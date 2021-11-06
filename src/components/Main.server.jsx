@@ -3,7 +3,7 @@ import groq from 'groq';
 import {Suspense} from 'react';
 import {Switch} from 'react-router-dom';
 
-import SettingsProvider from '../contexts/SettingsProvider.client';
+import SettingsProvider from '../contexts/SettingsProvider.server';
 import {LINKS} from '../fragments/links';
 import {PORTABLE_TEXT} from '../fragments/portableText';
 import useSanityQuery from '../utils/query/useSanityQuery';

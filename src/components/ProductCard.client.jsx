@@ -1,10 +1,4 @@
-import {
-  Link,
-  Product,
-  ProductProvider,
-  SelectedVariantImage,
-  SelectedVariantPrice,
-} from '@shopify/hydrogen/client';
+import {Link, Product} from '@shopify/hydrogen/client';
 
 import ButtonSelectedVariantAddToCart from './ButtonSelectedVariantAddToCart.client';
 
@@ -19,15 +13,12 @@ const ProductCard = (props) => {
   const productUrl = `/products/${product?.slug}`;
 
   return (
-    <ProductProvider
-      product={product.storefront}
-      initialVariantId={firstVariant.id}
-    >
+    <Product product={product.storefront} initialVariantId={firstVariant.id}>
       <div className="bg-white col-span-2 group">
         {/* Image */}
         <div className="relative">
           <Link to={productUrl}>
-            <SelectedVariantImage />
+            <Product.SelectedVariant.Image />
           </Link>
 
           {/* Quick add to cart button */}
@@ -35,6 +26,7 @@ const ProductCard = (props) => {
             <ButtonSelectedVariantAddToCart />
           </div>
         </div>
+
         {/* Title */}
         <Link to={productUrl}>
           <div className="font-medium mt-2">
@@ -43,24 +35,24 @@ const ProductCard = (props) => {
         </Link>
 
         <div className="flex items-center">
-          <SelectedVariantPrice className="text-gray-900">
+          <Product.SelectedVariant.Price className="text-gray-900">
             {({currencyCode, amount, currencyNarrowSymbol}) => {
               return (
                 <span>{`${currencyCode} ${currencyNarrowSymbol}${amount}`}</span>
               );
             }}
-          </SelectedVariantPrice>
-          <SelectedVariantPrice
+          </Product.SelectedVariant.Price>
+          <Product.SelectedVariant.Price
             priceType="compareAt"
             className="ml-1 text-gray-400 line-through"
           >
             {({amount, currencyNarrowSymbol}) => {
               return <span>{`${currencyNarrowSymbol}${amount}`}</span>;
             }}
-          </SelectedVariantPrice>
+          </Product.SelectedVariant.Price>
         </div>
       </div>
-    </ProductProvider>
+    </Product>
   );
 };
 

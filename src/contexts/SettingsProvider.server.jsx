@@ -1,4 +1,4 @@
-import SettingsContext from './SettingsContext.client';
+import SettingsContext from './SettingsContext.server';
 
 const SettingsProvider = ({children, value}) => {
   return (

@@ -1,7 +1,7 @@
 // import {useShopQuery, MediaFile} from '@shopify/hydrogen';
 import {Link} from '@shopify/hydrogen/client';
 // import gql from 'graphql-tag';
-import Layout from './Layout.client';
+import Layout from './Layout.server';
 // import ProductCard from './ProductCard.client';
 
 export default function NotFound() {

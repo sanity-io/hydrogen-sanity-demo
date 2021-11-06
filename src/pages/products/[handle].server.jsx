@@ -1,7 +1,7 @@
 import groq from 'groq';
 import {useParams} from 'react-router-dom';
 
-import Layout from '../../components/Layout.client';
+import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
 import ProductDetails from '../../components/ProductDetails.client';
 import Seo from '../../components/Seo.client';

@@ -1,4 +1,4 @@
-import {MediaFile, Product, ProductProvider} from '@shopify/hydrogen/client';
+import {Product} from '@shopify/hydrogen/client';
 import React from 'react';
 
 import {useProductsContext} from '../../contexts/ProductsContext.client';
@@ -16,19 +16,15 @@ const BlockProduct = (props) => {
   const productVariant = product?.variants?.edges[0]?.node;
 
   return (
-    <ProductProvider initialVariantId={productVariant.id} product={product}>
+    <Product initialVariantId={productVariant.id} product={product}>
       <div className="my-8">
         <div className="border border-black p-4 space-y-4 w-1/2">
           <>
             <Product.Title className="font-medium" />
             <Product.Price />
           </>
-          <MediaFile
+          <Product.SelectedVariant.Image
             className="w-full"
-            media={{
-              mediaContentType: 'IMAGE',
-              image: productVariant?.image,
-            }}
             options={{
               height: '700',
               crop: 'center',
@@ -43,7 +39,7 @@ const BlockProduct = (props) => {
           </div>
         )}
       </div>
-    </ProductProvider>
+    </Product>
   );
 };
 

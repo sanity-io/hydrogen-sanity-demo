@@ -1,4 +1,4 @@
-import {MediaFile, Product, ProductProvider} from '@shopify/hydrogen/client';
+import {Product} from '@shopify/hydrogen/client';
 
 import {useProductsContext} from '../../contexts/ProductsContext.client';
 import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.client';
@@ -18,7 +18,7 @@ const AnnotationProductMarginalia = (props) => {
   const productVariant = product?.variants?.edges[0]?.node;
 
   return (
-    <ProductProvider product={product} initialVariantId={productVariant?.id}>
+    <Product product={product} initialVariantId={productVariant?.id}>
       <>
         {children}
         <div className="absolute border border-gray-500 left-full ml-10 p-2 rounded-sm top-0 w-44">
@@ -26,12 +26,8 @@ const AnnotationProductMarginalia = (props) => {
             <Product.Title className="font-medium" />
             <Product.Price />
           </div>
-          <MediaFile
+          <Product.SelectedVariant.Image
             className="my-2 w-full"
-            media={{
-              mediaContentType: 'IMAGE',
-              image: productVariant?.image,
-            }}
             options={{
               height: '700',
               crop: 'center',
@@ -43,7 +39,7 @@ const AnnotationProductMarginalia = (props) => {
           {mark?.action === 'buyNow' && <ButtonSelectedVariantBuyNow small />}
         </div>
       </>
-    </ProductProvider>
+    </Product>
   );
 };
 

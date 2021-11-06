@@ -19,7 +19,7 @@ export default function Header() {
         <br />
         Development preview store
       </div>
-      <div onClick={toggleCart} style={{cursor: 'pointer'}}>
+      <div onClick={() => toggleCart()} style={{cursor: 'pointer'}}>
         <CartIcon />
       </div>
     </header>

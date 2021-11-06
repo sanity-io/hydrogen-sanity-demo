@@ -1,9 +1,9 @@
 import groq from 'groq';
 import {useParams} from 'react-router-dom';
 
-import Layout from '../../components/Layout.client';
+import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
-import ProductListing from '../../components/ProductListing.client';
+import ProductListing from '../../components/ProductListing.server';
 import Seo from '../../components/Seo.client';
 import {COLLECTION} from '../../fragments/collection';
 import useSanityQuery from '../../utils/query/useSanityQuery';

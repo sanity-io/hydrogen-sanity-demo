@@ -1,8 +1,4 @@
-import {
-  BuyNowButton,
-  ProductProvider,
-  SelectedVariantAddToCartButton,
-} from '@shopify/hydrogen/client';
+import {Product} from '@shopify/hydrogen/client';
 
 import {useProductsContext} from '../../contexts/ProductsContext.client';
 
@@ -28,18 +24,18 @@ const AnnotationProduct = (props) => {
   }
 
   return (
-    <ProductProvider product={product} initialVariantId={productVariant?.id}>
+    <Product product={product} initialVariantId={productVariant?.id}>
       {mark?.action === 'addToCart' && (
-        <SelectedVariantAddToCartButton quantity={mark?.quantity || 1}>
+        <Product.SelectedVariant.AddToCartButton quantity={mark?.quantity || 1}>
           <span className="bg-gray-200 p-1 rounded-sm">
             {children}{' '}
             <span className="font-semibold text-xs">({mark.action})</span>
           </span>
-        </SelectedVariantAddToCartButton>
+        </Product.SelectedVariant.AddToCartButton>
       )}
 
       {mark?.action === 'buyNow' && (
-        <BuyNowButton
+        <Product.SelectedVariant.BuyNowButton
           quantity={mark?.quantity || 1}
           variantId={productVariant?.id}
         >
@@ -47,9 +43,9 @@ const AnnotationProduct = (props) => {
             {children}{' '}
             <span className="font-semibold text-xs">({mark.action})</span>
           </span>
-        </BuyNowButton>
+        </Product.SelectedVariant.BuyNowButton>
       )}
-    </ProductProvider>
+    </Product>
   );
 };
 

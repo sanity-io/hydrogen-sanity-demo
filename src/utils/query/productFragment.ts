@@ -217,8 +217,10 @@ fragment MoneyFragment on MoneyV2 {
 
 fragment ImageFragment on Image {
   id
-  originalSrc
+  url
   altText
+  width
+  height
 }
 
 fragment UnitPriceFragment on ProductVariant {

@@ -1,6 +1,6 @@
 import {Link} from '@shopify/hydrogen/client';
 
-import {useSettingsContext} from '../contexts/SettingsContext.client';
+import {useSettingsContext} from '../contexts/SettingsContext.server';
 
 import PortableText from './PortableText.client';
 

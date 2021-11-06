@@ -1,9 +1,4 @@
-import {
-  Link,
-  MediaFile,
-  Product,
-  ProductProvider,
-} from '@shopify/hydrogen/client';
+import {Link, Product} from '@shopify/hydrogen/client';
 import Tippy from '@tippyjs/react/headless';
 
 import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.client';
@@ -30,10 +25,7 @@ const BlockInlineLinkProduct = (props) => {
       interactive
       placement="bottom"
       render={(attrs) => (
-        <ProductProvider
-          product={product}
-          initialVariantId={productVariant?.id}
-        >
+        <Product product={product} initialVariantId={productVariant?.id}>
           <div
             className="bg-white border border-black p-2 text-sm"
             tabIndex="-1"
@@ -44,12 +36,8 @@ const BlockInlineLinkProduct = (props) => {
                 <Product.Title className="font-medium" />
                 <Product.Price />
               </div>
-              <MediaFile
+              <Product.SelectedVariant.Image
                 className="my-2 w-full"
-                media={{
-                  mediaContentType: 'IMAGE',
-                  image: productVariant?.image,
-                }}
                 options={{
                   height: '700',
                   crop: 'center',
@@ -63,7 +51,7 @@ const BlockInlineLinkProduct = (props) => {
               )}
             </div>
           </div>
-        </ProductProvider>
+        </Product>
       )}
     >
       <Link className="underline" to={productUrl}>

@@ -8,6 +8,7 @@ import {
   useCart,
   useCartLinesTotalQuantity,
 } from '@shopify/hydrogen/client';
+import clsx from 'clsx';
 
 import {useCartUI} from '../contexts/CartUIProvider.client';
 
@@ -16,51 +17,69 @@ import CartIcon from './CartIcon.client';
 export default function Cart() {
   const itemCount = useCartLinesTotalQuantity();
   const {error} = useCart();
-  const {toggleCart} = useCartUI();
+  const {closeCart, isCartOpen, toggleCart} = useCartUI();
 
   return (
-    <div className="overflow-hidden h-full pointer-events-auto">
-      <div className="flex flex-col h-full">
-        {/* Header */}
-        <header className="bg-white p-4 h-20 border-b border-black flex flex-shrink-0 items-start justify-between">
-          <CartIcon />
-          <span
-            className="font-medium"
-            onClick={toggleCart}
-            style={{cursor: 'pointer'}}
-          >
-            Close
-          </span>
-        </header>
+    <>
+      {/* Overlay */}
+      <div
+        className={`z-50 fixed top-0 bottom-0 left-0 right-0 bg-black transition-opacity duration-400 ${
+          isCartOpen ? 'opacity-20' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={isCartOpen ? closeCart : null}
+      />
 
-        {/* Line items */}
-        <div className="bg-white flex-grow px-4 overflow-y-scroll">
-          {itemCount > 0 ? (
-            <CartLineItems />
-          ) : (
-            <p className="py-4 text-gray-600">Your cart is empty</p>
-          )}
-        </div>
+      {/* Panel */}
+      <div
+        className={clsx([
+          'pointer-events-none z-50 h-full fixed right-0 top-0 bottom-0 flex flex-col w-full max-w-md min-w-sm transition-transform duration-500 transform-gpu',
+          isCartOpen ? 'right-0' : 'translate-x-full',
+        ])}
+      >
+        <div className="overflow-hidden h-full pointer-events-auto">
+          <div className="flex flex-col h-full">
+            {/* Header */}
+            <header className="bg-white p-4 h-20 border-b border-black flex flex-shrink-0 items-start justify-between">
+              <CartIcon />
+              <span
+                className="font-medium"
+                onClick={toggleCart}
+                style={{cursor: 'pointer'}}
+              >
+                Close
+              </span>
+            </header>
 
-        {/* Error */}
-        {error ? (
-          <div
-            className="border bg-red-200 border-red-400 text-red-800 mb-4 mx-8 px-4 py-3 rounded relative"
-            role="alert"
-          >
-            {error}
+            {/* Line items */}
+            <div className="bg-white flex-grow px-4 overflow-y-scroll">
+              {itemCount > 0 ? (
+                <CartLineItems />
+              ) : (
+                <p className="py-4 text-gray-600">Your cart is empty</p>
+              )}
+            </div>
+
+            {/* Error */}
+            {error ? (
+              <div
+                className="border bg-red-200 border-red-400 text-red-800 mb-4 mx-8 px-4 py-3 rounded relative"
+                role="alert"
+              >
+                {error}
+              </div>
+            ) : null}
+
+            <footer
+              className={`${
+                itemCount > 0 ? 'border-t border-solid border-gray-300' : ''
+              } bg-white p-4 space-y-4 flex-shrink-0`}
+            >
+              {itemCount > 0 ? <CartFooter /> : null}
+            </footer>
           </div>
-        ) : null}
-
-        <footer
-          className={`${
-            itemCount > 0 ? 'border-t border-solid border-gray-300' : ''
-          } bg-white p-4 space-y-4 flex-shrink-0`}
-        >
-          {itemCount > 0 ? <CartFooter /> : null}
-        </footer>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -644,10 +644,10 @@
     pkg-dir "^5.0.0"
     pluralize "^8.0.0"
 
-"@shopify/hydrogen@0.5.3":
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/@shopify/hydrogen/-/hydrogen-0.5.3.tgz#9f7d2333e2e3d4ab9b4a3fc9c337f3f2e1c3d020"
-  integrity sha512-sL5YldjPG/0EAUP+a5cme9L5FmOHzvhFDzQdW5GoHD04i41nnY3SlIxhlNHuHqB+QmGRgCq7Snwji+qDCK9PPw==
+"@shopify/hydrogen@0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@shopify/hydrogen/-/hydrogen-0.6.0.tgz#cc8652d2cfcf1b34f99830d28caad659700f9795"
+  integrity sha512-22F2NLwQGgiKcg4aF4qo87bGZE8dJMxLO/TNz0P21kW9gNKFPfne/LaTaARJ1e6pQDi6QwH5ByDsmgf8CQPTlg==
   dependencies:
     "@vitejs/plugin-react" "^1.0.0"
     connect "^3.7.0"
@@ -1374,6 +1374,11 @@ clone-regexp@^2.1.0:
   integrity sha512-beMpP7BOtTipFuW8hrJvREQ2DrRu3BE7by0ZpibtfBA+qfHYvMGTc2Yb1JMYPKg/JUw0CHYvpg796aNTSW9z7Q==
   dependencies:
     is-regexp "^2.0.0"
+
+clsx@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
+  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
 
 color-convert@^1.9.0:
   version "1.9.3"

@@ -2,7 +2,7 @@ import groq from 'groq';
 import React from 'react';
 import {useParams} from 'react-router-dom';
 
-import Layout from '../components/Layout.client';
+import Layout from '../components/Layout.server';
 import NotFound from '../components/NotFound.server';
 import PortableText from '../components/PortableText.client';
 import Seo from '../components/Seo.client';
