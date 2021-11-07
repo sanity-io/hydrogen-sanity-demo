@@ -14,7 +14,9 @@ export default function ProductOptions() {
       {options.map(({name, values}) => {
         return (
           <fieldset key={name} className="my-3">
-            <legend className="text-xs text-gray-700 uppercase">{name}</legend>
+            <legend className="font-medium text-sm text-gray-700">
+              {name}
+            </legend>
 
             <div className="flex items-start flex-wrap gap-1 mt-1">
               {values.map((value) => {
@@ -33,7 +35,7 @@ export default function ProductOptions() {
                       onChange={() => setSelectedOption(name, value)}
                     />
                     <div
-                      className={`p-2 border cursor-pointer text-xs uppercase w-20 ${
+                      className={`px-3 py-2 border cursor-pointer font-medium text-sm ${
                         checked ? 'bg-gray-900 text-white' : 'text-gray-900'
                       }`}
                     >
