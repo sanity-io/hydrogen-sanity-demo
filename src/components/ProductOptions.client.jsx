@@ -47,7 +47,7 @@ export default function ProductOptions() {
                       onChange={() => setSelectedOption(name, value)}
                     />
                     <div
-                      className={`px-3 py-2 border cursor-pointer font-medium text-sm ${
+                      className={`px-3 py-2 border cursor-pointer text-sm ${
                         checked ? 'bg-gray-900 text-white' : 'text-gray-900'
                       }`}
                     >

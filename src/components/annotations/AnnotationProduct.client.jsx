@@ -28,8 +28,7 @@ const AnnotationProduct = (props) => {
       {mark?.action === 'addToCart' && (
         <Product.SelectedVariant.AddToCartButton quantity={mark?.quantity || 1}>
           <span className="bg-gray-200 p-1 rounded-sm">
-            {children}{' '}
-            <span className="font-semibold text-xs">({mark.action})</span>
+            {children} <span className="font-semibold text-xs"></span>
           </span>
         </Product.SelectedVariant.AddToCartButton>
       )}
@@ -40,8 +39,7 @@ const AnnotationProduct = (props) => {
           variantId={productVariant?.id}
         >
           <span className="bg-gray-700 p-1 rounded-sm text-white">
-            {children}{' '}
-            <span className="font-semibold text-xs">({mark.action})</span>
+            {children} <span className="font-semibold text-xs"></span>
           </span>
         </Product.SelectedVariant.BuyNowButton>
       )}

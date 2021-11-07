@@ -1,4 +1,4 @@
-import {Product} from '@shopify/hydrogen/client';
+import {Link, Product} from '@shopify/hydrogen/client';
 
 import {useProductsContext} from '../../contexts/ProductsContext.client';
 import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.client';
@@ -16,6 +16,7 @@ const AnnotationProductMarginalia = (props) => {
   }
 
   const productVariant = product?.variants?.edges[0]?.node;
+  const productUrl = `/products/${product.handle}`;
 
   return (
     <Product product={product} initialVariantId={productVariant?.id}>
@@ -23,7 +24,9 @@ const AnnotationProductMarginalia = (props) => {
         {children}
         <div className="absolute border border-gray-500 left-full ml-10 p-2 rounded-sm top-0 w-44">
           <div className="text-sm">
-            <Product.Title className="font-medium" />
+            <Link to={productUrl}>
+              <Product.Title className="font-medium" />
+            </Link>
             <Product.Price />
           </div>
           <Product.SelectedVariant.Image

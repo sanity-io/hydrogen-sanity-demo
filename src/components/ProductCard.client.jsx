@@ -29,11 +29,11 @@ const ProductCard = (props) => {
         </div>
 
         {/* Title */}
-        <Link to={productUrl}>
-          <div className="font-medium mt-2">
+        <div className="font-medium mt-2">
+          <Link to={productUrl}>
             <Product.Title />
-          </div>
-        </Link>
+          </Link>
+        </div>
         <div className="flex items-center">
           <Product.SelectedVariant.Price className="text-gray-900">
             {({currencyCode, amount, currencyNarrowSymbol}) => {

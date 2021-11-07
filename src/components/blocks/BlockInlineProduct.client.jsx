@@ -33,7 +33,9 @@ const BlockInlineLinkProduct = (props) => {
           >
             <div className="w-44">
               <div className="text-sm">
-                <Product.Title className="font-medium" />
+                <Link to={productUrl}>
+                  <Product.Title className="font-medium" />
+                </Link>
                 <Product.Price />
               </div>
               <Product.SelectedVariant.Image
