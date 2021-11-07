@@ -1,4 +1,5 @@
 import groq from 'groq';
+import pluralize from 'pluralize';
 import {useParams} from 'react-router-dom';
 
 import Layout from '../../components/Layout.server';
@@ -26,7 +27,18 @@ export default function Collection() {
       <div className="p-4">
         <div className="mb-20">
           {/* Title */}
-          <h1 className="font-medium text-xl">{sanityCollection.title}</h1>
+          <h1 className="font-medium text-xl">
+            {sanityCollection.title}{' '}
+            <span className="font-normal text-gray-400">
+              (
+              {pluralize(
+                'product',
+                sanityCollection?.products?.length || 0,
+                true,
+              )}
+              )
+            </span>
+          </h1>
 
           {/* Description */}
           {sanityCollection?.description && (

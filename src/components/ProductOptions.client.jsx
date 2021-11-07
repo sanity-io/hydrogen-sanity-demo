@@ -1,13 +1,25 @@
 import {useProduct} from '@shopify/hydrogen/client';
+import {useEffect} from 'react';
+import {decode} from 'shopify-gid';
 
 export default function ProductOptions() {
-  const {options, setSelectedOption, selectedOptions} = useProduct();
+  const {options, setSelectedOption, selectedOptions, selectedVariant} =
+    useProduct();
 
   // Display nothing if we only have one product option with less than one value
   // (typically a product with only a default variant)
   if (options.length === 1 && options?.[0]?.values.length <= 1) {
     return null;
   }
+
+  const decodedVariantId = selectedVariant && decode(selectedVariant.id)?.id;
+
+  // Append query on variant change
+  useEffect(() => {
+    if (decodedVariantId) {
+      window.history.replaceState({}, '', `?variant=${decodedVariantId}`);
+    }
+  }, [decodedVariantId]);
 
   return (
     <>

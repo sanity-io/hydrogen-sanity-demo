@@ -8,9 +8,7 @@ import PortableText from './PortableText.client';
 import ProductGallery from './ProductGallery.client';
 import ProductOptions from './ProductOptions.client';
 
-export default function ProductDetails({product}) {
-  const initialVariantId = product.storefront.variants.edges[0].node.id;
-
+export default function ProductDetails({product, initialVariantId}) {
   return (
     <div className="p-4">
       <Product product={product.storefront} initialVariantId={initialVariantId}>
