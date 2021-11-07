@@ -75,5 +75,8 @@ const QUERY = groq`
     && slug.current == $slug
   ][0]{
     ${COLLECTION}
+  } {
+    ...,
+    products[available]
   }
 `;
