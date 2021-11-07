@@ -32,6 +32,8 @@
     "vite": "^2.5.7"
   },
   "dependencies": {
+    "@headlessui/react": "^1.4.1",
+    "@heroicons/react": "^1.0.5",
     "@sanity/block-content-to-react": "^3.0.0",
     "@sanity/client": "^2.21.7",
     "@sanity/image-url": "^1.0.1",

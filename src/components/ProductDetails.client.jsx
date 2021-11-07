@@ -1,3 +1,5 @@
+import {Disclosure} from '@headlessui/react';
+import {ChevronUpIcon} from '@heroicons/react/outline';
 import {Product} from '@shopify/hydrogen/client';
 
 import ButtonSelectedVariantAddToCart from './ButtonSelectedVariantAddToCart.client';
@@ -12,15 +14,25 @@ export default function ProductDetails({product}) {
   return (
     <div className="p-4">
       <Product product={product.storefront} initialVariantId={initialVariantId}>
-        <div className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
           <section className="lg:col-span-2 grid gap-10" aria-label="Gallery">
-            {product?.images && <ProductGallery images={product.images} />}
+            {/* Image gallery */}
+            {product?.images && (
+              <div className="mb-10">
+                <ProductGallery images={product.images} />
+              </div>
+            )}
 
-            {/* <div className="bg bg-red-500 p-4">test</div> */}
+            {/* Body */}
+            {product?.body && (
+              <div className="max-w-2xl">
+                <PortableText blocks={product.body} />
+              </div>
+            )}
           </section>
 
           <section
-            className="my-4 md:my-0 max-w-md flex flex-col gap-6"
+            className="my-4 md:my-0 md:row-start-auto max-w-md flex flex-col gap-6 row-start-1"
             aria-label="Product details"
           >
             {/* eslint-disable-next-line @shopify/jsx-prefer-fragment-wrappers */}
@@ -72,27 +84,30 @@ export default function ProductDetails({product}) {
               {/* Custom sections */}
               <div className="my-4">
                 {product?.sections?.map((section) => (
-                  <div className="mb-8" key={section?._key}>
-                    <div className="font-medium text-sm">{section?.title}</div>
-                    <div className="text-gray-500 text-sm">
-                      {section?.body && <PortableText blocks={section.body} />}
-                    </div>
-                  </div>
+                  <Disclosure key={section?._key}>
+                    {({open}) => (
+                      <>
+                        <Disclosure.Button className="border-b border-gray-400 flex font-medium items-center justify-between text-md py-2 w-full">
+                          <span>{section?.title}</span>
+                          <ChevronUpIcon
+                            className={`${
+                              open ? 'transform rotate-180' : ''
+                            } w-5 h-5 scale-75 text-black`}
+                          />
+                        </Disclosure.Button>
+                        <Disclosure.Panel className="mt-2 text-gray-600 text-sm">
+                          {section?.body && (
+                            <PortableText blocks={section.body} />
+                          )}
+                        </Disclosure.Panel>
+                      </>
+                    )}
+                  </Disclosure>
                 ))}
               </div>
             </div>
           </section>
         </div>
-
-        {/* Divider */}
-        {product?.body && <div className="bg-gray-300 h-px my-10 w-full" />}
-
-        {/* Body */}
-        {product?.body && (
-          <div className="max-w-2xl mt-10">
-            <PortableText blocks={product.body} />
-          </div>
-        )}
       </Product>
     </div>
   );

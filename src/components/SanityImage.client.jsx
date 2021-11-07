@@ -115,10 +115,9 @@ const SanityImage = (props) => {
     <img
       {...rest}
       decoding="async"
-      sizes={sizes}
       // src={blurDataURL}
-      src={urlDefault}
       sizes={srcSetSizes}
+      src={urlDefault}
       srcSet={srcSet}
       style={{
         aspectRatio: 16 / 9,
