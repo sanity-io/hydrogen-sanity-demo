@@ -4,7 +4,7 @@ export default function CartIcon() {
   const itemCount = useCartLinesTotalQuantity();
 
   return (
-    <div className="border-blue">
+    <div>
       Cart <span>{itemCount > 0 ? `(${itemCount})` : null}</span>
     </div>
   );

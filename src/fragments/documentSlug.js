@@ -6,6 +6,7 @@ import reduce from 'lodash/fp/reduce';
 const DOCUMENT_SLUG_MAP = {
   'article.info': `"/" + slug.current`,
   'article.editorial': `"/editorial/" + slug.current`,
+  collection: `"/collections/" + slug.current`,
   home: `"/"`,
   product: `"/products/" + store.slug.current`,
 };

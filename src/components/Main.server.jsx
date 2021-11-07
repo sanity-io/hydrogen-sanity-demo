@@ -46,5 +46,10 @@ const QUERY = groq`
         ${PORTABLE_TEXT}
       },
     },
+    menu {
+      links[] {
+        ${LINKS}
+      }
+    }
   }
 `;

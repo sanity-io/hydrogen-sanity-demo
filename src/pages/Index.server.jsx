@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import groq from 'groq';
 import React from 'react';
 
@@ -42,7 +43,12 @@ export default function Index() {
           {/* Featured collections */}
           <div className="px-4">
             <h2 className="font-medium text-xl">Featured collections</h2>
-            <section className="gap-10 grid grid-cols-2 my-8">
+            <section
+              className={clsx([
+                'grid grid-cols-1 sm:grid-cols-2',
+                'gap-10 my-8',
+              ])}
+            >
               {sanityPage?.featuredCollections?.map((collection) => (
                 <div key={collection?._id}>
                   <CollectionCard collection={collection} />

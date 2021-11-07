@@ -1,4 +1,4 @@
-import Header from './Header.client';
+import Header from './Header.server';
 import Footer from './Footer.server';
 import Cart from './Cart.client';
 
