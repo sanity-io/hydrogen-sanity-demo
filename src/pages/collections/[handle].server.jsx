@@ -24,15 +24,17 @@ export default function Collection() {
   return (
     <Layout>
       <div className="p-4">
-        {/* Title */}
-        <h1 className="font-medium text-xl">{sanityCollection.title}</h1>
+        <div className="mb-20">
+          {/* Title */}
+          <h1 className="font-medium text-xl">{sanityCollection.title}</h1>
 
-        {/* Description */}
-        {sanityCollection?.description && (
-          <div className="max-w-3xl p4 text-xl">
-            {sanityCollection.description}
-          </div>
-        )}
+          {/* Description */}
+          {sanityCollection?.description && (
+            <div className="max-w-3xl text-gray-600 text-xl">
+              {sanityCollection.description}
+            </div>
+          )}
+        </div>
 
         <ProductListing
           products={sanityCollection?.products.map((product) => ({

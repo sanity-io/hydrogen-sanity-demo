@@ -16,13 +16,14 @@ const ProductCard = (props) => {
     <Product product={product.storefront} initialVariantId={firstVariant.id}>
       <div className="bg-white col-span-2 group">
         {/* Image */}
-        <div className="relative">
-          <Link to={productUrl}>
-            <Product.SelectedVariant.Image />
-          </Link>
-
+        <div className="overflow-hidden relative">
+          <div className="aspect-w-6 aspect-h-4">
+            <Link to={productUrl}>
+              <Product.SelectedVariant.Image className="absolute h-full object-cover w-full" />
+            </Link>
+          </div>
           {/* Quick add to cart button */}
-          <div className="absolute bottom-0 group-hover:block hidden left-0 w-full">
+          <div className="absolute bottom-0 duration-300 group-hover:translate-y-0 left-0 transform-gpu transition-transform translate-y-full w-full">
             <ButtonSelectedVariantAddToCart />
           </div>
         </div>
@@ -33,7 +34,6 @@ const ProductCard = (props) => {
             <Product.Title />
           </div>
         </Link>
-
         <div className="flex items-center">
           <Product.SelectedVariant.Price className="text-gray-900">
             {({currencyCode, amount, currencyNarrowSymbol}) => {

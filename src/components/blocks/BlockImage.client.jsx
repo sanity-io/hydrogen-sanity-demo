@@ -1,8 +1,10 @@
 import React from 'react';
 
-import sanityImageUrl from '../../utils/sanityImageUrl';
+import sanityConfig from '../../../sanity.config';
+import SanityImage from '../SanityImage.client';
 
 const BlockImage = (props) => {
+  const {fullWidth, image} = props?.node;
   return (
     <div className="my-6">
       <div
@@ -11,11 +13,18 @@ const BlockImage = (props) => {
           position: 'relative',
         }}
       >
-        <img
-          alt=""
-          className={props?.node?.fullWidth ? 'w-full' : 'w-1/3'}
-          src={sanityImageUrl(props?.node?.image, {width: 1000})}
-        />
+        <div className={fullWidth ? 'w-full' : 'md:w-1/3 w-full'}>
+          <SanityImage
+            alt={image?.altText}
+            crop={image?.crop}
+            dataset={sanityConfig.dataset}
+            hotspot={image?.hotspot}
+            layout="responsive"
+            projectId={sanityConfig.projectId}
+            sizes={['50vw']}
+            src={image?.asset._ref}
+          />
+        </div>
       </div>
       {/* Caption */}
       {props?.node?.caption && (

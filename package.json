@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "private": true,
+  "author": "Sanity.io <hello@sanity.io>",
   "scripts": {
     "dev": "vite",
     "lint": "npm-run-all lint:*",

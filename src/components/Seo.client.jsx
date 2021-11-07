@@ -2,8 +2,6 @@ import {Helmet} from '@shopify/hydrogen/client';
 
 import sanityImageUrl from '../utils/sanityImageUrl';
 
-// TODO: consider exposing locale, either from Shopify or Sanity
-
 /**
  * @param {object}      props
  * @param {SanityImage} props.defaultImage

@@ -23,7 +23,7 @@ export default function Cart() {
     <>
       {/* Overlay */}
       <div
-        className={`z-50 fixed top-0 bottom-0 left-0 right-0 bg-black transition-opacity duration-400 ${
+        className={`z-50 fixed top-0 bottom-0 left-0 right-0 bg-black transition-opacity duration-300 ${
           isCartOpen ? 'opacity-20' : 'opacity-0 pointer-events-none'
         }`}
         onClick={isCartOpen ? closeCart : null}

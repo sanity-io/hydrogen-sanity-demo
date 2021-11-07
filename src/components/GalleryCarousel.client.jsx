@@ -1,7 +1,8 @@
 import useEmblaCarousel from 'embla-carousel-react';
 import React from 'react';
 
-import sanityImageUrl from '../utils/sanityImageUrl';
+import sanityConfig from '../../sanity.config';
+import SanityImage from './SanityImage.client';
 
 const GalleryCarousel = (props) => {
   const {images} = props;
@@ -16,11 +17,19 @@ const GalleryCarousel = (props) => {
             {images.map((image) => (
               <div className="embla__slide" key={image?._key}>
                 <div className="embla__slide__inner">
-                  <img
-                    alt=""
-                    className="w-full"
-                    src={sanityImageUrl(image, {width: 1000})}
-                  />
+                  <div className="aspect-w-16 aspect-h-9 relative w-full">
+                    <SanityImage
+                      alt={image?.altText}
+                      crop={image?.crop}
+                      dataset={sanityConfig.dataset}
+                      hotspot={image?.hotspot}
+                      layout="fill"
+                      objectFit="cover"
+                      projectId={sanityConfig.projectId}
+                      sizes={['100vw']}
+                      src={image?.asset._ref}
+                    />
+                  </div>
                 </div>
               </div>
             ))}
