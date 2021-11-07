@@ -1,13 +1,25 @@
 import groq from 'groq';
 
-import {DOCUMENT_SLUG} from './documentSlug';
-
 export const LINK_INTERNAL = groq`
   _key,
   _type,
   title,
   ...reference-> {
     "documentType": _type,
-    ${DOCUMENT_SLUG},
+    (_type == "article.info") => {
+      "slug": "/" + slug.current,
+    },
+    (_type == "article.editorial") => {
+      "slug": "/editorial/" + slug.current,
+    },
+    (_type == "collection") => {
+      "slug": "/collections/" + slug.current,
+    },
+    (_type == "home") => {
+      "slug": "/",
+    },
+    (_type == "product" && store.isEnabled && store.status == "active") => {
+      "slug": "/products/" + store.slug.current,
+    },
   }
 `;

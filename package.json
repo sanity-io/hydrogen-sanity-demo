@@ -47,7 +47,6 @@
     "focus-trap-react": "^8.8.1",
     "graphql-tag": "^2.12.4",
     "groq": "^2.15.0",
-    "lodash": "^4.17.21",
     "pluralize": "^8.0.0",
     "react": "18.0.0-alpha-e6be2d531",
     "react-dom": "18.0.0-alpha-e6be2d531",
