@@ -1,3 +1,4 @@
+import {MinusSmIcon, PlusSmIcon, XIcon} from '@heroicons/react/solid';
 import {
   CartCheckoutButton,
   CartEstimatedCost,
@@ -51,7 +52,7 @@ export default function Cart() {
             </header>
 
             {/* Line items */}
-            <div className="bg-white flex-grow px-4 overflow-y-scroll">
+            <div className="bg-white flex-grow px-4 overflow-y-auto">
               {itemCount > 0 ? (
                 <CartLineItems />
               ) : (
@@ -136,71 +137,36 @@ function CartLineItems() {
                         adjust="remove"
                         aria-label="Remove from cart"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
+                        <XIcon className="h-4 mt-1 w-4" />
                       </CartLine.QuantityAdjustButton>
                     </div>
                   </div>
-                  <div className="flex mt-2">
+                  <div className="flex items-center mt-2">
                     <div className="flex-grow">
-                      <div className="border border-solid border-gray-300 inline-flex items-center text-gray-500">
+                      <div className="border border-gray-300 inline-flex items-center text-gray-500">
                         <CartLine.QuantityAdjustButton
                           adjust="decrease"
-                          className="p-2"
+                          className="p-2 text-gray-400"
                           aria-label="Decrease quantity"
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
+                          <MinusSmIcon className="h-4 w-4" />
                         </CartLine.QuantityAdjustButton>
                         <CartLine.Quantity
                           as="div"
-                          className="p-2 text-gray-900 text-center text-sm"
+                          className="text-gray-900 text-center text-sm"
                         />
                         <CartLine.QuantityAdjustButton
                           adjust="increase"
-                          className="p-2"
+                          className="p-2 text-gray-400"
                           aria-label="Increase quantity"
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
+                          <PlusSmIcon className="h-4 w-4" />
                         </CartLine.QuantityAdjustButton>
                       </div>
                     </div>
+
+                    <CartLine.Price className="text-sm" role="cell" />
                   </div>
-                  <CartLine.Price
-                    role="cell"
-                    className="absolute bottom-0 right-0 mb-3 text-sm"
-                  />
                 </div>
               </div>
             </div>

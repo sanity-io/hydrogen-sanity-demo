@@ -1,18 +1,24 @@
 import {ChevronDownIcon} from '@heroicons/react/outline';
 import {Popover} from '@headlessui/react';
 import {Link} from '@shopify/hydrogen/client';
+import clsx from 'clsx';
 
-const renderLinks = (links) => {
+const renderLinks = (links, close) => {
   return links?.map((link) => {
     if (link._type === 'linkGroup') {
       return (
         <Popover className="relative" key={link._key}>
-          {({open}) => (
+          {({close, open}) => (
             <>
-              <Popover.Button className="flex items-center justify-center">
+              <Popover.Button
+                className={clsx([
+                  'flex items-center justify-center',
+                  open ? 'opacity-50' : 'opacity-100',
+                ])}
+              >
                 <span>{link.title}</span>
                 <ChevronDownIcon
-                  className={`h-3 ml-1 opacity-75 w-3`}
+                  className={`h-3 ml-1 opacity-50 w-3`}
                   aria-hidden="true"
                 />
               </Popover.Button>
@@ -20,7 +26,7 @@ const renderLinks = (links) => {
               <Popover.Panel className="absolute -m-px -ml-4 transform top-10 left-0 z-10">
                 <div className="overflow-hidden border border-black">
                   <div className="bg-white gap-2 grid grid-cols-1 px-4 py-2 relative w-48">
-                    {link?.links && renderLinks(link.links)}
+                    {link?.links && renderLinks(link.links, close)}
                   </div>
                 </div>
               </Popover.Panel>
@@ -35,6 +41,7 @@ const renderLinks = (links) => {
           className="mr-1"
           href={link.url}
           key={link?._key}
+          onClick={close}
           rel="noreferrer"
           target={link.newWindow ? '_blank' : '_self'}
         >
@@ -48,7 +55,7 @@ const renderLinks = (links) => {
       }
 
       return (
-        <Link className="mr-1" key={link?._key} to={link.slug}>
+        <Link className="mr-1" key={link?._key} onClick={close} to={link.slug}>
           {link.title}
         </Link>
       );
