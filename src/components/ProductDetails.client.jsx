@@ -1,6 +1,6 @@
 import {Disclosure} from '@headlessui/react';
 import {ChevronUpIcon} from '@heroicons/react/outline';
-import {Product} from '@shopify/hydrogen/client';
+import {Product, flattenConnection} from '@shopify/hydrogen/client';
 
 import ButtonSelectedVariantAddToCart from './ButtonSelectedVariantAddToCart.client';
 import ButtonSelectedVariantBuyNow from './ButtonSelectedVariantBuyNow.client';
@@ -9,11 +9,25 @@ import ProductGallery from './ProductGallery.client';
 import ProductOptions from './ProductOptions.client';
 
 export default function ProductDetails({product, initialVariantId}) {
+  const currentStorefrontVariant = flattenConnection(
+    product.storefront.variants,
+  )?.find((variant) => variant.id === initialVariantId);
+
   return (
     <div className="p-4">
       <Product product={product.storefront} initialVariantId={initialVariantId}>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
-          <section className="lg:col-span-2 grid gap-10" aria-label="Gallery">
+          <section className="lg:col-span-2 grid gap-5" aria-label="Gallery">
+            {/* Selected variant image */}
+            {currentStorefrontVariant.image && (
+              <div className="aspect-w-4 aspect-h-3 bg-gray-50 w-full">
+                <Product.SelectedVariant.Image
+                  className="object-cover"
+                  options={{width: 2000}}
+                />
+              </div>
+            )}
+
             {/* Image gallery */}
             {product?.images && (
               <div className="mb-10">

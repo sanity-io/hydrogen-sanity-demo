@@ -12,7 +12,7 @@ const renderLinks = (links, close) => {
             <>
               <Popover.Button
                 className={clsx([
-                  'flex items-center justify-center',
+                  'flex items-center justify-center whitespace-nowrap',
                   open ? 'opacity-50' : 'opacity-100',
                 ])}
               >
@@ -38,7 +38,7 @@ const renderLinks = (links, close) => {
     if (link._type === 'linkExternal') {
       return (
         <a
-          className="mr-1"
+          className="mr-1 whitespace-nowrap"
           href={link.url}
           key={link?._key}
           onClick={close}
@@ -55,7 +55,12 @@ const renderLinks = (links, close) => {
       }
 
       return (
-        <Link className="mr-1" key={link?._key} onClick={close} to={link.slug}>
+        <Link
+          className="mr-1 whitespace-nowrap"
+          key={link?._key}
+          onClick={close}
+          to={link.slug}
+        >
           {link.title}
         </Link>
       );

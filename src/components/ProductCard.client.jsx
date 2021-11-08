@@ -21,7 +21,10 @@ const ProductCard = (props) => {
         <div className="overflow-hidden relative">
           <div className="aspect-w-6 aspect-h-4">
             <LinkProduct to={productUrl} variantId={product?.variantId}>
-              <Product.SelectedVariant.Image className="absolute h-full object-cover w-full" />
+              <Product.SelectedVariant.Image
+                className="absolute h-full object-cover w-full"
+                options={{width: 800}}
+              />
             </LinkProduct>
           </div>
           {/* Quick add to cart button */}
