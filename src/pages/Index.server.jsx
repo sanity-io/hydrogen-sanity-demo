@@ -62,7 +62,7 @@ export default function Index() {
 
           {/* Gallery */}
           {sanityPage?.gallery && (
-            <GalleryCarousel images={sanityPage?.gallery} />
+            <GalleryCarousel gallery={sanityPage?.gallery} />
           )}
 
           {/* Divider */}
@@ -108,7 +108,17 @@ const QUERY = groq`
       ${PRODUCT_WITH_VARIANT}
     },
     gallery[] {
-      ${IMAGE}
+      _key,
+      image {
+        ${IMAGE}
+      },
+      productWithVariant {
+        product->{
+          ...,
+          "variantId": coalesce(^.variant->store.id, store.variants[0]->store.id)
+        }
+      },
+      title
     },
     intro[] {
       ${PORTABLE_TEXT}
