@@ -9,6 +9,8 @@ export default function ProductListing({products}) {
         'gap-10 my-8',
       ])}
     >
+      {(!products || products.length === 0) && <div>No products</div>}
+
       {products?.map((product) => {
         return (
           <div key={product?._id}>

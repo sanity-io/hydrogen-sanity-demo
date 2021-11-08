@@ -49,7 +49,7 @@ export default function Index() {
                 'gap-10 my-8',
               ])}
             >
-              {sanityPage?.featuredCollections?.map((collection) => (
+              {sanityPage.featuredCollections?.map((collection) => (
                 <div key={collection?._id}>
                   <CollectionCard collection={collection} />
                 </div>
@@ -72,7 +72,7 @@ export default function Index() {
           <div className="px-4">
             <h2 className="font-medium text-xl">Featured products</h2>
             <ProductListing
-              products={sanityPage.featuredProducts.map((product) => ({
+              products={sanityPage?.featuredProducts?.map((product) => ({
                 ...product,
                 storefront: shopifyProducts?.[product?._id],
               }))}

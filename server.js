@@ -2,6 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
+const nocache = require('nocache');
 
 // TODO: Make it so we don't have to call `.default` at the end of this
 const hydrogenMiddleware = require('@shopify/hydrogen/middleware').default;
@@ -14,6 +15,12 @@ async function createServer() {
   const app = express();
 
   app.use(require('compression')());
+
+  // TODO: remove
+  // Temporarily disable caching in production
+  if (process.env.NODE_ENV === 'production') {
+    app.use(nocache());
+  }
   app.use(
     require('serve-static')(resolve('dist/client'), {
       index: false,
