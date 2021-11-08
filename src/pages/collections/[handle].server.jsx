@@ -18,7 +18,7 @@ export default function Collection() {
     },
   });
 
-  if (!sanityCollection || !shopifyProducts) {
+  if (!sanityCollection) {
     return <NotFound />;
   }
 
@@ -49,7 +49,7 @@ export default function Collection() {
         </div>
 
         <ProductListing
-          products={sanityCollection?.products.map((product) => ({
+          products={sanityCollection?.products?.map((product) => ({
             ...product,
             storefront: shopifyProducts?.[product?._id],
           }))}
