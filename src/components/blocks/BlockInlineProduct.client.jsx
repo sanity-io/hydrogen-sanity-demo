@@ -1,31 +1,36 @@
-import {Link, Product} from '@shopify/hydrogen/client';
+import {Product} from '@shopify/hydrogen/client';
 import Tippy from '@tippyjs/react/headless';
+import {encode} from 'shopify-gid';
 
+import {useProductsContext} from '../../contexts/ProductsContext.client';
 import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.client';
 import ButtonSelectedVariantBuyNow from '../ButtonSelectedVariantBuyNow.client';
-import {useProductsContext} from '../../contexts/ProductsContext.client';
+import LinkProduct from '../LinkProduct.client';
 
 const BlockInlineLinkProduct = (props) => {
   const {node} = props;
 
-  const productId = node?.product?._id;
+  const product = node?.productWithVariant?.product;
 
-  const product = useProductsContext(productId);
+  const storefrontProduct = useProductsContext(product?._id);
   // Return text only if no valid product is found
-  if (!product) {
+  if (!storefrontProduct) {
     return '(Product not found)';
   }
 
-  const productTitle = product?.title;
-  const productVariant = product?.variants?.edges[0]?.node;
-  const productUrl = `/products/${product.handle}`;
+  const encodedVariantId = encode('ProductVariant', product?.variantId);
+  const productTitle = storefrontProduct?.title;
+  const productUrl = `/products/${storefrontProduct.handle}?variant=${product?.variantId}`;
 
   return (
     <Tippy
       interactive
       placement="bottom"
       render={(attrs) => (
-        <Product product={product} initialVariantId={productVariant?.id}>
+        <Product
+          product={storefrontProduct}
+          initialVariantId={encodedVariantId}
+        >
           <div
             className="bg-white border border-black p-2 text-sm"
             tabIndex="-1"
@@ -33,9 +38,9 @@ const BlockInlineLinkProduct = (props) => {
           >
             <div className="w-44">
               <div className="text-sm">
-                <Link to={productUrl}>
+                <LinkProduct to={productUrl} variantId={product?.variantId}>
                   <Product.Title className="font-medium" />
-                </Link>
+                </LinkProduct>
                 <Product.Price />
               </div>
               <Product.SelectedVariant.Image
@@ -56,9 +61,15 @@ const BlockInlineLinkProduct = (props) => {
         </Product>
       )}
     >
-      <Link className="underline" to={productUrl}>
-        {productTitle}
-      </Link>
+      <span>
+        <LinkProduct
+          className="underline"
+          to={productUrl}
+          variantId={product?.variantId}
+        >
+          {productTitle}
+        </LinkProduct>
+      </span>
     </Tippy>
   );
 };

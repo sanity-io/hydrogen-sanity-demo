@@ -1,20 +1,28 @@
-import {Product} from '@shopify/hydrogen/client';
+import {Product, flattenConnection} from '@shopify/hydrogen/client';
+import {encode} from 'shopify-gid';
 
 import {useProductsContext} from '../../contexts/ProductsContext.client';
 
 const AnnotationProduct = (props) => {
   const {children, mark} = props;
 
-  const productId = mark?.product?._id;
+  const product = mark?.productWithVariant?.product;
 
-  const product = useProductsContext(productId);
+  const storefrontProduct = useProductsContext(product?._id);
+
   // Return text only if no valid product is found
-  if (!product) {
+  if (!storefrontProduct) {
     return children;
   }
 
-  const productVariant = product?.variants?.edges[0]?.node;
-  const availableForSale = productVariant?.availableForSale;
+  const encodedVariantId = encode('ProductVariant', product?.variantId);
+
+  const variants = flattenConnection(storefrontProduct.variants);
+  const selectedVariant = variants?.find(
+    (variant) => variant.id === encodedVariantId,
+  );
+
+  const availableForSale = selectedVariant?.availableForSale;
 
   // Return text only (with strikethrough + sold out prefix) if no longer available for sale
   if (!availableForSale) {
@@ -24,7 +32,7 @@ const AnnotationProduct = (props) => {
   }
 
   return (
-    <Product product={product} initialVariantId={productVariant?.id}>
+    <Product product={storefrontProduct} initialVariantId={selectedVariant.id}>
       {mark?.action === 'addToCart' && (
         <Product.SelectedVariant.AddToCartButton quantity={mark?.quantity || 1}>
           <span className="bg-gray-200 p-1 rounded-sm">
@@ -34,10 +42,7 @@ const AnnotationProduct = (props) => {
       )}
 
       {mark?.action === 'buyNow' && (
-        <Product.SelectedVariant.BuyNowButton
-          quantity={mark?.quantity || 1}
-          variantId={productVariant?.id}
-        >
+        <Product.SelectedVariant.BuyNowButton quantity={mark?.quantity || 1}>
           <span className="bg-gray-700 p-1 rounded-sm text-white">
             {children} <span className="font-semibold text-xs"></span>
           </span>

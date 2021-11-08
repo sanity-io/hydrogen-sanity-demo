@@ -1,29 +1,33 @@
-import {Link, Product} from '@shopify/hydrogen/client';
+import {Product} from '@shopify/hydrogen/client';
 import React from 'react';
+import {encode} from 'shopify-gid';
 
 import {useProductsContext} from '../../contexts/ProductsContext.client';
 import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.client';
+import LinkProduct from '../LinkProduct.client';
 
 const BlockProduct = (props) => {
-  const productId = props?.node?.product?._id;
+  const {node} = props;
 
-  const product = useProductsContext(productId);
+  const product = node?.productWithVariant?.product;
 
-  if (!product) {
+  const storefrontProduct = useProductsContext(product?._id);
+
+  if (!storefrontProduct) {
     return null;
   }
 
-  const productVariant = product?.variants?.edges[0]?.node;
-  const productUrl = `/products/${product.handle}`;
+  const encodedVariantId = encode('ProductVariant', product?.variantId);
+  const productUrl = `/products/${storefrontProduct.handle}?variant=${product?.variantId}`;
 
   return (
-    <Product initialVariantId={productVariant.id} product={product}>
+    <Product initialVariantId={encodedVariantId} product={storefrontProduct}>
       <div className="my-8">
         <div className="border border-black p-4 space-y-4 w-1/2">
           <div>
-            <Link to={productUrl}>
+            <LinkProduct to={productUrl} variantId={product?.variantId}>
               <Product.Title className="font-medium" />
-            </Link>
+            </LinkProduct>
             <Product.Price />
           </div>
           <Product.SelectedVariant.Image

@@ -5,6 +5,7 @@ import {LINK_EXTERNAL} from './linkExternal';
 import {LINK_INTERNAL} from './linkInternal';
 
 // TODO: reduce overfetching for all block and mark defs here
+// TODO: DRY `productWithVariant` blocks
 export const PORTABLE_TEXT = groq`
   ...,
   (_type == 'blockImage') => {
@@ -15,16 +16,22 @@ export const PORTABLE_TEXT = groq`
   },
   (_type == 'blockProduct') => {
     ...,
-    product->{
-      ...
+    productWithVariant {
+      product->{
+        ...,
+        "variantId": coalesce(^.variant->store.id, store.variants[0]->store.id)
+      }
     }
   },
   children[] {
     ...,
     (_type == 'blockInlineProduct') => {
       ...,
-      product->{
-        ...
+      productWithVariant {
+        product->{
+          ...,
+          "variantId": coalesce(^.variant->store.id, store.variants[0]->store.id)
+        }
       }
     },
   },
@@ -38,14 +45,20 @@ export const PORTABLE_TEXT = groq`
     },
     (_type == 'annotationProduct') => {
       ...,
-      product->{
-        ...
+      productWithVariant {
+        product->{
+          ...,
+          "variantId": coalesce(^.variant->store.id, store.variants[0]->store.id)
+        }
       }
     },
     (_type == 'annotationProductMarginalia') => {
       ...,
-      product->{
-        ...
+      productWithVariant {
+        product->{
+          ...,
+          "variantId": coalesce(^.variant->store.id, store.variants[0]->store.id)
+        }
       }
     },
   }

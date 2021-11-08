@@ -1,6 +1,8 @@
-import {Link, Product} from '@shopify/hydrogen/client';
+import {Product} from '@shopify/hydrogen/client';
+import {encode} from 'shopify-gid';
 
 import ButtonSelectedVariantAddToCart from './ButtonSelectedVariantAddToCart.client';
+import LinkProduct from './LinkProduct.client';
 
 const ProductCard = (props) => {
   const {product} = props;
@@ -9,18 +11,18 @@ const ProductCard = (props) => {
     return null;
   }
 
-  const firstVariant = product.storefront?.variants?.edges[0]?.node;
-  const productUrl = `/products/${product?.slug}`;
+  const encodedVariantId = encode('ProductVariant', product?.variantId);
+  const productUrl = `/products/${product?.slug}?variant=${product?.variantId}`;
 
   return (
-    <Product product={product.storefront} initialVariantId={firstVariant.id}>
+    <Product product={product.storefront} initialVariantId={encodedVariantId}>
       <div className="bg-white col-span-2 group">
         {/* Image */}
         <div className="overflow-hidden relative">
           <div className="aspect-w-6 aspect-h-4">
-            <Link to={productUrl}>
+            <LinkProduct to={productUrl} variantId={product?.variantId}>
               <Product.SelectedVariant.Image className="absolute h-full object-cover w-full" />
-            </Link>
+            </LinkProduct>
           </div>
           {/* Quick add to cart button */}
           <div className="absolute bottom-0 duration-300 group-hover:translate-y-0 left-0 transform-gpu transition-transform translate-y-full w-full">
@@ -30,9 +32,9 @@ const ProductCard = (props) => {
 
         {/* Title */}
         <div className="font-medium mt-2">
-          <Link to={productUrl}>
+          <LinkProduct to={productUrl} variantId={product?.variantId}>
             <Product.Title />
-          </Link>
+          </LinkProduct>
         </div>
         <div className="flex items-center">
           <Product.SelectedVariant.Price className="text-gray-900">

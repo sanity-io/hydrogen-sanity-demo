@@ -13,7 +13,7 @@ import Seo from '../components/Seo.client';
 import ProductsProvider from '../contexts/ProductsProvider.client';
 import {IMAGE} from '../fragments/image';
 import {PORTABLE_TEXT} from '../fragments/portableText';
-import {PRODUCT} from '../fragments/product';
+import {PRODUCT_WITH_VARIANT} from '../fragments/productWithVariant';
 import {SEO} from '../fragments/seo';
 import useSanityQuery from '../utils/query/useSanityQuery';
 
@@ -104,8 +104,8 @@ const QUERY = groq`
       "slug": slug.current,
       title,
     },
-    featuredProducts[]->{
-      ${PRODUCT}
+    featuredProducts[] {
+      ${PRODUCT_WITH_VARIANT}
     },
     gallery[] {
       ${IMAGE}

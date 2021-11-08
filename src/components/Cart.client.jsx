@@ -4,16 +4,17 @@ import {
   CartEstimatedCost,
   CartLine,
   CartLines,
-  Link,
   Money,
   useCart,
   useCartLinesTotalQuantity,
 } from '@shopify/hydrogen/client';
 import clsx from 'clsx';
+import {decode, encode} from 'shopify-gid';
 
 import {useCartUI} from '../contexts/CartUIProvider.client';
 
 import CartIcon from './CartIcon.client';
+import LinkProduct from './LinkProduct.client';
 
 export default function Cart() {
   const itemCount = useCartLinesTotalQuantity();
@@ -54,7 +55,7 @@ export default function Cart() {
             {/* Line items */}
             <div className="bg-white flex-grow px-4 overflow-y-auto">
               {itemCount > 0 ? (
-                <CartLineItems />
+                <CartLineItems closeCart={closeCart} />
               ) : (
                 <p className="py-4 text-gray-600">Your cart is empty</p>
               )}
@@ -84,7 +85,8 @@ export default function Cart() {
   );
 }
 
-function CartLineItems() {
+function CartLineItems(props) {
+  const {closeCart} = props;
   return (
     <div role="table" aria-label="Shopping cart">
       <div role="row" className="sr-only">
@@ -94,7 +96,9 @@ function CartLineItems() {
       </div>
       <CartLines>
         {({merchandise}) => {
-          const productUrl = `/products/${merchandise.product.handle}`;
+          const variant = decode(merchandise?.id);
+
+          const productUrl = `/products/${merchandise.product.handle}?variant=${variant?.id}`;
           return (
             <div
               role="row"
@@ -103,9 +107,13 @@ function CartLineItems() {
               <div className="flex space-x-8 relative">
                 <div role="cell">
                   <div className="w-20 h-20 relative">
-                    <Link to={productUrl}>
+                    <LinkProduct
+                      onClick={closeCart}
+                      to={productUrl}
+                      variantId={variant?.id}
+                    >
                       <CartLine.Image className="bg-white w-full h-full object-contain" />
-                    </Link>
+                    </LinkProduct>
                   </div>
                 </div>
                 <div
@@ -114,9 +122,13 @@ function CartLineItems() {
                 >
                   <div className="flex gap-2">
                     <div className="flex-grow">
-                      <Link to={productUrl}>
+                      <LinkProduct
+                        onClick={closeCart}
+                        to={productUrl}
+                        variantId={variant?.id}
+                      >
                         <CartLine.ProductTitle className="text-gray-900 text-sm font-medium" />
-                      </Link>
+                      </LinkProduct>
                       <CartLine.SelectedOptions className="text-sm">
                         {({name, value}) => (
                           <>

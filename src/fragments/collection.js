@@ -1,13 +1,13 @@
 import groq from 'groq';
 
-import {PRODUCT} from './product';
+import {PRODUCT_WITH_VARIANT} from './productWithVariant';
 import {SEO} from './seo';
 
 export const COLLECTION = groq`
   _id,
   description,
-  products[]->{
-    ${PRODUCT}
+  products[] {
+    ${PRODUCT_WITH_VARIANT}
   },
   seo {
     ${SEO}
