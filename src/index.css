@@ -2,13 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-ol {
+.portableText ol {
   list-style-position: inside;
   list-style-type: decimal;
   margin-bottom: 1rem;
 }
 
-ul {
+.portableText ul {
   list-style-position: inside;
   list-style-type: disc;
   margin-bottom: 1rem;
