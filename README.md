@@ -1,6 +1,6 @@
 # Hydrogen starter
 
-[Live demo](https://hydrogen-demo.fly.dev/)
+[Live demo](https://hydrogen-sanity-demo.com/)
 
 ![hydrogen-demo](https://user-images.githubusercontent.com/209129/140816218-3743b0fd-1443-4f46-9d95-6a0d4d6d923d.png)
 
