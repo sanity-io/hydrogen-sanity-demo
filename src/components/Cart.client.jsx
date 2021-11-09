@@ -43,11 +43,7 @@ export default function Cart() {
             {/* Header */}
             <header className="bg-white p-4 h-20 border-b border-black flex flex-shrink-0 items-start justify-between">
               <CartIcon />
-              <span
-                className="font-medium"
-                onClick={toggleCart}
-                style={{cursor: 'pointer'}}
-              >
+              <span className="cursor-pointer font-medium" onClick={toggleCart}>
                 Close
               </span>
             </header>
@@ -229,9 +225,6 @@ function CartFooter() {
         {/*
         <CartShopPayButton
           className="flex w-full"
-          style={{
-            opacity: 0.25,
-          }}
         />
         */}
 

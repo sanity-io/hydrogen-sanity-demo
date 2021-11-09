@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import React from 'react';
 
 import sanityConfig from '../../../sanity.config';
@@ -8,23 +9,21 @@ const BlockImage = (props) => {
   return (
     <div className="my-6">
       <div
-        style={{
-          width: 'calc(100vw - 3em)',
-          position: 'relative',
-        }}
+        className={clsx([
+          fullWidth ? 'ml-0 md:-ml-4' : 'md:ml-0',
+          fullWidth ? 'w-full md:w-screen' : 'w-full',
+        ])}
       >
-        <div className={fullWidth ? 'w-full' : 'md:w-1/3 w-full'}>
-          <SanityImage
-            alt={image?.altText}
-            crop={image?.crop}
-            dataset={sanityConfig.dataset}
-            hotspot={image?.hotspot}
-            layout="responsive"
-            projectId={sanityConfig.projectId}
-            sizes={['50vw']}
-            src={image?.asset._ref}
-          />
-        </div>
+        <SanityImage
+          alt={image?.altText}
+          crop={image?.crop}
+          dataset={sanityConfig.dataset}
+          hotspot={image?.hotspot}
+          layout="responsive"
+          projectId={sanityConfig.projectId}
+          sizes={['50vw']}
+          src={image?.asset._ref}
+        />
       </div>
       {/* Caption */}
       {props?.node?.caption && (

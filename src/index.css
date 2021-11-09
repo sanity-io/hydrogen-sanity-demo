@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+ol {
+  list-style-position: inside;
+  list-style-type: decimal;
+  margin-bottom: 1rem;
+}
+
+ul {
+  list-style-position: inside;
+  list-style-type: disc;
+  margin-bottom: 1rem;
+}
+
 strong {
   font-weight: 500;
 }
