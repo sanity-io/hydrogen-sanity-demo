@@ -105,7 +105,7 @@ const QUERY = groq`
       title,
     },
     featuredProducts[] {
-      ${PRODUCT_WITH_VARIANT}
+      ...${PRODUCT_WITH_VARIANT}
     },
     gallery[] {
       _key,
@@ -113,10 +113,7 @@ const QUERY = groq`
         ${IMAGE}
       },
       productWithVariant {
-        product->{
-          ...,
-          "variantId": coalesce(^.variant->store.id, store.variants[0]->store.id)
-        }
+        ${PRODUCT_WITH_VARIANT}
       },
       title
     },

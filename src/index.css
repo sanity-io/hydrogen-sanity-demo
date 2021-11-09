@@ -2,14 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-model-viewer::part(default-progress-mask) {
-  display: none;
-}
-
-model-viewer::part(default-progress-bar) {
-  display: none;
-}
-
 strong {
   font-weight: 500;
 }
@@ -64,13 +56,3 @@ strong {
   max-width: none;
   transform: translate(-50%, -50%);
 }
-
-/*
-.embla__button--prev {
-  left: 27px;
-}
-
-.embla__button--next {
-  right: 27px;
-}
-*/

@@ -6,7 +6,7 @@ import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
 import ProductListing from '../../components/ProductListing.server';
 import Seo from '../../components/Seo.client';
-import {COLLECTION} from '../../fragments/collection';
+import {COLLECTION_PAGE} from '../../fragments/collectionPage';
 import useSanityQuery from '../../utils/query/useSanityQuery';
 
 export default function Collection() {
@@ -74,7 +74,7 @@ const QUERY = groq`
     _type == 'collection'
     && slug.current == $slug
   ][0]{
-    ${COLLECTION}
+    ${COLLECTION_PAGE}
   } {
     ...,
     products[available]

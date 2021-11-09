@@ -1,9 +1,10 @@
+import sanityClient from '@sanity/client';
 import imageUrlBuilder from '@sanity/image-url';
 
-import {sanityClient} from '../lib/sanity';
+import sanityConfig from '../../sanity.config';
 
 const sanityImageUrl = (image, {width} = {width: 800}) => {
-  const builder = imageUrlBuilder(sanityClient());
+  const builder = imageUrlBuilder(sanityClient(sanityConfig));
   const urlFor = builder.image(image);
 
   const src = urlFor.width(width).auto('format').quality(80).url();

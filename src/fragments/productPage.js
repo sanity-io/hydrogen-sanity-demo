@@ -4,7 +4,7 @@ import {IMAGE} from './image';
 import {PORTABLE_TEXT} from './portableText';
 import {SEO_PRODUCT} from './seoProduct';
 
-export const PRODUCT = groq`
+export const PRODUCT_PAGE = groq`
   _id,
   "available": !store.isDeleted && store.status == 'active',
   body[]{

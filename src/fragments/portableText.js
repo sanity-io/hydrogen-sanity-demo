@@ -3,9 +3,9 @@ import groq from 'groq';
 import {IMAGE} from './image';
 import {LINK_EXTERNAL} from './linkExternal';
 import {LINK_INTERNAL} from './linkInternal';
+import {PRODUCT_WITH_VARIANT} from './productWithVariant';
 
-// TODO: reduce overfetching for all block and mark defs here
-// TODO: DRY `productWithVariant` blocks
+// TODO: try reduce overfetching for all block and mark defs here
 export const PORTABLE_TEXT = groq`
   ...,
   (_type == 'blockImage') => {
@@ -17,10 +17,7 @@ export const PORTABLE_TEXT = groq`
   (_type == 'blockProduct') => {
     ...,
     productWithVariant {
-      product->{
-        ...,
-        "variantId": coalesce(^.variant->store.id, store.variants[0]->store.id)
-      }
+      ${PRODUCT_WITH_VARIANT}
     }
   },
   children[] {
@@ -28,10 +25,7 @@ export const PORTABLE_TEXT = groq`
     (_type == 'blockInlineProduct') => {
       ...,
       productWithVariant {
-        product->{
-          ...,
-          "variantId": coalesce(^.variant->store.id, store.variants[0]->store.id)
-        }
+        ${PRODUCT_WITH_VARIANT}
       }
     },
   },
@@ -46,19 +40,13 @@ export const PORTABLE_TEXT = groq`
     (_type == 'annotationProduct') => {
       ...,
       productWithVariant {
-        product->{
-          ...,
-          "variantId": coalesce(^.variant->store.id, store.variants[0]->store.id)
-        }
+        ${PRODUCT_WITH_VARIANT}
       }
     },
     (_type == 'annotationProductMarginalia') => {
       ...,
       productWithVariant {
-        product->{
-          ...,
-          "variantId": coalesce(^.variant->store.id, store.variants[0]->store.id)
-        }
+        ${PRODUCT_WITH_VARIANT}
       }
     },
   }

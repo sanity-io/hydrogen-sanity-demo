@@ -8,7 +8,7 @@ import NotFound from '../../components/NotFound.server';
 import ProductDetails from '../../components/ProductDetails.client';
 import Seo from '../../components/Seo.client';
 import ProductsProvider from '../../contexts/ProductsProvider.client';
-import {PRODUCT} from '../../fragments/product';
+import {PRODUCT_PAGE} from '../../fragments/productPage';
 import useSanityQuery from '../../utils/query/useSanityQuery';
 
 export default function Product(props) {
@@ -79,6 +79,6 @@ const QUERY = groq`
     _type == 'product'
     && store.slug.current == $slug
   ][0]{
-    ${PRODUCT}
+    ${PRODUCT_PAGE}
   }
 `;
