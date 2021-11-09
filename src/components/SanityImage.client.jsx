@@ -75,6 +75,9 @@ const SanityImage = (props) => {
   if (!projectId) {
     throw new Error('SanityImage is missing required "projectId" property.');
   }
+  if (!src) {
+    return null;
+  }
 
   // Strip out blacklisted props
   delete rest?.['decoding'];
@@ -120,18 +123,24 @@ const SanityImage = (props) => {
       src={urlDefault}
       srcSet={srcSet}
       style={{
-        aspectRatio: 16 / 9,
-        objectFit,
         ...(layout === 'fill' && {
           bottom: 0,
           height: '100%',
           left: 0,
+          objectFit,
           position: 'absolute',
           right: 0,
           top: 0,
           width: '100%',
         }),
         ...(layout === 'responsive' && {
+          /*
+          ...(width && height
+            ? {
+                aspectRatio: width / height,
+              }
+            : {}),
+          */
           width: '100%',
         }),
       }}
