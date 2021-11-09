@@ -18,11 +18,13 @@ const BlockImage = (props) => {
           alt={image?.altText}
           crop={image?.crop}
           dataset={sanityConfig.dataset}
+          height={image?.height}
           hotspot={image?.hotspot}
           layout="responsive"
           projectId={sanityConfig.projectId}
           sizes={['50vw']}
           src={image?.asset._ref}
+          width={image?.width}
         />
       </div>
       {/* Caption */}

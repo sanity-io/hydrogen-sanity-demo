@@ -48,6 +48,9 @@ const generateSizes = (breakpoints, sizes) => {
     .join(', ');
 };
 
+/**
+ * A simple component that wraps around `@sanity/image-url`
+ */
 const SanityImage = (props) => {
   const {
     // blurDataURL,
@@ -95,7 +98,14 @@ const SanityImage = (props) => {
   const srcSetSizes = generateSizes(BREAKPOINTS, sizes);
   const srcSet = generateSrcSet(urlBuilder, BREAKPOINTS, {quality});
 
-  // const src = urlFor.width(width).auto('format').quality(80).url();
+  // Determine image aspect ratio (factoring in any potential crop)
+  let aspectRatio;
+  if (height && width) {
+    const multiplierWidth = 1 - (crop?.left || 0) - (crop?.right || 0);
+    const multiplierHeight = 1 - (crop?.bottom || 0) - (crop?.top || 0);
+    aspectRatio = (width * multiplierWidth) / (height * multiplierHeight);
+  }
+
   let urlDefault = urlBuilder;
 
   // Apply props
@@ -134,13 +144,7 @@ const SanityImage = (props) => {
           width: '100%',
         }),
         ...(layout === 'responsive' && {
-          /*
-          ...(width && height
-            ? {
-                aspectRatio: width / height,
-              }
-            : {}),
-          */
+          aspectRatio,
           width: '100%',
         }),
       }}
