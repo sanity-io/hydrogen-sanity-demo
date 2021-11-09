@@ -28,6 +28,12 @@ export const PORTABLE_TEXT = groq`
         ${PRODUCT_WITH_VARIANT}
       }
     },
+    (_type == 'blockInlineProductMarginalia') => {
+      ...,
+      productWithVariant {
+        ${PRODUCT_WITH_VARIANT}
+      }
+    },
   },
   markDefs[] {
     ...,
@@ -38,12 +44,6 @@ export const PORTABLE_TEXT = groq`
       ${LINK_INTERNAL}
     },
     (_type == 'annotationProduct') => {
-      ...,
-      productWithVariant {
-        ${PRODUCT_WITH_VARIANT}
-      }
-    },
-    (_type == 'annotationProductMarginalia') => {
       ...,
       productWithVariant {
         ${PRODUCT_WITH_VARIANT}

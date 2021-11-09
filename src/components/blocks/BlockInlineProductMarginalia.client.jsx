@@ -6,16 +6,15 @@ import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.cl
 import ButtonSelectedVariantBuyNow from '../ButtonSelectedVariantBuyNow.client';
 import LinkProduct from '../LinkProduct.client';
 
-const AnnotationProductMarginalia = (props) => {
-  const {children, mark} = props;
+const BlockInlineProductMarginalia = (props) => {
+  const {node} = props;
 
-  const product = mark?.productWithVariant?.product;
+  const product = node?.productWithVariant?.product;
 
   const storefrontProduct = useProductsContext(product?._id);
-
-  // Return text only if no valid product is found
+  // Return nothing if no valid product is found
   if (!storefrontProduct) {
-    return children;
+    return null;
   }
 
   const encodedVariantId = encode('ProductVariant', product?.variantId);
@@ -24,7 +23,6 @@ const AnnotationProductMarginalia = (props) => {
   return (
     <Product product={storefrontProduct} initialVariantId={encodedVariantId}>
       <>
-        {children}
         <div className="absolute border border-gray-500 left-full ml-10 p-2 rounded-sm top-0 w-44">
           <div className="text-sm">
             <LinkProduct to={productUrl} variantId={product?.variantId}>
@@ -39,14 +37,14 @@ const AnnotationProductMarginalia = (props) => {
               crop: 'center',
             }}
           />
-          {mark?.action === 'addToCart' && (
+          {node?.action === 'addToCart' && (
             <ButtonSelectedVariantAddToCart small />
           )}
-          {mark?.action === 'buyNow' && <ButtonSelectedVariantBuyNow small />}
+          {node?.action === 'buyNow' && <ButtonSelectedVariantBuyNow small />}
         </div>
       </>
     </Product>
   );
 };
 
-export default AnnotationProductMarginalia;
+export default BlockInlineProductMarginalia;

@@ -6,10 +6,10 @@ import AnnotationLinkEmail from './annotations/AnnotationLinkEmail';
 import AnnotationLinkExternal from './annotations/AnnotationLinkExternal';
 import AnnotationLinkInternal from './annotations/AnnotationLinkInternal';
 import AnnotationProduct from './annotations/AnnotationProduct.client';
-import AnnotationProductMarginalia from './annotations/AnnotationProductMarginalia.client';
 import Block from './blocks/Block.client';
 import BlockImage from './blocks/BlockImage.client';
 import BlockInlineProduct from './blocks/BlockInlineProduct.client';
+import BlockInlineProductMarginalia from './blocks/BlockInlineProductMarginalia.client';
 import BlockProduct from './blocks/BlockProduct.client';
 
 const portableTextMarks = {
@@ -17,7 +17,6 @@ const portableTextMarks = {
   annotationLinkExternal: AnnotationLinkExternal,
   annotationLinkInternal: AnnotationLinkInternal,
   annotationProduct: AnnotationProduct,
-  annotationProductMarginalia: AnnotationProductMarginalia,
   strong: (props) => {
     return <strong>{props.children}</strong>;
   },
@@ -41,6 +40,7 @@ const PortableText = (props) => {
             blockImage: BlockImage,
             blockProduct: BlockProduct,
             blockInlineProduct: BlockInlineProduct,
+            blockInlineProductMarginalia: BlockInlineProductMarginalia,
           },
         }}
       />
