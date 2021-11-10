@@ -1,4 +1,4 @@
-import {LocalizationProvider, ShopifyServerProvider} from '@shopify/hydrogen';
+import {ShopifyServerProvider} from '@shopify/hydrogen';
 
 import shopifyConfig from '../shopify.config';
 
@@ -10,11 +10,9 @@ export default function App({...serverState}) {
 
   return (
     <ShopifyServerProvider shopifyConfig={shopifyConfig} {...serverState}>
-      <LocalizationProvider>
-        <CartProvider>
-          <Main pages={pages} serverState={serverState} />
-        </CartProvider>
-      </LocalizationProvider>
+      <CartProvider>
+        <Main pages={pages} serverState={serverState} />
+      </CartProvider>
     </ShopifyServerProvider>
   );
 }
