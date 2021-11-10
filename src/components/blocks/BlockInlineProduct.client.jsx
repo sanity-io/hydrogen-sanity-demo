@@ -65,7 +65,7 @@ const BlockInlineProduct = (props) => {
     >
       <span>
         <LinkProduct
-          className="underline"
+          className="underline whitespace-nowrap"
           handle={storefrontProduct.handle}
           variantId={product?.variantId}
         >
