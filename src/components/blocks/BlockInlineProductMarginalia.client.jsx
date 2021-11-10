@@ -18,14 +18,16 @@ const BlockInlineProductMarginalia = (props) => {
   }
 
   const encodedVariantId = encode('ProductVariant', product?.variantId);
-  const productUrl = `/products/${storefrontProduct.handle}?variant=${product?.variantId}`;
 
   return (
     <Product product={storefrontProduct} initialVariantId={encodedVariantId}>
       <>
         <div className="absolute border border-gray-500 left-full ml-10 p-2 rounded-sm top-0 w-44">
           <div className="text-sm">
-            <LinkProduct to={productUrl} variantId={product?.variantId}>
+            <LinkProduct
+              handle={storefrontProduct.handle}
+              variantId={product?.variantId}
+            >
               <Product.Title className="font-medium" />
             </LinkProduct>
             <Product.Price />
@@ -33,8 +35,8 @@ const BlockInlineProductMarginalia = (props) => {
           <Product.SelectedVariant.Image
             className="my-2 w-full"
             options={{
-              height: '700',
               crop: 'center',
+              width: 300,
             }}
           />
           {node?.action === 'addToCart' && (

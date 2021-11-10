@@ -54,16 +54,13 @@ const generateSizes = (breakpoints, sizes) => {
 const SanityImage = (props) => {
   const {
     // blurDataURL,
-    breakpoints,
     crop,
     dataset,
     height,
     hotspot,
     layout,
-    loading,
     objectFit,
     options,
-    placeholder,
     projectId,
     quality = 80,
     sizes,

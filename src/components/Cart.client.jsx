@@ -94,7 +94,6 @@ function CartLineItems(props) {
         {({merchandise}) => {
           const variant = decode(merchandise?.id);
 
-          const productUrl = `/products/${merchandise.product.handle}?variant=${variant?.id}`;
           return (
             <div
               role="row"
@@ -104,8 +103,8 @@ function CartLineItems(props) {
                 <div role="cell">
                   <div className="w-20 h-20 relative">
                     <LinkProduct
+                      handle={merchandise.product.handle}
                       onClick={closeCart}
-                      to={productUrl}
                       variantId={variant?.id}
                     >
                       <CartLine.Image className="bg-white w-full h-full object-contain" />
@@ -119,8 +118,8 @@ function CartLineItems(props) {
                   <div className="flex gap-2">
                     <div className="flex-grow">
                       <LinkProduct
+                        handle={merchandise.product.handle}
                         onClick={closeCart}
-                        to={productUrl}
                         variantId={variant?.id}
                       >
                         <CartLine.ProductTitle className="text-gray-900 text-sm font-medium" />

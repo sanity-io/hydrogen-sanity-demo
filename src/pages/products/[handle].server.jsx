@@ -31,7 +31,7 @@ export default function Product(props) {
     storefront: storefrontProduct,
   };
 
-  // TODO: revise - is there a way to pass variants via query params without server state?
+  // Obtain variant ID from server state or request search params, in that order
   const params = new URLSearchParams(props.search);
   const variantId = props?.variantId || params?.get('variant');
   const encodedVariantId = encode('ProductVariant', variantId);

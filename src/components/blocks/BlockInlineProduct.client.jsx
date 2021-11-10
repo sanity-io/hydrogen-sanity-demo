@@ -7,7 +7,7 @@ import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.cl
 import ButtonSelectedVariantBuyNow from '../ButtonSelectedVariantBuyNow.client';
 import LinkProduct from '../LinkProduct.client';
 
-const BlockInlineLinkProduct = (props) => {
+const BlockInlineProduct = (props) => {
   const {node} = props;
 
   const product = node?.productWithVariant?.product;
@@ -20,7 +20,6 @@ const BlockInlineLinkProduct = (props) => {
 
   const encodedVariantId = encode('ProductVariant', product?.variantId);
   const productTitle = storefrontProduct?.title;
-  const productUrl = `/products/${storefrontProduct.handle}?variant=${product?.variantId}`;
 
   return (
     <Tippy
@@ -38,7 +37,10 @@ const BlockInlineLinkProduct = (props) => {
           >
             <div className="w-44">
               <div className="text-sm">
-                <LinkProduct to={productUrl} variantId={product?.variantId}>
+                <LinkProduct
+                  handle={storefrontProduct.handle}
+                  variantId={product?.variantId}
+                >
                   <Product.Title className="font-medium" />
                 </LinkProduct>
                 <Product.Price />
@@ -64,7 +66,7 @@ const BlockInlineLinkProduct = (props) => {
       <span>
         <LinkProduct
           className="underline"
-          to={productUrl}
+          handle={storefrontProduct.handle}
           variantId={product?.variantId}
         >
           {productTitle}
@@ -74,4 +76,4 @@ const BlockInlineLinkProduct = (props) => {
   );
 };
 
-export default BlockInlineLinkProduct;
+export default BlockInlineProduct;

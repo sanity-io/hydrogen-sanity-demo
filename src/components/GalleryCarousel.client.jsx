@@ -5,7 +5,6 @@ import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 
 import sanityConfig from '../../sanity.config';
-import LinkProduct from './LinkProduct.client';
 import SanityImage from './SanityImage.client';
 
 const GalleryCarousel = (props) => {
@@ -36,10 +35,9 @@ const GalleryCarousel = (props) => {
     }
 
     if (emblaApi.clickAllowed()) {
+      // TODO: Consider refactoring out usage of `react-router-dom` and instead wrap slides with <LinkProduct />
       const product = gallery[index]?.productWithVariant?.product;
       const productUrl = `/products/${product?.store?.slug?.current}?variant=${product?.variantId}`;
-
-      // TODO: refactor this out
       setServerState('variantId', product?.variantId);
       history.push(productUrl);
     }

@@ -18,14 +18,16 @@ const BlockProduct = (props) => {
   }
 
   const encodedVariantId = encode('ProductVariant', product?.variantId);
-  const productUrl = `/products/${storefrontProduct.handle}?variant=${product?.variantId}`;
 
   return (
     <Product initialVariantId={encodedVariantId} product={storefrontProduct}>
       <div className="my-8">
         <div className="border border-black p-4 space-y-4 w-1/2">
           <div>
-            <LinkProduct to={productUrl} variantId={product?.variantId}>
+            <LinkProduct
+              handle={storefrontProduct.handle}
+              variantId={product?.variantId}
+            >
               <Product.Title className="font-medium" />
             </LinkProduct>
             <Product.Price />
@@ -33,8 +35,8 @@ const BlockProduct = (props) => {
           <Product.SelectedVariant.Image
             className="w-full"
             options={{
-              height: '700',
               crop: 'center',
+              width: 500,
             }}
           />
           <ButtonSelectedVariantAddToCart />

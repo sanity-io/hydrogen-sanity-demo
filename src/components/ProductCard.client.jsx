@@ -12,7 +12,6 @@ const ProductCard = (props) => {
   }
 
   const encodedVariantId = encode('ProductVariant', product?.variantId);
-  const productUrl = `/products/${product?.slug}?variant=${product?.variantId}`;
 
   return (
     <Product product={product.storefront} initialVariantId={encodedVariantId}>
@@ -20,7 +19,7 @@ const ProductCard = (props) => {
         {/* Image */}
         <div className="overflow-hidden relative">
           <div className="aspect-w-6 aspect-h-4">
-            <LinkProduct to={productUrl} variantId={product?.variantId}>
+            <LinkProduct handle={product?.slug} variantId={product?.variantId}>
               <Product.SelectedVariant.Image
                 className="absolute h-full object-cover w-full"
                 options={{width: 800}}
@@ -35,7 +34,7 @@ const ProductCard = (props) => {
 
         {/* Title */}
         <div className="font-medium mt-2">
-          <LinkProduct to={productUrl} variantId={product?.variantId}>
+          <LinkProduct handle={product?.slug} variantId={product?.variantId}>
             <Product.Title />
           </LinkProduct>
         </div>
