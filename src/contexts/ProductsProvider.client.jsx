@@ -1,6 +1,6 @@
 import ProductsContext from './ProductsContext.client';
 
-const ProductsProvider = ({children, value}) => {
+const ProductsProvider = ({children, value = {}}) => {
   return (
     <ProductsContext.Provider value={value}>
       {children}
