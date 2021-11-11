@@ -27,7 +27,7 @@ export default function Collection() {
       <div className="p-4">
         <div className="mb-20">
           {/* Title */}
-          <h1 className="font-medium text-xl">
+          <h1 className="font-medium text-3xl">
             {sanityCollection.title}{' '}
             <span className="font-normal text-gray-400">
               (
@@ -42,7 +42,7 @@ export default function Collection() {
 
           {/* Description */}
           {sanityCollection?.description && (
-            <div className="max-w-3xl text-gray-600 text-xl">
+            <div className="font-normal max-w-3xl text-gray-500 text-3xl">
               {sanityCollection.description}
             </div>
           )}

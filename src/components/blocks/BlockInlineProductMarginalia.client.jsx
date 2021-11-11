@@ -22,7 +22,7 @@ const BlockInlineProductMarginalia = (props) => {
   return (
     <Product product={storefrontProduct} initialVariantId={encodedVariantId}>
       <>
-        <div className="absolute border border-gray-500 left-full ml-10 p-2 rounded-sm top-0 w-44">
+        <div className="absolute border border-gray-500 left-full ml-10 p-4 top-0 w-48">
           <div className="text-sm">
             <LinkProduct
               handle={storefrontProduct.handle}
@@ -33,9 +33,10 @@ const BlockInlineProductMarginalia = (props) => {
             <Product.Price />
           </div>
           <Product.SelectedVariant.Image
-            className="my-2 w-full"
+            className="my-4 w-full"
             options={{
               crop: 'center',
+              height: 300,
               width: 300,
             }}
           />

@@ -21,8 +21,8 @@ const BlockProduct = (props) => {
 
   return (
     <Product initialVariantId={encodedVariantId} product={storefrontProduct}>
-      <div className="my-8">
-        <div className="border border-black p-4 space-y-4 w-1/2">
+      <div className="mx-auto my-8">
+        <div className="border border-gray-400 p-4 space-y-4 w-1/2">
           <div>
             <LinkProduct
               handle={storefrontProduct.handle}

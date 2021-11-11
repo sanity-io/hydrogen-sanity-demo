@@ -17,6 +17,9 @@ const portableTextMarks = {
   annotationLinkExternal: AnnotationLinkExternal,
   annotationLinkInternal: AnnotationLinkInternal,
   annotationProduct: AnnotationProduct,
+  h2: (props) => {
+    return <span>yooo{props.children}</span>;
+  },
   strong: (props) => {
     return <strong>{props.children}</strong>;
   },

@@ -38,9 +38,7 @@ export default function Footer() {
         return null;
       })}
 
-      {data?.footer?.text && (
-        <PortableText className="text-gray-400" blocks={data.footer.text} />
-      )}
+      {data?.footer?.text && <PortableText blocks={data.footer.text} />}
     </footer>
   );
 }

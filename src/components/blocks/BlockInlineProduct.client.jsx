@@ -24,7 +24,7 @@ const BlockInlineProduct = (props) => {
   return (
     <Tippy
       interactive
-      placement="bottom"
+      placement="top"
       render={(attrs) => (
         <Product
           product={storefrontProduct}
@@ -48,7 +48,8 @@ const BlockInlineProduct = (props) => {
               <Product.SelectedVariant.Image
                 className="my-2 w-full"
                 options={{
-                  height: '700',
+                  width: 300,
+                  height: 250,
                   crop: 'center',
                 }}
               />
@@ -65,7 +66,7 @@ const BlockInlineProduct = (props) => {
     >
       <span>
         <LinkProduct
-          className="underline whitespace-nowrap"
+          className="border-dotted duration-300 hover:opacity-60 inline-flex font-medium items-center text-blue-500 whitespace-nowrap"
           handle={storefrontProduct.handle}
           variantId={product?.variantId}
         >

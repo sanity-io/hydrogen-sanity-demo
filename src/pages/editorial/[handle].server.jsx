@@ -29,7 +29,7 @@ export default function EditorialArticle() {
     <ProductsProvider value={shopifyProducts}>
       <Layout>
         <div className="max-w-3xl p-4">
-          <h1 className="font-medium text-xl">{sanityArticle.title}</h1>
+          <h1 className="font-medium mb-10 text-3xl">{sanityArticle.title}</h1>
 
           {/* Body */}
           {sanityArticle?.body && (

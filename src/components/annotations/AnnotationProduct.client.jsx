@@ -1,4 +1,5 @@
 import {Product, flattenConnection} from '@shopify/hydrogen/client';
+import {LightningBoltIcon, ShoppingCartIcon} from '@heroicons/react/outline';
 import {encode} from 'shopify-gid';
 
 import {useProductsContext} from '../../contexts/ProductsContext.client';
@@ -24,27 +25,31 @@ const AnnotationProduct = (props) => {
 
   const availableForSale = selectedVariant?.availableForSale;
 
-  // Return text only (with strikethrough + sold out prefix) if no longer available for sale
+  // Return text only if no longer available for sale
   if (!availableForSale) {
-    return (
-      <span className="text-red-500 line-through">{children} (sold out)</span>
-    );
+    return children;
   }
 
   return (
     <Product product={storefrontProduct} initialVariantId={selectedVariant.id}>
       {mark?.action === 'addToCart' && (
         <Product.SelectedVariant.AddToCartButton quantity={mark?.quantity || 1}>
-          <span className="bg-gray-200 p-1 rounded-sm">
-            {children} <span className="font-semibold text-xs"></span>
+          <span className="duration-300 flex font-medium hover:opacity-60 items-center text-blue-500 underline">
+            {children}
+            <span>
+              <ShoppingCartIcon className="h-4 ml-0.5 w-4" />
+            </span>
           </span>
         </Product.SelectedVariant.AddToCartButton>
       )}
 
       {mark?.action === 'buyNow' && (
         <Product.SelectedVariant.BuyNowButton quantity={mark?.quantity || 1}>
-          <span className="bg-gray-700 p-1 rounded-sm text-white">
-            {children} <span className="font-semibold text-xs"></span>
+          <span className="duration-300 flex font-medium hover:opacity-60 items-center text-blue-500 underline">
+            {children}
+            <span>
+              <LightningBoltIcon className="h-4 ml-0.5 w-4" />
+            </span>
           </span>
         </Product.SelectedVariant.BuyNowButton>
       )}
