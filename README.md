@@ -4,16 +4,10 @@
 
 ![hydrogen-demo](https://user-images.githubusercontent.com/209129/140816218-3743b0fd-1443-4f46-9d95-6a0d4d6d923d.png)
 
-### Table of contents
-
 - [About](#about)
   - [Approach](#approach)
-  - [Opinions](#opinions)
 - [Features](#features)
   - [Fetching data with useSanityQuery](#fetching-data-with-usesanityquery)
-    - [Overview](#overview)
-    - [Assumptions](#assumptions)
-    - [Usage](#usage)
 - [Getting started](#getting-started)
   - [Requirements](#requirements)
   - [Installation](#installation)
@@ -28,6 +22,8 @@ It is designed to be used alongside our [pre-configured Studio][sanity-shopify-s
 
 In addition to traditional PLP + PDPs, it also showcases pages that make extensive use of [Portable Text][sanity-portable-text], allowing for rich editorial that can easily reference your Shopify products in a multitude of ways.
 
+This demo has been designed to work specifically with the document schema defined in our [pre-configured Studio][sanity-shopify-studio]. There you can find more information about general assumptions we've made around the content models driving this demo.
+
 Hydrogen is currently in developer preview. Please note that this starter is not production ready and will be updated as Hydrogen continues to mature.
 
 ## Approach
@@ -40,30 +36,7 @@ For some, this could mean associating a particular product to a list of related 
 
 Bringing your product data into your Sanity dataset will allow you to wrangle your product data as you see fit, and Sanity Connect for Shopify can handle this process for you without having to write a single line of code.
 
-This starter also comes pre-packaged with a [`useSanityQuery`](#fetching-data-with-usesanityquery) hook that streamlines the process of fetching any Shopify products you may have referenced in your Sanity queries. With it, you can fetch both Sanity and Shopify product data in one convenient call and ensure that you're always fetching the latest product data from Shopify. This is especially important for products with high volatility.
-
-## Opinions
-
-No two custom storefronts are the same, and we've taken a few strong opinions with how we've approached this starter.
-
-Most significantly, it's been designed to work specifically with the document schema defined in our [pre-configured Studio][sanity-shopify-studio].
-
-It also makes the following assumptions:
-
-- Shopify is the source of truth for product titles, slugs (handles) and thumbnail images
-- Sanity is used as an additional presentational layer to add custom metadata to products.
-  - This includes a portable text field, a product-level gallery and re-organisable text sections
-- Product inventory is not stored in Sanity, and is always fetched at run time directly from Shopify
-  - However, we do store product status (whether a product is a draft, active or archived) and surface this in Sanity studio
-- Product status in Shopify also determines visibility. If a product is marked as anything but active, that page, as well as any references to it will not be publicly displayed.
-- Some images (such as product and cart line item thumbnails) are served by Shopify's CDN whilst other images (such as product-level image galleries) are handled by Sanity's Image API.
-- We only concern ourselves with Shopify _products_. Other Shopify document types – such as _collections_, _pages_ and _blog posts_ – are managed entirely in Sanity.
-
-We believe these rules work well for simpler use cases, and keeping product titles, images and slugs handled by Shopify helps keep content consistent as you navigate from product views, to the cart and ultimately checkout.
-
-Ensuring that product data (including inventory / availability) is fetched at run-time plays into Hydrogen's SSR-first philosophy.
-
-It's possible that you have differing opinions on how content best be modelled to fit your particular needs – this is normal and encouraged! Fortunately, Sanity was built for this flexibility in mind, and we've written [a guide on structured content patterns of ecommerce][sanity-structured-content-patterns] which may help inform how tackle this challenge.
+This starter comes pre-packaged with a [`useSanityQuery`](#fetching-data-with-usesanityquery) hook that streamlines the process of fetching any Shopify products you may have referenced in your Sanity queries. With it, you can fetch both Sanity and Shopify product data in one convenient call and ensure that you're always fetching the latest product data from Shopify.
 
 # Features
 
