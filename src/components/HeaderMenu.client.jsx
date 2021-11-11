@@ -25,7 +25,7 @@ const renderLinks = (links, close) => {
 
               <Popover.Panel className="absolute -m-px -ml-4 transform top-10 left-0 z-10">
                 <div className="overflow-hidden border border-black">
-                  <div className="bg-white gap-2 grid grid-cols-1 px-4 py-2 relative w-56">
+                  <div className="backdrop-filter backdrop-blur-lg bg-opacity-80 bg-white gap-2 grid grid-cols-1 px-4 py-2 relative w-56">
                     {link?.links && renderLinks(link.links, close)}
                   </div>
                 </div>

@@ -9,7 +9,7 @@ export default function Header() {
 
   return (
     <header
-      className="border-b border-black flex items-start justify-between h-20 p-4 w-full"
+      className="backdrop-filter backdrop-blur-lg bg-opacity-80 bg-white border-b border-black flex items-start justify-between h-20 p-4 sticky top-0 w-full z-50"
       role="banner"
     >
       <div className="">
