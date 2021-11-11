@@ -1,8 +1,8 @@
-# Hydrogen starter
+# Hydrogen starter with Sanity
 
 [Live demo][hydrogen-sanity-demo]
 
-![hydrogen-demo](https://user-images.githubusercontent.com/209129/140816218-3743b0fd-1443-4f46-9d95-6a0d4d6d923d.png)
+<p><img src="https://user-images.githubusercontent.com/209129/141310942-c7ed2c08-599b-431b-896d-ceadac46012a.png" width="800" /></p>
 
 - [About](#about)
   - [Approach](#approach)
@@ -28,7 +28,9 @@ Hydrogen is currently in developer preview. Please note that this starter is not
 
 ## Approach
 
-<img width="2116" alt="Sanity Hydrogen flow" src="https://user-images.githubusercontent.com/209129/140815830-4eed3299-eee7-41f9-bd26-a720ece870a9.png">
+<p>
+<img width="580" alt="Sanity Hydrogen flow" src="https://user-images.githubusercontent.com/209129/141320691-381776dc-87ff-41ac-ad21-21c817cf8d86.jpg" />
+</p>
 
 Beyond improved performance and modern tooling – the true power of custom storefronts lies in having the flexibility to augment your products with data relevant to you.
 
@@ -67,7 +69,7 @@ For this reason, we provide a `useSanityQuery` hook (for GROQ) and `useSanityGra
 
 ### Overview
 
-<img width="1272" alt="useSanityQuery-flow-diagram" src="https://user-images.githubusercontent.com/209129/141044556-6fbcfaf4-226e-4749-aa0e-6428c5f46850.png">
+<img width="700" alt="useSanityQuery-flow-diagram" src="https://user-images.githubusercontent.com/209129/141044556-6fbcfaf4-226e-4749-aa0e-6428c5f46850.png">
 
 ### Assumptions
 
