@@ -5,7 +5,6 @@ import {LINK_EXTERNAL} from './linkExternal';
 import {LINK_INTERNAL} from './linkInternal';
 import {PRODUCT_WITH_VARIANT} from './productWithVariant';
 
-// TODO: try reduce overfetching for all block and mark defs here
 export const PORTABLE_TEXT = groq`
   ...,
   (_type == 'blockImage') => {

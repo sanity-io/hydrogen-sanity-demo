@@ -49,7 +49,7 @@ const generateSizes = (breakpoints, sizes) => {
 };
 
 /**
- * A simple component that wraps around `@sanity/image-url`
+ * A simple image component that wraps around `@sanity/image-url`
  */
 const SanityImage = (props) => {
   const {

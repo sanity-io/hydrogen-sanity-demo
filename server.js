@@ -16,8 +16,9 @@ async function createServer() {
 
   app.use(require('compression')());
 
+  // We temporarily disable caching in production. This is currently in place until
+  // more fine-grained caching rules are added to this demo.
   // TODO: remove
-  // Temporarily disable caching in production
   if (process.env.NODE_ENV === 'production') {
     app.use(nocache());
   }

@@ -76,8 +76,5 @@ jspm_packages/
 # Vite output
 dist
 
-# Fly.io deployment config
-fly.toml
-
 # Mac OS finder cache files
 .DS_Store
