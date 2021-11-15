@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import groq from 'groq';
 import React from 'react';
+import {useSanityQuery} from 'hydrogen-plugin-sanity';
 
 import CollectionCard from '../components/CollectionCard.client';
 // import Gallery from '../components/Gallery.client';
@@ -15,7 +16,6 @@ import {IMAGE} from '../fragments/image';
 import {PORTABLE_TEXT} from '../fragments/portableText';
 import {PRODUCT_WITH_VARIANT} from '../fragments/productWithVariant';
 import {SEO} from '../fragments/seo';
-import useSanityQuery from '../utils/query/useSanityQuery';
 
 export default function Index() {
   const {sanityData: sanityPage, shopifyProducts} = useSanityQuery({
