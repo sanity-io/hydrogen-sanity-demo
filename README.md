@@ -67,61 +67,6 @@ In these instances, trying to determine what Shopify products your Sanity conten
 
 For this reason, we provide a `useSanityQuery` hook (for GROQ) and `useSanityGraphQLQuery` to help streamline this process.
 
-### Overview
-
-<img width="700" alt="useSanityQuery-flow-diagram" src="https://user-images.githubusercontent.com/209129/141044556-6fbcfaf4-226e-4749-aa0e-6428c5f46850.png">
-
-### Assumptions
-
-In order for `useSanityQuery` to be able to identify Shopify products in your dataset and query for them on your behalf, there are two rules you must follow:
-
-**1. Your Shopify product documents in Sanity must have an `_id` with the following naming convention:**
-
-**`shopifyProduct-${ID}`**
-
-Where `ID` is the ID of the product in Shopify. This is exposed in the URL when navigating your Shopify admin
-e.g. `https://my-shopify-store.myshopify.com/admin/products/6639629926487`
-
-The correct document `_id` for the above example would be:  
-`shopifyProduct-6639629926487`
-
-**2. Your Sanity query response must return these IDs in either `_id` or `_ref` keys**
-
-Tthese can any number of levels nested in your response. Either of the below are valid.
-
-```javascript
-"result": {
-  "products": {
-    [
-      {
-        "_ref": "shopifyProduct-6639500034135",
-      },
-      {
-        "_ref": "shopifyProduct-6639504195671",
-      },
-    ]
-  }
-}
-```
-
-```javascript
-"result": {
-  "body": [
-    {
-      "_type": "myCustomPortableTextBlock",
-      "caption": "Product caption",
-      "myNestedObject": {
-        "product": {
-          "_ref": "shopifyProduct-6639629926487"
-        }
-      }
-    },
-  ]
-}
-```
-
-If you're using Sanity Connect, it will automatically create documents with this naming convention by default.
-
 ### Usage
 
 **In your Hydrogen server component:**

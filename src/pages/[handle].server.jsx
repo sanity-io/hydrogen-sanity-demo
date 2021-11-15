@@ -1,6 +1,7 @@
 import groq from 'groq';
 import React from 'react';
 import {useParams} from 'react-router-dom';
+import {useSanityQuery} from 'hydrogen-plugin-sanity';
 
 import Layout from '../components/Layout.server';
 import NotFound from '../components/NotFound.server';
@@ -8,7 +9,6 @@ import PortableText from '../components/PortableText.client';
 import Seo from '../components/Seo.client';
 import {PORTABLE_TEXT} from '../fragments/portableText';
 import {SEO} from '../fragments/seo';
-import useSanityQuery from '../utils/query/useSanityQuery';
 
 export default function InfoArticle() {
   const {handle} = useParams();

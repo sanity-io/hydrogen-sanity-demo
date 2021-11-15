@@ -2,11 +2,11 @@ import {DefaultRoutes} from '@shopify/hydrogen';
 import groq from 'groq';
 import {Suspense} from 'react';
 import {Switch} from 'react-router-dom';
+import {useSanityQuery} from 'hydrogen-plugin-sanity';
 
 import SettingsProvider from '../contexts/SettingsProvider.server';
 import {LINKS} from '../fragments/links';
 import {PORTABLE_TEXT} from '../fragments/portableText';
-import useSanityQuery from '../utils/query/useSanityQuery';
 
 import DefaultSeo from './DefaultSeo.server';
 import NotFound from './NotFound.server';
