@@ -1,10 +1,9 @@
 import clsx from 'clsx';
 import groq from 'groq';
-import React from 'react';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
+import React from 'react';
 
 import CollectionCard from '../components/CollectionCard.client';
-// import Gallery from '../components/Gallery.client';
 import GalleryCarousel from '../components/GalleryCarousel.client';
 import Layout from '../components/Layout.server';
 import NotFound from '../components/NotFound.server';

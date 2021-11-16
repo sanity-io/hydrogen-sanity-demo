@@ -1,7 +1,7 @@
 import groq from 'groq';
+import {useSanityQuery} from 'hydrogen-plugin-sanity';
 
 import {IMAGE} from '../fragments/image';
-import {useSanityQuery} from 'hydrogen-plugin-sanity';
 
 import Seo from './Seo.client';
 

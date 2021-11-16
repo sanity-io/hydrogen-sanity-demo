@@ -1,8 +1,8 @@
 import {DefaultRoutes} from '@shopify/hydrogen';
 import groq from 'groq';
+import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import {Suspense} from 'react';
 import {Switch} from 'react-router-dom';
-import {useSanityQuery} from 'hydrogen-plugin-sanity';
 
 import SettingsProvider from '../contexts/SettingsProvider.server';
 import {LINKS} from '../fragments/links';
