@@ -23,5 +23,6 @@ export const PRODUCT_PAGE = groq`
   seo {
     ${SEO_PRODUCT}
   },
+  store,
   "slug": store.slug.current,
 `;

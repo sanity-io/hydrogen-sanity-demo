@@ -43,7 +43,7 @@ export default function EditorialArticle() {
             description: sanityArticle.seo?.description,
             image: sanityArticle.seo?.image,
             keywords: sanityArticle.seo?.keywords,
-            title: sanityArticle.seo?.title,
+            title: sanityArticle.seo?.title || sanityArticle?.title,
           }}
         />
       </Layout>

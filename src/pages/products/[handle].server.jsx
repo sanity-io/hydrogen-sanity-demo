@@ -56,16 +56,16 @@ export default function Product(props) {
         {/* SEO */}
         <Seo
           page={{
-            description: product.seo?.description,
-            image: product.seo?.image,
-            keywords: product.seo?.keywords,
+            description: sanityProduct.seo?.description,
+            image: sanityProduct.seo?.image,
+            keywords: sanityProduct.seo?.keywords,
             product: {
               availableForSale: productVariant?.node?.availableForSale,
-              description: product.seo?.description,
+              description: sanityProduct.seo?.description,
               price: productVariant?.node?.priceV2,
-              title: product.seo?.title,
+              title: sanityProduct.seo?.title || sanityProduct?.store?.title,
             },
-            title: product.seo?.title,
+            title: sanityProduct.seo?.title || sanityProduct?.store?.title,
             type: 'product',
           }}
         />
