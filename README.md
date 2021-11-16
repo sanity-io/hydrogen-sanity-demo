@@ -38,7 +38,7 @@ For some, this could mean associating a particular product to a list of related 
 
 Bringing your product data into your Sanity dataset will allow you to wrangle your product data as you see fit, and Sanity Connect for Shopify can handle this process for you without having to write a single line of code.
 
-This starter comes pre-packaged with a [`useSanityQuery`](#fetching-data-with-usesanityquery) hook that streamlines the process of fetching any Shopify products you may have referenced in your Sanity queries. With it, you can fetch both Sanity and Shopify product data in one convenient call and ensure that you're always fetching the latest product data from Shopify.
+This starter comes pre-packaged with a [`useSanityQuery`][sanity-hydrogen-plugin] hook that streamlines the process of fetching any Shopify products you may have referenced in your Sanity queries. With it, you can fetch both Sanity and Shopify product data in one convenient call and ensure that you're always fetching the latest product data from Shopify.
 
 # Features
 
@@ -65,7 +65,7 @@ However, if you're using Sanity and Shopify together it's highly likely that you
 
 In these instances, trying to determine what Shopify products your Sanity content may be referring to (especially with deeply nested data structures) and crafting two separate queries to grab data from both platforms can be laborious and error prone.
 
-For this reason, we provide a `useSanityQuery` hook (for GROQ) and `useSanityGraphQLQuery` to help streamline this process.
+For this reason, we provide a `[useSanityQuery][sanity-hydrogen-plugin]` hook (for GROQ) and `useSanityGraphQLQuery` to help streamline this process.
 
 ### Usage
 
@@ -262,6 +262,7 @@ This repository is published under the [MIT](LICENSE) license.
 [hydrogen-use-shop-query]: https://shopify.dev/api/hydrogen/hooks/global/useshopquery
 [sanity-connect]: https://www.sanity.io/docs/sanity-connect-for-shopify
 [sanity-http-api]: https://www.sanity.io/docs/http-api
+[sanity-hydrogen-plugin]: https://github.com/sanity-io/hydrogen-plugin-sanity
 [sanity-js-client]: https://www.sanity.io/docs/js-client
 [sanity-portable-text]: https://www.sanity.io/guides/introduction-to-portable-text
 [sanity-shopify-studio]: https://github.com/sanity-io/sanity-shopify-studio

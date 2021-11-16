@@ -1,7 +1,7 @@
 import groq from 'groq';
+import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import React from 'react';
 import {useParams} from 'react-router-dom';
-import {useSanityQuery} from 'hydrogen-plugin-sanity';
 
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';

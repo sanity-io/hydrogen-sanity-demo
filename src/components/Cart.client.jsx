@@ -9,7 +9,7 @@ import {
   useCartLinesTotalQuantity,
 } from '@shopify/hydrogen/client';
 import clsx from 'clsx';
-import {decode, encode} from 'shopify-gid';
+import {decode} from 'shopify-gid';
 
 import {useCartUI} from '../contexts/CartUIProvider.client';
 
