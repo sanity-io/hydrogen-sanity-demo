@@ -29,7 +29,7 @@
     "prettier": "^2.3.2",
     "stylelint": "^13.13.0",
     "tailwindcss": "^2.2.4",
-    "vite": "^2.5.7"
+    "vite": "^2.6.14"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.1",
@@ -37,7 +37,7 @@
     "@sanity/block-content-to-react": "^3.0.0",
     "@sanity/client": "^2.21.7",
     "@sanity/image-url": "^1.0.1",
-    "@shopify/hydrogen": "0.6.1",
+    "@shopify/hydrogen": "0.6.4",
     "@tailwindcss/aspect-ratio": "^0.3.0",
     "@tippyjs/react": "^4.2.6",
     "clsx": "^1.1.1",

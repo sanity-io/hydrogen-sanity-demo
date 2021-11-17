@@ -18,7 +18,7 @@ const ProductCard = (props) => {
       <div className="bg-white col-span-2 group">
         {/* Image */}
         <div className="overflow-hidden relative">
-          <div className="aspect-w-6 aspect-h-4">
+          <div className="aspect-w-6 aspect-h-4 bg-gray-100">
             <LinkProduct handle={product?.slug} variantId={product?.variantId}>
               <Product.SelectedVariant.Image
                 className="absolute h-full object-cover w-full"

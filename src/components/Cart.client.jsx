@@ -21,6 +21,7 @@ export default function Cart() {
   const {error} = useCart();
   const {closeCart, isCartOpen, toggleCart} = useCartUI();
 
+  // TODO: close the cart automatically whenever the URL changes
   return (
     <>
       {/* Overlay */}
@@ -35,7 +36,7 @@ export default function Cart() {
       <div
         className={clsx([
           'pointer-events-none z-50 h-full fixed right-0 top-0 bottom-0 flex flex-col w-full max-w-md min-w-sm transition-transform duration-500 transform-gpu',
-          isCartOpen ? 'right-0' : 'translate-x-full',
+          isCartOpen ? 'translate-x-0' : 'translate-x-full',
         ])}
       >
         <div className="overflow-hidden h-full pointer-events-auto">
@@ -67,6 +68,7 @@ export default function Cart() {
               </div>
             ) : null}
 
+            {/* Footer */}
             <footer
               className={`${
                 itemCount > 0 ? 'border-t border-solid border-gray-300' : ''

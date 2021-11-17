@@ -1,4 +1,5 @@
-import {LocalizationProvider, ShopifyServerProvider} from '@shopify/hydrogen';
+import {ShopifyServerProvider} from '@shopify/hydrogen';
+import {Suspense} from 'react';
 
 import shopifyConfig from '../shopify.config';
 
@@ -9,12 +10,12 @@ export default function App({...serverState}) {
   const pages = import.meta.globEager('./pages/**/*.server.(jsx|tsx)');
 
   return (
-    <ShopifyServerProvider shopifyConfig={shopifyConfig} {...serverState}>
-      <LocalizationProvider>
+    <Suspense fallback={<div className="p-4">Loading...</div>}>
+      <ShopifyServerProvider shopifyConfig={shopifyConfig} {...serverState}>
         <CartProvider>
           <Main pages={pages} serverState={serverState} />
         </CartProvider>
-      </LocalizationProvider>
-    </ShopifyServerProvider>
+      </ShopifyServerProvider>
+    </Suspense>
   );
 }

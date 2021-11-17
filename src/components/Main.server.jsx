@@ -1,7 +1,6 @@
 import {DefaultRoutes} from '@shopify/hydrogen';
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
-import {Suspense} from 'react';
 import {Switch} from 'react-router-dom';
 
 import SettingsProvider from '../contexts/SettingsProvider.server';
@@ -21,7 +20,7 @@ export default function Main(props) {
   });
 
   return (
-    <Suspense fallback={<div className="p-4">Loading...</div>}>
+    <>
       <DefaultSeo />
       <SettingsProvider value={sanitySettings}>
         <Switch>
@@ -32,7 +31,7 @@ export default function Main(props) {
           />
         </Switch>
       </SettingsProvider>
-    </Suspense>
+    </>
   );
 }
 
