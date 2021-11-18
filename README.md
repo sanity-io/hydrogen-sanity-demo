@@ -65,7 +65,7 @@ However, if you're using Sanity and Shopify together it's highly likely that you
 
 In these instances, trying to determine what Shopify products your Sanity content may be referring to (especially with deeply nested data structures) and crafting two separate queries to grab data from both platforms can be laborious and error prone.
 
-For this reason, we provide a `[useSanityQuery][sanity-hydrogen-plugin]` hook (for GROQ) and `useSanityGraphQLQuery` to help streamline this process.
+For this reason, we provide a [`useSanityQuery`][sanity-hydrogen-plugin] hook (for GROQ) and `useSanityGraphQLQuery` to help streamline this process.
 
 ### Usage
 
