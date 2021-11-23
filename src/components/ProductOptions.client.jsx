@@ -1,6 +1,7 @@
 import {useProduct} from '@shopify/hydrogen/client';
 import {useEffect} from 'react';
-import {decode} from 'shopify-gid';
+
+import {decode} from '../utils/shopifyGid';
 
 export default function ProductOptions() {
   const {options, setSelectedOption, selectedOptions, selectedVariant} =

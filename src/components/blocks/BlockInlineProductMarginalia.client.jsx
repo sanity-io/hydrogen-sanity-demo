@@ -1,7 +1,7 @@
 import {Product} from '@shopify/hydrogen/client';
-import {encode} from 'shopify-gid';
 
 import {useProductsContext} from '../../contexts/ProductsContext.client';
+import {encode} from '../../utils/shopifyGid';
 import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.client';
 import ButtonSelectedVariantBuyNow from '../ButtonSelectedVariantBuyNow.client';
 import LinkProduct from '../LinkProduct.client';

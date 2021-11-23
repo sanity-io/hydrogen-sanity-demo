@@ -1,8 +1,8 @@
 import {Product, flattenConnection} from '@shopify/hydrogen/client';
 import {LightningBoltIcon, ShoppingCartIcon} from '@heroicons/react/outline';
-import {encode} from 'shopify-gid';
 
 import {useProductsContext} from '../../contexts/ProductsContext.client';
+import {encode} from '../../utils/shopifyGid';
 
 const AnnotationProduct = (props) => {
   const {children, mark} = props;

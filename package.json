@@ -40,6 +40,7 @@
     "@shopify/hydrogen": "0.6.4",
     "@tailwindcss/aspect-ratio": "^0.3.0",
     "@tippyjs/react": "^4.2.6",
+    "base-64": "^1.0.0",
     "clsx": "^1.1.1",
     "compression": "^1.7.4",
     "embla-carousel-react": "^5.0.1",
@@ -53,7 +54,6 @@
     "react": "18.0.0-alpha-e6be2d531",
     "react-dom": "18.0.0-alpha-e6be2d531",
     "react-router-dom": "^5.2.0",
-    "serve-static": "^1.14.1",
-    "shopify-gid": "^1.0.1"
+    "serve-static": "^1.14.1"
   }
 }
