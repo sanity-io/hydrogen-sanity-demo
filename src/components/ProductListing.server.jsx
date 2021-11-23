@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import ProductCard from './ProductCard.client';
+import ProductCard from './ProductCard.server';
 
 export default function ProductListing({products}) {
   return (

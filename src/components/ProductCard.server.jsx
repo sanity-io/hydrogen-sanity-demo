@@ -40,21 +40,11 @@ const ProductCard = (props) => {
           </LinkProduct>
         </div>
         <div className="flex items-center">
-          <Product.SelectedVariant.Price className="text-gray-900">
-            {({currencyCode, amount, currencyNarrowSymbol}) => {
-              return (
-                <span>{`${currencyCode} ${currencyNarrowSymbol}${amount}`}</span>
-              );
-            }}
-          </Product.SelectedVariant.Price>
+          <Product.SelectedVariant.Price className="text-gray-900" />
           <Product.SelectedVariant.Price
             priceType="compareAt"
             className="ml-1 text-gray-400 line-through"
-          >
-            {({amount, currencyNarrowSymbol}) => {
-              return <span>{`${currencyNarrowSymbol}${amount}`}</span>;
-            }}
-          </Product.SelectedVariant.Price>
+          />
         </div>
       </div>
     </Product>

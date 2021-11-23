@@ -1,5 +1,5 @@
 {
-  "name": "@sanity-shopify-demo/hydrogen-app",
+  "name": "hydrogen-sanity-demo",
   "description": "This is a dev environment for Hydrogen",
   "version": "0.1.0",
   "license": "MIT",
@@ -13,7 +13,7 @@
     "build": "yarn build:client && yarn build:server && yarn build:worker",
     "build:client": "vite build --outDir dist/client --manifest",
     "build:server": "vite build --outDir dist/server --ssr src/entry-server.jsx",
-    "build:worker": "WORKER=true vite build --outDir dist/worker --ssr worker.js",
+    "build:worker": "cross-env WORKER=true vite build --outDir dist/worker --ssr worker.js",
     "serve": "node --enable-source-maps server"
   },
   "prettier": "@shopify/prettier-config",
@@ -23,6 +23,7 @@
     "@shopify/stylelint-plugin": "^10.2.0",
     "@tailwindcss/typography": "^0.4.1",
     "autoprefixer": "^10.2.5",
+    "cross-env": "^7.0.3",
     "eslint": "^7.31.0",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.2.10",
@@ -37,7 +38,7 @@
     "@sanity/block-content-to-react": "^3.0.0",
     "@sanity/client": "^2.21.7",
     "@sanity/image-url": "^1.0.1",
-    "@shopify/hydrogen": "0.6.4",
+    "@shopify/hydrogen": "0.7.0",
     "@tailwindcss/aspect-ratio": "^0.3.0",
     "@tippyjs/react": "^4.2.6",
     "base-64": "^1.0.0",
