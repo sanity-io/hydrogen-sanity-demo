@@ -17,7 +17,6 @@ export default function Collection() {
       country: country.isoCode
     },
     params: {
-      country: country.isoCode,
       slug: handle,
     },
   });

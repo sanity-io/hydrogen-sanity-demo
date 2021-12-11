@@ -20,7 +20,6 @@ export default function EditorialArticle() {
       country: country.isoCode
     },
     params: {
-      country: country.isoCode,
       slug: handle,
     },
   });

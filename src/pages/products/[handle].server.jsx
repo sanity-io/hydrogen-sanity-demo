@@ -19,7 +19,6 @@ export default function Product(props) {
       country: country.isoCode
     },
     params: {
-      country: country.isoCode,
       slug: handle,
     },
   });
