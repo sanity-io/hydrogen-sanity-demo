@@ -13,7 +13,11 @@ export default function Collection() {
   const {handle} = useParams();
   const {sanityData: sanityCollection, shopifyProducts} = useSanityQuery({
     query: QUERY,
+    shopifyVariables: {
+      country: country.isoCode
+    },
     params: {
+      country: country.isoCode,
       slug: handle,
     },
   });
@@ -27,7 +31,7 @@ export default function Collection() {
       <div className="p-4">
         <div className="mb-20">
           {/* Title */}
-          <h1 className="font-medium text-3xl">
+          <h1 className="text-3xl font-medium">
             {sanityCollection.title}{' '}
             <span className="font-normal text-gray-400">
               (
@@ -42,7 +46,7 @@ export default function Collection() {
 
           {/* Description */}
           {sanityCollection?.description && (
-            <div className="font-normal max-w-3xl text-gray-500 text-3xl">
+            <div className="max-w-3xl text-3xl font-normal text-gray-500">
               {sanityCollection.description}
             </div>
           )}

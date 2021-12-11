@@ -3063,10 +3063,10 @@ https-proxy-agent@^5.0.0:
     agent-base "6"
     debug "4"
 
-hydrogen-plugin-sanity@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/hydrogen-plugin-sanity/-/hydrogen-plugin-sanity-0.1.1.tgz#efca7536c7e3d30484ae2bc47cf53f7b0e4ce652"
-  integrity sha512-sWeO5/nq7u/vTe8W2HofrGJ1ychZbYEQP8SLaWoKHEMvIKNkhdsnZW7ZtjDC1zXJAh6W+oYKO+mDoBIVLyWqMA==
+hydrogen-plugin-sanity@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/hydrogen-plugin-sanity/-/hydrogen-plugin-sanity-0.2.0.tgz#52590c54a643e6fd8b99543bdc33757ef867e63c"
+  integrity sha512-qk+k10UDBfeCDrkxtT1/a9OxLgj8MCDBCo676lqZeJPGLIW0QZhhEXAA22pNZddKxFY0mArjaqz/cJp3UZym6w==
 
 hyperscript@^2.0.2:
   version "2.0.2"

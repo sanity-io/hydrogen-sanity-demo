@@ -11,10 +11,15 @@ import {PRODUCT_PAGE} from '../../fragments/productPage';
 import {encode} from '../../utils/shopifyGid';
 
 export default function Product(props) {
-  const {handle} = useParams();
+  const { handle } = useParams();
+  const {country = {isoCode: ''}} = props;
   const {sanityData: sanityProduct, shopifyProducts} = useSanityQuery({
     query: QUERY,
+    shopifyVariables: {
+      country: country.isoCode
+    },
     params: {
+      country: country.isoCode,
       slug: handle,
     },
   });

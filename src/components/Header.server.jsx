@@ -9,7 +9,7 @@ export default function Header() {
 
   return (
     <header
-      className="backdrop-filter backdrop-blur-lg bg-opacity-80 bg-white border-b border-black flex items-start justify-between h-20 p-4 sticky top-0 w-full z-50"
+      className="sticky top-0 z-50 flex items-start justify-between w-full h-20 p-4 bg-white border-b border-black backdrop-filter backdrop-blur-lg bg-opacity-80"
       role="banner"
     >
       <div className="">
@@ -19,6 +19,7 @@ export default function Header() {
           </Link>
         </div>
         {data?.menu?.links && <HeaderMenu links={data.menu.links} />}
+        
       </div>
       <CartToggleButton />
     </header>

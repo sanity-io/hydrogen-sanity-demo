@@ -202,7 +202,13 @@ const {sanityData} = useSanityQuery({
       slug.current == $handle
     }
   `,
-  params: {handle},
+  shopifyVariables: {
+      country: country.isoCode
+    },
+  params: {
+    country: country.isoCode,
+    slug: handle,
+  },
   // No need to query Shopify product data
   getProductGraphQLFragment: () => false,
 });

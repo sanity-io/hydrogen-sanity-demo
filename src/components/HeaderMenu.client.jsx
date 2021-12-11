@@ -2,6 +2,7 @@ import {ChevronDownIcon} from '@heroicons/react/outline';
 import {Popover} from '@headlessui/react';
 import {Link} from '@shopify/hydrogen/client';
 import clsx from 'clsx';
+import CurrencySelector from './CurrencySelector.client';
 
 const renderLinks = (links, close) => {
   return links?.map((link) => {
@@ -23,9 +24,9 @@ const renderLinks = (links, close) => {
                 />
               </Popover.Button>
 
-              <Popover.Panel className="absolute -m-px -ml-4 transform top-10 left-0 z-10">
+              <Popover.Panel className="absolute left-0 z-10 -m-px -ml-4 transform top-10">
                 <div className="overflow-hidden border border-black">
-                  <div className="backdrop-filter backdrop-blur-lg bg-opacity-80 bg-white gap-2 grid grid-cols-1 px-4 py-2 relative w-56">
+                  <div className="relative grid w-56 grid-cols-1 gap-2 px-4 py-2 bg-white backdrop-filter backdrop-blur-lg bg-opacity-80">
                     {link?.links && renderLinks(link.links, close)}
                   </div>
                 </div>
@@ -77,5 +78,6 @@ export default function HeaderMenu(props) {
     return null;
   }
 
-  return <div className="flex gap-4">{renderLinks(links)}</div>;
+  return <div className="flex gap-4">{renderLinks(links)}
+  <CurrencySelector /></div>;
 }

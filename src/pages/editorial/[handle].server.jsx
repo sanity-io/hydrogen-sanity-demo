@@ -16,7 +16,11 @@ export default function EditorialArticle() {
 
   const {sanityData: sanityArticle, shopifyProducts} = useSanityQuery({
     query: QUERY,
+    shopifyVariables: {
+      country: country.isoCode
+    },
     params: {
+      country: country.isoCode,
       slug: handle,
     },
   });
@@ -29,7 +33,7 @@ export default function EditorialArticle() {
     <ProductsProvider value={shopifyProducts}>
       <Layout>
         <div className="max-w-3xl p-4">
-          <h1 className="font-medium mb-10 text-3xl">{sanityArticle.title}</h1>
+          <h1 className="mb-10 text-3xl font-medium">{sanityArticle.title}</h1>
 
           {/* Body */}
           {sanityArticle?.body && (
