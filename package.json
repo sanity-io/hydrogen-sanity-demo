@@ -56,5 +56,8 @@
     "react-dom": "18.0.0-alpha-e6be2d531",
     "react-router-dom": "^5.2.0",
     "serve-static": "^1.14.1"
+  },
+  "volta": {
+    "node": "17.3.0"
   }
 }
