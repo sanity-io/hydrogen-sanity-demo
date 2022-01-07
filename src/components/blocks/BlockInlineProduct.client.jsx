@@ -2,7 +2,7 @@ import {Product} from '@shopify/hydrogen/client';
 import Tippy from '@tippyjs/react/headless';
 
 import {useProductsContext} from '../../contexts/ProductsContext.client';
-import {encode} from '../../utils/shopifyGid';
+import {formatGid} from '../../utils/shopifyGid';
 import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.client';
 import ButtonSelectedVariantBuyNow from '../ButtonSelectedVariantBuyNow.client';
 import LinkProduct from '../LinkProduct.client';
@@ -18,7 +18,6 @@ const BlockInlineProduct = (props) => {
     return '(Product not found)';
   }
 
-  const encodedVariantId = encode('ProductVariant', product?.variantId);
   const productTitle = storefrontProduct?.title;
 
   return (
@@ -27,8 +26,8 @@ const BlockInlineProduct = (props) => {
       placement="top"
       render={(attrs) => (
         <Product
+          initialVariantId={formatGid('ProductVariant', product?.variantId)}
           product={storefrontProduct}
-          initialVariantId={encodedVariantId}
         >
           <div
             className="bg-white border border-black p-2 text-sm"

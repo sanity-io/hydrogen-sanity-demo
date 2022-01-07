@@ -2,7 +2,7 @@ import {Product} from '@shopify/hydrogen/client';
 import React from 'react';
 
 import {useProductsContext} from '../../contexts/ProductsContext.client';
-import {encode} from '../../utils/shopifyGid';
+import {formatGid} from '../../utils/shopifyGid';
 import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.client';
 import LinkProduct from '../LinkProduct.client';
 
@@ -17,10 +17,11 @@ const BlockProduct = (props) => {
     return null;
   }
 
-  const encodedVariantId = encode('ProductVariant', product?.variantId);
-
   return (
-    <Product initialVariantId={encodedVariantId} product={storefrontProduct}>
+    <Product
+      initialVariantId={formatGid('ProductVariant', product?.variantId)}
+      product={storefrontProduct}
+    >
       <div className="mx-auto my-8">
         <div className="border border-gray-400 p-4 space-y-4 w-1/2">
           <div>

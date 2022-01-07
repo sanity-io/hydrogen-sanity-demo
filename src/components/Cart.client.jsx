@@ -11,7 +11,6 @@ import {
 import clsx from 'clsx';
 
 import {useCartUI} from '../contexts/CartUIProvider.client';
-import {decode} from '../utils/shopifyGid';
 
 import CartIcon from './CartIcon.client';
 import LinkProduct from './LinkProduct.client';
@@ -94,7 +93,7 @@ function CartLineItems(props) {
       </div>
       <CartLines>
         {({merchandise}) => {
-          const variant = decode(merchandise?.id);
+          const variant = merchandise?.id;
 
           return (
             <div

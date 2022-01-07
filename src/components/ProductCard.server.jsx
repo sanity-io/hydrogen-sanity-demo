@@ -1,6 +1,6 @@
 import {Product} from '@shopify/hydrogen/client';
 
-import {encode} from '../utils/shopifyGid';
+import {formatGid} from '../utils/shopifyGid';
 
 import ButtonSelectedVariantAddToCart from './ButtonSelectedVariantAddToCart.client';
 import LinkProduct from './LinkProduct.client';
@@ -12,10 +12,11 @@ const ProductCard = (props) => {
     return null;
   }
 
-  const encodedVariantId = encode('ProductVariant', product?.variantId);
-
   return (
-    <Product product={product.storefront} initialVariantId={encodedVariantId}>
+    <Product
+      product={product.storefront}
+      initialVariantId={formatGid('ProductVariant', product?.variantId)}
+    >
       <div className="bg-white col-span-2 group">
         {/* Image */}
         <div className="overflow-hidden relative">

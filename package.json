@@ -41,7 +41,6 @@
     "@shopify/hydrogen": "0.7.0",
     "@tailwindcss/aspect-ratio": "^0.3.0",
     "@tippyjs/react": "^4.2.6",
-    "base-64": "^1.0.0",
     "clsx": "^1.1.1",
     "compression": "^1.7.4",
     "embla-carousel-react": "^5.0.1",

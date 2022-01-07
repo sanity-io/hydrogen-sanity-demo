@@ -2,7 +2,7 @@ import {Product, flattenConnection} from '@shopify/hydrogen/client';
 import {LightningBoltIcon, ShoppingCartIcon} from '@heroicons/react/outline';
 
 import {useProductsContext} from '../../contexts/ProductsContext.client';
-import {encode} from '../../utils/shopifyGid';
+import {formatGid} from '../../utils/shopifyGid';
 
 const AnnotationProduct = (props) => {
   const {children, mark} = props;
@@ -16,11 +16,10 @@ const AnnotationProduct = (props) => {
     return children;
   }
 
-  const encodedVariantId = encode('ProductVariant', product?.variantId);
-
   const variants = flattenConnection(storefrontProduct.variants);
+
   const selectedVariant = variants?.find(
-    (variant) => variant.id === encodedVariantId,
+    (variant) => variant.id === formatGid('ProductVariant', product?.variantId),
   );
 
   const availableForSale = selectedVariant?.availableForSale;
@@ -31,7 +30,7 @@ const AnnotationProduct = (props) => {
   }
 
   return (
-    <Product product={storefrontProduct} initialVariantId={selectedVariant.id}>
+    <Product initialVariantId={selectedVariant.id} product={storefrontProduct}>
       {mark?.action === 'addToCart' && (
         <Product.SelectedVariant.AddToCartButton quantity={mark?.quantity || 1}>
           <span className="duration-300 flex font-medium hover:opacity-60 items-center text-blue-500 underline">
@@ -42,7 +41,6 @@ const AnnotationProduct = (props) => {
           </span>
         </Product.SelectedVariant.AddToCartButton>
       )}
-
       {mark?.action === 'buyNow' && (
         <Product.SelectedVariant.BuyNowButton quantity={mark?.quantity || 1}>
           <span className="duration-300 flex font-medium hover:opacity-60 items-center text-blue-500 underline">

@@ -1,8 +1,6 @@
 import {useProduct} from '@shopify/hydrogen/client';
 import {useEffect} from 'react';
 
-import {decode} from '../utils/shopifyGid';
-
 export default function ProductOptions() {
   const {options, setSelectedOption, selectedOptions, selectedVariant} =
     useProduct();
@@ -13,14 +11,17 @@ export default function ProductOptions() {
     return null;
   }
 
-  const decodedVariantId = selectedVariant && decode(selectedVariant.id)?.id;
+  // Extract variant ID from Shopify GID
+  // E.g. gid://shopify/ProductVariant/12345 => 12345
+  const variantId =
+    selectedVariant && selectedVariant?.id?.match(/[^\/]+$/i)[0];
 
   // Append query on variant change
   useEffect(() => {
-    if (decodedVariantId) {
-      window.history.replaceState({}, '', `?variant=${decodedVariantId}`);
+    if (variantId) {
+      window.history.replaceState({}, '', `?variant=${variantId}`);
     }
-  }, [decodedVariantId]);
+  }, [variantId]);
 
   return (
     <>

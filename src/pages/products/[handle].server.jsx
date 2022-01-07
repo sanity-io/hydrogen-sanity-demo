@@ -8,7 +8,7 @@ import ProductDetails from '../../components/ProductDetails.client';
 import Seo from '../../components/Seo.client';
 import ProductsProvider from '../../contexts/ProductsProvider.client';
 import {PRODUCT_PAGE} from '../../fragments/productPage';
-import {encode} from '../../utils/shopifyGid';
+import {formatGid} from '../../utils/shopifyGid';
 
 export default function Product(props) {
   const {handle} = useParams();
@@ -33,11 +33,10 @@ export default function Product(props) {
   // Obtain variant ID from server state or request search params, in that order
   const params = new URLSearchParams(props.search);
   const variantId = props?.variantId || params?.get('variant');
-  const encodedVariantId = encode('ProductVariant', variantId);
 
   const flattenedVariants = flattenConnection(product.storefront.variants);
   const productVariantIndex = flattenedVariants.findIndex(
-    (variant) => variant.id === encodedVariantId,
+    (variant) => variant.id === formatGid('ProductVariant', variantId),
   );
 
   const productVariant =

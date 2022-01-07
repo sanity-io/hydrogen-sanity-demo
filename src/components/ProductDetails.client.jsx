@@ -15,7 +15,7 @@ export default function ProductDetails({product, initialVariantId}) {
 
   return (
     <div className="p-4">
-      <Product product={product.storefront} initialVariantId={initialVariantId}>
+      <Product initialVariantId={initialVariantId} product={product.storefront}>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
           <section className="lg:col-span-2 grid gap-5" aria-label="Gallery">
             {/* Selected variant image */}

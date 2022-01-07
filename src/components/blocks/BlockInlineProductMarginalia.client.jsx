@@ -1,7 +1,7 @@
 import {Product} from '@shopify/hydrogen/client';
 
 import {useProductsContext} from '../../contexts/ProductsContext.client';
-import {encode} from '../../utils/shopifyGid';
+import {formatGid} from '../../utils/shopifyGid';
 import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.client';
 import ButtonSelectedVariantBuyNow from '../ButtonSelectedVariantBuyNow.client';
 import LinkProduct from '../LinkProduct.client';
@@ -17,10 +17,11 @@ const BlockInlineProductMarginalia = (props) => {
     return null;
   }
 
-  const encodedVariantId = encode('ProductVariant', product?.variantId);
-
   return (
-    <Product product={storefrontProduct} initialVariantId={encodedVariantId}>
+    <Product
+      initialVariantId={formatGid('ProductVariant', product?.variantId)}
+      product={storefrontProduct}
+    >
       <>
         <div className="absolute border border-gray-500 left-full ml-10 p-4 top-0 w-48">
           <div className="text-sm">
