@@ -1,8 +1,5 @@
 module.exports = {
-  purge: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
-  mode: 'jit',
-  darkMode: false, // or 'media' or 'class'
-  variants: {},
+  content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
   plugins: [
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/typography'),
