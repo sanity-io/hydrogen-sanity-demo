@@ -1,5 +1,7 @@
 # Hydrogen starter with Sanity
 
+:warning: **Hydrogen is in developer preview and undergoing frequent breaking changes. This demo is currently locked to `@shopify/hydrogen ~= 0.8.x`.** :warning:
+
 [Live demo][hydrogen-sanity-demo]
 
 <p><img src="https://user-images.githubusercontent.com/209129/141310942-c7ed2c08-599b-431b-896d-ceadac46012a.png" width="800" /></p>
