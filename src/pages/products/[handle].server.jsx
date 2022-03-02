@@ -1,13 +1,13 @@
-import {flattenConnection, Seo} from '@shopify/hydrogen';
+import {Seo} from '@shopify/hydrogen';
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
-import {encode} from 'shopify-gid';
 import clientConfig from '../../../sanity.config';
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
 import ProductDetails from '../../components/ProductDetails.client';
 import ProductsProvider from '../../contexts/ProductsProvider.client';
 import {PRODUCT_PAGE} from '../../fragments/productPage';
+import {getProductVariant} from '../../utils/getProductVariant';
 
 export default function Product(props) {
   const {handle} = props.params;
@@ -29,22 +29,16 @@ export default function Product(props) {
   };
 
   // Obtain variant ID from server state or request search params, in that order
-  const params = new URLSearchParams(props.search);
-  const variantId = props?.variantId || params?.get('variant');
+  const variantId =
+    props?.variantId || new URLSearchParams(props.search)?.get('variant');
 
-  // Obtain encoded product ID and current variant
-  const productVariantIdEncoded = encode('ProductVariant', variantId);
-  const flattenedVariants = flattenConnection(product.storefront.variants);
-  const currentStorefrontVariant =
-    flattenedVariants.find(
-      (variant) => variant.id === productVariantIdEncoded,
-    ) || flattenedVariants[0];
+  const currentVariant = getProductVariant(product.storefront, variantId);
 
   return (
     <ProductsProvider value={shopifyProducts}>
       <Layout>
         <ProductDetails
-          initialVariantId={currentStorefrontVariant?.id}
+          initialVariantId={currentVariant?.id}
           product={product}
         />
 

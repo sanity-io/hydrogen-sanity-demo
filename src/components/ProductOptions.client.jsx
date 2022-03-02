@@ -1,5 +1,4 @@
 import {useProduct} from '@shopify/hydrogen/client';
-import {decode} from 'shopify-gid';
 import {useEffect} from 'react';
 
 export default function ProductOptions() {
@@ -14,9 +13,23 @@ export default function ProductOptions() {
 
   // Append query on variant change
   useEffect(() => {
-    if (selectedVariant.id) {
-      const {id: variantId} = decode(selectedVariant.id);
-      window.history.replaceState({}, '', `?variant=${variantId}`);
+    // Storefront product variant IDs can either be an encoded base64 string or GID.
+    // Storefront `2022-04` and beyond will only return GIDs
+    // Reference: https://shopify.dev/api/examples/object-ids
+    let gid;
+    if (selectedVariant?.id.startsWith('gid://')) {
+      gid = selectedVariant.id;
+    } else {
+      // If variant ID is not a GID, try decode
+      try {
+        gid = window.atob(selectedVariant?.id);
+      } catch (err) {}
+    }
+
+    // Extract 'raw' variant ID (number) and modify history
+    const variantIdRaw = gid?.match(/[^\/]+$/i)[0];
+    if (variantIdRaw) {
+      window.history.replaceState({}, '', `?variant=${variantIdRaw}`);
     }
   }, [selectedVariant?.id]);
 

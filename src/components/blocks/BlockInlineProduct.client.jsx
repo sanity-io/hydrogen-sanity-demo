@@ -1,13 +1,12 @@
 import {
-  flattenConnection,
   Image,
   ProductPrice,
   ProductProvider,
   ProductTitle,
 } from '@shopify/hydrogen/client';
 import Tippy from '@tippyjs/react/headless';
-import {encode} from 'shopify-gid';
 import {useProductsContext} from '../../contexts/ProductsProvider.client';
+import {getProductVariant} from '../../utils/getProductVariant';
 import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.client';
 import ButtonSelectedVariantBuyNow from '../ButtonSelectedVariantBuyNow.client';
 import LinkProduct from '../LinkProduct.client';
@@ -23,11 +22,14 @@ const BlockInlineProduct = (props) => {
     return '(Product not found)';
   }
 
-  // Obtain encoded product ID and current variant
-  const productVariantIdEncoded = encode('ProductVariant', product?.variantId);
-  const currentStorefrontVariant = flattenConnection(
-    storefrontProduct.variants,
-  )?.find((variant) => variant.id === productVariantIdEncoded);
+  const currentVariant = getProductVariant(
+    storefrontProduct,
+    product?.variantId,
+  );
+
+  if (!currentVariant) {
+    return null;
+  }
 
   const productTitle = storefrontProduct?.title;
 
@@ -38,7 +40,7 @@ const BlockInlineProduct = (props) => {
       render={(attrs) => (
         <ProductProvider
           data={storefrontProduct}
-          initialVariantId={productVariantIdEncoded}
+          initialVariantId={currentVariant.id}
         >
           <div
             className="bg-white border border-black p-2 text-sm"
@@ -55,15 +57,17 @@ const BlockInlineProduct = (props) => {
                 </LinkProduct>
                 <ProductPrice />
               </div>
-              <Image
-                className="my-2 w-full"
-                data={currentStorefrontVariant?.image}
-                options={{
-                  width: 300,
-                  height: 250,
-                  crop: 'center',
-                }}
-              />
+              {currentVariant?.image && (
+                <Image
+                  className="my-2 w-full"
+                  data={currentVariant.image}
+                  options={{
+                    width: 300,
+                    height: 250,
+                    crop: 'center',
+                  }}
+                />
+              )}
               {node?.action === 'addToCart' && (
                 <ButtonSelectedVariantAddToCart small />
               )}

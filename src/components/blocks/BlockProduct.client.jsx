@@ -1,13 +1,12 @@
 import {
-  flattenConnection,
   Image,
   ProductPrice,
   ProductProvider,
   ProductTitle,
 } from '@shopify/hydrogen/client';
 import React from 'react';
-import {encode} from 'shopify-gid';
 import {useProductsContext} from '../../contexts/ProductsProvider.client';
+import {getProductVariant} from '../../utils/getProductVariant';
 import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.client';
 import LinkProduct from '../LinkProduct.client';
 
@@ -22,16 +21,19 @@ const BlockProduct = (props) => {
     return null;
   }
 
-  // Obtain encoded product ID and current variant
-  const productVariantIdEncoded = encode('ProductVariant', product?.variantId);
-  const currentStorefrontVariant = flattenConnection(
-    storefrontProduct.variants,
-  )?.find((variant) => variant.id === productVariantIdEncoded);
+  const currentVariant = getProductVariant(
+    storefrontProduct,
+    product?.variantId,
+  );
+
+  if (!currentVariant) {
+    return null;
+  }
 
   return (
     <ProductProvider
       data={storefrontProduct}
-      initialVariantId={productVariantIdEncoded}
+      initialVariantId={currentVariant.id}
     >
       <div className="mx-auto my-8">
         <div className="border border-gray-400 p-4 space-y-4 w-1/2">
@@ -46,11 +48,13 @@ const BlockProduct = (props) => {
             <ProductPrice />
           </div>
           {/* Image */}
-          <Image
-            className="w-full"
-            data={currentStorefrontVariant?.image}
-            options={{crop: 'center', width: 500}}
-          />
+          {currentVariant?.image && (
+            <Image
+              className="w-full"
+              data={currentVariant.image}
+              options={{crop: 'center', width: 500}}
+            />
+          )}
           <ButtonSelectedVariantAddToCart />
         </div>
         {/* Caption */}

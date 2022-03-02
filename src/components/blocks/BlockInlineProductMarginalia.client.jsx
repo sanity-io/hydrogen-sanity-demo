@@ -1,12 +1,11 @@
 import {
-  flattenConnection,
   Image,
   ProductPrice,
   ProductProvider,
   ProductTitle,
 } from '@shopify/hydrogen/client';
-import {encode} from 'shopify-gid';
 import {useProductsContext} from '../../contexts/ProductsProvider.client';
+import {getProductVariant} from '../../utils/getProductVariant';
 import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.client';
 import ButtonSelectedVariantBuyNow from '../ButtonSelectedVariantBuyNow.client';
 import LinkProduct from '../LinkProduct.client';
@@ -22,16 +21,19 @@ const BlockInlineProductMarginalia = (props) => {
     return null;
   }
 
-  // Obtain encoded product ID and current variant
-  const productVariantIdEncoded = encode('ProductVariant', product?.variantId);
-  const currentStorefrontVariant = flattenConnection(
-    storefrontProduct.variants,
-  )?.find((variant) => variant.id === productVariantIdEncoded);
+  const currentVariant = getProductVariant(
+    storefrontProduct,
+    product?.variantId,
+  );
+
+  if (!currentVariant) {
+    return null;
+  }
 
   return (
     <ProductProvider
       data={storefrontProduct}
-      initialVariantId={productVariantIdEncoded}
+      initialVariantId={currentVariant.id}
     >
       <>
         <div className="absolute border border-gray-500 left-full ml-10 p-4 top-0 w-48">
@@ -44,15 +46,17 @@ const BlockInlineProductMarginalia = (props) => {
             </LinkProduct>
             <ProductPrice />
           </div>
-          <Image
-            className="my-4 w-full"
-            data={currentStorefrontVariant?.image}
-            options={{
-              crop: 'center',
-              height: 300,
-              width: 300,
-            }}
-          />
+          {currentVariant?.image && (
+            <Image
+              className="my-4 w-full"
+              data={currentVariant.image}
+              options={{
+                crop: 'center',
+                height: 300,
+                width: 300,
+              }}
+            />
+          )}
           {node?.action === 'addToCart' && (
             <ButtonSelectedVariantAddToCart small />
           )}

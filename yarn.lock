@@ -4035,11 +4035,6 @@ shell-quote@^1.6.1:
   resolved "https://registry.npmjs.org/shell-quote/-/shell-quote-1.7.3.tgz"
   integrity sha512-Vpfqwm4EnqGdlsBFNmHhxhElJYrdfcxPThu+ryKS5J8L/fhAwLazFZtq+S+TWZ9ANj2piSQLGj6NQg+lKPmxrw==
 
-shopify-gid@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/shopify-gid/-/shopify-gid-1.0.1.tgz#4d237db3e57ab706f8dc3126f1a5634e727e21cc"
-  integrity sha512-dasZjOduquRJmBaSpNgqEeo0WfeB7werAjfkzUHSvEI95xYtS65pn8whYRWI4cLDjaC74nnD8XYziGPefpyo5w==
-
 side-channel@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npmjs.org/side-channel/-/side-channel-1.0.4.tgz"

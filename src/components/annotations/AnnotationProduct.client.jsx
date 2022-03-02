@@ -2,11 +2,10 @@ import {LightningBoltIcon, ShoppingCartIcon} from '@heroicons/react/outline';
 import {
   AddToCartButton,
   BuyNowButton,
-  flattenConnection,
   ProductProvider,
 } from '@shopify/hydrogen/client';
-import {encode} from 'shopify-gid';
 import {useProductsContext} from '../../contexts/ProductsProvider.client';
+import {getProductVariant} from '../../utils/getProductVariant';
 
 const AnnotationProduct = (props) => {
   const {children, mark} = props;
@@ -20,28 +19,27 @@ const AnnotationProduct = (props) => {
     return children;
   }
 
-  // Obtain encoded product ID and current variant
-  const productVariantIdEncoded = encode('ProductVariant', product?.variantId);
-  const currentStorefrontVariant = flattenConnection(
-    storefrontProduct.variants,
-  )?.find((variant) => variant.id === productVariantIdEncoded);
+  const currentVariant = getProductVariant(
+    storefrontProduct,
+    product?.variantId,
+  );
 
-  const availableForSale = currentStorefrontVariant?.availableForSale;
+  const availableForSale = currentVariant?.availableForSale;
 
-  // Return text only if no longer available for sale
-  if (!availableForSale) {
+  // Return text only if no longer available for sale or if variant isn't accessible
+  if (!availableForSale || !currentVariant) {
     return children;
   }
 
   return (
     <ProductProvider
       data={storefrontProduct}
-      initialVariantId={currentStorefrontVariant.id}
+      initialVariantId={currentVariant.id}
     >
       {mark?.action === 'addToCart' && (
         <AddToCartButton
           quantity={mark?.quantity || 1}
-          variantId={currentStorefrontVariant.id}
+          variantId={currentVariant.id}
         >
           <span className="duration-300 flex font-medium hover:opacity-60 items-center text-blue-500 underline">
             {children}
@@ -54,7 +52,7 @@ const AnnotationProduct = (props) => {
       {mark?.action === 'buyNow' && (
         <BuyNowButton
           quantity={mark?.quantity || 1}
-          variantId={currentStorefrontVariant.id}
+          variantId={currentVariant.id}
         >
           <span className="duration-300 flex font-medium hover:opacity-60 items-center text-blue-500 underline">
             {children}
