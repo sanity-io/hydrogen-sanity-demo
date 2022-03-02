@@ -1,12 +1,16 @@
-// Note: This must be a separate client component from your special Provider component.
-
 import {createContext, useContext} from 'react';
 
 const SettingsContext = createContext();
 
-export default SettingsContext;
+export default function SettingsProvider({children, value}) {
+  return (
+    <SettingsContext.Provider value={value}>
+      {children}
+    </SettingsContext.Provider>
+  );
+}
 
-export const useSettingsContext = () => {
+export function useSettingsContext() {
   const context = useContext(SettingsContext);
 
   if (!context) {
@@ -14,4 +18,4 @@ export const useSettingsContext = () => {
   }
 
   return context;
-};
+}

@@ -1,8 +1,13 @@
-import {Product} from '@shopify/hydrogen/client';
+import {
+  flattenConnection,
+  Image,
+  ProductPrice,
+  ProductProvider,
+  ProductTitle,
+} from '@shopify/hydrogen/client';
 import React from 'react';
-
-import {useProductsContext} from '../../contexts/ProductsContext.client';
-import {formatGid} from '../../utils/shopifyGid';
+import {encode} from 'shopify-gid';
+import {useProductsContext} from '../../contexts/ProductsProvider.client';
 import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.client';
 import LinkProduct from '../LinkProduct.client';
 
@@ -17,28 +22,34 @@ const BlockProduct = (props) => {
     return null;
   }
 
+  // Obtain encoded product ID and current variant
+  const productVariantIdEncoded = encode('ProductVariant', product?.variantId);
+  const currentStorefrontVariant = flattenConnection(
+    storefrontProduct.variants,
+  )?.find((variant) => variant.id === productVariantIdEncoded);
+
   return (
-    <Product
-      initialVariantId={formatGid('ProductVariant', product?.variantId)}
-      product={storefrontProduct}
+    <ProductProvider
+      data={storefrontProduct}
+      initialVariantId={productVariantIdEncoded}
     >
       <div className="mx-auto my-8">
         <div className="border border-gray-400 p-4 space-y-4 w-1/2">
+          {/* Product and price */}
           <div>
             <LinkProduct
               handle={storefrontProduct.handle}
               variantId={product?.variantId}
             >
-              <Product.Title className="font-medium" />
+              <ProductTitle className="font-medium" />
             </LinkProduct>
-            <Product.Price />
+            <ProductPrice />
           </div>
-          <Product.SelectedVariant.Image
+          {/* Image */}
+          <Image
             className="w-full"
-            options={{
-              crop: 'center',
-              width: 500,
-            }}
+            data={currentStorefrontVariant?.image}
+            options={{crop: 'center', width: 500}}
           />
           <ButtonSelectedVariantAddToCart />
         </div>
@@ -49,7 +60,7 @@ const BlockProduct = (props) => {
           </div>
         )}
       </div>
-    </Product>
+    </ProductProvider>
   );
 };
 

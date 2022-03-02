@@ -1,9 +1,6 @@
-import sanityConfig from './sanity.config';
-
 export default {
-  graphqlApiVersion: 'unstable',
-  locale: 'en-us',
+  defaultLocale: 'en-us',
   storeDomain: 'sanity-dev-store.myshopify.com',
+  storefrontApiVersion: '2022-01',
   storefrontToken: '791dbd01268e4a7129288e24b1012710',
-  sanity: sanityConfig,
 };

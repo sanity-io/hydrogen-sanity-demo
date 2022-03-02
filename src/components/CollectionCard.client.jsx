@@ -1,7 +1,5 @@
 import {Link} from '@shopify/hydrogen/client';
-
 import sanityConfig from '../../sanity.config';
-
 import SanityImage from './SanityImage.client';
 
 const CollectionCard = (props) => {
@@ -21,13 +19,11 @@ const CollectionCard = (props) => {
                 crop={collection.image?.crop}
                 dataset={sanityConfig.dataset}
                 hotspot={collection.image?.hotspot}
-                // height={collection.image.height}
                 layout="fill"
                 objectFit="cover"
                 projectId={sanityConfig.projectId}
                 sizes={['100vw', null, '50vw']}
                 src={collection.image?.asset._ref}
-                // width={collection.image.width}
               />
             )}
 

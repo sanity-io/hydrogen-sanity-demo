@@ -1,11 +1,11 @@
-import {useCartLinesTotalQuantity} from '@shopify/hydrogen/client';
+import {useCart} from '@shopify/hydrogen/client';
 
 export default function CartIcon() {
-  const itemCount = useCartLinesTotalQuantity();
+  const {totalQuantity} = useCart();
 
   return (
     <div>
-      Cart <span>{itemCount > 0 ? `(${itemCount})` : null}</span>
+      Cart <span>{totalQuantity > 0 ? `(${totalQuantity})` : null}</span>
     </div>
   );
 }

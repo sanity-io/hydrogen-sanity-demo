@@ -1,6 +1,5 @@
-import {Link} from '@shopify/hydrogen';
-
-import {useSettingsContext} from '../contexts/SettingsContext.server';
+import {Link} from '@shopify/hydrogen/client';
+import {useSettingsContext} from '../contexts/SettingsProvider.client';
 import CartToggleButton from './CartToggleButton.client';
 import HeaderMenu from './HeaderMenu.client';
 

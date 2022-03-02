@@ -1,8 +1,13 @@
-import {Product} from '@shopify/hydrogen/client';
+import {
+  flattenConnection,
+  Image,
+  ProductPrice,
+  ProductProvider,
+  ProductTitle,
+} from '@shopify/hydrogen/client';
 import Tippy from '@tippyjs/react/headless';
-
-import {useProductsContext} from '../../contexts/ProductsContext.client';
-import {formatGid} from '../../utils/shopifyGid';
+import {encode} from 'shopify-gid';
+import {useProductsContext} from '../../contexts/ProductsProvider.client';
 import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.client';
 import ButtonSelectedVariantBuyNow from '../ButtonSelectedVariantBuyNow.client';
 import LinkProduct from '../LinkProduct.client';
@@ -18,6 +23,12 @@ const BlockInlineProduct = (props) => {
     return '(Product not found)';
   }
 
+  // Obtain encoded product ID and current variant
+  const productVariantIdEncoded = encode('ProductVariant', product?.variantId);
+  const currentStorefrontVariant = flattenConnection(
+    storefrontProduct.variants,
+  )?.find((variant) => variant.id === productVariantIdEncoded);
+
   const productTitle = storefrontProduct?.title;
 
   return (
@@ -25,9 +36,9 @@ const BlockInlineProduct = (props) => {
       interactive
       placement="top"
       render={(attrs) => (
-        <Product
-          initialVariantId={formatGid('ProductVariant', product?.variantId)}
-          product={storefrontProduct}
+        <ProductProvider
+          data={storefrontProduct}
+          initialVariantId={productVariantIdEncoded}
         >
           <div
             className="bg-white border border-black p-2 text-sm"
@@ -40,12 +51,13 @@ const BlockInlineProduct = (props) => {
                   handle={storefrontProduct.handle}
                   variantId={product?.variantId}
                 >
-                  <Product.Title className="font-medium" />
+                  <ProductTitle className="font-medium" />
                 </LinkProduct>
-                <Product.Price />
+                <ProductPrice />
               </div>
-              <Product.SelectedVariant.Image
+              <Image
                 className="my-2 w-full"
+                data={currentStorefrontVariant?.image}
                 options={{
                   width: 300,
                   height: 250,
@@ -60,7 +72,7 @@ const BlockInlineProduct = (props) => {
               )}
             </div>
           </div>
-        </Product>
+        </ProductProvider>
       )}
     >
       <span>

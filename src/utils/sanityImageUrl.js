@@ -1,5 +1,4 @@
 import imageUrlBuilder from '@sanity/image-url';
-
 import sanityConfig from '../../sanity.config';
 
 const sanityImageUrl = (image, {width} = {width: 800}) => {

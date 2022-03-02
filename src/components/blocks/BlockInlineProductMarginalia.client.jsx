@@ -1,7 +1,12 @@
-import {Product} from '@shopify/hydrogen/client';
-
-import {useProductsContext} from '../../contexts/ProductsContext.client';
-import {formatGid} from '../../utils/shopifyGid';
+import {
+  flattenConnection,
+  Image,
+  ProductPrice,
+  ProductProvider,
+  ProductTitle,
+} from '@shopify/hydrogen/client';
+import {encode} from 'shopify-gid';
+import {useProductsContext} from '../../contexts/ProductsProvider.client';
 import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.client';
 import ButtonSelectedVariantBuyNow from '../ButtonSelectedVariantBuyNow.client';
 import LinkProduct from '../LinkProduct.client';
@@ -17,10 +22,16 @@ const BlockInlineProductMarginalia = (props) => {
     return null;
   }
 
+  // Obtain encoded product ID and current variant
+  const productVariantIdEncoded = encode('ProductVariant', product?.variantId);
+  const currentStorefrontVariant = flattenConnection(
+    storefrontProduct.variants,
+  )?.find((variant) => variant.id === productVariantIdEncoded);
+
   return (
-    <Product
-      initialVariantId={formatGid('ProductVariant', product?.variantId)}
-      product={storefrontProduct}
+    <ProductProvider
+      data={storefrontProduct}
+      initialVariantId={productVariantIdEncoded}
     >
       <>
         <div className="absolute border border-gray-500 left-full ml-10 p-4 top-0 w-48">
@@ -29,12 +40,13 @@ const BlockInlineProductMarginalia = (props) => {
               handle={storefrontProduct.handle}
               variantId={product?.variantId}
             >
-              <Product.Title className="font-medium" />
+              <ProductTitle className="font-medium" />
             </LinkProduct>
-            <Product.Price />
+            <ProductPrice />
           </div>
-          <Product.SelectedVariant.Image
+          <Image
             className="my-4 w-full"
+            data={currentStorefrontVariant?.image}
             options={{
               crop: 'center',
               height: 300,
@@ -47,7 +59,7 @@ const BlockInlineProductMarginalia = (props) => {
           {node?.action === 'buyNow' && <ButtonSelectedVariantBuyNow small />}
         </div>
       </>
-    </Product>
+    </ProductProvider>
   );
 };
 

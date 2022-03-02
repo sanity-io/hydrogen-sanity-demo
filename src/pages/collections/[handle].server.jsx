@@ -1,21 +1,21 @@
+import {Seo} from '@shopify/hydrogen';
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import pluralize from 'pluralize';
-import {useParams} from 'react-router-dom';
-
+import clientConfig from '../../../sanity.config';
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
 import ProductListing from '../../components/ProductListing.server';
-import Seo from '../../components/Seo.client';
 import {COLLECTION_PAGE} from '../../fragments/collectionPage';
 
-export default function Collection() {
-  const {handle} = useParams();
+export default function Collection({params}) {
+  const {handle} = params;
   const {sanityData: sanityCollection, shopifyProducts} = useSanityQuery({
     query: QUERY,
     params: {
       slug: handle,
     },
+    clientConfig,
   });
 
   if (!sanityCollection) {
@@ -58,12 +58,14 @@ export default function Collection() {
 
       {/* SEO */}
       <Seo
-        page={{
-          description: sanityCollection.seo?.description,
-          image: sanityCollection.seo?.image,
-          keywords: sanityCollection.seo?.keywords,
+        data={{
+          seo: {
+            description: sanityCollection.seo?.description,
+            title: sanityCollection.seo?.title,
+          },
           title: sanityCollection.seo?.title,
         }}
+        type="page"
       />
     </Layout>
   );

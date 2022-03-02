@@ -2,22 +2,23 @@ import {MinusSmIcon, PlusSmIcon, XIcon} from '@heroicons/react/solid';
 import {
   CartCheckoutButton,
   CartEstimatedCost,
-  CartLine,
+  CartLineImage,
+  CartLinePrice,
+  CartLineProductTitle,
+  CartLineQuantity,
+  CartLineQuantityAdjustButton,
   CartLines,
   Money,
   useCart,
-  useCartLinesTotalQuantity,
+  useCartLine,
 } from '@shopify/hydrogen/client';
 import clsx from 'clsx';
-
 import {useCartUI} from '../contexts/CartUIProvider.client';
-
 import CartIcon from './CartIcon.client';
 import LinkProduct from './LinkProduct.client';
 
 export default function Cart() {
-  const itemCount = useCartLinesTotalQuantity();
-  const {error} = useCart();
+  const {error, totalQuantity} = useCart();
   const {closeCart, isCartOpen, toggleCart} = useCartUI();
 
   // TODO: close the cart automatically whenever the URL changes
@@ -50,8 +51,10 @@ export default function Cart() {
 
             {/* Line items */}
             <div className="bg-white flex-grow px-4 overflow-y-auto">
-              {itemCount > 0 ? (
-                <CartLineItems closeCart={closeCart} />
+              {totalQuantity > 0 ? (
+                <CartLines>
+                  <CartLineItems closeCart={closeCart} />
+                </CartLines>
               ) : (
                 <p className="py-4 text-gray-600">Your cart is empty</p>
               )}
@@ -70,10 +73,10 @@ export default function Cart() {
             {/* Footer */}
             <footer
               className={`${
-                itemCount > 0 ? 'border-t border-solid border-gray-300' : ''
+                totalQuantity > 0 ? 'border-t border-solid border-gray-300' : ''
               } bg-white p-4 space-y-4 flex-shrink-0`}
             >
-              {itemCount > 0 ? <CartFooter /> : null}
+              {totalQuantity > 0 ? <CartFooter /> : null}
             </footer>
           </div>
         </div>
@@ -84,6 +87,9 @@ export default function Cart() {
 
 function CartLineItems(props) {
   const {closeCart} = props;
+  const {merchandise} = useCartLine();
+  const variant = merchandise?.id;
+
   return (
     <div role="table" aria-label="Shopping cart">
       <div role="row" className="sr-only">
@@ -91,96 +97,80 @@ function CartLineItems(props) {
         <div role="columnheader">Item details</div>
         <div role="columnheader">Price</div>
       </div>
-      <CartLines>
-        {({merchandise}) => {
-          const variant = merchandise?.id;
 
-          return (
-            <div
-              role="row"
-              className="border-b border-solid border-gray-300 last:border-0 py-4"
-            >
-              <div className="flex space-x-8 relative">
-                <div role="cell">
-                  <div className="w-20 h-20 relative">
-                    <LinkProduct
-                      handle={merchandise.product.handle}
-                      onClick={closeCart}
-                      variantId={variant?.id}
-                    >
-                      <CartLine.Image className="bg-white w-full h-full object-contain" />
-                    </LinkProduct>
-                  </div>
-                </div>
-                <div
-                  role="cell"
-                  className="flex-grow flex flex-col justify-between"
+      <div
+        role="row"
+        className="border-b border-solid border-gray-300 last:border-0 py-4"
+      >
+        <div className="flex space-x-8 relative">
+          <div role="cell">
+            <div className="w-20 h-20 relative">
+              <LinkProduct
+                handle={merchandise.product.handle}
+                onClick={closeCart}
+                variantId={variant?.id}
+              >
+                <CartLineImage className="bg-white w-full h-full object-contain" />
+              </LinkProduct>
+            </div>
+          </div>
+          <div role="cell" className="flex-grow flex flex-col justify-between">
+            <div className="flex gap-2">
+              <div className="flex-grow">
+                <LinkProduct
+                  handle={merchandise.product.handle}
+                  onClick={closeCart}
+                  variantId={variant?.id}
                 >
-                  <div className="flex gap-2">
-                    <div className="flex-grow">
-                      <LinkProduct
-                        handle={merchandise.product.handle}
-                        onClick={closeCart}
-                        variantId={variant?.id}
-                      >
-                        <CartLine.ProductTitle className="text-gray-900 text-sm font-medium" />
-                      </LinkProduct>
-                      <CartLine.SelectedOptions className="text-sm">
-                        {({name, value}) => (
-                          <>
-                            {name}: {value}
-                          </>
-                        )}
-                      </CartLine.SelectedOptions>
-                      <CartLine.Attributes className="text-sm">
-                        {({key, value}) => (
-                          <>
-                            {key}: {value}
-                          </>
-                        )}
-                      </CartLine.Attributes>
-                    </div>
-                    <div className="flex-shrink">
-                      <CartLine.QuantityAdjustButton
-                        adjust="remove"
-                        aria-label="Remove from cart"
-                      >
-                        <XIcon className="h-4 mt-1 w-4" />
-                      </CartLine.QuantityAdjustButton>
-                    </div>
-                  </div>
-                  <div className="flex items-center mt-2">
-                    <div className="flex-grow">
-                      <div className="border border-gray-300 inline-flex items-center text-gray-500">
-                        <CartLine.QuantityAdjustButton
-                          adjust="decrease"
-                          className="p-2 text-gray-400"
-                          aria-label="Decrease quantity"
-                        >
-                          <MinusSmIcon className="h-4 w-4" />
-                        </CartLine.QuantityAdjustButton>
-                        <CartLine.Quantity
-                          as="div"
-                          className="text-gray-900 text-center text-sm"
-                        />
-                        <CartLine.QuantityAdjustButton
-                          adjust="increase"
-                          className="p-2 text-gray-400"
-                          aria-label="Increase quantity"
-                        >
-                          <PlusSmIcon className="h-4 w-4" />
-                        </CartLine.QuantityAdjustButton>
-                      </div>
-                    </div>
-
-                    <CartLine.Price className="text-sm" role="cell" />
-                  </div>
-                </div>
+                  <CartLineProductTitle className="text-gray-900 text-sm font-medium" />
+                </LinkProduct>
+                {/* Selected options */}
+                <ul className="text-sm">
+                  {merchandise.selectedOptions.map(({name, value}) => (
+                    <li key={name}>
+                      {name}: {value}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="flex-shrink">
+                <CartLineQuantityAdjustButton
+                  adjust="remove"
+                  aria-label="Remove from cart"
+                >
+                  <XIcon className="h-4 mt-1 w-4" />
+                </CartLineQuantityAdjustButton>
               </div>
             </div>
-          );
-        }}
-      </CartLines>
+            <div className="flex items-center mt-2">
+              <div className="flex-grow">
+                <div className="border border-gray-300 inline-flex items-center text-gray-500">
+                  <CartLineQuantityAdjustButton
+                    adjust="decrease"
+                    className="p-2 text-gray-400"
+                    aria-label="Decrease quantity"
+                  >
+                    <MinusSmIcon className="h-4 w-4" />
+                  </CartLineQuantityAdjustButton>
+                  <CartLineQuantity
+                    as="div"
+                    className="text-gray-900 text-center text-sm"
+                  />
+                  <CartLineQuantityAdjustButton
+                    adjust="increase"
+                    className="p-2 text-gray-400"
+                    aria-label="Increase quantity"
+                  >
+                    <PlusSmIcon className="h-4 w-4" />
+                  </CartLineQuantityAdjustButton>
+                </div>
+              </div>
+
+              <CartLinePrice className="text-sm" role="cell" />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -197,7 +187,7 @@ function CartFooter() {
               Subtotal
             </div>
             <div role="cell" className="text-right pb-2">
-              <Money money={subtotal} />
+              <Money data={subtotal} />
             </div>
           </div>
         )}
@@ -221,13 +211,6 @@ function CartFooter() {
         </div>
       </div>
       <div className="space-y-2">
-        {/* Shop pay */}
-        {/*
-        <CartShopPayButton
-          className="flex w-full"
-        />
-        */}
-
         <CartCheckoutButton className="block w-full text-white text-sm bg-black px-3 py-4 disabled:cursor-wait disabled:opacity-60">
           Checkout
         </CartCheckoutButton>

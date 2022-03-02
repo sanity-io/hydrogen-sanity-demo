@@ -1,15 +1,15 @@
+import {Seo} from '@shopify/hydrogen';
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
-
+import clientConfig from '../../sanity.config';
 import {IMAGE} from '../fragments/image';
 
-import Seo from './Seo.client';
-
-export default function SeoServer() {
+export default function DefaultSeo() {
   const {sanityData: sanitySeo} = useSanityQuery({
     query: QUERY,
     // No need to query Shopify product data ✨
     getProductGraphQLFragment: () => false,
+    clientConfig,
   });
 
   if (!sanitySeo) {
@@ -17,7 +17,12 @@ export default function SeoServer() {
   }
 
   return (
-    <Seo defaultImage={sanitySeo?.image} defaultTitle={sanitySeo?.title} />
+    <Seo
+      data={{
+        title: sanitySeo?.title,
+      }}
+      type="defaultSeo"
+    />
   );
 }
 

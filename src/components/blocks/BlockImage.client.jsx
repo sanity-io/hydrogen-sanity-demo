@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import React from 'react';
-
 import sanityConfig from '../../../sanity.config';
 import SanityImage from '../SanityImage.client';
 

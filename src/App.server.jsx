@@ -1,21 +1,25 @@
-import {ShopifyServerProvider} from '@shopify/hydrogen';
+import {ShopifyProvider} from '@shopify/hydrogen';
+import renderHydrogen from '@shopify/hydrogen/entry-server';
 import {Suspense} from 'react';
-
 import shopifyConfig from '../shopify.config';
-
+import DefaultSeo from './components/DefaultSeo.server';
+import LoadingFallback from './components/LoadingFallback';
 import Main from './components/Main.server';
 import CartProvider from './contexts/CartProvider.client';
 
-export default function App({...serverState}) {
-  const pages = import.meta.globEager('./pages/**/*.server.(jsx|tsx)');
-
+function App({log, pages, ...serverState}) {
   return (
-    <Suspense fallback={<div className="p-4">Loading...</div>}>
-      <ShopifyServerProvider shopifyConfig={shopifyConfig} {...serverState}>
+    <Suspense fallback={<LoadingFallback />}>
+      <ShopifyProvider shopifyConfig={shopifyConfig}>
         <CartProvider>
-          <Main pages={pages} serverState={serverState} />
+          <DefaultSeo />
+          <Main log={log} pages={pages} serverState={serverState} />
         </CartProvider>
-      </ShopifyServerProvider>
+      </ShopifyProvider>
     </Suspense>
   );
 }
+
+const pages = import.meta.globEager('./pages/**/*.server.[jt](s|sx)');
+
+export default renderHydrogen(App, {pages});

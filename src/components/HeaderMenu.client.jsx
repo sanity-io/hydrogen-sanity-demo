@@ -1,5 +1,5 @@
-import {ChevronDownIcon} from '@heroicons/react/outline';
 import {Popover} from '@headlessui/react';
+import {ChevronDownIcon} from '@heroicons/react/outline';
 import {Link} from '@shopify/hydrogen/client';
 import clsx from 'clsx';
 

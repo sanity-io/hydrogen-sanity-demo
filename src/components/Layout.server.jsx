@@ -1,6 +1,6 @@
 import {LocalizationProvider} from '@shopify/hydrogen';
-import Header from './Header.server';
-import Footer from './Footer.server';
+import Header from './Header.client';
+import Footer from './Footer.client';
 import Cart from './Cart.client';
 
 export default function Layout({children}) {

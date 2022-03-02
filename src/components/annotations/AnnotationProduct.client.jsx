@@ -1,8 +1,12 @@
-import {Product, flattenConnection} from '@shopify/hydrogen/client';
 import {LightningBoltIcon, ShoppingCartIcon} from '@heroicons/react/outline';
-
-import {useProductsContext} from '../../contexts/ProductsContext.client';
-import {formatGid} from '../../utils/shopifyGid';
+import {
+  AddToCartButton,
+  BuyNowButton,
+  flattenConnection,
+  ProductProvider,
+} from '@shopify/hydrogen/client';
+import {encode} from 'shopify-gid';
+import {useProductsContext} from '../../contexts/ProductsProvider.client';
 
 const AnnotationProduct = (props) => {
   const {children, mark} = props;
@@ -16,13 +20,13 @@ const AnnotationProduct = (props) => {
     return children;
   }
 
-  const variants = flattenConnection(storefrontProduct.variants);
+  // Obtain encoded product ID and current variant
+  const productVariantIdEncoded = encode('ProductVariant', product?.variantId);
+  const currentStorefrontVariant = flattenConnection(
+    storefrontProduct.variants,
+  )?.find((variant) => variant.id === productVariantIdEncoded);
 
-  const selectedVariant = variants?.find(
-    (variant) => variant.id === formatGid('ProductVariant', product?.variantId),
-  );
-
-  const availableForSale = selectedVariant?.availableForSale;
+  const availableForSale = currentStorefrontVariant?.availableForSale;
 
   // Return text only if no longer available for sale
   if (!availableForSale) {
@@ -30,28 +34,37 @@ const AnnotationProduct = (props) => {
   }
 
   return (
-    <Product initialVariantId={selectedVariant.id} product={storefrontProduct}>
+    <ProductProvider
+      data={storefrontProduct}
+      initialVariantId={currentStorefrontVariant.id}
+    >
       {mark?.action === 'addToCart' && (
-        <Product.SelectedVariant.AddToCartButton quantity={mark?.quantity || 1}>
+        <AddToCartButton
+          quantity={mark?.quantity || 1}
+          variantId={currentStorefrontVariant.id}
+        >
           <span className="duration-300 flex font-medium hover:opacity-60 items-center text-blue-500 underline">
             {children}
             <span>
               <ShoppingCartIcon className="h-4 ml-0.5 w-4" />
             </span>
           </span>
-        </Product.SelectedVariant.AddToCartButton>
+        </AddToCartButton>
       )}
       {mark?.action === 'buyNow' && (
-        <Product.SelectedVariant.BuyNowButton quantity={mark?.quantity || 1}>
+        <BuyNowButton
+          quantity={mark?.quantity || 1}
+          variantId={currentStorefrontVariant.id}
+        >
           <span className="duration-300 flex font-medium hover:opacity-60 items-center text-blue-500 underline">
             {children}
             <span>
               <LightningBoltIcon className="h-4 ml-0.5 w-4" />
             </span>
           </span>
-        </Product.SelectedVariant.BuyNowButton>
+        </BuyNowButton>
       )}
-    </Product>
+    </ProductProvider>
   );
 };
 

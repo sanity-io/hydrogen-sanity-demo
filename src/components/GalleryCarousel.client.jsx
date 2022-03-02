@@ -1,10 +1,8 @@
-import {useServerState} from '@shopify/hydrogen/client';
 import clsx from 'clsx';
 import useEmblaCarousel from 'embla-carousel-react';
 import React, {useEffect, useState} from 'react';
-import {useHistory} from 'react-router-dom';
-
 import sanityConfig from '../../sanity.config';
+import LinkProduct from './LinkProduct.client';
 import SanityImage from './SanityImage.client';
 
 const GalleryCarousel = (props) => {
@@ -12,8 +10,6 @@ const GalleryCarousel = (props) => {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [viewportRef, emblaApi] = useEmblaCarousel({loop: true});
-  const history = useHistory();
-  const {setServerState} = useServerState();
 
   const handleSelect = (index) => {
     if (!emblaApi) {
@@ -27,20 +23,6 @@ const GalleryCarousel = (props) => {
       return;
     }
     setSelectedIndex(emblaApi.selectedScrollSnap());
-  };
-
-  const handleSlideClick = (index) => {
-    if (!emblaApi) {
-      return;
-    }
-
-    if (emblaApi.clickAllowed()) {
-      // TODO: Consider refactoring out usage of `react-router-dom` and instead wrap slides with <LinkProduct />
-      const product = gallery[index]?.productWithVariant?.product;
-      const productUrl = `/products/${product?.store?.slug?.current}?variant=${product?.variantId}`;
-      setServerState('variantId', product?.variantId);
-      history.push(productUrl);
-    }
   };
 
   useEffect(() => {
@@ -67,11 +49,7 @@ const GalleryCarousel = (props) => {
             }
 
             return (
-              <div
-                className="embla__slide"
-                key={link?._key}
-                onClick={() => handleSlideClick(index)}
-              >
+              <div className="embla__slide" key={link?._key}>
                 <div className="embla__slide__inner">
                   <div className="aspect-w-16 aspect-h-9 relative w-full">
                     <SanityImage
@@ -93,11 +71,12 @@ const GalleryCarousel = (props) => {
         </div>
 
         {/* Slide title */}
-        <div className="absolute flex gap-1 h-full items-center justify-center left-0 pointer-events-none top-0 w-full z-1">
+        <div className="absolute flex gap-1 h-full items-center justify-center left-0 top-0 w-full z-1">
           {gallery.map((link, index) => {
             if (!link?.title) {
               return null;
             }
+            const product = gallery[index]?.productWithVariant?.product;
             return (
               <div
                 className={clsx([
@@ -106,7 +85,12 @@ const GalleryCarousel = (props) => {
                 ])}
                 key={link?._key}
               >
-                {link.title}
+                <LinkProduct
+                  handle={product?.store?.slug?.current}
+                  variantId={product?.variantId}
+                >
+                  {link.title}
+                </LinkProduct>
               </div>
             );
           })}

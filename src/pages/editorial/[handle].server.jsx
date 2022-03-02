@@ -1,24 +1,24 @@
+import {Seo} from '@shopify/hydrogen';
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import React from 'react';
-import {useParams} from 'react-router-dom';
-
+import clientConfig from '../../../sanity.config';
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
 import PortableText from '../../components/PortableText.client';
-import Seo from '../../components/Seo.client';
 import ProductsProvider from '../../contexts/ProductsProvider.client';
 import {PORTABLE_TEXT} from '../../fragments/portableText';
 import {SEO} from '../../fragments/seo';
 
-export default function EditorialArticle() {
-  const {handle} = useParams();
+export default function EditorialArticle({params}) {
+  const {handle} = params;
 
   const {sanityData: sanityArticle, shopifyProducts} = useSanityQuery({
     query: QUERY,
     params: {
       slug: handle,
     },
+    clientConfig,
   });
 
   if (!sanityArticle) {
@@ -39,12 +39,14 @@ export default function EditorialArticle() {
 
         {/* SEO */}
         <Seo
-          page={{
-            description: sanityArticle.seo?.description,
-            image: sanityArticle.seo?.image,
-            keywords: sanityArticle.seo?.keywords,
+          data={{
+            seo: {
+              description: sanityArticle.seo?.description,
+              title: sanityArticle.seo?.title || sanityArticle?.title,
+            },
             title: sanityArticle.seo?.title || sanityArticle?.title,
           }}
+          type="page"
         />
       </Layout>
     </ProductsProvider>

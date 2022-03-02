@@ -1,7 +1,4 @@
-/* eslint-disable react/display-name */
-
 import BlockContent from '@sanity/block-content-to-react';
-
 import AnnotationLinkEmail from './annotations/AnnotationLinkEmail';
 import AnnotationLinkExternal from './annotations/AnnotationLinkExternal';
 import AnnotationLinkInternal from './annotations/AnnotationLinkInternal';

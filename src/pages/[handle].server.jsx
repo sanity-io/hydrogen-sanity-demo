@@ -1,17 +1,16 @@
+import {Seo} from '@shopify/hydrogen';
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import React from 'react';
-import {useParams} from 'react-router-dom';
-
+import clientConfig from '../../sanity.config';
 import Layout from '../components/Layout.server';
 import NotFound from '../components/NotFound.server';
 import PortableText from '../components/PortableText.client';
-import Seo from '../components/Seo.client';
 import {PORTABLE_TEXT} from '../fragments/portableText';
 import {SEO} from '../fragments/seo';
 
-export default function InfoArticle() {
-  const {handle} = useParams();
+export default function InfoArticle({params}) {
+  const {handle} = params;
 
   const {sanityData: sanityArticle} = useSanityQuery({
     query: QUERY,
@@ -20,6 +19,7 @@ export default function InfoArticle() {
     },
     // No need to query Shopify product data ✨
     getProductGraphQLFragment: () => false,
+    clientConfig,
   });
 
   if (!sanityArticle) {
@@ -39,12 +39,14 @@ export default function InfoArticle() {
 
       {/* SEO */}
       <Seo
-        page={{
-          description: sanityArticle.seo?.description,
-          image: sanityArticle.seo?.image,
-          keywords: sanityArticle.seo?.keywords,
+        data={{
+          seo: {
+            description: sanityArticle.seo?.description,
+            title: sanityArticle.seo?.title || sanityArticle?.title,
+          },
           title: sanityArticle.seo?.title || sanityArticle?.title,
         }}
+        type="page"
       />
     </Layout>
   );

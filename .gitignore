@@ -78,3 +78,7 @@ dist
 
 # Mac OS finder cache files
 .DS_Store
+
+# Yalc
+.yalc
+yalc.lock

@@ -1,7 +1,5 @@
 import {Link} from '@shopify/hydrogen/client';
-
-import {useSettingsContext} from '../contexts/SettingsContext.server';
-
+import {useSettingsContext} from '../contexts/SettingsProvider.client';
 import PortableText from './PortableText.client';
 
 export default function Footer() {
@@ -39,6 +37,12 @@ export default function Footer() {
       })}
 
       {data?.footer?.text && <PortableText blocks={data.footer.text} />}
+
+      <div>
+        <span className="bg-violet-600 inline-flex items-center justify-center leading-none mr-2 px-2 py-1 rounded text-violet-100 text-xs">
+          Hydrogen 0.11.1
+        </span>
+      </div>
     </footer>
   );
 }
