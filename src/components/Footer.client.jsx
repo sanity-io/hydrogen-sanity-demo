@@ -39,7 +39,7 @@ export default function Footer() {
       {data?.footer?.text && <PortableText blocks={data.footer.text} />}
 
       <div>
-        <span className="bg-violet-600 inline-flex items-center justify-center leading-none mr-2 px-2 py-1 rounded text-violet-100 text-xs">
+        <span className="bg-gray-500 inline-flex items-center justify-center leading-none mr-2 px-2 py-1 rounded text-gray-100 text-xs">
           Hydrogen 0.11.1
         </span>
       </div>
