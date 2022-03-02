@@ -15,6 +15,7 @@ import ProductOptions from './ProductOptions.client';
 
 const ProductDetailsContent = ({product}) => {
   const {selectedVariant} = useProduct();
+
   return (
     <div className="p-4">
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
@@ -55,22 +56,12 @@ const ProductDetailsContent = ({product}) => {
               <ProductPrice
                 className="font-medium text-gray-900"
                 variantId={selectedVariant.id}
-              >
-                {({currencyCode, amount, currencyNarrowSymbol}) => {
-                  return (
-                    <span>{`${currencyCode} ${currencyNarrowSymbol}${amount}`}</span>
-                  );
-                }}
-              </ProductPrice>
+              />
               <ProductPrice
                 className="text-gray-400 line-through"
                 priceType="compareAt"
                 variantId={selectedVariant.id}
-              >
-                {({amount, currencyNarrowSymbol}) => {
-                  return <span>{`${currencyNarrowSymbol}${amount}`}</span>;
-                }}
-              </ProductPrice>
+              />
             </div>
 
             {/* Product options */}

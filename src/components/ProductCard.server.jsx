@@ -59,10 +59,7 @@ const ProductCard = (props) => {
           </LinkProduct>
         </div>
         <div className="flex items-center">
-          <ProductPrice
-            className="text-gray-900"
-            variantId={currentVariant.id}
-          />
+          <ProductPrice className="text-gray-900" />
           <ProductPrice
             className="ml-1 text-gray-400 line-through"
             priceType="compareAt"

@@ -4,7 +4,7 @@ import {Link, useServerState} from '@shopify/hydrogen/client';
  * A simple wrapper for Hydrogen's `<Link />` component.
  *
  * @param {string}  props.handle - The handle of the product in Shopify
- * @param {string}  [props.variantId] - Unencoded variant ID.
+ * @param {string}  [props.variantId] - The 'raw' product variant number.
  */
 const LinkProduct = (props) => {
   const {children, className, handle, onClick, variantId} = props;
