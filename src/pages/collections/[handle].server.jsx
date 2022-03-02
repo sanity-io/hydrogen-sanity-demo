@@ -6,6 +6,7 @@ import clientConfig from '../../../sanity.config';
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
 import ProductListing from '../../components/ProductListing.server';
+import SeoImage from '../../components/SeoImage.client';
 import {COLLECTION_PAGE} from '../../fragments/collectionPage';
 
 export default function Collection({params}) {
@@ -67,6 +68,10 @@ export default function Collection({params}) {
         }}
         type="page"
       />
+      {/* Open Graph image tags */}
+      {sanityCollection?.seo?.image && (
+        <SeoImage image={sanityCollection.seo.image} />
+      )}
     </Layout>
   );
 }

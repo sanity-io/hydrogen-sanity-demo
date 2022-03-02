@@ -8,6 +8,7 @@ import ProductDetails from '../../components/ProductDetails.client';
 import ProductsProvider from '../../contexts/ProductsProvider.client';
 import {PRODUCT_PAGE} from '../../fragments/productPage';
 import {getProductVariant} from '../../utils/getProductVariant';
+import sanityImageSeo from '../../utils/sanityImageSeo';
 
 export default function Product(props) {
   const {handle} = props.params;
@@ -46,8 +47,7 @@ export default function Product(props) {
         <Seo
           data={{
             ...product.storefront,
-            // TODO: add seo image, if present
-            featuredImage: {},
+            featuredImage: sanityImageSeo(sanityProduct?.seo?.image),
             seo: {
               description: sanityProduct.seo?.description,
               title: sanityProduct.seo?.title || sanityProduct?.store?.title,

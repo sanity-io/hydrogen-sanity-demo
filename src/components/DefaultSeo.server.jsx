@@ -3,6 +3,7 @@ import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import clientConfig from '../../sanity.config';
 import {IMAGE} from '../fragments/image';
+import SeoImage from './SeoImage.client';
 
 export default function DefaultSeo() {
   const {sanityData: sanitySeo} = useSanityQuery({
@@ -17,12 +18,11 @@ export default function DefaultSeo() {
   }
 
   return (
-    <Seo
-      data={{
-        title: sanitySeo?.title,
-      }}
-      type="defaultSeo"
-    />
+    <>
+      <Seo data={{title: sanitySeo?.title}} type="defaultSeo" />
+      {/* Open Graph image tags */}
+      {sanitySeo?.image && <SeoImage image={sanitySeo.image} />}
+    </>
   );
 }
 

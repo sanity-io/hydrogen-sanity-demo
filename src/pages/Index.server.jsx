@@ -10,6 +10,7 @@ import Layout from '../components/Layout.server';
 import NotFound from '../components/NotFound.server';
 import PortableText from '../components/PortableText.client';
 import ProductListing from '../components/ProductListing.server';
+import SeoImage from '../components/SeoImage.client';
 import ProductsProvider from '../contexts/ProductsProvider.client';
 import {IMAGE} from '../fragments/image';
 import {PORTABLE_TEXT} from '../fragments/portableText';
@@ -90,6 +91,8 @@ export default function Index() {
           }}
           type="page"
         />
+        {/* Open Graph image tags */}
+        {sanityPage?.seo?.image && <SeoImage image={sanityPage.seo.image} />}
       </Layout>
     </ProductsProvider>
   );

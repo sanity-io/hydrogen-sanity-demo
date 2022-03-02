@@ -47,6 +47,6 @@ const QUERY = groq`
       links[] {
         ${LINKS}
       }
-    }
+    },
   }
 `;

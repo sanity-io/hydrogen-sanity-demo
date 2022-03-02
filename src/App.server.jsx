@@ -2,7 +2,6 @@ import {ShopifyProvider} from '@shopify/hydrogen';
 import renderHydrogen from '@shopify/hydrogen/entry-server';
 import {Suspense} from 'react';
 import shopifyConfig from '../shopify.config';
-import DefaultSeo from './components/DefaultSeo.server';
 import LoadingFallback from './components/LoadingFallback';
 import Main from './components/Main.server';
 import CartProvider from './contexts/CartProvider.client';
@@ -12,7 +11,6 @@ function App({log, pages, ...serverState}) {
     <Suspense fallback={<LoadingFallback />}>
       <ShopifyProvider shopifyConfig={shopifyConfig}>
         <CartProvider>
-          <DefaultSeo />
           <Main log={log} pages={pages} serverState={serverState} />
         </CartProvider>
       </ShopifyProvider>

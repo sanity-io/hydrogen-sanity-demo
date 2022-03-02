@@ -6,6 +6,7 @@ import clientConfig from '../../sanity.config';
 import Layout from '../components/Layout.server';
 import NotFound from '../components/NotFound.server';
 import PortableText from '../components/PortableText.client';
+import SeoImage from '../components/SeoImage.client';
 import {PORTABLE_TEXT} from '../fragments/portableText';
 import {SEO} from '../fragments/seo';
 
@@ -48,6 +49,10 @@ export default function InfoArticle({params}) {
         }}
         type="page"
       />
+      {/* Open Graph image tags */}
+      {sanityArticle?.seo?.image && (
+        <SeoImage image={sanityArticle.seo.image} />
+      )}
     </Layout>
   );
 }
