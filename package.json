@@ -37,7 +37,7 @@
     "@heroicons/react": "^1.0.5",
     "@sanity/block-content-to-react": "^3.0.0",
     "@sanity/image-url": "^1.0.1",
-    "@shopify/hydrogen": "0.11.1",
+    "@shopify/hydrogen": "~0.11.1",
     "@tailwindcss/aspect-ratio": "^0.3.0",
     "@tippyjs/react": "^4.2.6",
     "body-parser": "^1.19.1",

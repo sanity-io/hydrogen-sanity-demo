@@ -1,6 +1,6 @@
 # Hydrogen starter with Sanity
 
-:warning: **Hydrogen is in developer preview and undergoing frequent breaking changes. This demo is currently locked to `@shopify/hydrogen ~= 0.8.x`.** :warning:
+:warning: **Hydrogen is in developer preview and undergoing frequent changes. This demo is compatible with `@shopify/hydrogen ~= 0.11.x`.** :warning:
 
 [Live demo][hydrogen-sanity-demo]
 
@@ -77,6 +77,13 @@ For this reason, we provide a [`useSanityQuery`][sanity-hydrogen-plugin] hook (f
 // Import the hook
 import useSanityQuery from '../utils/query/useSanityQuery';
 
+// Point to your Sanity project and dataset
+const clientConfig = {
+  projectId: 'yourSanityProjectId',
+  dataset: 'production',
+  apiVersion: 'v2022-01-01',
+};
+
 // Query your data from Sanity as you would normally, making sure this query returns any
 // referenced Shopify product IDs (keyed to either `_ref` or `_id`).
 const {sanityData, shopifyProducts} = useSanityQuery({
@@ -91,6 +98,7 @@ const {sanityData, shopifyProducts} = useSanityQuery({
     }
   `,
   params: {homeId: 'homepage'},
+  clientConfig,
 });
 
 // And if prefer to use GraphQL:
@@ -111,6 +119,7 @@ const {sanityData, shopifyProducts} = useSanityGraphQLQuery({
     }
   `,
   variables: {homeId: 'homepage'},
+  clientConfig,
 });
 ```
 
