@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import useEmblaCarousel from 'embla-carousel-react';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import sanityConfig from '../../sanity.config';
 import LinkProduct from './LinkProduct.client';
 import SanityImage from './SanityImage.client';
@@ -18,12 +18,12 @@ const GalleryCarousel = (props) => {
     emblaApi.scrollTo(index);
   };
 
-  const handleSelected = () => {
+  const handleSelected = useCallback(() => {
     if (!emblaApi) {
       return;
     }
     setSelectedIndex(emblaApi.selectedScrollSnap());
-  };
+  }, [emblaApi]);
 
   useEffect(() => {
     if (emblaApi) {
@@ -35,13 +35,13 @@ const GalleryCarousel = (props) => {
         emblaApi.off('select', handleSelected);
       }
     };
-  }, [emblaApi]);
+  }, [emblaApi, handleSelected]);
 
   return (
     <div className="embla">
-      <div className="embla__viewport relative" ref={viewportRef}>
-        <div className="embla__container">
-          {gallery.map((link, index) => {
+      <div className="embla-viewport relative" ref={viewportRef}>
+        <div className="embla-container">
+          {gallery.map((link) => {
             const image = link.image;
 
             if (!image) {
@@ -49,8 +49,8 @@ const GalleryCarousel = (props) => {
             }
 
             return (
-              <div className="embla__slide" key={link?._key}>
-                <div className="embla__slide__inner">
+              <div className="embla-slide" key={link?._key}>
+                <div className="embla-slide-inner">
                   <div className="aspect-w-16 aspect-h-9 relative w-full">
                     <SanityImage
                       alt={image?.altText}
@@ -101,6 +101,7 @@ const GalleryCarousel = (props) => {
       <div className="flex gap-1 justify-center w-full">
         {gallery.map((link, index) => {
           return (
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
             <div
               className={clsx([
                 'px-1 py-4',

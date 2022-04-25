@@ -5,12 +5,6 @@ export default function ProductOptions() {
   const {options, setSelectedOption, selectedOptions, selectedVariant} =
     useProduct();
 
-  // Display nothing if we only have one product option with less than one value
-  // (typically a product with only a default variant)
-  if (options.length === 1 && options?.[0]?.values.length <= 1) {
-    return null;
-  }
-
   // Append query on variant change
   useEffect(() => {
     // Storefront product variant IDs can either be an encoded base64 string or GID.
@@ -23,15 +17,23 @@ export default function ProductOptions() {
       // If variant ID is not a GID, try decode
       try {
         gid = window.atob(selectedVariant?.id);
-      } catch (err) {}
+      } catch (err) {
+        //
+      }
     }
 
     // Extract 'raw' variant ID (number) and modify history
-    const variantIdRaw = gid?.match(/[^\/]+$/i)[0];
+    const variantIdRaw = gid?.match(/[^/]+$/i)[0];
     if (variantIdRaw) {
       window.history.replaceState({}, '', `?variant=${variantIdRaw}`);
     }
   }, [selectedVariant?.id]);
+
+  // Display nothing if we only have one product option with less than one value
+  // (typically a product with only a default variant)
+  if (options.length === 1 && options?.[0]?.values.length <= 1) {
+    return null;
+  }
 
   return (
     <>

@@ -24,47 +24,33 @@ strong {
   position: relative;
 }
 
-.embla__viewport {
+.embla-viewport {
   overflow: hidden;
   width: 100%;
 }
 
-.embla__viewport.is-draggable {
+.embla-viewport.is-draggable {
   cursor: move;
   cursor: grab;
 }
 
-.embla__viewport.is-dragging {
+.embla-viewport.is-dragging {
   cursor: grabbing;
 }
 
-.embla__container {
+.embla-container {
   display: flex;
   user-select: none;
   -webkit-touch-callout: none;
-  -khtml-user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
 
-.embla__slide {
+.embla-slide {
   position: relative;
   min-width: 100%;
 }
 
-.embla__slide__inner {
+.embla-slide-inner {
   position: relative;
   overflow: hidden;
-  /* height: 190px; */
-}
-
-.embla__slide__img {
-  position: absolute;
-  display: block;
-  top: 50%;
-  left: 50%;
-  width: auto;
-  min-height: 100%;
-  min-width: 100%;
-  max-width: none;
-  transform: translate(-50%, -50%);
 }

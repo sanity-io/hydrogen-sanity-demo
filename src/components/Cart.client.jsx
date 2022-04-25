@@ -25,6 +25,7 @@ export default function Cart() {
   return (
     <>
       {/* Overlay */}
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
       <div
         className={`z-50 fixed top-0 bottom-0 left-0 right-0 bg-black transition-opacity duration-300 ${
           isCartOpen ? 'opacity-20' : 'opacity-0 pointer-events-none'
@@ -44,6 +45,7 @@ export default function Cart() {
             {/* Header */}
             <header className="bg-white p-4 h-20 border-b border-black flex flex-shrink-0 items-start justify-between">
               <CartIcon />
+              {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
               <span className="cursor-pointer font-medium" onClick={toggleCart}>
                 Close
               </span>

@@ -49,7 +49,6 @@ const ProductDetailsContent = ({product}) => {
           className="my-4 md:my-0 md:row-start-auto max-w-md flex flex-col gap-6 row-start-1"
           aria-label="Product details"
         >
-          {/* eslint-disable-next-line @shopify/jsx-prefer-fragment-wrappers */}
           <div>
             <ProductTitle className="text-gray-900 font-medium" />
             <div className="gap-1">

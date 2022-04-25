@@ -20,7 +20,7 @@ function encode(type, id, params = {}) {
 
   return typeof window === 'undefined'
     ? Buffer.from(full, 'utf-8').toString('base64')
-    : btoa(full); // eslint-disable-line no-undef
+    : btoa(full);
 }
 
 /**

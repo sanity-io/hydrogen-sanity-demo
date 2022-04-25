@@ -6,18 +6,18 @@ import LoadingFallback from './components/LoadingFallback';
 import Main from './components/Main.server';
 import CartProvider from './contexts/CartProvider.client';
 
-function App({log, pages, ...serverState}) {
+function App({routes, ...serverProps}) {
   return (
     <Suspense fallback={<LoadingFallback />}>
       <ShopifyProvider shopifyConfig={shopifyConfig}>
         <CartProvider>
-          <Main log={log} pages={pages} serverState={serverState} />
+          <Main routes={routes} serverProps={serverProps} />
         </CartProvider>
       </ShopifyProvider>
     </Suspense>
   );
 }
 
-const pages = import.meta.globEager('./pages/**/*.server.[jt](s|sx)');
+const routes = import.meta.globEager('./routes/**/*.server.[jt](s|sx)');
 
-export default renderHydrogen(App, {pages});
+export default renderHydrogen(App, {shopifyConfig, routes});

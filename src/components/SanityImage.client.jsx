@@ -122,6 +122,7 @@ const SanityImage = (props) => {
   urlDefault = urlDefault.url();
 
   return (
+    // eslint-disable-next-line hydrogen/prefer-image-component, jsx-a11y/alt-text
     <img
       {...rest}
       decoding="async"
