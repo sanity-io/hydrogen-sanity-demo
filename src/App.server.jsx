@@ -6,12 +6,12 @@ import LoadingFallback from './components/LoadingFallback';
 import Main from './components/Main.server';
 import CartProvider from './contexts/CartProvider.client';
 
-function App({routes, ...serverProps}) {
+function App({routes}) {
   return (
     <Suspense fallback={<LoadingFallback />}>
       <ShopifyProvider shopifyConfig={shopifyConfig}>
         <CartProvider>
-          <Main routes={routes} serverProps={serverProps} />
+          <Main routes={routes} />
         </CartProvider>
       </ShopifyProvider>
     </Suspense>

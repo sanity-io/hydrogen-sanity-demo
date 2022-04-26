@@ -2,9 +2,9 @@ import {Seo} from '@shopify/hydrogen';
 import clsx from 'clsx';
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
-import React from 'react';
+import React, {Suspense} from 'react';
 import clientConfig from '../../sanity.config';
-import CollectionCard from '../components/CollectionCard.client';
+import CollectionCard from '../components/CollectionCard.server';
 import GalleryCarousel from '../components/GalleryCarousel.client';
 import Layout from '../components/Layout.server';
 import NotFound from '../components/NotFound.server';
@@ -34,7 +34,9 @@ export default function Index() {
           {/* Intro */}
           {sanityPage?.intro && (
             <div className="max-w-3xl p-4">
-              <PortableText blocks={sanityPage.intro} />
+              <Suspense fallback={null}>
+                <PortableText blocks={sanityPage.intro} />
+              </Suspense>
             </div>
           )}
 
@@ -63,7 +65,9 @@ export default function Index() {
 
           {/* Gallery */}
           {sanityPage?.gallery && (
-            <GalleryCarousel gallery={sanityPage?.gallery} />
+            <Suspense fallback={null}>
+              <GalleryCarousel gallery={sanityPage?.gallery} />
+            </Suspense>
           )}
 
           {/* Divider */}

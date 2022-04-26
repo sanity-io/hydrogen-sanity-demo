@@ -7,6 +7,7 @@ import {
   ProductTitle,
   useProduct,
 } from '@shopify/hydrogen/client';
+import {useEffect, useState} from 'react';
 import ButtonSelectedVariantAddToCart from './ButtonSelectedVariantAddToCart.client';
 import ButtonSelectedVariantBuyNow from './ButtonSelectedVariantBuyNow.client';
 import PortableText from './PortableText.client';
@@ -15,6 +16,12 @@ import ProductOptions from './ProductOptions.client';
 
 const ProductDetailsContent = ({product}) => {
   const {selectedVariant} = useProduct();
+  const [disclosureVisible, setDisclosureVisible] = useState(false);
+
+  // HACK: temporarily render disclosure buttons post-mount to prevent hydration issues with @headlessui/react
+  useEffect(() => {
+    setDisclosureVisible(true);
+  }, []);
 
   return (
     <div className="p-4">
@@ -76,27 +83,28 @@ const ProductDetailsContent = ({product}) => {
 
             {/* Custom sections */}
             <div className="my-4">
-              {product?.sections?.map((section) => (
-                <Disclosure key={section?._key}>
-                  {({open}) => (
-                    <>
-                      <Disclosure.Button className="border-b border-gray-400 flex font-medium items-center justify-between text-md py-2 w-full">
-                        <span>{section?.title}</span>
-                        <ChevronUpIcon
-                          className={`${
-                            open ? 'transform rotate-180' : ''
-                          } w-5 h-5 scale-75 text-black`}
-                        />
-                      </Disclosure.Button>
-                      <Disclosure.Panel className="mt-2 text-gray-600 text-sm">
-                        {section?.body && (
-                          <PortableText blocks={section.body} />
-                        )}
-                      </Disclosure.Panel>
-                    </>
-                  )}
-                </Disclosure>
-              ))}
+              {disclosureVisible &&
+                product?.sections?.map((section) => (
+                  <Disclosure key={section?._key}>
+                    {({open}) => (
+                      <>
+                        <Disclosure.Button className="border-b border-gray-400 flex font-medium items-center justify-between text-md py-2 w-full">
+                          <span>{section?.title}</span>
+                          <ChevronUpIcon
+                            className={`${
+                              open ? 'transform rotate-180' : ''
+                            } w-5 h-5 scale-75 text-black`}
+                          />
+                        </Disclosure.Button>
+                        <Disclosure.Panel className="mt-2 text-gray-600 text-sm">
+                          {section?.body && (
+                            <PortableText blocks={section.body} />
+                          )}
+                        </Disclosure.Panel>
+                      </>
+                    )}
+                  </Disclosure>
+                ))}
             </div>
           </div>
         </section>

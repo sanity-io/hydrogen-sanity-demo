@@ -2,13 +2,13 @@ import {Seo} from '@shopify/hydrogen';
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import React from 'react';
-import clientConfig from '../../sanity.config';
-import Layout from '../components/Layout.server';
-import NotFound from '../components/NotFound.server';
-import PortableText from '../components/PortableText.client';
-import SeoImage from '../components/SeoImage.client';
-import {PORTABLE_TEXT} from '../fragments/portableText';
-import {SEO} from '../fragments/seo';
+import clientConfig from '../../../sanity.config';
+import Layout from '../../components/Layout.server';
+import NotFound from '../../components/NotFound.server';
+import PortableText from '../../components/PortableText.client';
+import SeoImage from '../../components/SeoImage.client';
+import {PORTABLE_TEXT} from '../../fragments/portableText';
+import {SEO} from '../../fragments/seo';
 
 export default function InfoArticle({params}) {
   const {handle} = params;

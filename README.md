@@ -1,6 +1,6 @@
 # Hydrogen starter with Sanity
 
-:warning: **Hydrogen is in developer preview and undergoing frequent changes. This demo is compatible with `@shopify/hydrogen ~= 0.12.x`.** :warning:
+:warning: **Hydrogen is in developer preview and undergoing frequent changes. This demo is compatible with `@shopify/hydrogen ~= 0.13.x`.** :warning:
 
 [Live demo][hydrogen-sanity-demo]
 

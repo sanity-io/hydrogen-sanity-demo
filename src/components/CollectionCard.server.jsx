@@ -1,4 +1,5 @@
 import {Link} from '@shopify/hydrogen/client';
+import {Suspense} from 'react';
 import sanityConfig from '../../sanity.config';
 import SanityImage from './SanityImage.client';
 
@@ -14,17 +15,19 @@ const CollectionCard = (props) => {
           <div className="bg-gray-200 flex flex items-center justify-center">
             {/* Image */}
             {collection.image && (
-              <SanityImage
-                alt={collection.image?.altText}
-                crop={collection.image?.crop}
-                dataset={sanityConfig.dataset}
-                hotspot={collection.image?.hotspot}
-                layout="fill"
-                objectFit="cover"
-                projectId={sanityConfig.projectId}
-                sizes={['100vw', null, '50vw']}
-                src={collection.image?.asset._ref}
-              />
+              <Suspense fallback={null}>
+                <SanityImage
+                  alt={collection.image?.altText}
+                  crop={collection.image?.crop}
+                  dataset={sanityConfig.dataset}
+                  hotspot={collection.image?.hotspot}
+                  layout="fill"
+                  objectFit="cover"
+                  projectId={sanityConfig.projectId}
+                  sizes={['100vw', null, '50vw']}
+                  src={collection.image?.asset._ref}
+                />
+              </Suspense>
             )}
 
             {/* Overlay */}

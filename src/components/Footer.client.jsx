@@ -40,7 +40,7 @@ export default function Footer() {
 
       <div>
         <span className="bg-gray-500 inline-flex items-center justify-center leading-none mr-2 px-2 py-1 rounded text-gray-100 text-xs">
-          Hydrogen ~0.12.0
+          Hydrogen 0.13.2
         </span>
       </div>
     </footer>

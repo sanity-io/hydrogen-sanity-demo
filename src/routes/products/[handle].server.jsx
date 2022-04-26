@@ -42,7 +42,6 @@ export default function Product(props) {
           initialVariantId={currentVariant?.id}
           product={product}
         />
-
         {/* SEO */}
         <Seo
           data={{

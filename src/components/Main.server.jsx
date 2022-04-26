@@ -1,4 +1,4 @@
-import {FileRoutes, Router} from '@shopify/hydrogen';
+import {FileRoutes, Router, Route} from '@shopify/hydrogen';
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import clientConfig from '../../sanity.config';
@@ -8,9 +8,7 @@ import {PORTABLE_TEXT} from '../fragments/portableText';
 import DefaultSeo from './DefaultSeo.server';
 import NotFound from './NotFound.server';
 
-export default function Main(props) {
-  const {routes, serverProps} = props;
-
+export default function Main({routes}) {
   const {sanityData: sanitySettings} = useSanityQuery({
     query: QUERY,
     // No need to query Shopify product data ✨
@@ -22,11 +20,9 @@ export default function Main(props) {
     <>
       <DefaultSeo />
       <SettingsProvider value={sanitySettings}>
-        <Router
-          fallback={<NotFound response={serverProps.response} />}
-          serverProps={serverProps}
-        >
+        <Router>
           <FileRoutes routes={routes} />
+          <Route path="*" page={<NotFound />} />
         </Router>
       </SettingsProvider>
     </>

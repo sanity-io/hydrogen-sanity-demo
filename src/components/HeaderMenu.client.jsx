@@ -2,6 +2,7 @@ import {Popover} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/outline';
 import {Link} from '@shopify/hydrogen/client';
 import clsx from 'clsx';
+import {useEffect, useState} from 'react';
 
 const renderLinks = (links, close) => {
   return links?.map((link) => {
@@ -72,10 +73,16 @@ const renderLinks = (links, close) => {
 
 export default function HeaderMenu(props) {
   const {links} = props;
+  const [linksVisible, setLinksVisible] = useState(false);
+
+  // HACK: temporarily render menu links post-mount to prevent hydration issues with @headlessui/react
+  useEffect(() => {
+    setLinksVisible(true);
+  }, []);
 
   if (!links || links.length === 0) {
     return null;
   }
 
-  return <div className="flex gap-4">{renderLinks(links)}</div>;
+  return <div className="flex gap-4">{linksVisible && renderLinks(links)}</div>;
 }
