@@ -1,10 +1,11 @@
+import {useCart} from '@shopify/hydrogen/client';
 import {useCartUI} from './CartUIProvider.client';
-import CartIconWithItems from './CartIconWithItems.client';
 
 /**
  * A client component that defines the behavior when a user toggles a cart
  */
 export default function CartToggle({handleClick}) {
+  const {totalQuantity} = useCart();
   const cartUI = useCartUI();
 
   if (cartUI == null) {
@@ -23,8 +24,7 @@ export default function CartToggle({handleClick}) {
         handleClick();
       }}
     >
-      <CartIconWithItems />
-      <span className="sr-only">Open cart</span>
+      Cart ({totalQuantity})
     </button>
   );
 }

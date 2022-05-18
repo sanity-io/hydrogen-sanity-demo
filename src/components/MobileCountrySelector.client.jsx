@@ -1,4 +1,4 @@
-import {useCallback, useState, Suspense} from 'react';
+import {useState, Suspense} from 'react';
 import {useCountry} from '@shopify/hydrogen/client';
 import {Listbox} from '@headlessui/react';
 import SpinnerIcon from './SpinnerIcon.client';
@@ -10,20 +10,11 @@ import {ArrowIcon, Countries} from './CountrySelector.client';
  */
 export default function MobileCountrySelector() {
   const [listboxOpen, setListboxOpen] = useState(false);
-  const [selectedCountry] = useCountry();
-
-  const setCountry = useCallback(({isoCode, name}) => {
-    fetch(`/countries`, {
-      body: JSON.stringify({isoCode, name}),
-      method: 'POST',
-    }).then(() => {
-      window.location.reload();
-    });
-  }, []);
+  const [selectedCountry, setSelectedCountry] = useCountry();
 
   return (
-    <div className="mt-8 rounded border border-gray-200 w-full">
-      <Listbox onChange={setCountry}>
+    <div className="mt-8 border border-black w-full">
+      <Listbox onChange={setSelectedCountry}>
         {({open}) => {
           setTimeout(() => setListboxOpen(open));
           return (
@@ -32,7 +23,7 @@ export default function MobileCountrySelector() {
                 {selectedCountry.name}
                 <ArrowIcon isOpen={open} />
               </Listbox.Button>
-              <Listbox.Options className="w-full px-3 pb-2 text-lg overflow-y-auto h-64">
+              <Listbox.Options className="w-full px-3 pb-2 overflow-y-auto h-64">
                 <Listbox.Option
                   disabled
                   className="font-medium px-4 pb-4 w-full text-left uppercase"

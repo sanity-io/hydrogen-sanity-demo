@@ -1,15 +1,15 @@
 import {
+  Seo,
+  useRouteParams,
   useSession,
   useShop,
   useShopQuery,
-  Seo,
-  useRouteParams,
 } from '@shopify/hydrogen';
 import gql from 'graphql-tag';
-
-import ProductDetails from '../../components/ProductDetails.client';
-import NotFound from '../../components/NotFound.server';
 import Layout from '../../components/Layout.server';
+import NotFound from '../../components/NotFound.server';
+import ProductDetails from '../../components/ProductDetails.client';
+import ProductEditorial from '../../components/ProductEditorial';
 
 export default function Product() {
   const {handle} = useRouteParams();
@@ -37,6 +37,7 @@ export default function Product() {
     <Layout>
       <Seo type="product" data={product} />
       <ProductDetails product={product} />
+      <ProductEditorial />
     </Layout>
   );
 }

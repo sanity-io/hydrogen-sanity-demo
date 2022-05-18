@@ -1,9 +1,7 @@
-import {Fragment, useEffect} from 'react';
-import {Link} from '@shopify/hydrogen/client';
 import {FocusTrap} from '@headlessui/react';
-
+import {Link} from '@shopify/hydrogen/client';
+import {Fragment, useEffect} from 'react';
 import MobileCountrySelector from './MobileCountrySelector.client';
-import OpenIcon from './OpenIcon';
 
 let scrollPosition = 0;
 
@@ -32,8 +30,9 @@ export default function MobileNavigation({collections, isOpen, setIsOpen}) {
           onClick={() => setIsOpen((previousIsOpen) => !previousIsOpen)}
         >
           <span className="sr-only">{isOpen ? 'Close' : 'Open'} Menu</span>
-          {isOpen ? <CloseIcon /> : <OpenIcon />}
+          {isOpen ? 'Close' : 'Menu'}
         </button>
+
         {isOpen ? (
           <div className="fixed -left-0 top-20 w-full h-screen z-10 bg-gray-50 px-4 md:px-12 py-7">
             <ul>
@@ -55,26 +54,6 @@ export default function MobileNavigation({collections, isOpen, setIsOpen}) {
         ) : null}
       </OpenFocusTrap>
     </div>
-  );
-}
-
-function CloseIcon() {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 18 18"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M1 17L17 1M1 1L17 17"
-        stroke="black"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   );
 }
 

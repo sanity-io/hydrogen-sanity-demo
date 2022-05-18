@@ -15,14 +15,14 @@ import {Suspense} from 'react';
 /**
  * A server component that defines a structure and organization of a page that can be used in different parts of the Hydrogen app
  */
-export default function Layout({children, hero}) {
+export default function Layout({children}) {
   const {languageCode} = useShop();
 
   const {data} = useShopQuery({
     query: QUERY,
     variables: {
       language: languageCode,
-      numCollections: 3,
+      numCollections: 5,
     },
     cache: CacheHours(),
     preload: '*',
@@ -47,9 +47,9 @@ export default function Layout({children, hero}) {
           <Header collections={collections} storeName={storeName} />
           <Cart />
         </Suspense>
-        <main role="main" id="mainContent" className="relative bg-gray-50">
-          {hero}
-          <div className="mx-auto max-w-7xl p-4 md:py-5 md:px-8">
+
+        <main role="main" id="mainContent" className="relative">
+          <div className="mx-auto max-w-7xl">
             <Suspense fallback={null}>{children}</Suspense>
           </div>
         </main>

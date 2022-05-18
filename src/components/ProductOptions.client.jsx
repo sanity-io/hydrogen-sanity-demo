@@ -1,4 +1,5 @@
 import {useProduct} from '@shopify/hydrogen/client';
+import DebugWrapper from './DebugWrapper';
 
 /**
  * A client component that tracks a selected variant and/or selling plan state, as well as callbacks for modifying the state
@@ -7,14 +8,13 @@ export default function ProductOptions() {
   const {options, setSelectedOption, selectedOptions} = useProduct();
 
   return (
-    <>
+    <DebugWrapper name="Product Options" shopify>
       {options.map(({name, values}) => {
         return (
-          <fieldset key={name} className="mt-8">
-            <legend className="mb-4 text-xl font-medium text-gray-900">
-              {name}
-            </legend>
-            <div className="flex items-center flex-wrap gap-4">
+          <fieldset key={name} className="mt-4">
+            <legend className="mb-2 font-medium">{name}</legend>
+
+            <div className="flex items-center flex-wrap gap-2">
               {values.map((value) => {
                 const checked = selectedOptions[name] === value;
                 const id = `option-${name}-${value}`;
@@ -31,7 +31,7 @@ export default function ProductOptions() {
                       onChange={() => setSelectedOption(name, value)}
                     />
                     <div
-                      className={`p-2 border cursor-pointer rounded text-sm md:text-md ${
+                      className={`p-2 border cursor-pointer text-sm ${
                         checked ? 'bg-gray-900 text-white' : 'text-gray-900'
                       }`}
                     >
@@ -44,6 +44,6 @@ export default function ProductOptions() {
           </fieldset>
         );
       })}
-    </>
+    </DebugWrapper>
   );
 }

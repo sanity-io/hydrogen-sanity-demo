@@ -6,7 +6,7 @@ import {useMoney} from '@shopify/hydrogen/client';
 export default function MoneyCompareAtPrice({money}) {
   const {amount, currencyNarrowSymbol} = useMoney(money);
   return (
-    <span className="line-through text-lg mr-2.5 text-gray-500">
+    <span className="line-through mr-2.5">
       {currencyNarrowSymbol}
       {amount}
     </span>

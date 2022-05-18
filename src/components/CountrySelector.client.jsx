@@ -20,7 +20,7 @@ export default function CountrySelector() {
   }, []);
 
   return (
-    <div className="hidden lg:block">
+    <div className="border border-black hidden lg:block">
       <Listbox onChange={setCountry}>
         {({open}) => {
           setTimeout(() => setListboxOpen(open));
@@ -31,14 +31,8 @@ export default function CountrySelector() {
                 <ArrowIcon isOpen={open} />
               </Listbox.Button>
 
-              <Listbox.Options className="absolute z-10 mt-2">
-                <div className="bg-white p-4 rounded-lg drop-shadow-2xl overflow-y-auto h-64">
-                  <Listbox.Option
-                    disabled
-                    className="p-2 text-md text-left font-medium uppercase"
-                  >
-                    Country
-                  </Listbox.Option>
+              <Listbox.Options className="absolute border border-black z-10 mt-2">
+                <div className="bg-white overflow-y-auto h-64">
                   {listboxOpen && (
                     <Suspense
                       fallback={
@@ -50,10 +44,9 @@ export default function CountrySelector() {
                       <Countries
                         selectedCountry={selectedCountry}
                         getClassName={(active) => {
-                          return (
-                            `w-36 py-2 px-3 flex justify-between items-center text-left cursor-pointer` +
-                            `rounded ${active ? 'bg-gray-200' : null}`
-                          );
+                          return `w-36 p-2 flex justify-between items-center text-left cursor-pointer ${
+                            active ? 'bg-gray-200' : null
+                          }`;
                         }}
                       />
                     </Suspense>
@@ -78,33 +71,12 @@ export function Countries({selectedCountry, getClassName}) {
         {({active}) => (
           <div className={getClassName(active)}>
             {country.name}
-            {isSelected ? <CheckIcon /> : null}
+            {isSelected ? <span>✔</span> : null}
           </div>
         )}
       </Listbox.Option>
     );
   });
-}
-
-export function CheckIcon() {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path
-        d="M7 10L9 12L13 8M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z"
-        stroke="#354CF6"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
 }
 
 export function ArrowIcon({isOpen}) {

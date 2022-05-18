@@ -1,11 +1,10 @@
-import {useEffect, useState} from 'react';
 import {Link} from '@shopify/hydrogen/client';
-
+import {useEffect, useState} from 'react';
 import CartToggle from './CartToggle.client';
 import {useCartUI} from './CartUIProvider.client';
 import CountrySelector from './CountrySelector.client';
-import Navigation from './Navigation.client';
 import MobileNavigation from './MobileNavigation.client';
+import Navigation from './Navigation.client';
 
 /**
  * A client component that specifies the content of the header on the website
@@ -23,9 +22,9 @@ export default function Header({collections, storeName}) {
   }, [isCartOpen]);
 
   return (
-    <header className="h-20 lg:h-32" role="banner">
+    <header className="sticky top-0 z-20" role="banner">
       <div
-        className={`fixed z-20 h-20 lg:h-32 w-full border-b border-gray-200 px-6 md:px-8 md:py-6 lg:pt-8 lg:pb-0 mx-auto bg-white ${
+        className={`h-20 lg:h-auto w-full border-b border-black md:py-6 lg:pt-4 lg:pb-0 mx-auto bg-white ${
           isMobileNavOpen ? '' : 'bg-opacity-95'
         }`}
       >
@@ -35,25 +34,27 @@ export default function Header({collections, storeName}) {
             paddingRight: isCartOpen ? scrollbarWidth : 0,
           }}
         >
-          <div className="text-center w-full flex justify-between items-center">
+          <div className="text-center w-full flex justify-between items-center px-2">
             <CountrySelector />
+
             <MobileNavigation
               collections={collections}
               isOpen={isMobileNavOpen}
               setIsOpen={setIsMobileNavOpen}
             />
-            <Link
-              className="font-black uppercase text-3xl tracking-widest"
-              to="/"
-            >
-              {storeName}
+
+            {/* Logo */}
+            <Link className="font-semibold" to="/">
+              Hydrogen demo
             </Link>
+
             <CartToggle
               handleClick={() => {
                 if (isMobileNavOpen) setIsMobileNavOpen(false);
               }}
             />
           </div>
+
           <Navigation collections={collections} storeName={storeName} />
         </div>
       </div>

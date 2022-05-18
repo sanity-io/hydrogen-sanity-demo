@@ -1,13 +1,13 @@
 import {
-  useShop,
-  useShopQuery,
   flattenConnection,
+  useShop,
   useSession,
+  useShopQuery,
 } from '@shopify/hydrogen';
 import gql from 'graphql-tag';
-
-import Layout from './Layout.server';
 import Button from './Button.client';
+import DebugWrapper from './DebugWrapper';
+import Layout from './Layout.server';
 import ProductCard from './ProductCard';
 
 /**
@@ -15,38 +15,41 @@ import ProductCard from './ProductCard';
  */
 function NotFoundHero() {
   return (
-    <div className="py-10 border-b border-gray-200">
-      <div className="max-w-3xl text-center mx-4 md:mx-auto">
-        <h1 className="font-bold text-4xl md:text-5xl text-gray-900 mb-6 mt-6">
-          We&#39;ve lost this page
-        </h1>
-        <p className="text-lg m-8 text-gray-500">
-          We couldn’t find the page you’re looking for. Try checking the URL or
-          heading back to the home page.
-        </p>
-        <Button
-          className="w-full md:mx-auto md:w-96"
-          url="/"
-          label="Take me to the home page"
-        />
+    <DebugWrapper name="Not found hero">
+      <div>
+        <div>
+          <h1 className="font-medium text-gray-900">
+            We&#39;ve lost this page
+          </h1>
+          <p>
+            We couldn’t find the page you’re looking for. Try checking the URL
+            or heading back to the home page.
+          </p>
+          <Button
+            className="mt-2 w-96"
+            url="/"
+            label="Take me to the home page"
+          />
+        </div>
       </div>
-    </div>
+    </DebugWrapper>
   );
 }
 
 export default function NotFound({response}) {
+  const {countryCode = 'US'} = useSession();
+
   if (response) {
     response.doNotStream();
     response.writeHead({status: 404, statusText: 'Not found'});
   }
 
-  const {countryCode = 'US'} = useSession();
   const {languageCode} = useShop();
 
   const {data} = useShopQuery({
     query: QUERY,
     variables: {
-      countryCode,
+      country: countryCode,
       language: languageCode,
     },
   });
@@ -55,27 +58,26 @@ export default function NotFound({response}) {
   return (
     <Layout>
       <NotFoundHero />
-      <div className="my-8">
-        <p className="mb-8 text-lg text-black font-medium uppercase">
-          Products you might like
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {products.map((product) => (
-            <div key={product.id}>
-              <ProductCard product={product} />
-            </div>
-          ))}
+
+      <DebugWrapper name="Related products" shopify>
+        <div>
+          <p className="font-medium">Products you might like</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {products.map((product) => (
+              <div key={product.id}>
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      </DebugWrapper>
     </Layout>
   );
 }
 
 const QUERY = gql`
-  query NotFoundProductDetails(
-    $countryCode: CountryCode
-    $language: LanguageCode
-  ) @inContext(country: $countryCode, language: $language) {
+  query NotFoundProductDetails($country: CountryCode, $language: LanguageCode)
+  @inContext(country: $country, language: $language) {
     products(first: 3) {
       edges {
         node {

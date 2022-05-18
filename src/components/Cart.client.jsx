@@ -1,22 +1,20 @@
+import {Dialog} from '@headlessui/react';
 import {
-  useCart,
   CartCheckoutButton,
-  Link,
-  CartLines,
-  CartLineImage,
-  CartLineProductTitle,
-  CartLineQuantityAdjustButton,
-  CartLinePrice,
-  CartLineQuantity,
-  CartShopPayButton,
   CartEstimatedCost,
+  CartLineImage,
+  CartLinePrice,
+  CartLineProductTitle,
+  CartLineQuantity,
+  CartLineQuantityAdjustButton,
+  CartLines,
+  CartShopPayButton,
+  Link,
+  useCart,
   useCartLine,
 } from '@shopify/hydrogen/client';
-import {Dialog} from '@headlessui/react';
-
-import {useCartUI} from './CartUIProvider.client';
-import CartIconWithItems from './CartIconWithItems.client';
 import {BUTTON_PRIMARY_CLASSES} from './Button.client';
+import {useCartUI} from './CartUIProvider.client';
 
 /**
  * A client component that contains the merchandise that a customer intends to purchase, and the estimated cost associated with the cart
@@ -36,8 +34,9 @@ export default function Cart() {
       />
       <Dialog open={isCartOpen} onClose={closeCart}>
         <Dialog.Overlay className="fixed z-20 inset-0 bg-gray-50 opacity-75" />
+
         <div
-          className={`absolute flex flex-col md:block z-20 top-0 left-0 right-0 bottom-0 md:top-7 h-full md:left-auto md:right-7 md:bottom-auto md:h-auto md:max-h-[calc(100vh-56px)] bg-gray-50 w-full md:w-[470px] rounded-b-lg shadow-2xl ${
+          className={`absolute bg-white border border-black flex flex-col md:block z-20 top-0 left-0 right-0 bottom-0 md:top-4 h-full md:left-auto md:right-4 md:bottom-auto md:h-auto md:max-h-[calc(100vh-56px)] w-full md:w-[470px] ${
             totalQuantity === 0 ? 'overflow-hidden' : 'overflow-y-scroll'
           }`}
         >
@@ -59,22 +58,17 @@ export default function Cart() {
 function CartHeader() {
   const {closeCart} = useCartUI();
   return (
-    <header className="border-b border-gray-300 bg-white py-3 px-6 flex justify-between items-center sticky top-0">
+    <header className="border-b border-gray-300 p-4 flex justify-end items-center sticky top-0">
       <button type="button" onClick={closeCart}>
-        <ArrowIcon />
-        <span className="sr-only">Close cart</span>
+        <span>Close</span>
       </button>
-      <span className="text-xs text-gray-500">
-        Free shipping on orders over $50
-      </span>
-      <CartIconWithItems />
     </header>
   );
 }
 
 function CartItems() {
   return (
-    <div className="px-7 flex-grow" role="table" aria-label="Shopping cart">
+    <div className="px-4 flex-grow" role="table" aria-label="Shopping cart">
       <div role="row" className="sr-only">
         <div role="columnheader">Product image</div>
         <div role="columnheader">Product details</div>
@@ -90,14 +84,11 @@ function CartItems() {
 function LineInCart() {
   const {merchandise} = useCartLine();
   return (
-    <div
-      role="row"
-      className="flex py-7 border-b last:border-b-0 border-gray-300 text-gray-900"
-    >
+    <div role="row" className="flex py-4 border-b last:border-b-0">
       <div role="cell" className="flex-shrink-0 mr-7">
         <Link to={`/products/${merchandise.product.handle}`}>
           <CartLineImage
-            className="bg-white border border-black border-opacity-5 rounded-xl "
+            className="border border-black"
             options={{width: 98, height: 98, crop: 'center'}}
           />
         </Link>
@@ -110,7 +101,7 @@ function LineInCart() {
           to={`/products/${merchandise.product.handle}`}
           className="hover:underline"
         >
-          <CartLineProductTitle className="text-lg font-medium" />
+          <CartLineProductTitle className="font-medium" />
         </Link>
         <ul className="text-xs space-y-1">
           {merchandise.selectedOptions.map(({name, value}) => (
@@ -140,7 +131,7 @@ function LineInCart() {
             />
           </svg>
         </CartLineQuantityAdjustButton>
-        <CartLinePrice className="text-lg" />
+        <CartLinePrice />
       </div>
     </div>
   );
@@ -196,10 +187,10 @@ function CartItemQuantity() {
 function CartFooter() {
   return (
     <footer className="bottom-0 sticky pb-8 border-t border-black border-opacity-5">
-      <div className="relative h-60 bg-white text-gray-900 p-7">
+      <div className="relative h-60 text-gray-900 p-4">
         <div role="table" aria-label="Cost summary">
           <div role="row" className="flex justify-between">
-            <span className="font-semibold" role="rowheader">
+            <span className="font-medium" role="rowheader">
               Subtotal
             </span>
             <CartEstimatedCost
@@ -209,7 +200,7 @@ function CartFooter() {
             />
           </div>
           <div role="row" className="flex justify-between mt-2">
-            <span className="font-semibold" role="rowheader">
+            <span className="font-medium" role="rowheader">
               Shipping
             </span>
             <span role="cell" className="uppercase">
@@ -217,7 +208,7 @@ function CartFooter() {
             </span>
           </div>
         </div>
-        <CartShopPayButton className="flex my-4 justify-center w-full bg-[#5a31f4] py-2 rounded-md" />
+        <CartShopPayButton className="flex my-4 justify-center w-full bg-[#5a31f4] py-2" />
         <CartCheckoutButton className={BUTTON_PRIMARY_CLASSES}>
           Checkout
         </CartCheckoutButton>
@@ -229,10 +220,8 @@ function CartFooter() {
 function CartEmpty() {
   const {closeCart} = useCartUI();
   return (
-    <div className="p-7 flex flex-col">
-      <p className="mb-4 text-lg text-gray-500 text-center">
-        Your cart is empty
-      </p>
+    <div className="p-4 flex flex-col">
+      <p className="mb-4 text-center">Your cart is empty</p>
       <button
         type="button"
         onClick={closeCart}
@@ -241,25 +230,5 @@ function CartEmpty() {
         Continue Shopping
       </button>
     </div>
-  );
-}
-
-function ArrowIcon() {
-  return (
-    <svg
-      width="20"
-      height="17"
-      viewBox="0 0 20 17"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M12 1.5L19 8.5M19 8.5L12 15.5M19 8.5L1 8.5"
-        stroke="black"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   );
 }
