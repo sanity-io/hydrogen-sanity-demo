@@ -8,10 +8,6 @@ import {
   ProductTitle,
   useProduct,
 } from '@shopify/hydrogen/client';
-import {
-  BUTTON_PRIMARY_CLASSES,
-  BUTTON_SECONDARY_CLASSES,
-} from './Button.client';
 import DebugWrapper from './DebugWrapper';
 import Gallery from './Gallery.client';
 import ProductMetafields from './ProductMetafields.client';
@@ -24,19 +20,11 @@ function ProductActions() {
   return (
     <DebugWrapper name="Product Actions" shopify>
       <div className="space-y-2">
-        <AddToCartButton
-          className={BUTTON_PRIMARY_CLASSES}
-          disabled={isOutOfStock}
-        >
+        <AddToCartButton disabled={isOutOfStock}>
           {isOutOfStock ? 'Out of stock' : 'Add to bag'}
         </AddToCartButton>
         {!isOutOfStock && (
-          <BuyNowButton
-            variantId={selectedVariant.id}
-            className={BUTTON_SECONDARY_CLASSES}
-          >
-            Buy it now
-          </BuyNowButton>
+          <BuyNowButton variantId={selectedVariant.id}>Buy it now</BuyNowButton>
         )}
       </div>
     </DebugWrapper>
@@ -97,7 +85,7 @@ export default function ProductDetails({product}) {
             <ProductOptions />
 
             {/* Product Metafields */}
-            {/* <ProductMetafields /> */}
+            <ProductMetafields />
 
             {/* Actions */}
             <ProductActions />

@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import CartToggle from './CartToggle.client';
 import {useCartUI} from './CartUIProvider.client';
 import CountrySelector from './CountrySelector.client';
+import DebugWrapper from './DebugWrapper';
 import MobileNavigation from './MobileNavigation.client';
 import Navigation from './Navigation.client';
 
@@ -23,41 +24,43 @@ export default function Header({collections, storeName}) {
 
   return (
     <header className="sticky top-0 z-20" role="banner">
-      <div
-        className={`h-20 lg:h-auto w-full border-b border-black md:py-6 lg:pt-4 lg:pb-0 mx-auto bg-white ${
-          isMobileNavOpen ? '' : 'bg-opacity-95'
-        }`}
-      >
+      <DebugWrapper name="header">
         <div
-          className="h-full flex lg:flex-col place-content-between"
-          style={{
-            paddingRight: isCartOpen ? scrollbarWidth : 0,
-          }}
+          className={`h-20 lg:h-auto w-full md:py-6 lg:pt-4 lg:pb-0 mx-auto ${
+            isMobileNavOpen ? '' : 'bg-opacity-95'
+          }`}
         >
-          <div className="text-center w-full flex justify-between items-center px-2">
-            <CountrySelector />
+          <div
+            className="h-full flex lg:flex-col place-content-between"
+            style={{
+              paddingRight: isCartOpen ? scrollbarWidth : 0,
+            }}
+          >
+            <div className="text-center w-full flex justify-between items-center px-2">
+              <CountrySelector />
 
-            <MobileNavigation
-              collections={collections}
-              isOpen={isMobileNavOpen}
-              setIsOpen={setIsMobileNavOpen}
-            />
+              <MobileNavigation
+                collections={collections}
+                isOpen={isMobileNavOpen}
+                setIsOpen={setIsMobileNavOpen}
+              />
 
-            {/* Logo */}
-            <Link className="font-semibold" to="/">
-              Hydrogen demo
-            </Link>
+              {/* Logo */}
+              <Link className="font-semibold" to="/">
+                Hydrogen demo
+              </Link>
 
-            <CartToggle
-              handleClick={() => {
-                if (isMobileNavOpen) setIsMobileNavOpen(false);
-              }}
-            />
+              <CartToggle
+                handleClick={() => {
+                  if (isMobileNavOpen) setIsMobileNavOpen(false);
+                }}
+              />
+            </div>
+
+            <Navigation collections={collections} storeName={storeName} />
           </div>
-
-          <Navigation collections={collections} storeName={storeName} />
         </div>
-      </div>
+      </DebugWrapper>
     </header>
   );
 }

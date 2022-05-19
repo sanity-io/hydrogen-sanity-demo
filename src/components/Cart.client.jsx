@@ -13,7 +13,6 @@ import {
   useCart,
   useCartLine,
 } from '@shopify/hydrogen/client';
-import {BUTTON_PRIMARY_CLASSES} from './Button.client';
 import {useCartUI} from './CartUIProvider.client';
 
 /**
@@ -209,9 +208,7 @@ function CartFooter() {
           </div>
         </div>
         <CartShopPayButton className="flex my-4 justify-center w-full bg-[#5a31f4] py-2" />
-        <CartCheckoutButton className={BUTTON_PRIMARY_CLASSES}>
-          Checkout
-        </CartCheckoutButton>
+        <CartCheckoutButton>Checkout</CartCheckoutButton>
       </div>
     </footer>
   );
@@ -222,11 +219,7 @@ function CartEmpty() {
   return (
     <div className="p-4 flex flex-col">
       <p className="mb-4 text-center">Your cart is empty</p>
-      <button
-        type="button"
-        onClick={closeCart}
-        className={BUTTON_PRIMARY_CLASSES}
-      >
+      <button type="button" onClick={closeCart}>
         Continue Shopping
       </button>
     </div>

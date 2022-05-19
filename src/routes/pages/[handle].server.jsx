@@ -1,47 +1,54 @@
-import {useShop, useShopQuery, Seo} from '@shopify/hydrogen';
-import gql from 'graphql-tag';
-
+import {Seo} from '@shopify/hydrogen';
+import groq from 'groq';
+import {useSanityQuery} from 'hydrogen-plugin-sanity';
+import clientConfig from '../../../sanity.config';
+import DebugWrapper from '../../components/DebugWrapper';
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
+import PortableText from '../../components/PortableText.client';
+import {PORTABLE_TEXT} from '../../fragments/portableText';
+import {SEO} from '../../fragments/seo';
 
 export default function Page({params}) {
-  const {languageCode} = useShop();
-
   const {handle} = params;
-  const {data} = useShopQuery({
+  const {sanityData: page} = useSanityQuery({
     query: QUERY,
-    variables: {language: languageCode, handle},
+    params: {
+      slug: handle,
+    },
+    // No need to query Shopify product data ✨
+    getProductGraphQLFragment: () => false,
+    clientConfig,
   });
 
-  if (!data.pageByHandle) {
+  if (!page) {
     return <NotFound />;
   }
-
-  const page = data.pageByHandle;
 
   return (
     <Layout>
       <Seo type="page" data={page} />
-      <h1 className="text-2xl font-bold">{page.title}</h1>
-      <div
-        dangerouslySetInnerHTML={{__html: page.body}}
-        className="prose mt-8"
-      />
+      <DebugWrapper name="Page">
+        {/* Title */}
+        <h1 className="font-medium">{page.title}</h1>
+
+        {/* Body */}
+        {page?.body && <PortableText blocks={page.body} className="mt-4" />}
+      </DebugWrapper>
     </Layout>
   );
 }
-
-const QUERY = gql`
-  query PageDetails($language: LanguageCode, $handle: String!)
-  @inContext(language: $language) {
-    pageByHandle(handle: $handle) {
-      title
-      body
-      title
-      seo {
-        description
-        title
-      }
-    }
+const QUERY = groq`
+  *[
+    _type == 'page'
+    && slug.current == $slug
+  ][0]{
+    body[]{
+      ${PORTABLE_TEXT}
+    },
+    seo {
+      ${SEO}
+    },
+    title,
   }
 `;

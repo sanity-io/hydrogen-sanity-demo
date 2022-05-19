@@ -1,6 +1,14 @@
 module.exports = {
   content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
   theme: {
+    fontFamily: {
+      sans: '"DM Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+    },
+    fontWeight: {
+      bold: 700,
+      medium: 500,
+      regular: 400,
+    },
     extend: {
       typography: (theme) => ({
         DEFAULT: {
