@@ -1,4 +1,12 @@
-export default function DebugWrapper({children, name, shopify}) {
+import {ReactNode} from 'react';
+
+type Props = {
+  children?: ReactNode;
+  name: string;
+  shopify?: boolean;
+};
+
+export default function DebugWrapper({children, name, shopify}: Props) {
   const background = shopify ? 'bg-teal-100' : 'bg-red-100';
   const borderColor = shopify ? 'border-teal-500' : 'border-red-500';
   const textColor = shopify ? 'text-teal-500' : 'text-red-500';

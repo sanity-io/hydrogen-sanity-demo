@@ -14,10 +14,12 @@ function App() {
   return (
     <Suspense fallback={<LoadingFallback />}>
       <ShopifyProvider>
+        {/* @ts-expect-error <CartProvider> doesn't require `numCartLines` */}
         <CartProvider>
           <DefaultSeo />
           <Router>
             <FileRoutes />
+            {/* @ts-expect-error <NotFound> doesn't require response */}
             <Route path="*" page={<NotFound />} />
           </Router>
         </CartProvider>
