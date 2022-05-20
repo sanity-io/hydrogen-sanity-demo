@@ -26,13 +26,13 @@ export default function Gallery() {
 
   return (
     <div
-      className="gap-2 flex md:grid md:grid-cols-2 overflow-x-scroll no-scrollbar scroll-snap-x scroll-smooth h-[485px] md:h-auto place-content-start"
+      className="no-scrollbar scroll-snap-x flex h-[485px] place-content-start gap-2 overflow-x-scroll scroll-smooth md:grid md:h-auto md:grid-cols-2"
       tabIndex="-1"
     >
       <Image
         fetchpriority="high"
         data={selectedVariant.image}
-        className="w-[80vw] md:w-full h-full md:h-auto object-cover object-center flex-shrink-0 md:flex-shrink-none snap-start md:col-span-2 border border-black"
+        className="md:flex-shrink-none h-full w-[80vw] flex-shrink-0 snap-start border border-black object-cover object-center md:col-span-2 md:h-auto md:w-full"
       />
       {galleryMedia.map((med) => {
         let extraProps = {};
@@ -45,10 +45,10 @@ export default function Gallery() {
           <MediaFile
             tabIndex="0"
             key={med.id || med.image.id}
-            className="w-[80vw] md:w-auto h-full md:h-auto object-cover object-center transition-all snap-start border border-black flex-shrink-0"
+            className="h-full w-[80vw] flex-shrink-0 snap-start border border-black object-cover object-center transition-all md:h-auto md:w-auto"
             data={med}
             fetchpriority="low"
-            options={{
+            loaderOptions={{
               height: '485',
               crop: 'center',
             }}

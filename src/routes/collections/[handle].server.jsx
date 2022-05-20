@@ -48,12 +48,12 @@ export default function Collection({collectionProductCount = 24, params}) {
         <div dangerouslySetInnerHTML={{__html: collection.descriptionHtml}} />
       </DebugWrapper>
 
-      <p className="text-sm my-5">
+      <p className="my-5 text-sm">
         {products.length} {products.length > 1 ? 'products' : 'product'}
       </p>
 
       <DebugWrapper name="Collection Products" shopify>
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <ul className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {products.map((product) => (
             <li key={product.id}>
               <ProductCard product={product} />

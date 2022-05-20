@@ -43,7 +43,7 @@ const BlockInlineProduct = (props) => {
           initialVariantId={currentVariant.id}
         >
           <div
-            className="bg-white border border-black p-2 text-sm"
+            className="border border-black bg-white p-2 text-sm"
             tabIndex="-1"
             {...attrs}
           >
@@ -61,7 +61,7 @@ const BlockInlineProduct = (props) => {
                 <Image
                   className="my-2 w-full"
                   data={currentVariant.image}
-                  options={{
+                  loaderOptions={{
                     width: 300,
                     height: 250,
                     crop: 'center',
@@ -81,7 +81,7 @@ const BlockInlineProduct = (props) => {
     >
       <span>
         <LinkProduct
-          className="border-dotted duration-300 hover:opacity-60 inline-flex font-medium items-center text-blue-500 whitespace-nowrap"
+          className="inline-flex items-center whitespace-nowrap border-dotted font-medium text-blue-500 duration-300 hover:opacity-60"
           handle={storefrontProduct.handle}
           variantId={product?.variantId}
         >

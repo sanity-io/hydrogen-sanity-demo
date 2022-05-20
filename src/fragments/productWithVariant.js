@@ -1,5 +1,6 @@
 import groq from 'groq';
 
+// TODO: do we need the whole `store` object?
 export const PRODUCT_WITH_VARIANT = groq`
   product->{
     _id,

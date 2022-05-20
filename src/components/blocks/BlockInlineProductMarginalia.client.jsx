@@ -36,7 +36,7 @@ const BlockInlineProductMarginalia = (props) => {
       initialVariantId={currentVariant.id}
     >
       <>
-        <div className="absolute border border-gray-500 left-full ml-10 p-4 top-0 w-48">
+        <div className="absolute left-full top-0 ml-10 w-48 border border-gray-500 p-4">
           <div className="text-sm">
             <LinkProduct
               handle={storefrontProduct.handle}
@@ -50,7 +50,7 @@ const BlockInlineProductMarginalia = (props) => {
             <Image
               className="my-4 w-full"
               data={currentVariant.image}
-              options={{
+              loaderOptions={{
                 crop: 'center',
                 height: 300,
                 width: 300,

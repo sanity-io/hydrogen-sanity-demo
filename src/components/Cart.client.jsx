@@ -14,6 +14,7 @@ import {
   useCartLine,
 } from '@shopify/hydrogen/client';
 import {useCartUI} from './CartUIProvider.client';
+import Button from './Button.client';
 
 /**
  * A client component that contains the merchandise that a customer intends to purchase, and the estimated cost associated with the cart
@@ -26,18 +27,20 @@ export default function Cart() {
     <>
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
       <div
-        className={`z-20 fixed top-0 bottom-0 left-0 right-0 bg-black transition-opacity duration-400 ${
-          isCartOpen ? 'opacity-20' : 'opacity-0 pointer-events-none'
+        className={`duration-400 fixed top-0 bottom-0 left-0 right-0 z-20 bg-black transition-opacity ${
+          isCartOpen ? 'opacity-20' : 'pointer-events-none opacity-0'
         }`}
         onClick={isCartOpen ? closeCart : null}
       />
-      <Dialog open={isCartOpen} onClose={closeCart}>
-        <Dialog.Overlay className="fixed z-20 inset-0 bg-gray-50 opacity-75" />
 
+      <Dialog open={isCartOpen} onClose={closeCart}>
         <div
-          className={`absolute bg-white border border-black flex flex-col md:block z-20 top-0 left-0 right-0 bottom-0 md:top-4 h-full md:left-auto md:right-4 md:bottom-auto md:h-auto md:max-h-[calc(100vh-56px)] w-full md:w-[470px] ${
-            totalQuantity === 0 ? 'overflow-hidden' : 'overflow-y-scroll'
-          }`}
+          aria-hidden="true"
+          className="fixed inset-0 z-20 bg-gray-50 opacity-75"
+        />
+
+        <Dialog.Panel
+          className={`fixed top-0 left-0 right-0 bottom-0 z-20 flex h-full w-full flex-col overflow-y-auto bg-white md:left-auto md:bottom-auto md:block md:w-[470px]`}
         >
           <CartHeader />
           {totalQuantity === 0 ? (
@@ -48,7 +51,7 @@ export default function Cart() {
               <CartFooter />
             </>
           )}
-        </div>
+        </Dialog.Panel>
       </Dialog>
     </>
   );
@@ -57,7 +60,7 @@ export default function Cart() {
 function CartHeader() {
   const {closeCart} = useCartUI();
   return (
-    <header className="border-b border-gray-300 p-4 flex justify-end items-center sticky top-0">
+    <header className="sticky top-0 flex items-center justify-end border-b border-gray-300 p-4">
       <button type="button" onClick={closeCart}>
         <span>Close</span>
       </button>
@@ -67,7 +70,7 @@ function CartHeader() {
 
 function CartItems() {
   return (
-    <div className="px-4 flex-grow" role="table" aria-label="Shopping cart">
+    <div className="flex-grow px-4" role="table" aria-label="Shopping cart">
       <div role="row" className="sr-only">
         <div role="columnheader">Product image</div>
         <div role="columnheader">Product details</div>
@@ -83,18 +86,18 @@ function CartItems() {
 function LineInCart() {
   const {merchandise} = useCartLine();
   return (
-    <div role="row" className="flex py-4 border-b last:border-b-0">
-      <div role="cell" className="flex-shrink-0 mr-7">
+    <div role="row" className="flex border-b py-4 last:border-b-0">
+      <div role="cell" className="mr-7 flex-shrink-0">
         <Link to={`/products/${merchandise.product.handle}`}>
           <CartLineImage
-            className="border border-black"
-            options={{width: 98, height: 98, crop: 'center'}}
+            className="rounded"
+            loaderOptions={{width: 98, height: 98, crop: 'center'}}
           />
         </Link>
       </div>
       <div
         role="cell"
-        className="flex flex-col w-full justify-between items-start flex-grow-1 mr-4"
+        className="flex-grow-1 mr-4 flex w-full flex-col items-start justify-between"
       >
         <Link
           to={`/products/${merchandise.product.handle}`}
@@ -102,7 +105,7 @@ function LineInCart() {
         >
           <CartLineProductTitle className="font-medium" />
         </Link>
-        <ul className="text-xs space-y-1">
+        <ul className="space-y-1 text-xs">
           {merchandise.selectedOptions.map(({name, value}) => (
             <li key={name}>
               {name}: {value}
@@ -111,7 +114,7 @@ function LineInCart() {
         </ul>
         <CartItemQuantity />
       </div>
-      <div role="cell" className="flex flex-col justify-between items-end">
+      <div role="cell" className="flex flex-col items-end justify-between">
         <CartLineQuantityAdjustButton
           adjust="remove"
           aria-label="Remove from cart"
@@ -138,11 +141,11 @@ function LineInCart() {
 
 function CartItemQuantity() {
   return (
-    <div className="flex border rounded border-gray-300 items-center overflow-auto mt-2">
+    <div className="mt-2 flex items-center overflow-auto rounded border border-gray-300">
       <CartLineQuantityAdjustButton
         adjust="decrease"
         aria-label="Decrease quantity"
-        className="p-2 disabled:pointer-events-all disabled:cursor-wait"
+        className="disabled:pointer-events-all p-2 disabled:cursor-wait"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -159,12 +162,12 @@ function CartItemQuantity() {
       </CartLineQuantityAdjustButton>
       <CartLineQuantity
         as="div"
-        className="p-2 text-gray-900 text-xs text-center"
+        className="p-2 text-center text-xs text-gray-900"
       />
       <CartLineQuantityAdjustButton
         adjust="increase"
         aria-label="Increase quantity"
-        className="p-2 text-gray-400 disabled:pointer-events-all disabled:cursor-wait"
+        className="disabled:pointer-events-all p-2 text-gray-400 disabled:cursor-wait"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -185,8 +188,8 @@ function CartItemQuantity() {
 
 function CartFooter() {
   return (
-    <footer className="bottom-0 sticky pb-8 border-t border-black border-opacity-5">
-      <div className="relative h-60 text-gray-900 p-4">
+    <footer className="sticky bottom-0 border-t border-black border-opacity-5 pb-8">
+      <div className="relative h-60 p-4 text-gray-900">
         <div role="table" aria-label="Cost summary">
           <div role="row" className="flex justify-between">
             <span className="font-medium" role="rowheader">
@@ -198,7 +201,7 @@ function CartFooter() {
               className="text-right "
             />
           </div>
-          <div role="row" className="flex justify-between mt-2">
+          <div role="row" className="mt-2 flex justify-between">
             <span className="font-medium" role="rowheader">
               Shipping
             </span>
@@ -207,7 +210,7 @@ function CartFooter() {
             </span>
           </div>
         </div>
-        <CartShopPayButton className="flex my-4 justify-center w-full bg-[#5a31f4] py-2" />
+        <CartShopPayButton className="my-4 flex w-full justify-center bg-[#5a31f4] py-2" />
         <CartCheckoutButton>Checkout</CartCheckoutButton>
       </div>
     </footer>
@@ -217,11 +220,11 @@ function CartFooter() {
 function CartEmpty() {
   const {closeCart} = useCartUI();
   return (
-    <div className="p-4 flex flex-col">
+    <div className="flex flex-col p-4">
       <p className="mb-4 text-center">Your cart is empty</p>
-      <button type="button" onClick={closeCart}>
+      <Button type="button" onClick={closeCart}>
         Continue Shopping
-      </button>
+      </Button>
     </div>
   );
 }

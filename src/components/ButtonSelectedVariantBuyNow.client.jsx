@@ -16,7 +16,7 @@ export default function ButtonSelectedVariantBuyNow(props) {
 
   return (
     <BuyNowButton
-      className={`bg-gray-900 disabled:opacity-20 text-white text-center ${
+      className={`bg-gray-900 text-center text-white disabled:opacity-20 ${
         small ? 'p-3 text-xs' : 'p-4 text-sm'
       } w-full`}
       disabled={!availableForSale}

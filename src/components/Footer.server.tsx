@@ -1,23 +1,27 @@
+import {Block} from '@sanity/types';
 import {Link} from '@shopify/hydrogen';
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import clientConfig from '../../sanity.config';
 import {LINKS} from '../fragments/links';
 import {PORTABLE_TEXT} from '../fragments/portableText';
+import {SanityLink} from '../types';
 import DebugWrapper from './DebugWrapper';
 
 /**
  * A server component that specifies the content of the footer on the website
  */
-export default function Footer({collection, product}) {
-  const {sanityData: footer} = useSanityQuery({
-    query: QUERY,
-    // No need to query Shopify product data ✨
-    getProductGraphQLFragment: () => false,
+export default function Footer() {
+  const {sanityData: footer} = useSanityQuery<{
+    links: SanityLink[];
+    text: Block[];
+  }>({
     clientConfig,
+    getProductGraphQLFragment: () => false,
+    query: QUERY,
   });
 
-  const renderLinks = footer.links.map((link) => {
+  const renderLinks = footer?.links.map((link) => {
     if (link._type === 'linkExternal') {
       return (
         <div key={link._key}>
@@ -49,14 +53,15 @@ export default function Footer({collection, product}) {
     <footer role="contentinfo">
       <DebugWrapper name="Footer">
         <div className="relative">
-          <div className="mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-12 mt-4">
+          <div className="font-bold">(Logo)</div>
+          <div className="mt-4 grid max-w-2xl grid-cols-1 md:grid-cols-2">
             {renderLinks}
           </div>
         </div>
-        <div className="py-4">
-          <p>© {new Date().getFullYear()} Sanity.io</p>
-        </div>
       </DebugWrapper>
+      <div className="py-4 text-sm">
+        <p>© {new Date().getFullYear()} – Store name. All rights reserved.</p>
+      </div>
     </footer>
   );
 }

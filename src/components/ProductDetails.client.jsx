@@ -1,6 +1,4 @@
 import {
-  AddToCartButton,
-  BuyNowButton,
   flattenConnection,
   ProductDescription,
   ProductPrice,
@@ -8,6 +6,8 @@ import {
   ProductTitle,
   useProduct,
 } from '@shopify/hydrogen/client';
+import ButtonSelectedVariantAddToCart from './ButtonSelectedVariantAddToCart.client';
+import ButtonSelectedVariantBuyNow from './ButtonSelectedVariantBuyNow.client';
 import DebugWrapper from './DebugWrapper';
 import Gallery from './Gallery.client';
 import ProductMetafields from './ProductMetafields.client';
@@ -20,12 +20,9 @@ function ProductActions() {
   return (
     <DebugWrapper name="Product Actions" shopify>
       <div className="space-y-2">
-        <AddToCartButton disabled={isOutOfStock}>
-          {isOutOfStock ? 'Out of stock' : 'Add to bag'}
-        </AddToCartButton>
-        {!isOutOfStock && (
-          <BuyNowButton variantId={selectedVariant.id}>Buy it now</BuyNowButton>
-        )}
+        <ButtonSelectedVariantAddToCart available={!isOutOfStock} />
+
+        {!isOutOfStock && <ButtonSelectedVariantBuyNow />}
       </div>
     </DebugWrapper>
   );
@@ -37,7 +34,7 @@ function ProductPrices() {
   return (
     <>
       <ProductPrice
-        className="line-through font-semibold"
+        className="font-semibold line-through"
         priceType="compareAt"
         variantId={product.selectedVariant.id}
       />
@@ -55,7 +52,7 @@ export default function ProductDetails({product}) {
   return (
     <DebugWrapper name="Product Details" shopify>
       <ProductProvider data={product} initialVariantId={initialVariant.id}>
-        <div className="grid grid-cols-1 md:grid-cols-[2fr,1fr] gap-x-8 mb-16">
+        <div className="mb-16 grid grid-cols-1 gap-x-8 md:grid-cols-[2fr,1fr]">
           {/* Mobile */}
           <div className="md:hidden">
             {/* Title */}

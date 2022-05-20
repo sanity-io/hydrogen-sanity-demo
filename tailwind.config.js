@@ -1,6 +1,10 @@
 module.exports = {
   content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
   theme: {
+    borderRadius: {
+      DEFAULT: '4px',
+      full: '9999px',
+    },
     fontFamily: {
       sans: '"DM Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     },

@@ -15,26 +15,26 @@ export default function ProductCard({product}) {
   }
 
   return (
-    <div className="text-md mb-4 relative">
+    <div className="text-md relative mb-4">
       <Link to={`/products/${product.handle}`}>
-        <div className="border border-black mb-2 relative flex items-center justify-center overflow-hidden object-cover h-96">
+        <div className="relative mb-2 flex h-96 items-center justify-center overflow-hidden border border-black object-cover">
           {selectedVariant.image ? (
             <Image
-              className="absolute w-full h-full transition-all duration-500 ease-in-out transform bg-center bg-cover object-center object-contain"
+              className="absolute h-full w-full transform bg-cover bg-center object-contain object-center transition-all duration-500 ease-in-out"
               data={selectedVariant.image}
             />
           ) : null}
 
           {/* Out of stock sticker */}
           {!selectedVariant?.availableForSale && (
-            <div className="absolute top-3 left-3 text-xs bg-black text-white p-2">
+            <div className="absolute top-3 left-3 bg-black p-2 text-xs text-white">
               Out of stock
             </div>
           )}
         </div>
 
         {/* Title */}
-        <span className="font-medium mb-0.5">{product.title}</span>
+        <span className="mb-0.5 font-medium">{product.title}</span>
 
         {/* Vendor */}
         {product.vendor && <p className="mb-0.5">{product.vendor}</p>}

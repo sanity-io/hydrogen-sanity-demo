@@ -1,10 +1,14 @@
 import {useCart} from '@shopify/hydrogen/client';
 import {useCartUI} from './CartUIProvider.client';
 
+type Props = {
+  handleClick?: () => void;
+};
+
 /**
  * A client component that defines the behavior when a user toggles a cart
  */
-export default function CartToggle({handleClick}) {
+export default function CartToggle({handleClick}: Props) {
   const {totalQuantity} = useCart();
   const cartUI = useCartUI();
 
@@ -16,15 +20,17 @@ export default function CartToggle({handleClick}) {
 
   return (
     <button
-      type="button"
       aria-expanded={isCartOpen}
       aria-controls="cart"
+      className="aspect-square w-10 rounded-full bg-indigo-300"
       onClick={() => {
+        // @ts-expect-error cartUI shouldnt return null
         toggleCart();
-        handleClick();
+        handleClick?.();
       }}
+      type="button"
     >
-      Cart ({totalQuantity})
+      {totalQuantity}
     </button>
   );
 }

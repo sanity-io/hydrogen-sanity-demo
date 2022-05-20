@@ -36,7 +36,7 @@ const BlockProduct = (props) => {
       initialVariantId={currentVariant.id}
     >
       <div className="mx-auto my-8">
-        <div className="border border-gray-400 p-4 space-y-4 w-1/2">
+        <div className="w-1/2 space-y-4 border border-gray-400 p-4">
           {/* Product and price */}
           <div>
             <LinkProduct
@@ -52,14 +52,14 @@ const BlockProduct = (props) => {
             <Image
               className="w-full"
               data={currentVariant.image}
-              options={{crop: 'center', width: 500}}
+              loaderOptions={{crop: 'center', width: 500}}
             />
           )}
           <ButtonSelectedVariantAddToCart />
         </div>
         {/* Caption */}
         {props?.node?.caption && (
-          <div className="text-gray-400 text-sm mt-2">
+          <div className="mt-2 text-sm text-gray-400">
             {props?.node?.caption}
           </div>
         )}
