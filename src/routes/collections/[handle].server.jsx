@@ -6,6 +6,7 @@ import {
   useShopQuery,
 } from '@shopify/hydrogen';
 import gql from 'graphql-tag';
+import pluralize from 'pluralize';
 import DebugWrapper from '../../components/DebugWrapper';
 import Layout from '../../components/Layout.server';
 import LoadMoreProducts from '../../components/LoadMoreProducts.client';
@@ -49,7 +50,7 @@ export default function Collection({collectionProductCount = 24, params}) {
       </DebugWrapper>
 
       <p className="my-5 text-sm">
-        {products.length} {products.length > 1 ? 'products' : 'product'}
+        {pluralize('product', products.length, true)}
       </p>
 
       <DebugWrapper name="Collection Products" shopify>

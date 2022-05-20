@@ -15,7 +15,7 @@ export default function CollectionGroupContent({
   products,
 }: Props) {
   return (
-    <div className="mt-24 border border-red-500 p-2">
+    <div className="mt-24 p-2">
       <div className="relative grid grid-cols-2 gap-2">
         {collectionGroup?.collectionLinks?.map((collection, index) => (
           <Link
