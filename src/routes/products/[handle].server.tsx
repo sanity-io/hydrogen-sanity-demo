@@ -41,8 +41,11 @@ export default function ProductRoute() {
   return (
     <Layout>
       <Seo type="product" data={storefrontProduct} />
-      <ProductDetails product={storefrontProduct} />
-      <ProductEditorial product={sanityProduct} />
+      <ProductDetails
+        sanityProduct={sanityProduct}
+        storefrontProduct={storefrontProduct}
+      />
+      <ProductEditorial sanityProduct={sanityProduct} />
     </Layout>
   );
 }

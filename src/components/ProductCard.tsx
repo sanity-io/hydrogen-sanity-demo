@@ -1,14 +1,18 @@
-import {Suspense} from 'react';
 import {Image, Link} from '@shopify/hydrogen';
-
+import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import {Suspense} from 'react';
 import MoneyCompareAtPrice from './MoneyCompareAtPrice.client';
 import MoneyPrice from './MoneyPrice.client';
+
+type Props = {
+  storefrontProduct: Product;
+};
 
 /**
  * A shared component that displays a single product to allow buyers to quickly identify a particular item of interest
  */
-export default function ProductCard({product}) {
-  const selectedVariant = product.variants.edges[0].node;
+export default function ProductCard({storefrontProduct}: Props) {
+  const selectedVariant = storefrontProduct.variants.edges[0].node;
 
   if (selectedVariant == null) {
     return null;
@@ -16,7 +20,7 @@ export default function ProductCard({product}) {
 
   return (
     <div className="text-md relative mb-4">
-      <Link to={`/products/${product.handle}`}>
+      <Link to={`/products/${storefrontProduct.handle}`}>
         <div className="relative mb-2 flex h-96 items-center justify-center overflow-hidden border border-black object-cover">
           {selectedVariant.image ? (
             <Image
@@ -34,10 +38,12 @@ export default function ProductCard({product}) {
         </div>
 
         {/* Title */}
-        <span className="mb-0.5 font-medium">{product.title}</span>
+        <span className="mb-0.5 font-medium">{storefrontProduct.title}</span>
 
         {/* Vendor */}
-        {product.vendor && <p className="mb-0.5">{product.vendor}</p>}
+        {storefrontProduct.vendor && (
+          <p className="mb-0.5">{storefrontProduct.vendor}</p>
+        )}
 
         <div className="flex ">
           {selectedVariant.compareAtPriceV2 && (

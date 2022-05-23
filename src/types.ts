@@ -15,12 +15,27 @@ export type SanityCollectionGroup = {
   title: string;
 };
 
-export type SanityLink = SanityLinkExternal | SanityLinkInternal;
+export type SanityCustomProductOption = SanityCustomProductOptionColor;
+
+interface SanityCustomProductOptionBase {
+  _key: string;
+  title: string;
+}
+export interface SanityCustomProductOptionColor
+  extends SanityCustomProductOptionBase {
+  _type: 'customProductOption.color';
+  colors: {
+    hex: string;
+    title: string;
+  }[];
+}
 
 export type SanityMenuLink =
   | SanityCollectionGroup
   | SanityLinkExternal
   | SanityLinkInternal;
+
+export type SanityLink = SanityLinkExternal | SanityLinkInternal;
 
 export type SanityLinkExternal = {
   _key: string;
@@ -42,6 +57,7 @@ export type SanityProduct = {
   _id: string;
   available: boolean;
   body: Block[];
+  customProductOptions?: SanityCustomProductOption[];
   images?: any;
   slug: string;
   sections?: any;

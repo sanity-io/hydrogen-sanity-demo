@@ -5,6 +5,10 @@ import {
   useShop,
   useShopQuery,
 } from '@shopify/hydrogen';
+import {
+  Collection,
+  Product,
+} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import gql from 'graphql-tag';
 import pluralize from 'pluralize';
 import DebugWrapper from '../../components/DebugWrapper';
@@ -13,12 +17,22 @@ import LoadMoreProducts from '../../components/LoadMoreProducts.client';
 import NotFound from '../../components/NotFound.server';
 import ProductCard from '../../components/ProductCard';
 
-export default function CollectionRoute({collectionProductCount = 24, params}) {
+type Props = {
+  collectionProductCount: number;
+  params: any;
+};
+
+export default function CollectionRoute({
+  collectionProductCount = 24,
+  params,
+}: Props) {
   const {languageCode} = useShop();
   const {countryCode = 'US'} = useSession();
 
   const {handle} = params;
-  const {data} = useShopQuery({
+  const {data} = useShopQuery<{
+    collection: Collection;
+  }>({
     query: QUERY,
     variables: {
       handle,
@@ -30,11 +44,12 @@ export default function CollectionRoute({collectionProductCount = 24, params}) {
   });
 
   if (data?.collection == null) {
+    // @ts-expect-error <NotFound> doesn't require response
     return <NotFound />;
   }
 
   const collection = data.collection;
-  const products = flattenConnection(collection.products);
+  const products = flattenConnection(collection.products) as Product[];
   const hasNextPage = data.collection.products.pageInfo.hasNextPage;
 
   return (
@@ -57,7 +72,7 @@ export default function CollectionRoute({collectionProductCount = 24, params}) {
         <ul className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {products.map((product) => (
             <li key={product.id}>
-              <ProductCard product={product} />
+              <ProductCard storefrontProduct={product} />
             </li>
           ))}
         </ul>

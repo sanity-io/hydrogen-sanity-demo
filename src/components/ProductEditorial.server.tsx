@@ -3,14 +3,14 @@ import DebugWrapper from './DebugWrapper';
 import PortableText from './PortableText.client';
 
 type Props = {
-  product: SanityProduct;
+  sanityProduct: SanityProduct;
 };
 
-export default function ProductEditorial({product}: Props) {
+export default function ProductEditorial({sanityProduct}: Props) {
   return (
     <DebugWrapper name="Product Editorial">
       {/* Body */}
-      {product?.body && <PortableText blocks={product.body} />}
+      {sanityProduct?.body && <PortableText blocks={sanityProduct.body} />}
     </DebugWrapper>
   );
 }

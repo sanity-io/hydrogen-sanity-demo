@@ -34,7 +34,7 @@ export default function CollectionGroupContent({
       <ul className="mt-8 grid grid-cols-1 gap-2 md:grid-cols-2">
         {products?.map((product) => (
           <li key={product.id}>
-            <ProductPill product={product} />
+            <ProductPill storefrontProduct={product} />
           </li>
         ))}
       </ul>

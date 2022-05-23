@@ -40,7 +40,7 @@ const AnnotationProduct = (props) => {
           quantity={mark?.quantity || 1}
           variantId={currentVariant.id}
         >
-          <span className="duration-300 flex font-medium hover:opacity-60 items-center text-blue-500 underline">
+          <span className="flex items-center font-medium text-blue-500 underline duration-300 hover:opacity-60">
             {children}
             {/* TODO: remove */}
             <span>(cart icon)</span>
@@ -52,7 +52,7 @@ const AnnotationProduct = (props) => {
           quantity={mark?.quantity || 1}
           variantId={currentVariant.id}
         >
-          <span className="duration-300 flex font-medium hover:opacity-60 items-center text-blue-500 underline">
+          <span className="flex items-center font-medium text-blue-500 underline duration-300 hover:opacity-60">
             {children}
             {/* TODO: remove */}
             <span>(bolt icon)</span>
