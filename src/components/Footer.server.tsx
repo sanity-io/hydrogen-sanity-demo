@@ -60,7 +60,7 @@ export default function Footer() {
         </div>
       </DebugWrapper>
       <div className="py-4 text-sm">
-        <p>© {new Date().getFullYear()} – Store name. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} – AKVA. All rights reserved.</p>
       </div>
     </footer>
   );

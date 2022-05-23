@@ -7,6 +7,7 @@ import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
 import ProductDetails from '../../components/ProductDetails.client';
 import ProductEditorial from '../../components/ProductEditorial.server';
+import RelatedProducts from '../../components/RelatedProducts.server';
 import {PRODUCT_PAGE} from '../../fragments/productPage';
 import type {SanityProduct} from '../../types';
 
@@ -46,6 +47,9 @@ export default function ProductRoute() {
         storefrontProduct={storefrontProduct}
       />
       <ProductEditorial sanityProduct={sanityProduct} />
+
+      {/* Related products */}
+      <RelatedProducts storefrontProduct={storefrontProduct} />
     </Layout>
   );
 }

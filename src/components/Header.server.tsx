@@ -32,7 +32,7 @@ export default function Header({menuLinks}: Props) {
             {/* Logo */}
             <div className="absolute bottom-0 top-0 left-1/2 flex -translate-x-1/2 items-center">
               <Link className="font-bold" to="/">
-                Store name
+                AKVA
               </Link>
             </div>
 

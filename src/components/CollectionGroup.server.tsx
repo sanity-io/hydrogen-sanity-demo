@@ -6,7 +6,6 @@ import {
 import gql from 'graphql-tag';
 import type {SanityCollectionGroup} from '../types';
 import CollectionGroupDialog from './CollectionGroupDialog.client';
-// import CollectionGroupDialog from './CollectionGroupDialog.client';
 
 type Props = {
   collectionGroup: SanityCollectionGroup;

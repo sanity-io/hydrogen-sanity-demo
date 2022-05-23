@@ -29,12 +29,15 @@ export default function ProductOptions({customProductOptions}: Props) {
             return (
               <ProductOptionsColor
                 customProductOption={customProductOption}
+                key={name}
                 name={name}
                 values={values}
               />
             );
           default:
-            return <ProductOptionsDefault name={name} values={values} />;
+            return (
+              <ProductOptionsDefault key={name} name={name} values={values} />
+            );
         }
       })}
     </DebugWrapper>
