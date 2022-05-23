@@ -14,7 +14,7 @@ import FeaturedCollection from '../components/FeaturedCollection';
 import Layout from '../components/Layout.server';
 import ProductCard from '../components/ProductCard';
 
-export default function Index() {
+export default function IndexRoute() {
   const {countryCode = 'US'} = useSession();
 
   return (
@@ -57,7 +57,7 @@ function SeoForHomepage() {
 }
 
 function BoxFallback() {
-  return <div className="p-12 shadow-xl rounded-xl mb-10 h-40"></div>;
+  return <div className="rounded-xl mb-10 h-40 p-12 shadow-xl"></div>;
 }
 
 function FeaturedProductsBox({country}) {
@@ -82,7 +82,7 @@ function FeaturedProductsBox({country}) {
     <div>
       {featuredProductsCollection ? (
         <DebugWrapper name="Featured Products" shopify>
-          <div className="flex justify-between items-center mb-8 text-md font-medium">
+          <div className="text-md mb-8 flex items-center justify-between font-medium">
             {/* Collection title */}
             <span>{featuredProductsCollection.title}</span>
 
@@ -95,14 +95,14 @@ function FeaturedProductsBox({country}) {
               </Link>
             </span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+          <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {featuredProducts.map((product) => (
               <div key={product.id}>
                 <ProductCard product={product} />
               </div>
             ))}
           </div>
-          <div className="md:hidden text-center">
+          <div className="text-center md:hidden">
             <Link
               to={`/collections/${featuredProductsCollection.handle}`}
               className="text-blue-600"

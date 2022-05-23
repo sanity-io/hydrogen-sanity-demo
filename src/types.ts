@@ -1,3 +1,5 @@
+import {Block} from '@sanity/types';
+
 export type SanityCollection = {
   _id: string;
   slug: string;
@@ -34,4 +36,15 @@ export type SanityLinkInternal = {
   documentType: string;
   slug: string;
   title: string;
+};
+
+export type SanityProduct = {
+  _id: string;
+  available: boolean;
+  body: Block[];
+  images?: any;
+  slug: string;
+  sections?: any;
+  seo?: any;
+  store: Record<string, any>;
 };

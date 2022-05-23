@@ -13,7 +13,7 @@ import LoadMoreProducts from '../../components/LoadMoreProducts.client';
 import NotFound from '../../components/NotFound.server';
 import ProductCard from '../../components/ProductCard';
 
-export default function Collection({collectionProductCount = 24, params}) {
+export default function CollectionRoute({collectionProductCount = 24, params}) {
   const {languageCode} = useShop();
   const {countryCode = 'US'} = useSession();
 

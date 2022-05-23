@@ -1,5 +1,8 @@
 import {flattenConnection, useShopQuery} from '@shopify/hydrogen';
-import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import {
+  Collection,
+  Product,
+} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import gql from 'graphql-tag';
 import type {SanityCollectionGroup} from '../types';
 import CollectionGroupDialog from './CollectionGroupDialog.client';
@@ -7,6 +10,12 @@ import CollectionGroupDialog from './CollectionGroupDialog.client';
 
 type Props = {
   collectionGroup: SanityCollectionGroup;
+};
+
+type ShopifyPayload = {
+  data: {
+    collection: Collection;
+  };
 };
 
 export default function CollectionGroup({collectionGroup}: Props) {
@@ -21,10 +30,10 @@ export default function CollectionGroup({collectionGroup}: Props) {
       numProducts: 6,
     },
     preload: true,
-  });
+  }) as ShopifyPayload;
 
-  const products: Product[] = data?.collection?.products
-    ? flattenConnection(data.collection.products)
+  const products = data?.collection?.products
+    ? (flattenConnection(data.collection.products) as Product[])
     : null;
 
   return (

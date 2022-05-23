@@ -1,11 +1,11 @@
-import {Block} from '@sanity/types';
+import type {Block} from '@sanity/types';
 import {Link} from '@shopify/hydrogen';
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import clientConfig from '../../sanity.config';
 import {LINKS} from '../fragments/links';
 import {PORTABLE_TEXT} from '../fragments/portableText';
-import {SanityLink} from '../types';
+import type {SanityLink} from '../types';
 import DebugWrapper from './DebugWrapper';
 
 /**

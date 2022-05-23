@@ -6,7 +6,7 @@ import ProductPill from './ProductPill';
 type Props = {
   collectionGroup?: SanityCollectionGroup;
   onClose: () => void;
-  products?: Product[];
+  products: Product[] | null;
 };
 
 export default function CollectionGroupContent({

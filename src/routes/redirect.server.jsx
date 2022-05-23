@@ -1,3 +1,3 @@
-export default function Redirect({response}) {
+export default function RedirectRoute({response}) {
   return response.redirect('/products/snowboard');
 }

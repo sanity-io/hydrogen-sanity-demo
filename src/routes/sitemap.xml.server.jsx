@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 
 const MAX_URLS = 250; // the google limit is 50K, however, SF API only allow querying for 250 resources each time
 
-export default function Sitemap({request, response}) {
+export default function SitemapRoute({request, response}) {
   response.doNotStream();
 
   const {languageCode} = useShop();

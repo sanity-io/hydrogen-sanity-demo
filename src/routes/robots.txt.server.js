@@ -4,7 +4,7 @@
  * Learn more: https://developers.google.com/search/docs/advanced/robots/create-robots-txt
  */
 
-export default function RobotsTxt({request, response}) {
+export default function RobotsTxtRoute({request, response}) {
   response.doNotStream();
   response.headers.set('content-type', 'text/plain');
 

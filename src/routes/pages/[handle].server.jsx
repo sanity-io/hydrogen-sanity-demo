@@ -9,7 +9,7 @@ import PortableText from '../../components/PortableText.client';
 import {PORTABLE_TEXT} from '../../fragments/portableText';
 import {SEO} from '../../fragments/seo';
 
-export default function Page({params}) {
+export default function PageRoute({params}) {
   const {handle} = params;
   const {sanityData: page} = useSanityQuery({
     query: QUERY,

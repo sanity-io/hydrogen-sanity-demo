@@ -9,7 +9,7 @@ export default function CollectionGroupDialog({
   products,
 }: {
   collectionGroup: SanityCollectionGroup;
-  products?: Product[];
+  products: Product[] | null;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
