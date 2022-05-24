@@ -20,17 +20,20 @@ export default function ProductPill({storefrontProduct}: Props) {
 
   return (
     <div className="flex" role="row">
-      <div role="cell" className="mr-4 flex-shrink-0">
-        {selectedVariant.image ? (
-          <Image
-            data={selectedVariant.image}
-            loaderOptions={{width: 98, height: 98, crop: 'center'}}
-          />
-        ) : null}
+      <div role="cell" className="relative mr-4 flex-shrink-0">
+        <div className="relative h-20 w-20 bg-gray-100">
+          {selectedVariant.image && (
+            <Image
+              className="absolute inset-0"
+              data={selectedVariant.image}
+              loaderOptions={{width: 100, height: 100, crop: 'center'}}
+            />
+          )}
+        </div>
 
         {/* Out of stock sticker */}
         {!selectedVariant?.availableForSale && (
-          <div className="absolute top-3 left-3 bg-black p-2 text-xs text-white">
+          <div className="absolute top-0 left-0 bg-black p-2 text-xs text-white">
             Out of stock
           </div>
         )}

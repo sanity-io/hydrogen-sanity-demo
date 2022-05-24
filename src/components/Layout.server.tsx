@@ -36,6 +36,7 @@ export default function Layout({children}: Props) {
           Skip to content
         </a>
       </div>
+
       <div className="max-w-screen min-h-screen font-sans text-gray-700">
         {/* TODO: Find out why Suspense needs to be here to prevent hydration errors. */}
         <Suspense fallback={null}>

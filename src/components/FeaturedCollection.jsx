@@ -7,21 +7,18 @@ import DebugWrapper from './DebugWrapper';
 export default function FeaturedCollection({collection}) {
   return collection ? (
     <DebugWrapper name="Featured Collection" shopify>
-      <div className="gap-2 grid grid-cols-1 lg:grid-cols-2 items-center overflow-hidden">
+      <div className="grid grid-cols-1 items-center gap-2 overflow-hidden lg:grid-cols-2">
         {collection.image ? (
           <Image width="622" height="465" data={collection.image} />
         ) : null}
         <div className="py-10 lg:py-0">
           {/* Title */}
-          <h2 className="font-medium mb-5">{collection.title}</h2>
+          <h2 className="mb-5 font-medium">{collection.title}</h2>
 
           {/* Description */}
           <p className="mb-6">{collection.description}</p>
 
-          <Link
-            to={`/collections/${collection.handle}`}
-            className="inline-block bg-gray-900 text-white py-4 px-16"
-          >
+          <Link className="btn" to={`/collections/${collection.handle}`}>
             Shop Collection
           </Link>
         </div>

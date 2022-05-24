@@ -4,21 +4,24 @@ import {BuyNowButton, useProduct} from '@shopify/hydrogen/client';
  * Wrapper around Hydrogen's `<BuyNowButton />` which will
  * display a disabled 'sold out' button if variant is not available for sale
  */
-export default function ButtonSelectedVariantBuyNow(props) {
-  const {showSoldOut = true, small} = props;
+
+type Props = {
+  showSoldOut?: boolean;
+};
+
+export default function ButtonSelectedVariantBuyNow(props: Props) {
+  const {showSoldOut = true} = props;
   const {selectedVariant} = useProduct();
 
   const availableForSale = selectedVariant?.availableForSale;
 
-  if (!showSoldOut && !availableForSale) {
+  if ((!showSoldOut && !availableForSale) || !selectedVariant) {
     return null;
   }
 
   return (
     <BuyNowButton
-      className={`bg-gray-900 text-center text-white disabled:opacity-20 ${
-        small ? 'p-3 text-xs' : 'p-4 text-sm'
-      } w-full`}
+      className="btn"
       disabled={!availableForSale}
       variantId={selectedVariant.id}
     >

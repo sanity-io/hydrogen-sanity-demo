@@ -30,7 +30,7 @@ function ProductActions() {
   return (
     <DebugWrapper name="Product Actions" shopify>
       <div className="space-y-2">
-        <ButtonSelectedVariantAddToCart available={!isOutOfStock} />
+        <ButtonSelectedVariantAddToCart />
 
         {!isOutOfStock && <ButtonSelectedVariantBuyNow />}
       </div>

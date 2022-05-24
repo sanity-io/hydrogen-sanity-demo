@@ -50,7 +50,7 @@ export default function Footer() {
   });
 
   return (
-    <footer role="contentinfo">
+    <footer className="bg-white" role="contentinfo">
       <DebugWrapper name="Footer">
         <div className="relative">
           <div className="font-bold">(Logo)</div>

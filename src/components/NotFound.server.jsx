@@ -5,37 +5,13 @@ import {
   useShopQuery,
 } from '@shopify/hydrogen';
 import gql from 'graphql-tag';
-import Button from './Button.client';
 import DebugWrapper from './DebugWrapper';
 import Layout from './Layout.server';
-import ProductCard from './ProductCard';
+import ProductPill from './ProductPill';
 
 /**
  * A server component that defines the content to display when a page isn't found (404 error)
  */
-function NotFoundHero() {
-  return (
-    <DebugWrapper name="Not found hero">
-      <div>
-        <div>
-          <h1 className="font-medium text-gray-900">
-            We&#39;ve lost this page
-          </h1>
-          <p>
-            We couldn’t find the page you’re looking for. Try checking the URL
-            or heading back to the home page.
-          </p>
-          <Button
-            className="mt-2 w-96"
-            url="/"
-            label="Take me to the home page"
-          />
-        </div>
-      </div>
-    </DebugWrapper>
-  );
-}
-
 export default function NotFound({response}) {
   const {countryCode = 'US'} = useSession();
 
@@ -57,20 +33,33 @@ export default function NotFound({response}) {
 
   return (
     <Layout>
-      <NotFoundHero />
+      <div className="bg-indigo-100">
+        <DebugWrapper name="Not Found">
+          <h1 className="font-medium text-gray-900">
+            Well... you&#8216;re officially lost
+          </h1>
+          <button
+            className="btn"
+            disabled
+            // url="/"
+          >
+            Home
+          </button>
+        </DebugWrapper>
 
-      <DebugWrapper name="Related products" shopify>
-        <div>
-          <p className="font-medium">Products you might like</p>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {products.map((product) => (
-              <div key={product.id}>
-                <ProductCard storefrontProduct={product} />
-              </div>
-            ))}
+        <DebugWrapper name="Related products" shopify>
+          <div>
+            <p className="font-medium">Products you might like</p>
+            <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4">
+              {products.map((product) => (
+                <div key={product.id}>
+                  <ProductPill storefrontProduct={product} />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </DebugWrapper>
+        </DebugWrapper>
+      </div>
     </Layout>
   );
 }
@@ -78,7 +67,7 @@ export default function NotFound({response}) {
 const QUERY = gql`
   query NotFoundProductDetails($country: CountryCode, $language: LanguageCode)
   @inContext(country: $country, language: $language) {
-    products(first: 3) {
+    products(first: 16) {
       edges {
         node {
           handle

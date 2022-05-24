@@ -14,7 +14,6 @@ import {
   useCartLine,
 } from '@shopify/hydrogen/client';
 import {useCartUI} from './CartUIProvider.client';
-import Button from './Button.client';
 
 /**
  * A client component that contains the merchandise that a customer intends to purchase, and the estimated cost associated with the cart
@@ -189,7 +188,7 @@ function CartItemQuantity() {
 function CartFooter() {
   return (
     <footer className="sticky bottom-0 border-t border-black border-opacity-5 pb-8">
-      <div className="relative h-60 p-4 text-gray-900">
+      <div className="relative flex h-60 flex-col p-4 text-gray-900">
         <div role="table" aria-label="Cost summary">
           <div role="row" className="flex justify-between">
             <span className="font-medium" role="rowheader">
@@ -211,7 +210,7 @@ function CartFooter() {
           </div>
         </div>
         <CartShopPayButton className="my-4 flex w-full justify-center bg-[#5a31f4] py-2" />
-        <CartCheckoutButton>Checkout</CartCheckoutButton>
+        <CartCheckoutButton className="btn flex">Checkout</CartCheckoutButton>
       </div>
     </footer>
   );
@@ -222,9 +221,9 @@ function CartEmpty() {
   return (
     <div className="flex flex-col p-4">
       <p className="mb-4 text-center">Your cart is empty</p>
-      <Button type="button" onClick={closeCart}>
+      <button className="btn" type="button" onClick={closeCart}>
         Continue Shopping
-      </Button>
+      </button>
     </div>
   );
 }

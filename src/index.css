@@ -2,6 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .btn {
+    -webkit-font-smoothing: antialiased;
+    background-color: theme('colors.black');
+    border-radius: theme('borderRadius.full');
+    color: theme('colors.white');
+    display: flex;
+    font-size: theme('fontSize.sm');
+    font-weight: theme('fontWeight.bold');
+    padding: theme('padding.2') theme('padding.4');
+  }
+
+  .btn:disabled {
+    opacity: 0.2;
+  }
+}
+
 @layer utilities {
   .scroll-snap-x {
     scroll-snap-type: x mandatory;

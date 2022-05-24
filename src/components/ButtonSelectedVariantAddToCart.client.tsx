@@ -4,8 +4,13 @@ import {AddToCartButton, useProduct} from '@shopify/hydrogen/client';
  * Wrapper around Hydrogen's `<AddToCartButton />` which will
  * display a disabled 'sold out' button if variant is not available for sale
  */
-export default function ButtonSelectedVariantAddToCart(props) {
-  const {showSoldOut = true, small} = props;
+
+type Props = {
+  showSoldOut?: boolean;
+};
+
+export default function ButtonSelectedVariantAddToCart(props: Props) {
+  const {showSoldOut = true} = props;
   const {selectedVariant} = useProduct();
 
   const availableForSale = selectedVariant?.availableForSale;
@@ -16,11 +21,9 @@ export default function ButtonSelectedVariantAddToCart(props) {
 
   return (
     <AddToCartButton
-      className={`bg-gray-900 text-center text-white disabled:opacity-20 ${
-        small ? 'p-3 text-xs' : 'p-4 text-sm'
-      } w-full`}
+      className="btn"
       disabled={!availableForSale}
-      variantId={selectedVariant.id}
+      variantId={selectedVariant?.id}
     >
       {availableForSale ? 'Add to cart' : 'Sold out'}
     </AddToCartButton>
