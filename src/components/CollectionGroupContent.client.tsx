@@ -17,10 +17,10 @@ export default function CollectionGroupContent({
   return (
     <div className="mt-24 p-2">
       <div className="relative grid grid-cols-2 gap-2">
-        {collectionGroup?.collectionLinks?.map((collection, index) => (
+        {collectionGroup?.collectionLinks?.map((collection) => (
           <Link
             className="font-bold"
-            key={index}
+            key={collection._id}
             onClick={onClose}
             to={collection.slug}
           >

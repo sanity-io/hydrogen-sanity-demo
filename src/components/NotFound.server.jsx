@@ -35,9 +35,7 @@ export default function NotFound({response}) {
     <Layout>
       <div className="bg-indigo-100">
         <DebugWrapper name="Not Found">
-          <h1 className="font-medium text-gray-900">
-            Well... you&#8216;re officially lost
-          </h1>
+          <h1 className="font-medium">Well... you&#8216;re officially lost</h1>
           <button
             className="btn"
             disabled

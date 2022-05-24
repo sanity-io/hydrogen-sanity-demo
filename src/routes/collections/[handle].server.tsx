@@ -10,16 +10,30 @@ import {
   Product,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import gql from 'graphql-tag';
+import groq from 'groq';
+import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import pluralize from 'pluralize';
+import clientConfig from '../../../sanity.config';
 import DebugWrapper from '../../components/DebugWrapper';
 import Layout from '../../components/Layout.server';
 import LoadMoreProducts from '../../components/LoadMoreProducts.client';
 import NotFound from '../../components/NotFound.server';
 import ProductCard from '../../components/ProductCard';
+import {COLLECTION_PAGE} from '../../fragments/collectionPage';
+import {SanityCollection} from '../../types';
 
 type Props = {
   collectionProductCount: number;
   params: any;
+};
+
+type SanityPayload = {
+  sanityData: SanityCollection;
+  // shopifyProducts: Record<string, Product>;
+};
+
+type ShopifyPayload = {
+  collection: Collection;
 };
 
 export default function CollectionRoute({
@@ -30,9 +44,7 @@ export default function CollectionRoute({
   const {countryCode = 'US'} = useSession();
 
   const {handle} = params;
-  const {data} = useShopQuery<{
-    collection: Collection;
-  }>({
+  const {data} = useShopQuery<ShopifyPayload>({
     query: QUERY,
     variables: {
       handle,
@@ -43,7 +55,22 @@ export default function CollectionRoute({
     preload: true,
   });
 
-  if (data?.collection == null) {
+  // TODO: add collection support to `useSanityQuery`
+  const {
+    sanityData: sanityCollection,
+    // shopifyProducts
+  } = useSanityQuery({
+    clientConfig,
+    params: {
+      slug: handle,
+    },
+    query: SANITY_QUERY,
+    shopifyVariables: {
+      country: countryCode,
+    },
+  }) as SanityPayload;
+
+  if (data?.collection == null || !sanityCollection) {
     // @ts-expect-error <NotFound> doesn't require response
     return <NotFound />;
   }
@@ -53,16 +80,17 @@ export default function CollectionRoute({
   const hasNextPage = data.collection.products.pageInfo.hasNextPage;
 
   return (
-    <Layout>
+    <Layout colorTheme={sanityCollection?.colorTheme}>
       {/* the seo object will be expose in API version 2022-04 or later */}
       <Seo type="collection" data={collection} />
 
-      <DebugWrapper name="Collection Details" shopify>
+      {/* Collection hero */}
+      <div className="bg-red-500">
         {/* Title */}
-        <h1 className="font-medium">{collection.title}</h1>
+        <h1 className="text-7xl font-medium">{collection.title}</h1>
         {/* Description */}
         <div dangerouslySetInnerHTML={{__html: collection.descriptionHtml}} />
-      </DebugWrapper>
+      </div>
 
       <p className="my-5 text-sm">
         {pluralize('product', products.length, true)}
@@ -84,6 +112,15 @@ export default function CollectionRoute({
     </Layout>
   );
 }
+
+const SANITY_QUERY = groq`
+  *[
+    _type == 'collection'
+    && store.slug.current == $slug
+  ][0]{
+    ${COLLECTION_PAGE}
+  }
+`;
 
 const QUERY = gql`
   query CollectionDetails(

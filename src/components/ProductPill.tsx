@@ -24,6 +24,7 @@ export default function ProductPill({storefrontProduct}: Props) {
         <div className="relative h-20 w-20 bg-gray-100">
           {selectedVariant.image && (
             <Image
+              alt="yo"
               className="absolute inset-0"
               data={selectedVariant.image}
               loaderOptions={{width: 100, height: 100, crop: 'center'}}

@@ -6,7 +6,7 @@ import clientConfig from '../../sanity.config';
 import {LINKS} from '../fragments/links';
 import {PORTABLE_TEXT} from '../fragments/portableText';
 import type {SanityLink} from '../types';
-import DebugWrapper from './DebugWrapper';
+import LogoMark from './LogoMark.client';
 
 /**
  * A server component that specifies the content of the footer on the website
@@ -51,14 +51,12 @@ export default function Footer() {
 
   return (
     <footer className="bg-white" role="contentinfo">
-      <DebugWrapper name="Footer">
-        <div className="relative">
-          <div className="font-bold">(Logo)</div>
-          <div className="mt-4 grid max-w-2xl grid-cols-1 md:grid-cols-2">
-            {renderLinks}
-          </div>
+      <div className="relative">
+        <LogoMark />
+        <div className="mt-4 grid max-w-2xl grid-cols-1 md:grid-cols-2">
+          {renderLinks}
         </div>
-      </DebugWrapper>
+      </div>
       <div className="py-4 text-sm">
         <p>© {new Date().getFullYear()} – AKVA. All rights reserved.</p>
       </div>

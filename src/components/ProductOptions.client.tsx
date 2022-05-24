@@ -1,6 +1,5 @@
 import {useProduct} from '@shopify/hydrogen/client';
 import type {SanityCustomProductOption} from '../types';
-import DebugWrapper from './DebugWrapper';
 import ProductOptionsColor from './ProductOptionsColor.client';
 import ProductOptionsDefault from './ProductOptionsDefault.client';
 
@@ -16,7 +15,7 @@ export default function ProductOptions({customProductOptions}: Props) {
   const {options} = useProduct();
 
   return (
-    <DebugWrapper name="Product Options" shopify>
+    <div>
       {options?.map(({name, values}) => {
         // Check if current product has a valid custom option type.
         // If so, render a custom option component.
@@ -40,6 +39,6 @@ export default function ProductOptions({customProductOptions}: Props) {
             );
         }
       })}
-    </DebugWrapper>
+    </div>
   );
 }

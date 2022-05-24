@@ -1,11 +1,20 @@
-import {Seo, useRouteParams, useSession} from '@shopify/hydrogen';
-import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import {
+  flattenConnection,
+  ProductProvider,
+  Seo,
+  useRouteParams,
+  useSession,
+} from '@shopify/hydrogen';
+import {
+  Product,
+  ProductVariant,
+} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import clientConfig from '../../../sanity.config';
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
-import ProductDetails from '../../components/ProductDetails.client';
+import ProductHero from '../../components/ProductHero.client';
 import ProductEditorial from '../../components/ProductEditorial.server';
 import RelatedProducts from '../../components/RelatedProducts.server';
 import {PRODUCT_PAGE} from '../../fragments/productPage';
@@ -39,17 +48,22 @@ export default function ProductRoute() {
     return <NotFound />;
   }
 
-  return (
-    <Layout>
-      <Seo type="product" data={storefrontProduct} />
-      <ProductDetails
-        sanityProduct={sanityProduct}
-        storefrontProduct={storefrontProduct}
-      />
-      <ProductEditorial sanityProduct={sanityProduct} />
+  const initialVariant = flattenConnection(
+    storefrontProduct.variants,
+  )[0] as ProductVariant;
 
-      {/* Related products */}
-      <RelatedProducts storefrontProduct={storefrontProduct} />
+  return (
+    <Layout colorTheme={sanityProduct?.colorTheme}>
+      <ProductProvider
+        data={storefrontProduct}
+        initialVariantId={initialVariant.id}
+      >
+        <ProductHero sanityProduct={sanityProduct} />
+        <ProductEditorial sanityProduct={sanityProduct} />
+        <RelatedProducts storefrontProduct={storefrontProduct} />
+      </ProductProvider>
+
+      <Seo type="product" data={storefrontProduct} />
     </Layout>
   );
 }

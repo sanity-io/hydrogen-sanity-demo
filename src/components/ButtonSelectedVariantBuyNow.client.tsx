@@ -6,11 +6,12 @@ import {BuyNowButton, useProduct} from '@shopify/hydrogen/client';
  */
 
 type Props = {
+  quantity?: number;
   showSoldOut?: boolean;
 };
 
 export default function ButtonSelectedVariantBuyNow(props: Props) {
-  const {showSoldOut = true} = props;
+  const {quantity = 1, showSoldOut = true} = props;
   const {selectedVariant} = useProduct();
 
   const availableForSale = selectedVariant?.availableForSale;
@@ -23,6 +24,7 @@ export default function ButtonSelectedVariantBuyNow(props: Props) {
     <BuyNowButton
       className="btn"
       disabled={!availableForSale}
+      quantity={quantity}
       variantId={selectedVariant.id}
     >
       {availableForSale ? 'Buy it now' : 'Sold out'}

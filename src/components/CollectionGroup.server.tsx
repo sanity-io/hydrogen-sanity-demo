@@ -57,10 +57,6 @@ const QUERY_SHOPIFY = gql`
       products(first: $numProducts) {
         edges {
           node {
-            title
-            vendor
-            handle
-            descriptionHtml
             compareAtPriceRange {
               maxVariantPrice {
                 currencyCode
@@ -71,6 +67,9 @@ const QUERY_SHOPIFY = gql`
                 amount
               }
             }
+            handle
+            id
+            title
             variants(first: 1) {
               edges {
                 node {
@@ -95,6 +94,7 @@ const QUERY_SHOPIFY = gql`
                 }
               }
             }
+            vendor
           }
         }
       }

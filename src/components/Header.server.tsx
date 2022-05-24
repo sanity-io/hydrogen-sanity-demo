@@ -13,8 +13,8 @@ type Props = {
  */
 export default function Header({menuLinks}: Props) {
   return (
-    <header className="sticky top-0 z-20" role="banner">
-      <div className={`mx-auto w-full bg-white bg-opacity-95 lg:px-4`}>
+    <header className="fixed top-0 z-20 w-full" role="banner">
+      <div className={`mx-auto w-full bg-opacity-95 lg:px-4`}>
         <div className="flex h-full place-content-between items-stretch lg:flex-col">
           <div className="flex w-full items-stretch justify-between">
             {/*

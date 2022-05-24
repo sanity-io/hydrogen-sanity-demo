@@ -1,17 +1,15 @@
 import groq from 'groq';
-
-import {PRODUCT_WITH_VARIANT} from './productWithVariant';
-import {SEO} from './seo';
+import {COLOR_THEME} from './colorTheme';
+// TODO: rename SEO_PRODUCT or create separate version for collections
+import {SEO_PRODUCT} from './seoProduct';
 
 export const COLLECTION_PAGE = groq`
   _id,
-  description,
-  products[] {
-    ...${PRODUCT_WITH_VARIANT}
+  colorTheme->{
+    ${COLOR_THEME}
   },
   seo {
-    ${SEO}
+    ${SEO_PRODUCT}
   },
-  "slug": slug.current,
-  title,
+  "slug": store.slug.current,
 `;

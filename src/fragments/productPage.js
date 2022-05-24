@@ -1,4 +1,5 @@
 import groq from 'groq';
+import {COLOR_THEME} from './colorTheme';
 import {CUSTOM_PRODUCT_OPTIONS} from './customProductOptions';
 import {IMAGE} from './image';
 import {PORTABLE_TEXT} from './portableText';
@@ -9,6 +10,9 @@ export const PRODUCT_PAGE = groq`
   "available": !store.isDeleted && store.status == 'active',
   body[]{
     ${PORTABLE_TEXT}
+  },
+  colorTheme->{
+    ${COLOR_THEME}
   },
   "customProductOptions": *[_type == 'settings'][0].customProductOptions[title in ^.store.options[].name] {
     ${CUSTOM_PRODUCT_OPTIONS}
