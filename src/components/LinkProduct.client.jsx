@@ -1,4 +1,4 @@
-import {Link, useServerProps} from '@shopify/hydrogen/client';
+import {Link, useServerProps} from '@shopify/hydrogen';
 
 /**
  * A simple wrapper for Hydrogen's `<Link />` component.

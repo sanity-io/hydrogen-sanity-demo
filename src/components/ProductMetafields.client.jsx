@@ -1,4 +1,4 @@
-import {useParsedMetafields, useProduct} from '@shopify/hydrogen/client';
+import {useParsedMetafields, useProduct} from '@shopify/hydrogen';
 import DebugWrapper from './DebugWrapper';
 
 function SizeChart() {
@@ -47,9 +47,11 @@ function SizeChart() {
 }
 
 export default function ProductMetafields() {
-  const product = useProduct();
+  const storefrontProduct = useProduct();
 
-  const productMetafields = useParsedMetafields(product.metafields || {});
+  const productMetafields = useParsedMetafields(
+    storefrontProduct.metafields || {},
+  );
   const sizeChartMetafield = productMetafields.find(
     (metafield) =>
       metafield.namespace === 'my_fields' && metafield.key === 'size_chart',

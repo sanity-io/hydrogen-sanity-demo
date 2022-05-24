@@ -1,4 +1,4 @@
-import {useCart} from '@shopify/hydrogen/client';
+import {useCart} from '@shopify/hydrogen';
 import {useCartUI} from './CartUIProvider.client';
 
 type Props = {

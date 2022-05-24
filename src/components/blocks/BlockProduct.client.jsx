@@ -1,9 +1,4 @@
-import {
-  Image,
-  ProductPrice,
-  ProductProvider,
-  ProductTitle,
-} from '@shopify/hydrogen/client';
+import {Image, ProductPrice, ProductProvider} from '@shopify/hydrogen';
 import React from 'react';
 import {getProductVariant} from '../../utils/getProductVariant';
 import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.client';
@@ -43,7 +38,9 @@ const BlockProduct = (props) => {
               handle={storefrontProduct.handle}
               variantId={product?.variantId}
             >
-              <ProductTitle className="font-medium" />
+              {storefrontProduct?.title && (
+                <div className="font-medium">{storefrontProduct.title}</div>
+              )}
             </LinkProduct>
             <ProductPrice />
           </div>

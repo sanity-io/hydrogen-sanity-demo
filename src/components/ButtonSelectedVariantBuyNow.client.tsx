@@ -1,4 +1,4 @@
-import {BuyNowButton, useProduct} from '@shopify/hydrogen/client';
+import {BuyNowButton, useProduct} from '@shopify/hydrogen';
 
 /**
  * Wrapper around Hydrogen's `<BuyNowButton />` which will

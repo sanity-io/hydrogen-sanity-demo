@@ -9,7 +9,7 @@ export default function FeaturedCollection({collection}) {
     <DebugWrapper name="Featured Collection" shopify>
       <div className="grid grid-cols-1 items-center gap-2 overflow-hidden lg:grid-cols-2">
         {collection.image ? (
-          <Image width="622" height="465" data={collection.image} />
+          <Image data={collection.image} height="465" width="622" />
         ) : null}
         <div className="py-10 lg:py-0">
           {/* Title */}

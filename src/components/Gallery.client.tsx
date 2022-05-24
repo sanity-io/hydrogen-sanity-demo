@@ -1,4 +1,4 @@
-import {useProduct, MediaFile, Image} from '@shopify/hydrogen/client';
+import {Image, MediaFile, useProduct} from '@shopify/hydrogen';
 import DebugWrapper from './DebugWrapper';
 
 /**
@@ -7,9 +7,9 @@ import DebugWrapper from './DebugWrapper';
 export default function Gallery() {
   const {media, selectedVariant} = useProduct();
 
-  const featuredMedia = selectedVariant.image || media[0]?.image;
+  const featuredMedia = selectedVariant?.image || media[0]?.image;
   const featuredMediaSrc = featuredMedia?.url.split('?')[0];
-  const galleryMedia = media.filter((med) => {
+  const galleryMedia = media.filter((med: any) => {
     if (
       med.mediaContentType === MODEL_3D_TYPE ||
       med.mediaContentType === VIDEO_TYPE ||
@@ -29,14 +29,17 @@ export default function Gallery() {
     <DebugWrapper name="Gallery" shopify>
       <div
         className="no-scrollbar scroll-snap-x flex h-[485px] place-content-start gap-2 overflow-x-scroll scroll-smooth md:grid md:h-auto md:grid-cols-2"
-        tabIndex="-1"
+        tabIndex={-1}
       >
-        <Image
-          fetchpriority="high"
-          data={selectedVariant.image}
-          className="md:flex-shrink-none h-full w-[80vw] flex-shrink-0 snap-start border border-black object-cover object-center md:col-span-2 md:h-auto md:w-full"
-        />
-        {galleryMedia.map((med) => {
+        (Gallery)
+        {selectedVariant?.image && (
+          <Image
+            fetchpriority="high"
+            data={selectedVariant.image}
+            className="md:flex-shrink-none h-full w-[80vw] flex-shrink-0 snap-start border border-black object-cover object-center md:col-span-2 md:h-auto md:w-full"
+          />
+        )}
+        {galleryMedia.map((med: any) => {
           let extraProps = {};
 
           if (med.mediaContentType === MODEL_3D_TYPE) {
@@ -45,7 +48,8 @@ export default function Gallery() {
 
           return (
             <MediaFile
-              tabIndex="0"
+              // @ts-expect-error <MediaFile> should accept tabIndex
+              tabIndex={0}
               key={med.id || med.image.id}
               className="h-full w-[80vw] flex-shrink-0 snap-start border border-black object-cover object-center transition-all md:h-auto md:w-auto"
               data={med}

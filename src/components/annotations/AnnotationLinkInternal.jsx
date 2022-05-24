@@ -1,4 +1,4 @@
-import {Link} from '@shopify/hydrogen/client';
+import {Link} from '@shopify/hydrogen';
 
 const AnnotationLinkInternal = (props) => {
   const {children, mark} = props;
@@ -9,7 +9,7 @@ const AnnotationLinkInternal = (props) => {
 
   return (
     <Link
-      className="duration-300 inline-flex font-medium hover:opacity-60 items-center text-black transition-opacity underline"
+      className="inline-flex items-center font-medium text-black underline transition-opacity duration-300 hover:opacity-60"
       to={mark?.slug}
     >
       {children}

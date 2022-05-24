@@ -12,7 +12,7 @@ import {
   Link,
   useCart,
   useCartLine,
-} from '@shopify/hydrogen/client';
+} from '@shopify/hydrogen';
 import {useCartUI} from './CartUIProvider.client';
 
 /**

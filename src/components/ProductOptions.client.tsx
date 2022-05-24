@@ -1,4 +1,4 @@
-import {useProduct} from '@shopify/hydrogen/client';
+import {useProduct} from '@shopify/hydrogen';
 import type {SanityCustomProductOption} from '../types';
 import ProductOptionsColor from './ProductOptionsColor.client';
 import ProductOptionsDefault from './ProductOptionsDefault.client';

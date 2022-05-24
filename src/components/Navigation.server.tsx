@@ -1,4 +1,4 @@
-import {Link} from '@shopify/hydrogen/client';
+import {Link} from '@shopify/hydrogen';
 import type {SanityMenuLink} from '../types';
 import CollectionGroup from './CollectionGroup.server';
 

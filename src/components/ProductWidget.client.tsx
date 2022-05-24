@@ -1,4 +1,4 @@
-import {ProductPrice, ProductTitle, useProduct} from '@shopify/hydrogen/client';
+import {ProductPrice, useProduct} from '@shopify/hydrogen';
 import {useState} from 'react';
 import {SanityProduct} from '../types';
 import ButtonSelectedVariantAddToCart from './ButtonSelectedVariantAddToCart.client';
@@ -102,11 +102,12 @@ function ProductPrices() {
 export default function ProductWidget({sanityProduct}: Props) {
   const storefrontProduct = useProduct();
 
-  // console.log('storefrontProduct', storefrontProduct);
-
   return (
     <div className="rounded bg-gray-100 p-4">
-      <ProductTitle as="h1" className="font-medium" />
+      {storefrontProduct?.title && (
+        <h1 className="font-medium">{storefrontProduct.title}</h1>
+      )}
+
       {/* {storefrontProduct?.vendor && <div>{storefrontProduct.vendor}</div>} */}
       <ProductPrices />
       <ProductOptions

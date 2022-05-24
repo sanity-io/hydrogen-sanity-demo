@@ -1,4 +1,4 @@
-import {Link} from '@shopify/hydrogen/client';
+import {Link} from '@shopify/hydrogen';
 import {SanityMenuLink} from '../types';
 import CartToggle from './CartToggle.client';
 import CountrySelector from './CountrySelector.client';

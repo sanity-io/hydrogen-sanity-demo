@@ -14,6 +14,7 @@ type ShopifyPayload = {
   };
 };
 
+// TODO: understand why `useProduct` doesn't work here
 export default function RelatedProducts({storefrontProduct}: Props) {
   const {countryCode = 'US'} = useSession();
   const {languageCode} = useShop();

@@ -2,7 +2,7 @@ import {
   AddToCartButton,
   BuyNowButton,
   ProductProvider,
-} from '@shopify/hydrogen/client';
+} from '@shopify/hydrogen';
 import {getProductVariant} from '../../utils/getProductVariant';
 import {useProductsContext} from '../ProductsProvider.client';
 

@@ -1,5 +1,5 @@
 import {FocusTrap} from '@headlessui/react';
-import {Link} from '@shopify/hydrogen/client';
+import {Link} from '@shopify/hydrogen';
 import {Fragment, useEffect} from 'react';
 import MobileCountrySelector from './MobileCountrySelector.client';
 
@@ -26,7 +26,7 @@ export default function MobileNavigation({collections, isOpen, setIsOpen}) {
       <OpenFocusTrap>
         <button
           type="button"
-          className="flex justify-center items-center w-7 h-full"
+          className="flex h-full w-7 items-center justify-center"
           onClick={() => setIsOpen((previousIsOpen) => !previousIsOpen)}
         >
           <span className="sr-only">{isOpen ? 'Close' : 'Open'} Menu</span>
@@ -34,12 +34,12 @@ export default function MobileNavigation({collections, isOpen, setIsOpen}) {
         </button>
 
         {isOpen ? (
-          <div className="fixed -left-0 top-20 w-full h-screen z-10 bg-gray-50 px-4 md:px-12 py-7">
+          <div className="fixed -left-0 top-20 z-10 h-screen w-full bg-gray-50 px-4 py-7 md:px-12">
             <ul>
               {collections.map((collection) => (
                 <li className="border-b border-gray-200" key={collection.id}>
                   <Link
-                    className="group py-5 text-gray-700 flex items-center justify-between"
+                    className="group flex items-center justify-between py-5 text-gray-700"
                     to={`/collections/${collection.handle}`}
                     onClick={() => setIsOpen(false)}
                   >

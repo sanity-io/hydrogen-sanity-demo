@@ -1,4 +1,4 @@
-import {AddToCartButton, useProduct} from '@shopify/hydrogen/client';
+import {AddToCartButton, useProduct} from '@shopify/hydrogen';
 
 /**
  * Wrapper around Hydrogen's `<AddToCartButton />` which will

@@ -14,6 +14,7 @@ import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import clientConfig from '../../../sanity.config';
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
+import ProductDetails from '../../components/ProductDetails.client';
 import ProductHero from '../../components/ProductHero.client';
 import ProductEditorial from '../../components/ProductEditorial.server';
 import RelatedProducts from '../../components/RelatedProducts.server';
@@ -59,6 +60,7 @@ export default function ProductRoute() {
         initialVariantId={initialVariant.id}
       >
         <ProductHero sanityProduct={sanityProduct} />
+        <ProductDetails />
         <ProductEditorial sanityProduct={sanityProduct} />
         <RelatedProducts storefrontProduct={storefrontProduct} />
       </ProductProvider>

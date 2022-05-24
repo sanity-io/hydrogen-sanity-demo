@@ -1,8 +1,6 @@
-import {ProductDescription} from '@shopify/hydrogen/client';
 import {SanityProduct} from '../types';
 import DebugWrapper from './DebugWrapper';
 import Gallery from './Gallery.client';
-import ProductMetafields from './ProductMetafields.client';
 import ProductWidget from './ProductWidget.client';
 
 type Props = {
@@ -17,8 +15,6 @@ export default function ProductHero({sanityProduct}: Props) {
 
         <div>
           <ProductWidget sanityProduct={sanityProduct} />
-          <ProductMetafields />
-          <ProductDescription className="prose" />
         </div>
       </div>
     </DebugWrapper>

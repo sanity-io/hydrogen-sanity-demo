@@ -1,5 +1,5 @@
 import {useCallback, useState, Suspense} from 'react';
-import {useCountry, fetchSync} from '@shopify/hydrogen/client';
+import {useCountry, fetchSync} from '@shopify/hydrogen';
 import {Listbox} from '@headlessui/react';
 import SpinnerIcon from './SpinnerIcon.client';
 
@@ -20,19 +20,19 @@ export default function CountrySelector() {
   }, []);
 
   return (
-    <div className="border border-black hidden lg:block">
+    <div className="hidden border border-black lg:block">
       <Listbox onChange={setCountry}>
         {({open}) => {
           setTimeout(() => setListboxOpen(open));
           return (
             <>
-              <Listbox.Button className="font-medium text-sm h-8 p-2 flex items-center">
+              <Listbox.Button className="flex h-8 items-center p-2 text-sm font-medium">
                 <span className="mr-4">{selectedCountry.name}</span>
                 <ArrowIcon isOpen={open} />
               </Listbox.Button>
 
-              <Listbox.Options className="absolute border border-black z-10 mt-2">
-                <div className="bg-white overflow-y-auto h-64">
+              <Listbox.Options className="absolute z-10 mt-2 border border-black">
+                <div className="h-64 overflow-y-auto bg-white">
                   {listboxOpen && (
                     <Suspense
                       fallback={

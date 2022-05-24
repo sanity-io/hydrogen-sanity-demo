@@ -1,4 +1,4 @@
-import {Image} from '@shopify/hydrogen';
+import {Image, Link} from '@shopify/hydrogen';
 import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import {Suspense} from 'react';
 import MoneyCompareAtPrice from './MoneyCompareAtPrice.client';
@@ -19,49 +19,51 @@ export default function ProductPill({storefrontProduct}: Props) {
   }
 
   return (
-    <div className="flex" role="row">
-      <div role="cell" className="relative mr-4 flex-shrink-0">
-        <div className="relative h-20 w-20 bg-gray-100">
-          {selectedVariant.image && (
-            <Image
-              alt="yo"
-              className="absolute inset-0"
-              data={selectedVariant.image}
-              loaderOptions={{width: 100, height: 100, crop: 'center'}}
-            />
-          )}
-        </div>
-
-        {/* Out of stock sticker */}
-        {!selectedVariant?.availableForSale && (
-          <div className="absolute top-0 left-0 bg-black p-2 text-xs text-white">
-            Out of stock
+    <Link to={`/products/${storefrontProduct.handle}`}>
+      <div className="flex" role="row">
+        <div role="cell" className="relative mr-4 flex-shrink-0">
+          <div className="relative h-20 w-20 bg-gray-100">
+            {selectedVariant.image && (
+              <Image
+                alt="yo"
+                className="absolute inset-0"
+                data={selectedVariant.image}
+                loaderOptions={{width: 100, height: 100, crop: 'center'}}
+              />
+            )}
           </div>
-        )}
-      </div>
 
-      <div>
-        {/* Title */}
-        <span className="mb-0.5 text-sm font-medium">
-          {storefrontProduct.title}
-        </span>
-
-        {/* Vendor */}
-        {storefrontProduct.vendor && (
-          <p className="mb-0.5 text-sm">{storefrontProduct.vendor}</p>
-        )}
-
-        <div className="flex text-sm">
-          {selectedVariant.compareAtPriceV2 && (
-            <Suspense fallback={null}>
-              <MoneyCompareAtPrice money={selectedVariant.compareAtPriceV2} />
-            </Suspense>
+          {/* Out of stock sticker */}
+          {!selectedVariant?.availableForSale && (
+            <div className="absolute top-0 left-0 bg-black p-2 text-xs text-white">
+              Out of stock
+            </div>
           )}
-          <Suspense fallback={null}>
-            <MoneyPrice money={selectedVariant.priceV2} />
-          </Suspense>
+        </div>
+
+        <div>
+          {/* Title */}
+          <span className="mb-0.5 text-sm font-medium">
+            {storefrontProduct.title}
+          </span>
+
+          {/* Vendor */}
+          {storefrontProduct.vendor && (
+            <p className="mb-0.5 text-sm">{storefrontProduct.vendor}</p>
+          )}
+
+          <div className="flex text-sm">
+            {selectedVariant.compareAtPriceV2 && (
+              <Suspense fallback={null}>
+                <MoneyCompareAtPrice money={selectedVariant.compareAtPriceV2} />
+              </Suspense>
+            )}
+            <Suspense fallback={null}>
+              <MoneyPrice money={selectedVariant.priceV2} />
+            </Suspense>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
