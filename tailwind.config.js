@@ -3,8 +3,10 @@ module.exports = {
   theme: {
     borderRadius: {
       DEFAULT: '8px',
-      md: '15px',
-      lg: '20px',
+      sm: '4px',
+      md: '8px',
+      lg: '15px',
+      xl: '20px',
       full: '9999px',
     },
     fontFamily: {
@@ -31,7 +33,7 @@ module.exports = {
         },
       ],
       // 16px
-      base: [
+      md: [
         '1rem',
         {
           letterSpacing: '-0.03em',
@@ -101,6 +103,7 @@ module.exports = {
         gray: '#757575',
         lightGray: '#E7E7E7',
         peach: '#FFE1D1',
+        red: '#EC5039',
       },
       spacing: {
         1: '4px',

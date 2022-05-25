@@ -35,11 +35,11 @@ export default function RelatedProducts({
 
   return (
     <div
-      className="rounded-t-lg p-4"
+      className="rounded-t-xl p-8"
       style={{background: colorTheme?.background || 'white'}}
     >
       <h3 className="mb-6 text-xl font-medium">You might also like</h3>
-      <div className="grid gap-8 md:grid-cols-4">
+      <div className="grid gap-3 md:grid-cols-4">
         {products.map((product) => (
           <ProductCard key={product.id} storefrontProduct={product} />
         ))}
@@ -82,6 +82,7 @@ const QUERY = gql`
           }
         }
       }
+      vendor
     }
   }
 `;

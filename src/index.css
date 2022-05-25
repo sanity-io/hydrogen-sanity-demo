@@ -5,6 +5,7 @@
 @layer base {
   html {
     @apply text-black;
+    @apply text-md;
   }
 }
 

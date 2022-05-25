@@ -8,7 +8,7 @@ type Props = {
 export default function Hero({colorTheme, title}: Props) {
   return (
     <div
-      className="rounded-b-lg py-16 px-4"
+      className="rounded-b-xl py-16 px-4"
       style={{
         background: colorTheme?.background || 'white',
         color: colorTheme?.text || 'black',
@@ -16,7 +16,7 @@ export default function Hero({colorTheme, title}: Props) {
     >
       {/* Title */}
       {title && (
-        <h1 className="text-4xl font-medium tracking-tight">{title}</h1>
+        <h1 className="tracking-tight text-4xl font-medium">{title}</h1>
       )}
     </div>
   );

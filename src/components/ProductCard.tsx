@@ -26,7 +26,7 @@ export default function ProductCard({storefrontProduct}: Props) {
       // }}
     >
       <Link to={`/products/${storefrontProduct.handle}`}>
-        <div className="relative mb-2 flex aspect-square items-center justify-center overflow-hidden rounded bg-lightGray object-cover">
+        <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded bg-lightGray object-cover">
           {selectedVariant.image ? (
             <Image
               className="absolute h-full w-full transform bg-cover bg-center object-cover object-center transition-all duration-500 ease-in-out"
@@ -34,33 +34,47 @@ export default function ProductCard({storefrontProduct}: Props) {
             />
           ) : null}
 
-          {/* Out of stock sticker */}
-          {!selectedVariant?.availableForSale && (
-            <div className="absolute top-3 left-3 bg-black p-2 text-xs text-white">
-              Out of stock
-            </div>
-          )}
+          {/* Sale badge */}
+          {selectedVariant?.availableForSale &&
+            selectedVariant?.compareAtPriceV2 && (
+              <div className="absolute top-6 left-6 flex place-content-center rounded-sm bg-white px-1.5 py-1 text-sm font-bold uppercase leading-none text-red">
+                Sale
+              </div>
+            )}
         </div>
 
-        {/* Title */}
-        <span className="text-md mb-0.5 font-bold uppercase">
-          {storefrontProduct.title}
-        </span>
+        <div className="mt-3 text-md">
+          <div className="space-y-1">
+            {/* Title */}
+            <div className="font-bold">{storefrontProduct.title}</div>
 
-        {/* Vendor */}
-        {storefrontProduct.vendor && (
-          <p className="mb-0.5 text-sm">{storefrontProduct.vendor}</p>
-        )}
+            {/* Vendor */}
+            {storefrontProduct.vendor && (
+              <div className="text-gray">{storefrontProduct.vendor}</div>
+            )}
 
-        <div className="flex text-sm">
-          {selectedVariant.compareAtPriceV2 && (
-            <Suspense fallback={null}>
-              <MoneyCompareAtPrice money={selectedVariant.compareAtPriceV2} />
-            </Suspense>
+            {/* TODO: variant types */}
+          </div>
+
+          {/* Price / sold out */}
+          {selectedVariant?.availableForSale ? (
+            <div className="mt-3 flex font-bold">
+              {selectedVariant.compareAtPriceV2 && (
+                <span className="text-gray">
+                  <Suspense fallback={null}>
+                    <MoneyCompareAtPrice
+                      money={selectedVariant.compareAtPriceV2}
+                    />
+                  </Suspense>
+                </span>
+              )}
+              <Suspense fallback={null}>
+                <MoneyPrice money={selectedVariant.priceV2} />
+              </Suspense>
+            </div>
+          ) : (
+            <div className="mt-3 font-bold uppercase text-gray">Sold out</div>
           )}
-          <Suspense fallback={null}>
-            <MoneyPrice money={selectedVariant.priceV2} />
-          </Suspense>
         </div>
       </Link>
     </div>

@@ -97,7 +97,7 @@ export default function CollectionRoute({
       {/* <div dangerouslySetInnerHTML={{__html: collection.descriptionHtml}} /> */}
 
       <div className="p-4">
-        <ul className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
           {products.map((product) => (
             <li key={product.id}>
               <ProductCard storefrontProduct={product} />

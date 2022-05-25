@@ -54,7 +54,7 @@ export default function Cart() {
             leaveTo="translate-x-full"
           >
             <Dialog.Panel
-              className={`fixed top-0 left-0 right-0 bottom-0 z-40 flex h-full w-full flex-col overflow-y-auto rounded-l-lg bg-white md:left-auto md:bottom-auto md:block md:w-[470px]`}
+              className={`fixed top-0 left-0 right-0 bottom-0 z-40 flex h-full w-full flex-col overflow-y-auto rounded-l-xl bg-white md:left-auto md:bottom-auto md:block md:w-[470px]`}
             >
               <CartHeader />
               {totalQuantity === 0 ? (
