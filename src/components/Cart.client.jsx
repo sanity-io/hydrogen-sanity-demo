@@ -1,4 +1,4 @@
-import {Dialog} from '@headlessui/react';
+import {Dialog, Transition} from '@headlessui/react';
 import {
   CartCheckoutButton,
   CartEstimatedCost,
@@ -13,7 +13,7 @@ import {
   useCart,
   useCartLine,
 } from '@shopify/hydrogen';
-import clsx from 'clsx';
+import {Fragment} from 'react';
 import {useCartUI} from './CartUIProvider.client';
 
 /**
@@ -25,35 +25,50 @@ export default function Cart() {
 
   return (
     <>
-      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-      <div
-        className={clsx([
-          `duration-400 fixed top-0 bottom-0 left-0 right-0 z-20 bg-black transition-opacity`,
-          isCartOpen ? 'opacity-20' : 'pointer-events-none opacity-0',
-        ])}
-        onClick={isCartOpen ? closeCart : null}
-      />
+      <Transition show={isCartOpen}>
+        <Dialog onClose={closeCart}>
+          {/* Overlay */}
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-300"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div
+              aria-hidden="true"
+              className="pointer-events-none fixed inset-0 z-40 bg-black bg-opacity-20"
+            />
+          </Transition.Child>
 
-      <Dialog open={isCartOpen} onClose={closeCart}>
-        <div
-          aria-hidden="true"
-          className="fixed inset-0 z-20  bg-gray-50 opacity-75"
-        />
-
-        <Dialog.Panel
-          className={`fixed top-0 left-0 right-0 bottom-0 z-20 flex h-full w-full flex-col overflow-y-auto rounded-l-lg bg-white md:left-auto md:bottom-auto md:block md:w-[470px]`}
-        >
-          <CartHeader />
-          {totalQuantity === 0 ? (
-            <CartEmpty />
-          ) : (
-            <>
-              <CartItems />
-              <CartFooter />
-            </>
-          )}
-        </Dialog.Panel>
-      </Dialog>
+          {/* Panel */}
+          <Transition.Child
+            as={Fragment}
+            enter="ease-in-out duration-[450ms]"
+            enterFrom="translate-x-full"
+            enterTo="translate-x-0"
+            leave="ease-in-out duration-[400ms]"
+            leaveFrom="translate-x-0"
+            leaveTo="translate-x-full"
+          >
+            <Dialog.Panel
+              className={`fixed top-0 left-0 right-0 bottom-0 z-40 flex h-full w-full flex-col overflow-y-auto rounded-l-lg bg-white md:left-auto md:bottom-auto md:block md:w-[470px]`}
+            >
+              <CartHeader />
+              {totalQuantity === 0 ? (
+                <CartEmpty />
+              ) : (
+                <>
+                  <CartItems />
+                  <CartFooter />
+                </>
+              )}
+            </Dialog.Panel>
+          </Transition.Child>
+        </Dialog>
+      </Transition>
     </>
   );
 }
