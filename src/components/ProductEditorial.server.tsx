@@ -1,5 +1,4 @@
 import {SanityProduct} from '../types';
-import DebugWrapper from './DebugWrapper';
 import PortableText from './PortableText.client';
 
 type Props = {

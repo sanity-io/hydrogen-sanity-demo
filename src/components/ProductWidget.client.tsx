@@ -110,13 +110,14 @@ export default function ProductWidget({sanityProduct}: Props) {
         </h1>
       )}
 
-      {/* {storefrontProduct?.vendor && <div>{storefrontProduct.vendor}</div>} */}
+      {storefrontProduct?.vendor && (
+        <div className="text-sm">{storefrontProduct.vendor}</div>
+      )}
       <ProductPrices />
       <ProductOptions
         customProductOptions={sanityProduct.customProductOptions}
       />
       <ProductActions />
-      {/* </div> */}
     </div>
   );
 }

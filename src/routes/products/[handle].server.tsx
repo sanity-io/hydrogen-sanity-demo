@@ -4,11 +4,14 @@ import {
   Seo,
   useRouteParams,
   useSession,
+  useShop,
+  useShopQuery,
 } from '@shopify/hydrogen';
 import {
   Product,
   ProductVariant,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import gql from 'graphql-tag';
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import clientConfig from '../../../sanity.config';
@@ -28,22 +31,34 @@ type SanityPayload = {
 };
 
 export default function ProductRoute() {
+  const {languageCode} = useShop();
   const {handle} = useRouteParams();
   const {countryCode = 'US'} = useSession();
 
   // TODO: add `preload` support to `useSanityQuery`
-  const {sanityData: sanityProduct, shopifyProducts} = useSanityQuery({
+
+  // Fetch Sanity document
+  const {sanityData: sanityProduct} = useSanityQuery({
     clientConfig,
+    getProductGraphQLFragment: () => false,
     params: {
       slug: handle,
     },
     query: QUERY,
-    shopifyVariables: {
-      country: countryCode,
-    },
   }) as SanityPayload;
 
-  const storefrontProduct = shopifyProducts?.[sanityProduct?._id];
+  // Fetch Shopify document
+  // TODO: use GID received from Sanity payload
+  const {
+    data: {product: storefrontProduct},
+  } = useShopQuery<{product: Product}>({
+    query: QUERY_SHOPIFY,
+    variables: {
+      country: countryCode,
+      handle,
+      language: languageCode,
+    },
+  });
 
   if (!sanityProduct || !storefrontProduct) {
     // @ts-expect-error <NotFound> doesn't require response
@@ -86,5 +101,193 @@ const QUERY = groq`
     && store.slug.current == $slug
   ][0]{
     ${PRODUCT_PAGE}
+  }
+`;
+
+const QUERY_SHOPIFY = gql`
+  query product(
+    $country: CountryCode
+    $language: LanguageCode
+    $handle: String!
+  ) @inContext(country: $country, language: $language) {
+    product: product(handle: $handle) {
+      compareAtPriceRange {
+        maxVariantPrice {
+          currencyCode
+          amount
+        }
+        minVariantPrice {
+          currencyCode
+          amount
+        }
+      }
+      description
+      descriptionHtml
+      featuredImage {
+        url
+        width
+        height
+        altText
+      }
+      handle
+      id
+      media(first: 6) {
+        edges {
+          node {
+            ... on MediaImage {
+              mediaContentType
+              image {
+                id
+                url
+                altText
+                width
+                height
+              }
+            }
+            ... on Video {
+              mediaContentType
+              id
+              previewImage {
+                url
+              }
+              sources {
+                mimeType
+                url
+              }
+            }
+            ... on ExternalVideo {
+              mediaContentType
+              id
+              embedUrl
+              host
+            }
+            ... on Model3d {
+              mediaContentType
+              id
+              alt
+              mediaContentType
+              previewImage {
+                url
+              }
+              sources {
+                url
+              }
+            }
+          }
+        }
+      }
+      metafields(first: 20) {
+        edges {
+          node {
+            id
+            type
+            namespace
+            key
+            value
+            createdAt
+            updatedAt
+            description
+            reference {
+              __typename
+              ... on MediaImage {
+                id
+                mediaContentType
+                image {
+                  id
+                  url
+                  altText
+                  width
+                  height
+                }
+              }
+            }
+          }
+        }
+      }
+      priceRange {
+        maxVariantPrice {
+          currencyCode
+          amount
+        }
+        minVariantPrice {
+          currencyCode
+          amount
+        }
+      }
+      seo {
+        description
+        title
+      }
+      title
+      variants(first: 250) {
+        edges {
+          node {
+            availableForSale
+            compareAtPriceV2 {
+              amount
+              currencyCode
+            }
+            id
+            image {
+              id
+              url
+              altText
+              width
+              height
+            }
+            metafields(first: 10) {
+              edges {
+                node {
+                  id
+                  type
+                  namespace
+                  key
+                  value
+                  createdAt
+                  updatedAt
+                  description
+                  reference {
+                    __typename
+                    ... on MediaImage {
+                      id
+                      mediaContentType
+                      image {
+                        id
+                        url
+                        altText
+                        width
+                        height
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            priceV2 {
+              amount
+              currencyCode
+            }
+            selectedOptions {
+              name
+              value
+            }
+            sku
+            title
+            unitPrice {
+              amount
+              currencyCode
+            }
+            unitPriceMeasurement {
+              measuredType
+              quantityUnit
+              quantityValue
+              referenceUnit
+              referenceValue
+            }
+          }
+        }
+      }
+      vendor
+    }
   }
 `;
