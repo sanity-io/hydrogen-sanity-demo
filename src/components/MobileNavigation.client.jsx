@@ -34,12 +34,12 @@ export default function MobileNavigation({collections, isOpen, setIsOpen}) {
         </button>
 
         {isOpen ? (
-          <div className="fixed -left-0 top-20 z-10 h-screen w-full bg-gray-50 px-4 py-7 md:px-12">
+          <div className="fixed -left-0 top-20 z-10 h-screen w-full bg-gray px-4 py-7 md:px-12">
             <ul>
               {collections.map((collection) => (
-                <li className="border-b border-gray-200" key={collection.id}>
+                <li className="border-b border-gray" key={collection.id}>
                   <Link
-                    className="group flex items-center justify-between py-5 text-gray-700"
+                    className="group flex items-center justify-between py-5 text-gray"
                     to={`/collections/${collection.handle}`}
                     onClick={() => setIsOpen(false)}
                   >

@@ -51,13 +51,13 @@ export default function Footer() {
 
   return (
     <footer
-      className="align-start flex justify-between bg-white p-4"
+      className="align-start flex justify-between bg-peach p-4"
       role="contentinfo"
     >
       <div className="relative">
         <LogoMark />
-        <p className="mt-8 text-sm">
-          © {new Date().getFullYear()} – AKVA. All rights reserved.
+        <p className="text-gray mt-8 text-sm">
+          Made by Sanity, Companion and Ewa Lefmann
         </p>
       </div>
       <div className="grid max-w-2xl grid-cols-1 gap-2 font-medium md:grid-cols-2">

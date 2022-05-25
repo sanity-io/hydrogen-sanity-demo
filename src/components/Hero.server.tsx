@@ -16,7 +16,7 @@ export default function Hero({colorTheme, title}: Props) {
     >
       {/* Title */}
       {title && (
-        <h1 className="text-7xl font-medium tracking-tight">{title}</h1>
+        <h1 className="text-4xl font-medium tracking-tight">{title}</h1>
       )}
     </div>
   );

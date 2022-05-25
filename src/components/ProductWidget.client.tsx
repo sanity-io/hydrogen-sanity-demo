@@ -28,7 +28,7 @@ function ProductActions() {
     <div className="mt-2 space-y-2">
       {/* Quantity */}
       {!isOutOfStock && (
-        <div className="inline-flex items-center overflow-auto rounded border border-gray-300">
+        <div className="inline-flex items-center overflow-auto rounded border border-gray">
           <button
             aria-label="Decrease quantity"
             className="disabled:pointer-events-all p-2"
@@ -37,7 +37,7 @@ function ProductActions() {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 text-gray-400"
+              className="h-5 w-5 text-gray"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -48,12 +48,10 @@ function ProductActions() {
               />
             </svg>
           </button>
-          <div className="p-2 text-center text-xs text-gray-900">
-            {quantity}
-          </div>
+          <div className="p-2 text-center text-xs text-gray">{quantity}</div>
           <button
             aria-label="Increase quantity"
-            className="disabled:pointer-events-all p-2 text-gray-400"
+            className="disabled:pointer-events-all p-2 text-gray"
             onClick={handleIncreaseQuantity}
           >
             <svg
@@ -103,7 +101,7 @@ export default function ProductWidget({sanityProduct}: Props) {
   const storefrontProduct = useProduct();
 
   return (
-    <div className="pointer-events-auto sticky top-16 w-[400px] rounded bg-gray-100 p-4">
+    <div className="pointer-events-auto sticky top-16 w-[400px] rounded bg-white p-4 shadow">
       {storefrontProduct?.title && (
         <h1 className="text-lg font-bold uppercase">
           {storefrontProduct.title}

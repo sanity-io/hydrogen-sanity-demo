@@ -31,7 +31,7 @@ const BlockInlineProductMarginalia = (props) => {
       initialVariantId={currentVariant.id}
     >
       <>
-        <div className="absolute left-full top-0 ml-10 w-48 border border-gray-500 p-4">
+        <div className="absolute left-full top-0 ml-10 w-48 border border-gray p-4">
           <div className="text-sm">
             <LinkProduct
               handle={storefrontProduct.handle}

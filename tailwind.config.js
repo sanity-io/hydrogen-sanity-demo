@@ -10,12 +10,95 @@ module.exports = {
     fontFamily: {
       sans: '"DM Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     },
+    boxShadow: {
+      DEFAULT: '0px 0px 4px rgba(0, 0, 0, 0.1)',
+    },
+    fontSize: {
+      // 12px
+      xs: [
+        '0.75rem',
+        {
+          letterSpacing: '-0.03em',
+          lineHeight: '1.1',
+        },
+      ],
+      // 14px
+      sm: [
+        '0.875rem',
+        {
+          letterSpacing: '-0.03em',
+          lineHeight: '1.1',
+        },
+      ],
+      // 16px
+      base: [
+        '1rem',
+        {
+          letterSpacing: '-0.03em',
+          lineHeight: '1.1',
+        },
+      ],
+      //18px
+      lg: [
+        '1.125rem',
+        {
+          letterSpacing: '-0.03em',
+          lineHeight: '1.1',
+        },
+      ],
+      // 24px
+      xl: [
+        '1.5rem',
+        {
+          letterSpacing: '-0.03em',
+          lineHeight: '1.1',
+        },
+      ],
+      // 36px
+      '2xl': [
+        '2.25rem',
+        {
+          letterSpacing: '-0.03em',
+          lineHeight: '1.1',
+        },
+      ],
+      // 54px
+      '3xl': [
+        '3.375rem',
+        {
+          letterSpacing: '-0.03em',
+          lineHeight: '1',
+        },
+      ],
+      // 74px
+      '4xl': [
+        '4.625rem',
+        {
+          letterSpacing: '-0.03em',
+          lineHeight: '1',
+        },
+      ],
+      // 110px
+      '5xl': [
+        '6.875rem',
+        {
+          letterSpacing: '-0.03em',
+          lineHeight: '1',
+        },
+      ],
+    },
     fontWeight: {
       bold: 700,
       medium: 500,
       regular: 400,
     },
     extend: {
+      colors: {
+        black: '#2B2E2E',
+        gray: '#757575',
+        lightGray: '#E7E7E7',
+        peach: '#FFE1D1',
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: {

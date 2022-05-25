@@ -28,7 +28,7 @@ const BlockImage = (props) => {
       </div>
       {/* Caption */}
       {props?.node?.caption && (
-        <div className="text-gray-400 text-sm mt-2">{props?.node?.caption}</div>
+        <div className="mt-2 text-sm text-gray">{props?.node?.caption}</div>
       )}
     </div>
   );

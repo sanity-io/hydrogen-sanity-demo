@@ -157,7 +157,7 @@ function LineInCart() {
 
 function CartItemQuantity() {
   return (
-    <div className="mt-2 flex items-center overflow-auto rounded border border-gray-300">
+    <div className="mt-2 flex items-center overflow-auto rounded border border-black">
       <CartLineQuantityAdjustButton
         adjust="decrease"
         aria-label="Decrease quantity"
@@ -165,7 +165,7 @@ function CartItemQuantity() {
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 text-gray-400"
+          className="h-5 w-5 text-black"
           viewBox="0 0 20 20"
           fill="currentColor"
         >
@@ -178,12 +178,12 @@ function CartItemQuantity() {
       </CartLineQuantityAdjustButton>
       <CartLineQuantity
         as="div"
-        className="p-2 text-center text-xs text-gray-900"
+        className="p-2 text-center text-xs text-black"
       />
       <CartLineQuantityAdjustButton
         adjust="increase"
         aria-label="Increase quantity"
-        className="disabled:pointer-events-all p-2 text-gray-400 disabled:cursor-wait"
+        className="disabled:pointer-events-all p-2 text-black disabled:cursor-wait"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -205,7 +205,7 @@ function CartItemQuantity() {
 function CartFooter() {
   return (
     <footer className="sticky bottom-0 border-t border-black border-opacity-5 pb-8">
-      <div className="relative flex h-60 flex-col p-4 text-gray-900">
+      <div className="relative flex h-60 flex-col p-4 text-black">
         <div role="table" aria-label="Cost summary">
           <div role="row" className="flex justify-between">
             <span className="font-medium" role="rowheader">

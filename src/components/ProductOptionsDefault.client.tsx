@@ -40,7 +40,7 @@ export default function ProductOptionsDefault({name, values}: Props) {
               />
               <div
                 className={`cursor-pointer border p-2 text-sm ${
-                  checked ? 'bg-gray-900 text-white' : 'text-gray-900'
+                  checked ? 'bg-gray text-white' : 'text-gray'
                 }`}
               >
                 {value}

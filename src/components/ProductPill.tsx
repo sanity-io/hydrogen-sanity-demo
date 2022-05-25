@@ -22,7 +22,7 @@ export default function ProductPill({storefrontProduct}: Props) {
     <Link to={`/products/${storefrontProduct.handle}`}>
       <div className="flex" role="row">
         <div role="cell" className="relative mr-4 flex-shrink-0">
-          <div className="relative h-20 w-20 overflow-hidden rounded bg-gray-100">
+          <div className="relative h-20 w-20 overflow-hidden rounded bg-gray">
             {selectedVariant.image && (
               <Image
                 className="absolute inset-0 object-cover"

@@ -26,7 +26,7 @@ export default function ProductCard({storefrontProduct}: Props) {
       // }}
     >
       <Link to={`/products/${storefrontProduct.handle}`}>
-        <div className="relative mb-2 flex aspect-square items-center justify-center overflow-hidden rounded bg-gray-50 object-cover">
+        <div className="relative mb-2 flex aspect-square items-center justify-center overflow-hidden rounded bg-lightGray object-cover">
           {selectedVariant.image ? (
             <Image
               className="absolute h-full w-full transform bg-cover bg-center object-cover object-center transition-all duration-500 ease-in-out"

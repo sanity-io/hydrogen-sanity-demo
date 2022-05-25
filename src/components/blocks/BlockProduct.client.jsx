@@ -31,7 +31,7 @@ const BlockProduct = (props) => {
       initialVariantId={currentVariant.id}
     >
       <div className="mx-auto my-8">
-        <div className="w-1/2 space-y-4 border border-gray-400 p-4">
+        <div className="w-1/2 space-y-4 border border-gray p-4">
           {/* Product and price */}
           <div>
             <LinkProduct
@@ -56,9 +56,7 @@ const BlockProduct = (props) => {
         </div>
         {/* Caption */}
         {props?.node?.caption && (
-          <div className="mt-2 text-sm text-gray-400">
-            {props?.node?.caption}
-          </div>
+          <div className="mt-2 text-sm text-gray">{props?.node?.caption}</div>
         )}
       </div>
     </ProductProvider>

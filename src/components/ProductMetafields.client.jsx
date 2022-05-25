@@ -72,7 +72,7 @@ export default function ProductMetafields() {
       {sizeChartMetafield?.value && (
         <a
           href="#size-chart"
-          className="my-4 block text-sm text-gray-500 underline"
+          className="my-4 block text-sm text-gray underline"
         >
           Size Chart
         </a>
@@ -106,7 +106,7 @@ export default function ProductMetafields() {
                 strokeLinejoin="round"
               />
             </svg>
-            <span className="text-sm font-medium text-gray-900">
+            <span className="text-sm font-medium text-gray">
               Lifetime Warranty
             </span>
           </span>

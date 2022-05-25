@@ -45,7 +45,7 @@ export default function CountrySelector() {
                         selectedCountry={selectedCountry}
                         getClassName={(active) => {
                           return `w-36 p-2 flex justify-between items-center text-left cursor-pointer ${
-                            active ? 'bg-gray-200' : null
+                            active ? 'bg-lightGray' : null
                           }`;
                         }}
                       />

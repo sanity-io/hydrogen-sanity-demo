@@ -78,7 +78,7 @@ export default function ProductOptionsColor({
               ) : (
                 <div
                   className={`cursor-pointer border p-2 text-sm ${
-                    selected ? 'bg-gray-900 text-white' : 'text-gray-900'
+                    selected ? 'bg-gray text-white' : 'text-gray'
                   }`}
                 >
                   {value}
