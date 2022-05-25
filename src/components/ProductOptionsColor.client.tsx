@@ -49,6 +49,9 @@ export default function ProductOptionsColor({
 
   return (
     <fieldset key={name} className="mt-4">
+      {/* Name */}
+      <legend className="mb-2 text-xs font-medium text-gray">{name}</legend>
+
       <div className="flex flex-wrap items-center gap-2">
         {values.map((value) => {
           const selected = selectedOptions?.[name] === value;

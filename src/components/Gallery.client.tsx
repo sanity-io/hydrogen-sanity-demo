@@ -26,7 +26,7 @@ export default function Gallery() {
 
   return (
     <div
-      className="no-scrollbar scroll-snap-x flex h-[485px] w-1/2 place-content-start overflow-x-scroll scroll-smooth md:grid md:h-auto md:grid-cols-2"
+      className="no-scrollbar scroll-snap-x flex min-h-screen w-1/2 place-content-start overflow-x-scroll scroll-smooth bg-lightGray md:grid md:h-auto md:grid-cols-2"
       tabIndex={-1}
     >
       {selectedVariant?.image && (

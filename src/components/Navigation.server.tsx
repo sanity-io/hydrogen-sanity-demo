@@ -1,6 +1,7 @@
 import {Link} from '@shopify/hydrogen';
 import type {SanityMenuLink} from '../types';
 import CollectionGroup from './CollectionGroup.server';
+import StyledLink from './StyledLink.client';
 
 type Props = {
   menuLinks: SanityMenuLink[];
@@ -18,15 +19,16 @@ export default function Navigation({menuLinks}: Props) {
       }
       if (link._type === 'linkExternal') {
         return (
-          <a
-            className="relative z-20 mr-1 flex items-center whitespace-nowrap"
-            href={link.url}
-            key={link?._key}
-            rel="noreferrer"
-            target={link.newWindow ? '_blank' : '_self'}
-          >
-            {link.title}
-          </a>
+          <div className="flex items-center" key={link._key}>
+            <a
+              className="textLink relative z-20 mr-1 whitespace-nowrap"
+              href={link.url}
+              rel="noreferrer"
+              target={link.newWindow ? '_blank' : '_self'}
+            >
+              {link.title}
+            </a>
+          </div>
         );
       }
       if (link._type === 'linkInternal') {
@@ -35,13 +37,14 @@ export default function Navigation({menuLinks}: Props) {
         }
 
         return (
-          <Link
-            className="relative z-20 mr-1 flex items-center whitespace-nowrap"
-            key={link?._key}
-            to={link.slug}
-          >
-            {link.title}
-          </Link>
+          <div className="flex items-center" key={link._key}>
+            <Link
+              className="textLink relative z-20 mr-1 whitespace-nowrap"
+              to={link.slug}
+            >
+              {link.title}
+            </Link>
+          </div>
         );
       }
 

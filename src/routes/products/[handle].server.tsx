@@ -76,7 +76,7 @@ export default function ProductRoute() {
     >
       <Layout>
         <div className="relative min-h-screen w-full">
-          <div className="w-50 pointer-events-none absolute right-4 z-10 h-full">
+          <div className="w-50 pointer-events-none absolute right-8 z-10 h-full">
             <ProductWidget sanityProduct={sanityProduct} />
           </div>
           <Gallery />

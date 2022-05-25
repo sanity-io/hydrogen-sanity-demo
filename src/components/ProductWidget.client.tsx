@@ -25,7 +25,7 @@ function ProductActions() {
   };
 
   return (
-    <div className="mt-2 flex flex-col space-y-2">
+    <div className="mt-5 flex flex-col space-y-2">
       {/* Quantity */}
       {!isOutOfStock && (
         <div className="inline-flex items-center overflow-auto rounded border border-gray">
@@ -83,17 +83,17 @@ function ProductPrices() {
   }
 
   return (
-    <>
+    <div className="my-4">
       <ProductPrice
-        className="font-semibold text-sm line-through"
+        className="text-xl font-bold line-through"
         priceType="compareAt"
         variantId={storefrontProduct.selectedVariant.id}
       />
       <ProductPrice
-        className="font-semibold text-sm "
+        className="text-xl font-bold"
         variantId={storefrontProduct.selectedVariant.id}
       />
-    </>
+    </div>
   );
 }
 
@@ -101,17 +101,23 @@ export default function ProductWidget({sanityProduct}: Props) {
   const storefrontProduct = useProduct();
 
   return (
-    <div className="pointer-events-auto sticky top-16 w-[315px] rounded bg-white p-6 shadow">
+    <div className="pointer-events-auto sticky top-24 w-[315px] rounded bg-white p-6 shadow">
+      {/* Title */}
       {storefrontProduct?.title && (
         <h1 className="text-xl font-bold uppercase">
           {storefrontProduct.title}
         </h1>
       )}
 
+      {/* Vendor */}
       {storefrontProduct?.vendor && (
         <div className="mt-1 text-xs text-gray">{storefrontProduct.vendor}</div>
       )}
+
+      {/* Prices */}
       <ProductPrices />
+
+      {/* Product options */}
       <ProductOptions
         customProductOptions={sanityProduct.customProductOptions}
       />

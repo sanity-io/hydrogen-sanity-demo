@@ -29,6 +29,15 @@
   .btn:disabled {
     opacity: 0.2;
   }
+
+  .textLink {
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-bottom-color: transparent;
+  }
+  .textLink:hover {
+    border-bottom-color: inherit;
+  }
 }
 
 @layer utilities {

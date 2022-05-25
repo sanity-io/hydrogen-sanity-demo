@@ -34,7 +34,7 @@ export default function CollectionGroupDialog({
       onMouseLeave={handleClose}
     >
       {/* Title */}
-      <button className="font-bold" onKeyPress={handleToggleOpen}>
+      <button className="textLink font-bold" onKeyPress={handleToggleOpen}>
         {collectionGroup.title}
       </button>
 
