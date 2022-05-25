@@ -21,8 +21,6 @@ export default function Layout({children}: Props) {
     clientConfig,
     getProductGraphQLFragment: () => false,
     query: QUERY,
-    // cache: CacheHours(),
-    // preload: '*',
   });
 
   return (

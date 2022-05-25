@@ -31,32 +31,26 @@ export default function NotFound({response}) {
   });
   const products = data ? flattenConnection(data.products) : [];
 
+  // TODO: bring in text and color theme from sanity
+
   return (
     <Layout>
-      <div className="bg-indigo-100">
-        <DebugWrapper name="Not Found">
-          <h1 className="font-medium">Well... you&#8216;re officially lost</h1>
-          <button
-            className="btn"
-            disabled
-            // url="/"
-          >
-            Home
-          </button>
-        </DebugWrapper>
+      <div className="pt-34">
+        <h1 className="mx-auto px-12 text-center text-4xl font-medium sm:max-w-2xl">
+          Well... you&#8216;re officially lost
+        </h1>
 
-        <DebugWrapper name="Related products" shopify>
-          <div>
-            <p className="font-medium">Products you might like</p>
-            <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4">
-              {products.map((product) => (
-                <div key={product.id}>
-                  <ProductPill storefrontProduct={product} />
-                </div>
-              ))}
+        <p className="my-8 text-center">
+          But that’s okay, because we’ve brought everything to you instead.
+        </p>
+
+        <div className="mx-4 mb-18 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
+          {products.map((product) => (
+            <div key={product.id}>
+              <ProductPill storefrontProduct={product} />
             </div>
-          </div>
-        </DebugWrapper>
+          ))}
+        </div>
       </div>
     </Layout>
   );
@@ -95,6 +89,7 @@ const QUERY = gql`
               }
             }
           }
+          vendor
         }
       }
     }

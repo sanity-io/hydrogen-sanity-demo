@@ -36,7 +36,7 @@ export default function CountrySelector() {
                   {listboxOpen && (
                     <Suspense
                       fallback={
-                        <div className="flex justify-center">
+                        <div className="flex justify-center overflow-hidden">
                           <SpinnerIcon />
                         </div>
                       }

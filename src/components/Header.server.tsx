@@ -26,7 +26,9 @@ export default function Header({menuLinks}: Props) {
               />
             */}
 
-      <div className="lg:hidden">(Menu)</div>
+      <div className="flex items-center text-sm font-bold text-red lg:hidden">
+        (Menu)
+      </div>
 
       <Navigation menuLinks={menuLinks} />
 

@@ -20,12 +20,15 @@ export default function ProductPill({storefrontProduct}: Props) {
 
   return (
     <Link to={`/products/${storefrontProduct.handle}`}>
-      <div className="flex" role="row">
-        <div role="cell" className="relative mr-4 flex-shrink-0">
-          <div className="relative h-20 w-20 overflow-hidden rounded bg-gray">
+      <div
+        className="flex h-[110px] gap-4 rounded-md border border-lightGray bg-white p-3"
+        role="row"
+      >
+        <div role="cell" className="relative flex-shrink-0">
+          <div className="relative aspect-[107/84] h-full overflow-hidden rounded-sm bg-lightGray">
             {selectedVariant.image && (
               <Image
-                className="absolute inset-0 object-cover"
+                className="absolute inset-0 h-full w-full object-cover"
                 data={selectedVariant.image}
                 loaderOptions={{width: 100, height: 100, crop: 'center'}}
               />
@@ -33,34 +36,42 @@ export default function ProductPill({storefrontProduct}: Props) {
           </div>
 
           {/* Out of stock sticker */}
-          {!selectedVariant?.availableForSale && (
+          {/*!selectedVariant?.availableForSale && (
             <div className="absolute top-0 left-0 bg-black p-2 text-xs text-white">
               Out of stock
             </div>
-          )}
+          )*/}
         </div>
 
-        <div className="truncate">
+        {/* TODO: potentially DRY with product card */}
+        <div className="overflow-hidden">
           {/* Title */}
-          <span className="mb-0.5 text-sm font-bold uppercase">
-            {storefrontProduct.title}
-          </span>
+          <div className="font-bold">{storefrontProduct.title}</div>
 
           {/* Vendor */}
           {storefrontProduct.vendor && (
-            <p className="mb-0.5 text-sm">{storefrontProduct.vendor}</p>
+            <div className="text-gray">{storefrontProduct.vendor}</div>
           )}
 
-          <div className="flex text-xs">
-            {selectedVariant.compareAtPriceV2 && (
+          {/* Price / sold out */}
+          {selectedVariant?.availableForSale ? (
+            <div className="mt-3 flex font-bold">
+              {selectedVariant.compareAtPriceV2 && (
+                <span className="text-gray">
+                  <Suspense fallback={null}>
+                    <MoneyCompareAtPrice
+                      money={selectedVariant.compareAtPriceV2}
+                    />
+                  </Suspense>
+                </span>
+              )}
               <Suspense fallback={null}>
-                <MoneyCompareAtPrice money={selectedVariant.compareAtPriceV2} />
+                <MoneyPrice money={selectedVariant.priceV2} />
               </Suspense>
-            )}
-            <Suspense fallback={null}>
-              <MoneyPrice money={selectedVariant.priceV2} />
-            </Suspense>
-          </div>
+            </div>
+          ) : (
+            <div className="mt-3 font-bold uppercase text-gray">Sold out</div>
+          )}
         </div>
       </div>
     </Link>
