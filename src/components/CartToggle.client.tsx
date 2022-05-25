@@ -22,7 +22,7 @@ export default function CartToggle({handleClick}: Props) {
     <button
       aria-expanded={isCartOpen}
       aria-controls="cart"
-      className="aspect-square w-10 rounded-full bg-indigo-300"
+      className="aspect-square w-[2.375rem] place-content-center rounded-full border border-lightGray bg-white text-sm font-bold"
       onClick={() => {
         // @ts-expect-error cartUI shouldnt return null
         toggleCart();

@@ -102,7 +102,10 @@ function CartItems() {
 function LineInCart() {
   const {merchandise} = useCartLine();
   return (
-    <div role="row" className="flex border-b py-4 last:border-b-0">
+    <div
+      role="row"
+      className="flex border-b border-lightGray py-4 last:border-b-0"
+    >
       <div role="cell" className="mr-7 flex-shrink-0">
         <Link to={`/products/${merchandise.product.handle}`}>
           <CartLineImage
@@ -157,7 +160,7 @@ function LineInCart() {
 
 function CartItemQuantity() {
   return (
-    <div className="mt-2 flex items-center overflow-auto rounded border border-black">
+    <div className="mt-2 flex items-center overflow-auto rounded border border-gray">
       <CartLineQuantityAdjustButton
         adjust="decrease"
         aria-label="Decrease quantity"
@@ -226,7 +229,7 @@ function CartFooter() {
             </span>
           </div>
         </div>
-        <CartShopPayButton className="my-4 flex w-full justify-center bg-[#5a31f4] py-2" />
+        <CartShopPayButton className="btn my-4 flex w-full justify-center bg-[#5a31f4] py-2" />
         <CartCheckoutButton className="btn flex">Checkout</CartCheckoutButton>
       </div>
     </footer>

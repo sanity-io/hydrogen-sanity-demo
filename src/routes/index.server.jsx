@@ -57,7 +57,7 @@ function SeoForHomepage() {
 }
 
 function BoxFallback() {
-  return <div className="rounded-xl mb-10 h-40 p-12 shadow-xl"></div>;
+  return <div className="rounded-xl mb-10 h-40 p-12"></div>;
 }
 
 function FeaturedProductsBox({country}) {

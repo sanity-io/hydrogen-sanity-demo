@@ -50,10 +50,8 @@ export default function Navigation({menuLinks}: Props) {
   };
 
   return (
-    <nav className="hidden lg:flex">
-      <div className="items-stretch justify-start gap-3 font-medium md:flex">
-        {renderLinks()}
-      </div>
+    <nav className="flex items-stretch justify-start gap-6 text-sm font-bold">
+      {renderLinks()}
     </nav>
   );
 }

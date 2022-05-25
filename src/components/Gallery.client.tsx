@@ -26,14 +26,14 @@ export default function Gallery() {
 
   return (
     <div
-      className="no-scrollbar scroll-snap-x flex h-[485px] w-1/2 place-content-start gap-2 overflow-x-scroll scroll-smooth md:grid md:h-auto md:grid-cols-2"
+      className="no-scrollbar scroll-snap-x flex h-[485px] w-1/2 place-content-start overflow-x-scroll scroll-smooth md:grid md:h-auto md:grid-cols-2"
       tabIndex={-1}
     >
       {selectedVariant?.image && (
         <Image
           fetchpriority="high"
           data={selectedVariant.image}
-          className="md:flex-shrink-none h-full w-[80vw] flex-shrink-0 snap-start border border-black object-cover object-center md:col-span-2 md:h-auto md:w-full"
+          className="md:flex-shrink-none order h-full w-[80vw] flex-shrink-0 snap-start object-cover object-center md:col-span-2 md:h-auto md:w-full"
         />
       )}
       {galleryMedia.map((med: any) => {
@@ -48,7 +48,7 @@ export default function Gallery() {
             // @ts-expect-error <MediaFile> should accept tabIndex
             tabIndex={0}
             key={med.id || med.image.id}
-            className="h-full w-[80vw] flex-shrink-0 snap-start border border-black object-cover object-center transition-all md:h-auto md:w-auto"
+            className="h-full w-[80vw] flex-shrink-0 snap-start object-cover object-center transition-all md:h-auto md:w-auto"
             data={med}
             fetchpriority="low"
             loaderOptions={{

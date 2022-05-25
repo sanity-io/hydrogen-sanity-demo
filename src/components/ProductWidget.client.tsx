@@ -25,7 +25,7 @@ function ProductActions() {
   };
 
   return (
-    <div className="mt-2 space-y-2">
+    <div className="mt-2 flex flex-col space-y-2">
       {/* Quantity */}
       {!isOutOfStock && (
         <div className="inline-flex items-center overflow-auto rounded border border-gray">
@@ -101,15 +101,15 @@ export default function ProductWidget({sanityProduct}: Props) {
   const storefrontProduct = useProduct();
 
   return (
-    <div className="pointer-events-auto sticky top-16 w-[400px] rounded bg-white p-4 shadow">
+    <div className="pointer-events-auto sticky top-16 w-[315px] rounded bg-white p-6 shadow">
       {storefrontProduct?.title && (
-        <h1 className="text-lg font-bold uppercase">
+        <h1 className="text-xl font-bold uppercase">
           {storefrontProduct.title}
         </h1>
       )}
 
       {storefrontProduct?.vendor && (
-        <div className="text-sm">{storefrontProduct.vendor}</div>
+        <div className="mt-1 text-xs text-gray">{storefrontProduct.vendor}</div>
       )}
       <ProductPrices />
       <ProductOptions

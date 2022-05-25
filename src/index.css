@@ -11,13 +11,18 @@
 @layer components {
   .btn {
     -webkit-font-smoothing: antialiased;
+    align-items: center;
     background-color: theme('colors.black');
     border-radius: theme('borderRadius.full');
     color: theme('colors.white');
     display: flex;
     font-size: theme('fontSize.sm');
     font-weight: theme('fontWeight.bold');
-    padding: theme('padding.2') theme('padding.4');
+    height: 2.5rem;
+    justify-content: center;
+    letter-spacing: theme('letterSpacing.normal');
+    overflow: hidden;
+    padding: theme('padding.4');
   }
 
   .btn:disabled {

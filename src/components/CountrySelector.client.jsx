@@ -20,19 +20,19 @@ export default function CountrySelector() {
   }, []);
 
   return (
-    <div className="hidden lg:block">
+    <div className="relative hidden lg:block">
       <Listbox onChange={setCountry}>
         {({open}) => {
           setTimeout(() => setListboxOpen(open));
           return (
             <>
-              <Listbox.Button className="flex h-8 items-center p-2 text-sm font-medium">
-                <span className="mr-4">{selectedCountry.name}</span>
-                <ArrowIcon isOpen={open} />
+              <Listbox.Button className="flex items-center p-2 text-sm font-bold">
+                <span className="mr-2">{selectedCountry.name}</span>
+                <ArrowIcon className={open ? 'rotate-180' : null} />
               </Listbox.Button>
 
-              <Listbox.Options className="absolute z-10 mt-2 border border-black">
-                <div className="h-64 overflow-y-auto bg-white">
+              <Listbox.Options className="absolute left-1/2 z-10 min-w-[150px] -translate-x-1/2 overflow-hidden rounded shadow">
+                <div className="max-h-64 overflow-y-auto bg-white">
                   {listboxOpen && (
                     <Suspense
                       fallback={
@@ -44,8 +44,8 @@ export default function CountrySelector() {
                       <Countries
                         selectedCountry={selectedCountry}
                         getClassName={(active) => {
-                          return `w-36 p-2 flex justify-between items-center text-left cursor-pointer ${
-                            active ? 'bg-lightGray' : null
+                          return `p-3 flex justify-between items-center text-left font-bold text-sm cursor-pointer whitespace-nowrap ${
+                            active ? 'text-gray' : null
                           }`;
                         }}
                       />
@@ -71,7 +71,41 @@ export function Countries({selectedCountry, getClassName}) {
         {({active}) => (
           <div className={getClassName(active)}>
             {country.name}
-            {isSelected ? <span>✔</span> : null}
+            <svg
+              className="ml-8"
+              width="21"
+              height="21"
+              viewBox="0 0 21 21"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {isSelected ? (
+                <>
+                  <path
+                    d="M0 10.5C0 4.70101 4.70101 0 10.5 0C16.299 0 21 4.70101 21 10.5C21 16.299 16.299 21 10.5 21C4.70101 21 0 16.299 0 10.5Z"
+                    fill="#1147E0"
+                  />
+                  <path
+                    d="M15.6562 7.21875L9.09375 13.7812L5.8125 10.5"
+                    stroke="white"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </>
+              ) : (
+                <>
+                  <path
+                    d="M10.5 20.5C4.97715 20.5 0.5 16.0228 0.5 10.5C0.5 4.97715 4.97715 0.5 10.5 0.5C16.0228 0.5 20.5 4.97715 20.5 10.5C20.5 16.0228 16.0228 20.5 10.5 20.5Z"
+                    fill="white"
+                  />
+                  <path
+                    d="M10.5 20.5C4.97715 20.5 0.5 16.0228 0.5 10.5C0.5 4.97715 4.97715 0.5 10.5 0.5C16.0228 0.5 20.5 4.97715 20.5 10.5C20.5 16.0228 16.0228 20.5 10.5 20.5Z"
+                    stroke="#E7E7E7"
+                  />
+                </>
+              )}
+            </svg>
           </div>
         )}
       </Listbox.Option>
@@ -79,24 +113,21 @@ export function Countries({selectedCountry, getClassName}) {
   });
 }
 
-export function ArrowIcon({isOpen}) {
+export function ArrowIcon({className}) {
   return (
     <svg
-      className={`transition-transform duration-300 ${
-        isOpen ? 'rotate-180' : null
-      }`}
-      aria-hidden="true"
-      width="10"
-      height="6"
-      viewBox="0 0 10 6"
+      className={className}
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M0.292893 0.292893C0.683416 -0.097631 1.31658 -0.097631 1.7071 0.292893L4.99999 3.58579L8.29288 0.292893C8.6834 -0.0976311 9.31657 -0.0976311 9.70709 0.292893C10.0976 0.683417 10.0976 1.31658 9.70709 1.70711L5.7071 5.70711C5.31657 6.09763 4.68341 6.09763 4.29289 5.70711L0.292893 1.70711C-0.0976309 1.31658 -0.0976309 0.683417 0.292893 0.292893Z"
-        fill="#374151"
+        d="M9.75 4.5L6 8.25L2.25 4.5"
+        stroke="#3A3E3E"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

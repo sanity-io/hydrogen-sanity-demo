@@ -6,7 +6,7 @@ import clientConfig from '../../sanity.config';
 import {LINKS} from '../fragments/links';
 import {PORTABLE_TEXT} from '../fragments/portableText';
 import type {SanityLink} from '../types';
-import LogoMark from './LogoMark.client';
+import Logo from './Logo.client';
 
 /**
  * A server component that specifies the content of the footer on the website
@@ -51,16 +51,17 @@ export default function Footer() {
 
   return (
     <footer
-      className="align-start flex justify-between bg-peach p-4"
+      className="align-start flex justify-between bg-peach py-10 pl-8 pr-19"
       role="contentinfo"
     >
-      <div className="relative">
-        <LogoMark />
-        <p className="text-gray mt-8 text-sm">
+      <div>
+        <Logo />
+        <p className="mt-12 text-sm text-gray">
           Made by Sanity, Companion and Ewa Lefmann
         </p>
       </div>
-      <div className="grid max-w-2xl grid-cols-1 gap-2 font-medium md:grid-cols-2">
+
+      <div className="grid grid-cols-1 gap-x-17 gap-y-7 self-start text-lg font-bold md:grid-cols-2">
         {renderLinks}
       </div>
     </footer>
