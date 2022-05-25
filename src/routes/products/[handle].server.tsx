@@ -12,11 +12,12 @@ import {
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import clientConfig from '../../../sanity.config';
+import Gallery from '../../components/Gallery.client';
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
 import ProductDetails from '../../components/ProductDetails.client';
-import ProductHero from '../../components/ProductHero.client';
 import ProductEditorial from '../../components/ProductEditorial.server';
+import ProductWidget from '../../components/ProductWidget.client';
 import RelatedProducts from '../../components/RelatedProducts.server';
 import {PRODUCT_PAGE} from '../../fragments/productPage';
 import type {SanityProduct} from '../../types';
@@ -54,19 +55,28 @@ export default function ProductRoute() {
   )[0] as ProductVariant;
 
   return (
-    <Layout colorTheme={sanityProduct?.colorTheme}>
-      <ProductProvider
-        data={storefrontProduct}
-        initialVariantId={initialVariant.id}
-      >
-        <ProductHero sanityProduct={sanityProduct} />
-        <ProductDetails />
-        <ProductEditorial sanityProduct={sanityProduct} />
-        <RelatedProducts storefrontProduct={storefrontProduct} />
-      </ProductProvider>
+    <ProductProvider
+      data={storefrontProduct}
+      initialVariantId={initialVariant.id}
+    >
+      <Layout>
+        <div className="relative min-h-screen w-full">
+          <div className="w-50 pointer-events-none absolute right-4 z-10 h-full">
+            <ProductWidget sanityProduct={sanityProduct} />
+          </div>
+          <Gallery />
+          <ProductDetails />
+          <ProductEditorial sanityProduct={sanityProduct} />
+        </div>
 
-      <Seo type="product" data={storefrontProduct} />
-    </Layout>
+        <RelatedProducts
+          colorTheme={sanityProduct?.colorTheme}
+          storefrontProduct={storefrontProduct}
+        />
+
+        <Seo type="product" data={storefrontProduct} />
+      </Layout>
+    </ProductProvider>
   );
 }
 

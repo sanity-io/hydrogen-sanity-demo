@@ -25,10 +25,10 @@ function ProductActions() {
   };
 
   return (
-    <div className="space-y-2">
+    <div className="mt-2 space-y-2">
       {/* Quantity */}
       {!isOutOfStock && (
-        <div className="mt-2 inline-flex items-center overflow-auto rounded border border-gray-300">
+        <div className="inline-flex items-center overflow-auto rounded border border-gray-300">
           <button
             aria-label="Decrease quantity"
             className="disabled:pointer-events-all p-2"
@@ -87,12 +87,12 @@ function ProductPrices() {
   return (
     <>
       <ProductPrice
-        className="font-semibold line-through"
+        className="font-semibold text-sm line-through"
         priceType="compareAt"
         variantId={storefrontProduct.selectedVariant.id}
       />
       <ProductPrice
-        className="font-semibold"
+        className="font-semibold text-sm "
         variantId={storefrontProduct.selectedVariant.id}
       />
     </>
@@ -103,9 +103,11 @@ export default function ProductWidget({sanityProduct}: Props) {
   const storefrontProduct = useProduct();
 
   return (
-    <div className="rounded bg-gray-100 p-4">
+    <div className="pointer-events-auto sticky top-16 w-[400px] rounded bg-gray-100 p-4">
       {storefrontProduct?.title && (
-        <h1 className="font-medium">{storefrontProduct.title}</h1>
+        <h1 className="text-lg font-bold uppercase">
+          {storefrontProduct.title}
+        </h1>
       )}
 
       {/* {storefrontProduct?.vendor && <div>{storefrontProduct.vendor}</div>} */}
@@ -114,6 +116,7 @@ export default function ProductWidget({sanityProduct}: Props) {
         customProductOptions={sanityProduct.customProductOptions}
       />
       <ProductActions />
+      {/* </div> */}
     </div>
   );
 }

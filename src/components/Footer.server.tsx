@@ -50,15 +50,18 @@ export default function Footer() {
   });
 
   return (
-    <footer className="bg-white" role="contentinfo">
+    <footer
+      className="align-start flex justify-between bg-white p-4"
+      role="contentinfo"
+    >
       <div className="relative">
         <LogoMark />
-        <div className="mt-4 grid max-w-2xl grid-cols-1 md:grid-cols-2">
-          {renderLinks}
-        </div>
+        <p className="mt-8 text-sm">
+          © {new Date().getFullYear()} – AKVA. All rights reserved.
+        </p>
       </div>
-      <div className="py-4 text-sm">
-        <p>© {new Date().getFullYear()} – AKVA. All rights reserved.</p>
+      <div className="grid max-w-2xl grid-cols-1 gap-2 font-medium md:grid-cols-2">
+        {renderLinks}
       </div>
     </footer>
   );

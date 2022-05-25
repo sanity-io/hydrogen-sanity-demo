@@ -4,20 +4,19 @@ import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import {ReactNode, Suspense} from 'react';
 import clientConfig from '../../sanity.config';
 import {LINKS} from '../fragments/links';
-import {SanityColorTheme, SanityMenuLink} from '../types';
+import {SanityMenuLink} from '../types';
 import Cart from './Cart.client';
 import Footer from './Footer.server';
 import Header from './Header.server';
 
 type Props = {
   children?: ReactNode;
-  colorTheme?: SanityColorTheme;
 };
 
 /**
  * A server component that defines a structure and organization of a page that can be used in different parts of the Hydrogen app
  */
-export default function Layout({children, colorTheme}: Props) {
+export default function Layout({children}: Props) {
   const {sanityData: menuLinks} = useSanityQuery<SanityMenuLink[]>({
     clientConfig,
     getProductGraphQLFragment: () => false,
@@ -37,22 +36,14 @@ export default function Layout({children, colorTheme}: Props) {
         </a>
       </div>
 
-      <div
-        className="max-w-screen flex min-h-screen flex-col font-sans text-gray-700"
-        style={{background: colorTheme?.background || 'white'}}
-      >
+      <div className="max-w-screen flex min-h-screen flex-col font-sans">
         {/* TODO: Find out why Suspense needs to be here to prevent hydration errors. */}
         <Suspense fallback={null}>
           {menuLinks && <Header menuLinks={menuLinks} />}
           <Cart />
         </Suspense>
 
-        <main
-          className="relative grow"
-          id="mainContent"
-          role="main"
-          style={{color: colorTheme?.text || 'black'}}
-        >
+        <main className="relative grow" id="mainContent" role="main">
           {/* <div className="mx-auto max-w-7xl"> */}
           <div className="mx-auto">
             <Suspense fallback={null}>{children}</Suspense>

@@ -12,9 +12,9 @@ import {
 import gql from 'graphql-tag';
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
-import pluralize from 'pluralize';
+// import pluralize from 'pluralize';
 import clientConfig from '../../../sanity.config';
-import DebugWrapper from '../../components/DebugWrapper';
+import Hero from '../../components/Hero.server';
 import Layout from '../../components/Layout.server';
 import LoadMoreProducts from '../../components/LoadMoreProducts.client';
 import NotFound from '../../components/NotFound.server';
@@ -80,23 +80,23 @@ export default function CollectionRoute({
   const hasNextPage = data.collection.products.pageInfo.hasNextPage;
 
   return (
-    <Layout colorTheme={sanityCollection?.colorTheme}>
-      {/* the seo object will be expose in API version 2022-04 or later */}
-      <Seo type="collection" data={collection} />
+    <Layout>
+      <Hero
+        colorTheme={sanityCollection?.colorTheme}
+        title={collection.title}
+      />
 
-      {/* Collection hero */}
-      <div className="bg-red-500">
-        {/* Title */}
-        <h1 className="text-7xl font-medium">{collection.title}</h1>
-        {/* Description */}
-        <div dangerouslySetInnerHTML={{__html: collection.descriptionHtml}} />
-      </div>
-
+      {/* Collection count */}
+      {/*
       <p className="my-5 text-sm">
         {pluralize('product', products.length, true)}
       </p>
+      */}
 
-      <DebugWrapper name="Collection Products" shopify>
+      {/* HTML Description */}
+      {/* <div dangerouslySetInnerHTML={{__html: collection.descriptionHtml}} /> */}
+
+      <div className="p-4">
         <ul className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {products.map((product) => (
             <li key={product.id}>
@@ -104,11 +104,14 @@ export default function CollectionRoute({
             </li>
           ))}
         </ul>
-      </DebugWrapper>
+      </div>
 
       {hasNextPage && (
         <LoadMoreProducts startingCount={collectionProductCount} />
       )}
+
+      {/* the seo object will be exposed in API version 2022-04 or later */}
+      <Seo type="collection" data={collection} />
     </Layout>
   );
 }

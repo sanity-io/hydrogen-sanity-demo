@@ -23,7 +23,7 @@ export default function Header({menuLinks}: Props) {
                 isOpen={isMobileNavOpen}
                 setIsOpen={setIsMobileNavOpen}
               />
-          */}
+            */}
 
             <div className="lg:hidden">(Menu)</div>
 

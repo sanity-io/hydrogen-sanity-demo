@@ -8,9 +8,9 @@ type Props = {
 
 export default function ProductEditorial({sanityProduct}: Props) {
   return (
-    <DebugWrapper name="Product Editorial">
+    <div>
       {/* Body */}
       {sanityProduct?.body && <PortableText blocks={sanityProduct.body} />}
-    </DebugWrapper>
+    </div>
   );
 }

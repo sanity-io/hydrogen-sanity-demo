@@ -2,7 +2,9 @@ module.exports = {
   content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     borderRadius: {
-      DEFAULT: '4px',
+      DEFAULT: '8px',
+      md: '15px',
+      lg: '20px',
       full: '9999px',
     },
     fontFamily: {

@@ -17,14 +17,21 @@ export default function CollectionGroupContent({
   return (
     <div className="mt-24 p-2">
       <div className="relative grid grid-cols-2 gap-2">
+        {/* TODO: make a separate collection card component */}
         {collectionGroup?.collectionLinks?.map((collection) => (
           <Link
-            className="font-bold"
+            className="text-2xl font-medium"
             key={collection._id}
             onClick={onClose}
             to={collection.slug}
           >
-            <div className="flex aspect-[4/3] items-center justify-center rounded border border-black">
+            <div
+              className="flex aspect-[4/3] items-center justify-center rounded text-center"
+              style={{
+                background: collection?.colorTheme?.background || 'black',
+                color: collection?.colorTheme?.text || 'white',
+              }}
+            >
               {collection.title}
             </div>
           </Link>

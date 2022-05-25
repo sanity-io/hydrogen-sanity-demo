@@ -19,12 +19,17 @@ export default function ProductCard({storefrontProduct}: Props) {
   }
 
   return (
-    <div className="text-md relative mb-4">
+    <div
+      className="relative mb-4"
+      // style={{
+      //   color: 'red',
+      // }}
+    >
       <Link to={`/products/${storefrontProduct.handle}`}>
-        <div className="relative mb-2 flex h-96 items-center justify-center overflow-hidden border border-black object-cover">
+        <div className="relative mb-2 flex aspect-square items-center justify-center overflow-hidden rounded bg-gray-50 object-cover">
           {selectedVariant.image ? (
             <Image
-              className="absolute h-full w-full transform bg-cover bg-center object-contain object-center transition-all duration-500 ease-in-out"
+              className="absolute h-full w-full transform bg-cover bg-center object-cover object-center transition-all duration-500 ease-in-out"
               data={selectedVariant.image}
             />
           ) : null}
@@ -38,14 +43,16 @@ export default function ProductCard({storefrontProduct}: Props) {
         </div>
 
         {/* Title */}
-        <span className="mb-0.5 font-medium">{storefrontProduct.title}</span>
+        <span className="text-md mb-0.5 font-bold uppercase">
+          {storefrontProduct.title}
+        </span>
 
         {/* Vendor */}
         {storefrontProduct.vendor && (
-          <p className="mb-0.5">{storefrontProduct.vendor}</p>
+          <p className="mb-0.5 text-sm">{storefrontProduct.vendor}</p>
         )}
 
-        <div className="flex ">
+        <div className="flex text-sm">
           {selectedVariant.compareAtPriceV2 && (
             <Suspense fallback={null}>
               <MoneyCompareAtPrice money={selectedVariant.compareAtPriceV2} />

@@ -1,10 +1,11 @@
 import {useSession, useShop, useShopQuery} from '@shopify/hydrogen';
 import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import gql from 'graphql-tag';
-import DebugWrapper from './DebugWrapper';
+import {SanityColorTheme} from '../types';
 import ProductCard from './ProductCard';
 
 type Props = {
+  colorTheme?: SanityColorTheme;
   storefrontProduct: Product;
 };
 
@@ -15,7 +16,10 @@ type ShopifyPayload = {
 };
 
 // TODO: understand why `useProduct` doesn't work here
-export default function RelatedProducts({storefrontProduct}: Props) {
+export default function RelatedProducts({
+  colorTheme,
+  storefrontProduct,
+}: Props) {
   const {countryCode = 'US'} = useSession();
   const {languageCode} = useShop();
   const {data} = useShopQuery({
@@ -30,13 +34,17 @@ export default function RelatedProducts({storefrontProduct}: Props) {
   const products = data?.productRecommendations?.slice(0, 4);
 
   return (
-    <DebugWrapper name="Related products" shopify>
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+    <div
+      className="rounded-t-lg p-4"
+      style={{background: colorTheme?.background || 'white'}}
+    >
+      <h3 className="mb-6 text-xl font-medium">You might also like</h3>
+      <div className="grid gap-8 md:grid-cols-4">
         {products.map((product) => (
           <ProductCard key={product.id} storefrontProduct={product} />
         ))}
       </div>
-    </DebugWrapper>
+    </div>
   );
 }
 

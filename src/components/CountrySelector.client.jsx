@@ -20,7 +20,7 @@ export default function CountrySelector() {
   }, []);
 
   return (
-    <div className="hidden border border-black lg:block">
+    <div className="hidden lg:block">
       <Listbox onChange={setCountry}>
         {({open}) => {
           setTimeout(() => setListboxOpen(open));

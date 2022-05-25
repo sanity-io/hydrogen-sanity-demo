@@ -24,7 +24,9 @@ export default function CollectionGroupDialog({
       onMouseLeave={handleClose}
     >
       {/* Title */}
-      <button onKeyPress={handleToggleOpen}>{collectionGroup.title}</button>
+      <button className="font-medium" onKeyPress={handleToggleOpen}>
+        {collectionGroup.title}
+      </button>
 
       <Dialog open={isOpen} onClose={handleClose} static>
         {/* Overlay */}
@@ -37,7 +39,7 @@ export default function CollectionGroupDialog({
 
         {isOpen && (
           <Dialog.Panel
-            className={`fixed top-0 left-0 right-0 bottom-0 flex h-full w-full flex-col overflow-y-auto bg-white md:right-auto md:bottom-auto md:block md:w-[470px]`}
+            className={`fixed top-0 left-0 right-0 bottom-0 flex h-full w-full flex-col overflow-y-auto rounded-r-md bg-white md:right-auto md:bottom-auto md:block md:w-[470px]`}
           >
             <CollectionGroupContent
               collectionGroup={collectionGroup}

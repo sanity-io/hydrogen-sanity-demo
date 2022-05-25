@@ -2,7 +2,7 @@
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import clientConfig from '../../../sanity.config';
-import DebugWrapper from '../../components/DebugWrapper';
+import Hero from '../../components/Hero.server';
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
 import PortableText from '../../components/PortableText.client';
@@ -33,16 +33,14 @@ export default function PageRoute({params}: Props) {
   }
 
   return (
-    <Layout colorTheme={page?.colorTheme}>
+    <Layout>
+      <Hero title={page.title} />
+
+      {/* Body */}
+      {page?.body && <PortableText blocks={page.body} className="mt-4" />}
+
       {/* TODO: re-add */}
       {/* <Seo type="page" data={page} /> */}
-      <DebugWrapper name="Page">
-        {/* Title */}
-        <h1 className="font-medium">{page.title}</h1>
-
-        {/* Body */}
-        {page?.body && <PortableText blocks={page.body} className="mt-4" />}
-      </DebugWrapper>
     </Layout>
   );
 }

@@ -13,6 +13,7 @@ import {
   useCart,
   useCartLine,
 } from '@shopify/hydrogen';
+import clsx from 'clsx';
 import {useCartUI} from './CartUIProvider.client';
 
 /**
@@ -26,20 +27,21 @@ export default function Cart() {
     <>
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
       <div
-        className={`duration-400 fixed top-0 bottom-0 left-0 right-0 z-20 bg-black transition-opacity ${
-          isCartOpen ? 'opacity-20' : 'pointer-events-none opacity-0'
-        }`}
+        className={clsx([
+          `duration-400 fixed top-0 bottom-0 left-0 right-0 z-20 bg-black transition-opacity`,
+          isCartOpen ? 'opacity-20' : 'pointer-events-none opacity-0',
+        ])}
         onClick={isCartOpen ? closeCart : null}
       />
 
       <Dialog open={isCartOpen} onClose={closeCart}>
         <div
           aria-hidden="true"
-          className="fixed inset-0 z-20 bg-gray-50 opacity-75"
+          className="fixed inset-0 z-20  bg-gray-50 opacity-75"
         />
 
         <Dialog.Panel
-          className={`fixed top-0 left-0 right-0 bottom-0 z-20 flex h-full w-full flex-col overflow-y-auto bg-white md:left-auto md:bottom-auto md:block md:w-[470px]`}
+          className={`fixed top-0 left-0 right-0 bottom-0 z-20 flex h-full w-full flex-col overflow-y-auto rounded-l-lg bg-white md:left-auto md:bottom-auto md:block md:w-[470px]`}
         >
           <CartHeader />
           {totalQuantity === 0 ? (
@@ -59,7 +61,7 @@ export default function Cart() {
 function CartHeader() {
   const {closeCart} = useCartUI();
   return (
-    <header className="sticky top-0 flex items-center justify-end border-b border-gray-300 p-4">
+    <header className="sticky top-0 flex items-center justify-end p-4">
       <button type="button" onClick={closeCart}>
         <span>Close</span>
       </button>

@@ -22,11 +22,10 @@ export default function ProductPill({storefrontProduct}: Props) {
     <Link to={`/products/${storefrontProduct.handle}`}>
       <div className="flex" role="row">
         <div role="cell" className="relative mr-4 flex-shrink-0">
-          <div className="relative h-20 w-20 bg-gray-100">
+          <div className="relative h-20 w-20 overflow-hidden rounded bg-gray-100">
             {selectedVariant.image && (
               <Image
-                alt="yo"
-                className="absolute inset-0"
+                className="absolute inset-0 object-cover"
                 data={selectedVariant.image}
                 loaderOptions={{width: 100, height: 100, crop: 'center'}}
               />
@@ -41,9 +40,9 @@ export default function ProductPill({storefrontProduct}: Props) {
           )}
         </div>
 
-        <div>
+        <div className="truncate">
           {/* Title */}
-          <span className="mb-0.5 text-sm font-medium">
+          <span className="mb-0.5 text-sm font-bold uppercase">
             {storefrontProduct.title}
           </span>
 
@@ -52,7 +51,7 @@ export default function ProductPill({storefrontProduct}: Props) {
             <p className="mb-0.5 text-sm">{storefrontProduct.vendor}</p>
           )}
 
-          <div className="flex text-sm">
+          <div className="flex text-xs">
             {selectedVariant.compareAtPriceV2 && (
               <Suspense fallback={null}>
                 <MoneyCompareAtPrice money={selectedVariant.compareAtPriceV2} />
