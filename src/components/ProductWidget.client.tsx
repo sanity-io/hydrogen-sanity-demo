@@ -101,7 +101,7 @@ export default function ProductWidget({sanityProduct}: Props) {
   const storefrontProduct = useProduct();
 
   return (
-    <div className="pointer-events-auto sticky top-24 w-[315px] rounded bg-white p-6 shadow">
+    <div className="pointer-events-auto sticky top-26 w-[315px] rounded bg-white p-6 shadow">
       {/* Title */}
       {storefrontProduct?.title && (
         <h1 className="text-xl font-bold uppercase">

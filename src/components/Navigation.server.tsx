@@ -1,7 +1,6 @@
 import {Link} from '@shopify/hydrogen';
 import type {SanityMenuLink} from '../types';
 import CollectionGroup from './CollectionGroup.server';
-import StyledLink from './StyledLink.client';
 
 type Props = {
   menuLinks: SanityMenuLink[];

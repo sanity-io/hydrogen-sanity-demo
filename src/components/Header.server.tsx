@@ -1,8 +1,7 @@
-import {Link} from '@shopify/hydrogen';
 import {SanityMenuLink} from '../types';
 import CartToggle from './CartToggle.client';
 import CountrySelector from './CountrySelector.client';
-import Logo from './Logo.client';
+import HeaderBackground from './HeaderBackground.client';
 import Navigation from './Navigation.server';
 
 type Props = {
@@ -26,28 +25,19 @@ export default function Header({menuLinks}: Props) {
         />
       */}
 
+      <HeaderBackground />
+
       <div className="flex items-center text-sm font-bold text-red lg:hidden">
         (Menu)
       </div>
 
       <Navigation menuLinks={menuLinks} />
 
-      {/* Logo */}
-      <div className="absolute bottom-0 top-0 left-1/2 flex -translate-x-1/2 items-center">
-        <Link className="font-bold" to="/">
-          <Logo />
-        </Link>
-      </div>
-
       {/* Country selector + Cart toggle */}
-      <div className="flex items-center gap-2">
+      <div className="relative flex items-center gap-2">
         <CountrySelector />
         <CartToggle />
       </div>
-      {/*
-        <div className="flex h-full place-content-between items-stretch lg:flex-col">
-        </div>
-          */}
     </header>
   );
 }
