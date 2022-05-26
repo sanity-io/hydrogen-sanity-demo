@@ -4,11 +4,10 @@ import {useMoney} from '@shopify/hydrogen';
  * A client component that renders a product's compare at price
  */
 export default function MoneyCompareAtPrice({money}) {
-  const {amount, currencyNarrowSymbol} = useMoney(money);
+  const {localizedString} = useMoney(money);
   return (
     <span className="mr-2.5 line-through decoration-red">
-      {currencyNarrowSymbol}
-      {amount}
+      {localizedString}
     </span>
   );
 }

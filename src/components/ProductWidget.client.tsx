@@ -85,7 +85,7 @@ function ProductPrices() {
   return (
     <div className="my-4">
       <ProductPrice
-        className="text-xl font-bold line-through"
+        className="text-xl font-bold line-through decoration-red"
         priceType="compareAt"
         variantId={storefrontProduct.selectedVariant.id}
       />

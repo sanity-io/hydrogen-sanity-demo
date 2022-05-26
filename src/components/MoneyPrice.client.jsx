@@ -1,15 +1,9 @@
 import {useMoney} from '@shopify/hydrogen';
 
 /**
- * A client component that defines the currency code, currency symbol, and amount of a product
+ * A client component that defines the localized value of a product
  */
 export default function MoneyPrice({money}) {
-  const {currencyCode, currencyNarrowSymbol, amount} = useMoney(money);
-  return (
-    <span className="text-md">
-      {currencyCode}
-      {currencyNarrowSymbol}
-      {amount}
-    </span>
-  );
+  const {localizedString} = useMoney(money);
+  return <span className="text-md">{localizedString}</span>;
 }
