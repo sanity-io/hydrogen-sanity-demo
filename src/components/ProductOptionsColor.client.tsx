@@ -1,6 +1,7 @@
 import {useProduct} from '@shopify/hydrogen';
 import clsx from 'clsx';
 import {SanityCustomProductOptionColor} from '../types';
+import OptionButton from './OptionButton.client';
 
 /**
  * A client component that tracks a selected variant and/or selling plan state, as well as callbacks for modifying the state
@@ -12,7 +13,7 @@ type Props = {
   values: string[];
 };
 
-const ColorSwatch = ({hex, selected}: {hex: string; selected: boolean}) => {
+const ColorChip = ({hex, selected}: {hex: string; selected: boolean}) => {
   return (
     <>
       <div
@@ -52,9 +53,9 @@ export default function ProductOptionsColor({
       {/* Name */}
       <legend className="mb-2 text-xs font-medium text-gray">{name}</legend>
 
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-center gap-x-1 gap-y-2">
         {values.map((value) => {
-          const selected = selectedOptions?.[name] === value;
+          const checked = selectedOptions?.[name] === value;
           const id = `option-${name}-${value}`;
 
           const foundCustomOptionValue = customProductOption.colors.find(
@@ -69,23 +70,17 @@ export default function ProductOptionsColor({
                 id={id}
                 name={`option[${name}]`}
                 value={value}
-                checked={selected}
+                checked={checked}
                 onChange={() => handleChange(name, value)}
               />
 
               {foundCustomOptionValue ? (
-                <ColorSwatch
+                <ColorChip
                   hex={foundCustomOptionValue.hex}
-                  selected={selected}
+                  selected={checked}
                 />
               ) : (
-                <div
-                  className={`cursor-pointer border p-2 text-sm ${
-                    selected ? 'bg-gray text-white' : 'text-gray'
-                  }`}
-                >
-                  {value}
-                </div>
+                <OptionButton checked={checked} label={value} />
               )}
             </label>
           );

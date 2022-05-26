@@ -20,6 +20,7 @@ import {useCartUI} from './CartUIProvider.client';
  * A client component that contains the merchandise that a customer intends to purchase, and the estimated cost associated with the cart
  */
 export default function Cart() {
+  // @ts-expect-error cartUI shouldnt return null
   const {isCartOpen, closeCart} = useCartUI();
   const {totalQuantity} = useCart();
 
@@ -56,7 +57,7 @@ export default function Cart() {
             <Dialog.Panel
               className={`fixed top-0 left-0 right-0 bottom-0 z-40 flex h-full w-full flex-col overflow-y-auto rounded-l-xl bg-white md:left-auto md:bottom-auto md:w-[470px]`}
             >
-              <CartHeader />
+              <CartHeader totalQuantity={totalQuantity} />
               {totalQuantity === 0 ? (
                 <CartEmpty />
               ) : (
@@ -73,11 +74,14 @@ export default function Cart() {
   );
 }
 
-function CartHeader() {
+function CartHeader({totalQuantity}: {totalQuantity?: number}) {
+  // @ts-expect-error cartUI shouldnt return null
   const {closeCart} = useCartUI();
   return (
     <header className="sticky top-0 flex items-center justify-between px-8 pb-5 pt-8">
-      <div className="text-xl font-bold">My Cart</div>
+      <div className="text-xl font-bold">
+        My Cart {totalQuantity && `(${totalQuantity})`}
+      </div>
       <button type="button" onClick={closeCart}>
         <span>Close</span>
       </button>
@@ -269,8 +273,10 @@ function CartFooter() {
             </span>
           </div>
         </div>
-        <CartShopPayButton className="btn my-4 flex w-full justify-center bg-[#5a31f4] py-2" />
-        <CartCheckoutButton className="btn flex">Checkout</CartCheckoutButton>
+        <CartShopPayButton className="btn mt-4 flex w-full justify-center bg-[#5a31f4] py-2" />
+        <CartCheckoutButton className="btn mt-3 flex">
+          Checkout
+        </CartCheckoutButton>
       </div>
     </footer>
   );
