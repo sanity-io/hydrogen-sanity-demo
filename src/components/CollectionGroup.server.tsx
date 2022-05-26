@@ -1,4 +1,9 @@
-import {flattenConnection, useShopQuery} from '@shopify/hydrogen';
+import {
+  flattenConnection,
+  useSession,
+  useShop,
+  useShopQuery,
+} from '@shopify/hydrogen';
 import {
   Collection,
   Product,
@@ -21,11 +26,15 @@ export default function CollectionGroup({collectionGroup}: Props) {
   const collectionHandle =
     collectionGroup?.collectionProducts?.store.slug.current || '';
 
+  const {countryCode = 'US'} = useSession();
+  const {languageCode} = useShop();
   // Fetch products
   const {data} = useShopQuery({
     query: QUERY_SHOPIFY,
     variables: {
+      country: countryCode,
       handle: collectionHandle,
+      language: languageCode,
       numProducts: 4,
     },
     preload: true,
@@ -44,7 +53,12 @@ export default function CollectionGroup({collectionGroup}: Props) {
 }
 
 const QUERY_SHOPIFY = gql`
-  query CollectionDetails($handle: String!, $numProducts: Int!) {
+  query CollectionDetails(
+    $country: CountryCode
+    $language: LanguageCode
+    $handle: String!
+    $numProducts: Int!
+  ) @inContext(country: $country, language: $language) {
     collection(handle: $handle) {
       title
       image {
