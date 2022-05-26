@@ -5,13 +5,14 @@ import MoneyCompareAtPrice from './MoneyCompareAtPrice.client';
 import MoneyPrice from './MoneyPrice.client';
 
 type Props = {
+  onClick: () => void;
   storefrontProduct: Pick<Product, 'handle' | 'title' | 'variants' | 'vendor'>;
 };
 
 /**
  * A shared component that displays a (small) single product to allow buyers to quickly identify a particular item of interest
  */
-export default function ProductPill({storefrontProduct}: Props) {
+export default function ProductPill({onClick, storefrontProduct}: Props) {
   const selectedVariant = storefrontProduct.variants.edges[0].node;
 
   if (selectedVariant == null) {
@@ -19,7 +20,7 @@ export default function ProductPill({storefrontProduct}: Props) {
   }
 
   return (
-    <Link to={`/products/${storefrontProduct.handle}`}>
+    <Link onClick={onClick} to={`/products/${storefrontProduct.handle}`}>
       <div
         className="flex h-[110px] gap-4 rounded-md border border-lightGray bg-white p-3"
         role="row"

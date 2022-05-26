@@ -39,9 +39,8 @@ export default function CollectionGroupDialog({
       </button>
 
       <Transition show={isOpen}>
-        <Dialog onClose={handleClose} static>
+        <Dialog className="relative z-30" onClose={handleClose} static>
           {/* Overlay */}
-          {/*
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -56,7 +55,6 @@ export default function CollectionGroupDialog({
               className="pointer-events-none fixed inset-0 bg-black bg-opacity-20"
             />
           </Transition.Child>
-          */}
 
           {/* Panel */}
           <Transition.Child

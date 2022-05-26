@@ -15,16 +15,16 @@ type Props = {
 export default function Header({menuLinks}: Props) {
   return (
     <header
-      className="align-center fixed top-0 z-20 flex h-[100px] w-full justify-between px-8"
+      className="align-center fixed top-0 z-40 flex h-[100px] w-full justify-between px-8"
       role="banner"
     >
       {/*
-              <MobileNavigation
-                collections={collections}
-                isOpen={isMobileNavOpen}
-                setIsOpen={setIsMobileNavOpen}
-              />
-            */}
+        <MobileNavigation
+          collections={collections}
+          isOpen={isMobileNavOpen}
+          setIsOpen={setIsMobileNavOpen}
+        />
+      */}
 
       <div className="flex items-center text-sm font-bold text-red lg:hidden">
         (Menu)
