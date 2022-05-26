@@ -3,6 +3,8 @@ import {useState} from 'react';
 import {SanityProductPage} from '../types';
 import ButtonSelectedVariantAddToCart from './ButtonSelectedVariantAddToCart.client';
 import ButtonSelectedVariantBuyNow from './ButtonSelectedVariantBuyNow.client';
+import MinusIcon from './MinusIcon.client';
+import PlusIcon from './PlusIcon.client';
 import ProductOptions from './ProductOptions.client';
 
 type Props = {
@@ -26,49 +28,29 @@ function ProductActions() {
 
   return (
     <div className="mt-5 flex flex-col space-y-2">
-      {/* Quantity */}
-      {!isOutOfStock && (
-        <div className="inline-flex items-center overflow-auto rounded border border-gray">
+      {/* Quantity picker */}
+      {/*!isOutOfStock && (
+        <div className="inline-flex items-center gap-2 overflow-auto">
           <button
             aria-label="Decrease quantity"
-            className="disabled:pointer-events-all p-2"
+            className="disabled:pointer-events-all disabled:opacity-50"
             disabled={quantity === 1}
             onClick={handleDecreaseQuantity}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 text-gray"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <MinusIcon />
           </button>
-          <div className="p-2 text-center text-xs text-gray">{quantity}</div>
+          <div className="min-w-[1rem] text-center text-sm font-bold text-black">
+            {quantity}
+          </div>
           <button
             aria-label="Increase quantity"
-            className="disabled:pointer-events-all p-2 text-gray"
+            className="disabled:pointer-events-all disabled:opacity-50"
             onClick={handleIncreaseQuantity}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <PlusIcon />
           </button>
         </div>
-      )}
+      )*/}
       <ButtonSelectedVariantAddToCart quantity={quantity} />
       {!isOutOfStock && <ButtonSelectedVariantBuyNow quantity={quantity} />}
     </div>
@@ -121,6 +103,8 @@ export default function ProductWidget({sanityProduct}: Props) {
       <ProductOptions
         customProductOptions={sanityProduct.customProductOptions}
       />
+
+      {/* Product actions */}
       <ProductActions />
     </div>
   );

@@ -15,6 +15,8 @@ import {
 } from '@shopify/hydrogen';
 import {Fragment} from 'react';
 import {useCartUI} from './CartUIProvider.client';
+import MinusIcon from './MinusIcon.client';
+import PlusIcon from './PlusIcon.client';
 
 /**
  * A client component that contains the merchandise that a customer intends to purchase, and the estimated cost associated with the cart
@@ -83,7 +85,26 @@ function CartHeader({totalQuantity}: {totalQuantity?: number}) {
         My Cart {totalQuantity && `(${totalQuantity})`}
       </div>
       <button type="button" onClick={closeCart}>
-        <span>Close</span>
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M19.2803 4.71967C19.5732 5.01256 19.5732 5.48744 19.2803 5.78033L5.78033 19.2803C5.48744 19.5732 5.01256 19.5732 4.71967 19.2803C4.42678 18.9874 4.42678 18.5126 4.71967 18.2197L18.2197 4.71967C18.5126 4.42678 18.9874 4.42678 19.2803 4.71967Z"
+            fill="#2B2E2E"
+          />
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M4.71967 4.71967C5.01256 4.42678 5.48744 4.42678 5.78033 4.71967L19.2803 18.2197C19.5732 18.5126 19.5732 18.9874 19.2803 19.2803C18.9874 19.5732 18.5126 19.5732 18.2197 19.2803L4.71967 5.78033C4.42678 5.48744 4.42678 5.01256 4.71967 4.71967Z"
+            fill="#2B2E2E"
+          />
+        </svg>
       </button>
     </header>
   );
@@ -106,6 +127,11 @@ function CartItems() {
 
 function LineInCart() {
   const {merchandise} = useCartLine();
+
+  const firstVariant = merchandise.selectedOptions[0];
+  const hasDefaultVariantOnly =
+    firstVariant.name === 'Title' && firstVariant.value === 'Default Title';
+
   return (
     <div
       role="row"
@@ -134,13 +160,15 @@ function LineInCart() {
         </Link>
 
         {/* Options */}
-        <ul className="mt-1 space-y-1 text-xs text-gray">
-          {merchandise.selectedOptions.map(({name, value}) => (
-            <li key={name}>
-              {name}: {value}
-            </li>
-          ))}
-        </ul>
+        {!hasDefaultVariantOnly && (
+          <ul className="mt-1 space-y-1 text-xs text-gray">
+            {merchandise.selectedOptions.map(({name, value}) => (
+              <li key={name}>
+                {name}: {value}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       {/* Quantity */}
@@ -149,7 +177,7 @@ function LineInCart() {
       </div>
 
       {/* Price */}
-      <CartLinePrice className="mx-4 text-sm font-bold" />
+      <CartLinePrice className="ml-4 mr-6 min-w-[4rem] text-right text-sm font-bold leading-none" />
 
       {/* Remove */}
       <div role="cell" className="flex flex-col items-end justify-between">
@@ -204,46 +232,24 @@ function LineInCart() {
 
 function CartItemQuantity() {
   return (
-    <div className="flex items-center overflow-auto rounded border border-gray">
+    <div className="flex items-center gap-2 overflow-auto">
       <CartLineQuantityAdjustButton
         adjust="decrease"
         aria-label="Decrease quantity"
-        className="disabled:pointer-events-all p-2 disabled:cursor-wait"
+        className="disabled:pointer-events-all disabled:cursor-wait"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 text-black"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fillRule="evenodd"
-            d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z"
-            clipRule="evenodd"
-          />
-        </svg>
+        <MinusIcon />
       </CartLineQuantityAdjustButton>
       <CartLineQuantity
         as="div"
-        className="p-2 text-center text-xs text-black"
+        className="min-w-[1rem] text-center text-sm font-bold leading-none text-black"
       />
       <CartLineQuantityAdjustButton
         adjust="increase"
         aria-label="Increase quantity"
-        className="disabled:pointer-events-all p-2 text-black disabled:cursor-wait"
+        className="disabled:pointer-events-all text-black disabled:cursor-wait"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-            clipRule="evenodd"
-          />
-        </svg>
+        <PlusIcon />
       </CartLineQuantityAdjustButton>
     </div>
   );
@@ -283,6 +289,7 @@ function CartFooter() {
 }
 
 function CartEmpty() {
+  // @ts-expect-error cartUI shouldnt return null
   const {closeCart} = useCartUI();
   return (
     <div className="flex flex-col p-4">
