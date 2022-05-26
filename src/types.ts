@@ -3,6 +3,16 @@ import {Block} from '@sanity/types';
 export type SanityCollection = {
   _id: string;
   colorTheme?: SanityColorTheme;
+  hero?: SanityPageHero;
+  slug: string;
+  store: Record<string, any>;
+  title: string;
+};
+
+export type SanityCollectionPage = {
+  _id: string;
+  colorTheme?: SanityColorTheme;
+  hero?: SanityPageHero;
   slug: string;
   store: Record<string, any>;
   title: string;
@@ -11,6 +21,7 @@ export type SanityCollection = {
 export type SanityCollectionGroup = {
   _key: string;
   _type: 'collectionGroup';
+  // TODO: use separate type
   collectionLinks?: SanityCollection[];
   collectionProducts?: SanityCollection;
   title: string;
@@ -62,11 +73,32 @@ export type SanityLinkInternal = {
 export type SanityPage = {
   body: Block[];
   colorTheme?: SanityColorTheme;
+  hero?: SanityPageHero;
   // seo: null,
+  showHeader?: boolean;
   title: string;
 };
 
-export type SanityProduct = {
+export type SanityPageHero = {
+  module?:
+    | SanityProductWithVariant
+    | {
+        _type: 'imageWithOptions';
+        image: any;
+      };
+  title?: string;
+};
+
+export type SanityProductWithVariant = {
+  _id: string;
+  _type: 'productWithVariant';
+  available: boolean;
+  slug: string;
+  store: Record<string, any>;
+  variantId: number;
+};
+
+export type SanityProductPage = {
   _id: string;
   available: boolean;
   body: Block[];

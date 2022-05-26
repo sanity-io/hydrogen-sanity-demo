@@ -18,27 +18,32 @@ export default function CollectionGroupContent({
     <div className="mt-24 p-2">
       <div className="relative grid grid-cols-2 gap-2">
         {/* TODO: make a separate collection card component */}
-        {collectionGroup?.collectionLinks?.map((collection) => (
-          <Link
-            className="text-2xl font-medium"
-            key={collection._id}
-            onClick={onClose}
-            to={collection.slug}
-          >
-            <div
-              className="flex aspect-[4/3] items-center justify-center rounded text-center"
-              style={{
-                background: collection?.colorTheme?.background || 'black',
-                color: collection?.colorTheme?.text || 'white',
-              }}
+        {collectionGroup?.collectionLinks?.map((collection) => {
+          if (!collection) {
+            return null;
+          }
+          return (
+            <Link
+              className="text-2xl font-medium"
+              key={collection._id}
+              onClick={onClose}
+              to={collection.slug}
             >
-              {collection.title}
-            </div>
-          </Link>
-        ))}
+              <div
+                className="flex aspect-[4/3] items-center justify-center rounded text-center"
+                style={{
+                  background: collection?.colorTheme?.background || 'black',
+                  color: collection?.colorTheme?.text || 'white',
+                }}
+              >
+                {collection.title}
+              </div>
+            </Link>
+          );
+        })}
       </div>
 
-      <ul className="mt-8 grid grid-cols-1 gap-2 md:grid-cols-2">
+      <ul className="mt-8 grid grid-cols-1 gap-2">
         {products?.map((product) => (
           <li key={product.id}>
             <ProductPill storefrontProduct={product} />

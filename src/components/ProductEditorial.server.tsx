@@ -1,8 +1,8 @@
-import {SanityProduct} from '../types';
+import {SanityProductPage} from '../types';
 import PortableText from './PortableText.client';
 
 type Props = {
-  sanityProduct: SanityProduct;
+  sanityProduct: SanityProductPage;
 };
 
 export default function ProductEditorial({sanityProduct}: Props) {

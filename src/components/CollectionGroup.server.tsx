@@ -26,7 +26,7 @@ export default function CollectionGroup({collectionGroup}: Props) {
     query: QUERY_SHOPIFY,
     variables: {
       handle: collectionHandle,
-      numProducts: 6,
+      numProducts: 4,
     },
     preload: true,
   }) as ShopifyPayload;

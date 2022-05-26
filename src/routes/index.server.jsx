@@ -9,7 +9,6 @@ import {
 } from '@shopify/hydrogen';
 import gql from 'graphql-tag';
 import {Suspense} from 'react';
-import DebugWrapper from '../components/DebugWrapper';
 import FeaturedCollection from '../components/FeaturedCollection';
 import Layout from '../components/Layout.server';
 import ProductCard from '../components/ProductCard';
@@ -23,12 +22,19 @@ export default function IndexRoute() {
         <SeoForHomepage />
       </Suspense>
       <div className="relative">
+        <h1 className="mx-auto max-w-[60rem] pb-8 pt-34 text-center text-4xl font-medium">
+          (Home modules)
+        </h1>
+        {/*
         <Suspense fallback={<BoxFallback />}>
           <FeaturedProductsBox country={countryCode} />
         </Suspense>
+        */}
+        {/*
         <Suspense fallback={<BoxFallback />}>
           <FeaturedCollectionBox country={countryCode} />
         </Suspense>
+        */}
       </div>
     </Layout>
   );
@@ -57,9 +63,10 @@ function SeoForHomepage() {
 }
 
 function BoxFallback() {
-  return <div className="rounded-xl mb-10 h-40 p-12"></div>;
+  return <div className="mb-10 h-40 rounded-xl p-12"></div>;
 }
 
+/*
 function FeaturedProductsBox({country}) {
   const {languageCode} = useShop();
 
@@ -81,41 +88,40 @@ function FeaturedProductsBox({country}) {
   return (
     <div>
       {featuredProductsCollection ? (
-        <DebugWrapper name="Featured Products" shopify>
-          <div className="text-md mb-8 flex items-center justify-between font-medium">
-            {/* Collection title */}
-            <span>{featuredProductsCollection.title}</span>
+        <div className="mb-8 flex items-center justify-between text-md font-medium">
+          <span>{featuredProductsCollection.title}</span>
 
-            <span className="hidden md:inline-flex">
-              <Link
-                to={`/collections/${featuredProductsCollection.handle}`}
-                className="text-blue-600 hover:underline"
-              >
-                Shop all
-              </Link>
-            </span>
-          </div>
-          <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {featuredProducts.map((product) => (
-              <div key={product.id}>
-                <ProductCard storefrontProduct={product} />
-              </div>
-            ))}
-          </div>
-          <div className="text-center md:hidden">
+          <span className="hidden md:inline-flex">
             <Link
               to={`/collections/${featuredProductsCollection.handle}`}
-              className="text-blue-600"
+              className="text-blue-600 hover:underline"
             >
               Shop all
             </Link>
-          </div>
-        </DebugWrapper>
+          </span>
+        </div>
+        <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {featuredProducts.map((product) => (
+            <div key={product.id}>
+              <ProductCard storefrontProduct={product} />
+            </div>
+          ))}
+        </div>
+        <div className="text-center md:hidden">
+          <Link
+            to={`/collections/${featuredProductsCollection.handle}`}
+            className="text-blue-600"
+          >
+            Shop all
+          </Link>
+        </div>
       ) : null}
     </div>
   );
 }
+*/
 
+/*
 function FeaturedCollectionBox({country}) {
   const {languageCode} = useShop();
 
@@ -134,6 +140,7 @@ function FeaturedCollectionBox({country}) {
 
   return <FeaturedCollection collection={featuredCollection} />;
 }
+*/
 
 const SEO_QUERY = gql`
   query homeShopInfo {

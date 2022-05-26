@@ -19,20 +19,15 @@ export default function ProductCard({storefrontProduct}: Props) {
   }
 
   return (
-    <div
-      className="relative mb-4"
-      // style={{
-      //   color: 'red',
-      // }}
-    >
+    <div className="relative mb-4">
       <Link to={`/products/${storefrontProduct.handle}`}>
         <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded bg-lightGray object-cover">
-          {selectedVariant.image ? (
+          {selectedVariant.image && (
             <Image
               className="absolute h-full w-full transform bg-cover bg-center object-cover object-center transition-all duration-500 ease-in-out"
               data={selectedVariant.image}
             />
-          ) : null}
+          )}
 
           {/* Sale badge */}
           {selectedVariant?.availableForSale &&

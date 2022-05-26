@@ -23,10 +23,10 @@ import ProductEditorial from '../../components/ProductEditorial.server';
 import ProductWidget from '../../components/ProductWidget.client';
 import RelatedProducts from '../../components/RelatedProducts.server';
 import {PRODUCT_PAGE} from '../../fragments/productPage';
-import type {SanityProduct} from '../../types';
+import type {SanityProductPage} from '../../types';
 
 type SanityPayload = {
-  sanityData: SanityProduct;
+  sanityData: SanityProductPage;
   shopifyProducts: Record<string, Product>;
 };
 

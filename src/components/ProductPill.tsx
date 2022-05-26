@@ -5,7 +5,7 @@ import MoneyCompareAtPrice from './MoneyCompareAtPrice.client';
 import MoneyPrice from './MoneyPrice.client';
 
 type Props = {
-  storefrontProduct: Product;
+  storefrontProduct: Pick<Product, 'handle' | 'title' | 'variants' | 'vendor'>;
 };
 
 /**
@@ -44,14 +44,16 @@ export default function ProductPill({storefrontProduct}: Props) {
         </div>
 
         {/* TODO: potentially DRY with product card */}
-        <div className="overflow-hidden">
-          {/* Title */}
-          <div className="font-bold">{storefrontProduct.title}</div>
+        <div>
+          <div className="mr-3 space-y-0.5 overflow-hidden">
+            {/* Title */}
+            <div className="font-bold">{storefrontProduct.title}</div>
 
-          {/* Vendor */}
-          {storefrontProduct.vendor && (
-            <div className="text-gray">{storefrontProduct.vendor}</div>
-          )}
+            {/* Vendor */}
+            {storefrontProduct.vendor && (
+              <div className="text-gray">{storefrontProduct.vendor}</div>
+            )}
+          </div>
 
           {/* Price / sold out */}
           {selectedVariant?.availableForSale ? (

@@ -5,7 +5,6 @@ import {
   useShopQuery,
 } from '@shopify/hydrogen';
 import gql from 'graphql-tag';
-import DebugWrapper from './DebugWrapper';
 import Layout from './Layout.server';
 import ProductPill from './ProductPill';
 

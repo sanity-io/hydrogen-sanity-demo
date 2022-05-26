@@ -14,13 +14,13 @@ import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 // import pluralize from 'pluralize';
 import clientConfig from '../../../sanity.config';
-import Hero from '../../components/Hero.server';
 import Layout from '../../components/Layout.server';
 import LoadMoreProducts from '../../components/LoadMoreProducts.client';
 import NotFound from '../../components/NotFound.server';
+import PageHero from '../../components/PageHero.server';
 import ProductCard from '../../components/ProductCard';
 import {COLLECTION_PAGE} from '../../fragments/collectionPage';
-import {SanityCollection} from '../../types';
+import {SanityCollectionPage} from '../../types';
 
 type Props = {
   collectionProductCount: number;
@@ -28,7 +28,7 @@ type Props = {
 };
 
 type SanityPayload = {
-  sanityData: SanityCollection;
+  sanityData: SanityCollectionPage;
   // shopifyProducts: Record<string, Product>;
 };
 
@@ -81,9 +81,11 @@ export default function CollectionRoute({
 
   return (
     <Layout>
-      <Hero
-        colorTheme={sanityCollection?.colorTheme}
-        title={collection.title}
+      {/* Page hero */}
+      <PageHero
+        colorTheme={sanityCollection.colorTheme}
+        fallbackTitle={sanityCollection.title}
+        hero={sanityCollection.hero}
       />
 
       {/* Collection count */}
@@ -134,8 +136,6 @@ const QUERY = gql`
   ) @inContext(country: $country, language: $language) {
     collection(handle: $handle) {
       title
-      descriptionHtml
-      description
       seo {
         description
         title
@@ -153,7 +153,6 @@ const QUERY = gql`
             title
             vendor
             handle
-            descriptionHtml
             compareAtPriceRange {
               maxVariantPrice {
                 currencyCode

@@ -1,12 +1,12 @@
 import {ProductPrice, useProduct} from '@shopify/hydrogen';
 import {useState} from 'react';
-import {SanityProduct} from '../types';
+import {SanityProductPage} from '../types';
 import ButtonSelectedVariantAddToCart from './ButtonSelectedVariantAddToCart.client';
 import ButtonSelectedVariantBuyNow from './ButtonSelectedVariantBuyNow.client';
 import ProductOptions from './ProductOptions.client';
 
 type Props = {
-  sanityProduct: SanityProduct;
+  sanityProduct: SanityProductPage;
 };
 
 function ProductActions() {
