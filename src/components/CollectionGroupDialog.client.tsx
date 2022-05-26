@@ -1,15 +1,15 @@
 import {Dialog, Transition} from '@headlessui/react';
-import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import {Fragment, useEffect, useRef, useState} from 'react';
 import type {SanityCollectionGroup} from '../types';
 import CollectionGroupContent from './CollectionGroupContent.client';
 
 export default function CollectionGroupDialog({
+  collection,
   collectionGroup,
-  products,
 }: {
+  collection: Collection;
   collectionGroup: SanityCollectionGroup;
-  products: Product[] | null;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const refTimeout = useRef<ReturnType<typeof setTimeout>>();
@@ -69,12 +69,12 @@ export default function CollectionGroupDialog({
             leaveTo="-translate-x-full"
           >
             <Dialog.Panel
-              className={`fixed top-0 left-0 right-0 bottom-0 flex h-full w-full flex-col overflow-y-auto rounded-r-lg bg-white md:right-auto md:bottom-auto md:block md:w-[470px]`}
+              className={`fixed top-0 left-0 right-0 bottom-0 flex h-full w-full flex-col overflow-y-auto rounded-r-lg bg-white md:right-auto md:bottom-auto md:block md:w-[490px]`}
             >
               <CollectionGroupContent
+                collection={collection}
                 collectionGroup={collectionGroup}
                 onClose={handleClose}
-                products={products}
               />
             </Dialog.Panel>
           </Transition.Child>

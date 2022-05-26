@@ -1,55 +1,75 @@
-import {Link} from '@shopify/hydrogen';
-import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import {flattenConnection, Link} from '@shopify/hydrogen';
+import {
+  Collection,
+  Product,
+} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import type {SanityCollectionGroup} from '../types';
 import ProductPill from './ProductPill';
 
 type Props = {
+  collection: Collection;
   collectionGroup?: SanityCollectionGroup;
   onClose: () => void;
-  products: Product[] | null;
 };
 
 export default function CollectionGroupContent({
+  collection,
   collectionGroup,
   onClose,
-  products,
 }: Props) {
+  const products = collection?.products
+    ? (flattenConnection(collection.products) as Product[])
+    : null;
+
   return (
-    <div className="mt-24 p-2">
-      <div className="relative grid grid-cols-2 gap-2">
-        {/* TODO: make a separate collection card component */}
-        {collectionGroup?.collectionLinks?.map((collection) => {
-          if (!collection) {
-            return null;
-          }
-          return (
-            <Link
-              className="text-2xl font-medium"
-              key={collection._id}
-              onClick={onClose}
-              to={collection.slug}
-            >
-              <div
-                className="flex aspect-[4/3] items-center justify-center rounded text-center"
-                style={{
-                  background: collection?.colorTheme?.background || 'black',
-                  color: collection?.colorTheme?.text || 'white',
-                }}
-              >
-                {collection.title}
-              </div>
-            </Link>
-          );
-        })}
+    <div className="mt-24 px-8">
+      {/* Collections */}
+      <div>
+        <div className="text-lg font-bold">Collections</div>
+        <div className="relative mt-3 grid grid-cols-2 gap-2">
+          {/* TODO: make a separate collection card component */}
+          {collectionGroup?.collectionLinks?.map(
+            (collectionGroupCollection) => {
+              if (!collectionGroupCollection) {
+                return null;
+              }
+              return (
+                <Link
+                  className="text-lg font-bold"
+                  key={collectionGroupCollection._id}
+                  onClick={onClose}
+                  to={collectionGroupCollection.slug}
+                >
+                  <div
+                    className="flex aspect-[4/3] items-center justify-center rounded text-center"
+                    style={{
+                      background:
+                        collectionGroupCollection?.colorTheme?.background ||
+                        'black',
+                      color:
+                        collectionGroupCollection?.colorTheme?.text || 'white',
+                    }}
+                  >
+                    {collectionGroupCollection.title}
+                  </div>
+                </Link>
+              );
+            },
+          )}
+        </div>
       </div>
 
-      <ul className="mt-8 grid grid-cols-1 gap-2">
-        {products?.map((product) => (
-          <li key={product.id}>
-            <ProductPill storefrontProduct={product} />
-          </li>
-        ))}
-      </ul>
+      {/* Collection products */}
+      <div className="mt-8 ">
+        <div className="text-lg font-bold">{collection.title}</div>
+        <ul className="mt-3 grid grid-cols-1 gap-2">
+          {products?.map((product) => (
+            <li key={product.id}>
+              <ProductPill storefrontProduct={product} />
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

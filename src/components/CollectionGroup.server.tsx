@@ -1,13 +1,5 @@
-import {
-  flattenConnection,
-  useSession,
-  useShop,
-  useShopQuery,
-} from '@shopify/hydrogen';
-import {
-  Collection,
-  Product,
-} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import {useSession, useShop, useShopQuery} from '@shopify/hydrogen';
+import {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import gql from 'graphql-tag';
 import type {SanityCollectionGroup} from '../types';
 import CollectionGroupDialog from './CollectionGroupDialog.client';
@@ -28,7 +20,8 @@ export default function CollectionGroup({collectionGroup}: Props) {
 
   const {countryCode = 'US'} = useSession();
   const {languageCode} = useShop();
-  // Fetch products
+
+  // Fetch collection
   const {data} = useShopQuery({
     query: QUERY_SHOPIFY,
     variables: {
@@ -40,14 +33,10 @@ export default function CollectionGroup({collectionGroup}: Props) {
     preload: true,
   }) as ShopifyPayload;
 
-  const products = data?.collection?.products
-    ? (flattenConnection(data.collection.products) as Product[])
-    : null;
-
   return (
     <CollectionGroupDialog
+      collection={data?.collection}
       collectionGroup={collectionGroup}
-      products={products}
     />
   );
 }
