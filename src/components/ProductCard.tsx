@@ -1,11 +1,15 @@
 import {Image, Link} from '@shopify/hydrogen';
 import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import pluralize from 'pluralize';
 import {Suspense} from 'react';
 import MoneyCompareAtPrice from './MoneyCompareAtPrice.client';
 import MoneyPrice from './MoneyPrice.client';
 
 type Props = {
-  storefrontProduct: Product;
+  storefrontProduct: Pick<
+    Product,
+    'handle' | 'options' | 'title' | 'variants' | 'vendor'
+  >;
 };
 
 /**
@@ -17,6 +21,14 @@ export default function ProductCard({storefrontProduct}: Props) {
   if (selectedVariant == null) {
     return null;
   }
+
+  // TODO: DRY with product pill
+  const firstOption = storefrontProduct.options[0];
+  const hasDefaultVariantOnly =
+    firstOption.name === 'Title' && firstOption.values[0] === 'Default Title';
+  const productOptions = storefrontProduct.options
+    ?.map(({name, values}) => pluralize(name, values.length, true))
+    .join(' / ');
 
   return (
     <div className="relative mb-4">
@@ -48,7 +60,10 @@ export default function ProductCard({storefrontProduct}: Props) {
               <div className="text-gray">{storefrontProduct.vendor}</div>
             )}
 
-            {/* TODO: variant types */}
+            {/* Product options */}
+            {!hasDefaultVariantOnly && (
+              <div className="text-gray">{productOptions}</div>
+            )}
           </div>
 
           {/* Price / sold out */}

@@ -6,12 +6,18 @@ import ProductCard from './ProductCard';
 
 type Props = {
   colorTheme?: SanityColorTheme;
-  storefrontProduct: Product;
+  storefrontProduct: Pick<
+    Product,
+    'handle' | 'id' | 'title' | 'variants' | 'vendor'
+  >;
 };
 
 type ShopifyPayload = {
   data: {
-    productRecommendations: Product[];
+    productRecommendations: Pick<
+      Product,
+      'handle' | 'id' | 'options' | 'title' | 'variants' | 'vendor'
+    >[];
   };
 };
 
@@ -57,6 +63,10 @@ const QUERY = gql`
     productRecommendations(productId: $productId) {
       handle
       id
+      options {
+        name
+        values
+      }
       title
       variants(first: 1) {
         edges {

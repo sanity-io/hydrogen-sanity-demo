@@ -1,12 +1,16 @@
 import {Image, Link} from '@shopify/hydrogen';
 import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import pluralize from 'pluralize';
 import {Suspense} from 'react';
 import MoneyCompareAtPrice from './MoneyCompareAtPrice.client';
 import MoneyPrice from './MoneyPrice.client';
 
 type Props = {
   onClick: () => void;
-  storefrontProduct: Pick<Product, 'handle' | 'title' | 'variants' | 'vendor'>;
+  storefrontProduct: Pick<
+    Product,
+    'handle' | 'options' | 'title' | 'variants' | 'vendor'
+  >;
 };
 
 /**
@@ -18,6 +22,14 @@ export default function ProductPill({onClick, storefrontProduct}: Props) {
   if (selectedVariant == null) {
     return null;
   }
+
+  // TODO: DRY with product card
+  const firstOption = storefrontProduct.options[0];
+  const hasDefaultVariantOnly =
+    firstOption.name === 'Title' && firstOption.values[0] === 'Default Title';
+  const productOptions = storefrontProduct.options
+    ?.map(({name, values}) => pluralize(name, values.length, true))
+    .join(' / ');
 
   return (
     <Link onClick={onClick} to={`/products/${storefrontProduct.handle}`}>
@@ -45,20 +57,27 @@ export default function ProductPill({onClick, storefrontProduct}: Props) {
         </div>
 
         {/* TODO: potentially DRY with product card */}
-        <div>
-          <div className="mr-3 space-y-0.5 overflow-hidden">
+        <div className="overflow-hidden">
+          <div className="mr-3 space-y-0.5">
             {/* Title */}
-            <div className="font-bold">{storefrontProduct.title}</div>
+            <div className="truncate font-bold">{storefrontProduct.title}</div>
 
             {/* Vendor */}
             {storefrontProduct.vendor && (
-              <div className="text-gray">{storefrontProduct.vendor}</div>
+              <div className="truncate text-gray">
+                {storefrontProduct.vendor}
+              </div>
+            )}
+
+            {/* Product options */}
+            {!hasDefaultVariantOnly && (
+              <div className="truncate text-gray">{productOptions}</div>
             )}
           </div>
 
           {/* Price / sold out */}
           {selectedVariant?.availableForSale ? (
-            <div className="mt-3 flex font-bold">
+            <div className="mt-3 flex font-bold ">
               {selectedVariant.compareAtPriceV2 && (
                 <span className="text-gray">
                   <Suspense fallback={null}>

@@ -150,9 +150,6 @@ const QUERY = gql`
       products(first: $numProducts) {
         edges {
           node {
-            title
-            vendor
-            handle
             compareAtPriceRange {
               maxVariantPrice {
                 currencyCode
@@ -163,6 +160,12 @@ const QUERY = gql`
                 amount
               }
             }
+            handle
+            options {
+              name
+              values
+            }
+            title
             variants(first: 1) {
               edges {
                 node {
@@ -187,6 +190,7 @@ const QUERY = gql`
                 }
               }
             }
+            vendor
           }
         }
         pageInfo {

@@ -24,7 +24,7 @@ import PlusIcon from './PlusIcon.client';
 export default function Cart() {
   // @ts-expect-error cartUI shouldnt return null
   const {isCartOpen, closeCart} = useCartUI();
-  const {totalQuantity} = useCart();
+  const {lines, totalQuantity} = useCart();
 
   return (
     <>
@@ -59,7 +59,7 @@ export default function Cart() {
             <Dialog.Panel
               className={`fixed top-0 left-0 right-0 bottom-0 z-40 flex h-full w-full flex-col overflow-y-auto rounded-l-xl bg-white md:left-auto md:bottom-auto md:w-[470px]`}
             >
-              <CartHeader totalQuantity={totalQuantity} />
+              <CartHeader numLines={lines.length} />
               {totalQuantity === 0 ? (
                 <CartEmpty />
               ) : (
@@ -76,13 +76,13 @@ export default function Cart() {
   );
 }
 
-function CartHeader({totalQuantity}: {totalQuantity?: number}) {
+function CartHeader({numLines}: {numLines: number}) {
   // @ts-expect-error cartUI shouldnt return null
   const {closeCart} = useCartUI();
   return (
     <header className="sticky top-0 flex items-center justify-between px-8 pb-5 pt-8">
       <div className="text-xl font-bold">
-        My Cart {totalQuantity && `(${totalQuantity})`}
+        My Cart {numLines > 0 && `(${numLines})`}
       </div>
       <button type="button" onClick={closeCart}>
         <svg
@@ -293,7 +293,9 @@ function CartEmpty() {
   const {closeCart} = useCartUI();
   return (
     <div className="flex flex-col p-4">
-      <p className="mb-4 text-center">Your cart is empty</p>
+      <p className="mb-4 text-center text-lg font-bold">
+        There's nothing in here...yet.
+      </p>
       <button className="btn" type="button" onClick={closeCart}>
         Continue Shopping
       </button>

@@ -72,6 +72,10 @@ const QUERY_SHOPIFY = gql`
             }
             handle
             id
+            options {
+              name
+              values
+            }
             title
             variants(first: 1) {
               edges {
