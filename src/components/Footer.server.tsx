@@ -24,15 +24,16 @@ export default function Footer() {
   const renderLinks = footer?.links.map((link) => {
     if (link._type === 'linkExternal') {
       return (
-        <a
-          className="textLink mb-7 block"
-          href={link.url}
-          key={link._key}
-          rel="noreferrer"
-          target={link.newWindow ? '_blank' : '_self'}
-        >
-          {link.title}
-        </a>
+        <div className="mb-7" key={link._key}>
+          <a
+            className="textLink"
+            href={link.url}
+            rel="noreferrer"
+            target={link.newWindow ? '_blank' : '_self'}
+          >
+            {link.title}
+          </a>
+        </div>
       );
     }
     if (link._type === 'linkInternal') {
@@ -41,9 +42,11 @@ export default function Footer() {
       }
 
       return (
-        <Link className="textLink mb-7 block" key={link._key} to={link.slug}>
-          {link.title}
-        </Link>
+        <div className="mb-7" key={link._key}>
+          <Link className="textLink" to={link.slug}>
+            {link.title}
+          </Link>
+        </div>
       );
     }
     return null;

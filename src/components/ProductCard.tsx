@@ -36,7 +36,7 @@ export default function ProductCard({storefrontProduct}: Props) {
         <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded bg-lightGray object-cover">
           {selectedVariant.image && (
             <Image
-              className="absolute h-full w-full transform bg-cover bg-center object-cover object-center transition-all duration-500 ease-in-out"
+              className="absolute h-full w-full transform bg-cover bg-center object-cover object-center ease-in-out"
               data={selectedVariant.image}
             />
           )}

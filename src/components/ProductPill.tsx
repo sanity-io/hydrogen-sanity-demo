@@ -34,7 +34,7 @@ export default function ProductPill({onClick, storefrontProduct}: Props) {
   return (
     <Link onClick={onClick} to={`/products/${storefrontProduct.handle}`}>
       <div
-        className="flex h-[110px] gap-4 rounded-md border border-lightGray bg-white p-3"
+        className="group flex h-[110px] gap-4 rounded-md border border-lightGray bg-white p-3 hover:border-darkGray"
         role="row"
       >
         <div role="cell" className="relative flex-shrink-0">
@@ -60,7 +60,9 @@ export default function ProductPill({onClick, storefrontProduct}: Props) {
         <div className="overflow-hidden">
           <div className="mr-3 space-y-0.5">
             {/* Title */}
-            <div className="truncate font-bold">{storefrontProduct.title}</div>
+            <div className="truncate font-bold group-hover:underline">
+              {storefrontProduct.title}
+            </div>
 
             {/* Vendor */}
             {storefrontProduct.vendor && (

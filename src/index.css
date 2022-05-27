@@ -31,7 +31,8 @@
   }
 
   .textLink {
-    border-bottom-width: 2px;
+    display: inline-block;
+    border-bottom-width: 0.125em;
     border-bottom-style: solid;
     border-bottom-color: transparent;
   }
