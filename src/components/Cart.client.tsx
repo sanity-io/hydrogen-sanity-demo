@@ -257,32 +257,42 @@ function CartItemQuantity() {
 
 function CartFooter() {
   return (
-    <footer className="sticky bottom-0 border-t border-black border-opacity-5">
-      <div className="relative flex flex-col p-4 text-black">
-        <div role="table" aria-label="Cost summary">
-          <div role="row" className="flex justify-between">
-            <span className="font-medium" role="rowheader">
+    <footer className="sticky bottom-0">
+      <div className="relative flex flex-col">
+        <div role="table" aria-label="Cost summary" className="text-sm">
+          <div
+            className="flex justify-between border-t border-gray p-4"
+            role="row"
+          >
+            <span className="font-medium text-darkGray" role="rowheader">
               Subtotal
             </span>
             <CartEstimatedCost
               amountType="subtotal"
+              className="text-right font-bold"
               role="cell"
-              className="text-right "
             />
           </div>
-          <div role="row" className="mt-2 flex justify-between">
-            <span className="font-medium" role="rowheader">
+
+          <div
+            role="row"
+            className="flex justify-between border-t border-gray p-4"
+          >
+            <span className="font-medium text-darkGray" role="rowheader">
               Shipping
             </span>
-            <span role="cell" className="uppercase">
+            <span role="cell" className="font-bold uppercase">
               Free
             </span>
           </div>
         </div>
-        <CartShopPayButton className="btn mt-4 flex w-full justify-center bg-[#5a31f4] py-2" />
-        <CartCheckoutButton className="btn mt-3 flex">
-          Checkout
-        </CartCheckoutButton>
+
+        <div className="flex w-full gap-3 border-t border-gray p-4">
+          <CartShopPayButton className="btn w-1/2 bg-[#5a31f4]" />
+          <CartCheckoutButton className="btn w-1/2">
+            Checkout
+          </CartCheckoutButton>
+        </div>
       </div>
     </footer>
   );

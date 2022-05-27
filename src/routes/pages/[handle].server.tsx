@@ -42,7 +42,9 @@ export default function PageRoute({params}: Props) {
       />
 
       {/* Body */}
-      {page.body && <PortableText blocks={page.body} className="mt-8" />}
+      {page.body && (
+        <PortableText blocks={page.body} className="mt-8 pb-overlap" />
+      )}
 
       {/* TODO: re-add */}
       {/* <Seo type="page" data={page} /> */}

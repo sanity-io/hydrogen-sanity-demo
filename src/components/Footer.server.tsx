@@ -53,7 +53,7 @@ export default function Footer() {
   });
 
   return (
-    <footer role="contentinfo">
+    <footer className="-mt-overlap" role="contentinfo">
       <div className="align-start relative flex justify-between overflow-hidden rounded-xl bg-peach py-10 pl-8 pr-19">
         <div>
           <Logo />
@@ -67,7 +67,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="-my-5 bg-[#121923] pt-5 text-white">
+      <div className="-my-overlap bg-[#121923] pt-overlap text-white">
         <div className="mx-auto max-w-[41rem] px-8 py-12 text-center text-xl font-medium">
           This is a demo store that Sanity have created along with Shopify's
           Hydrogen framework, powered by our free and official Sanity Connect

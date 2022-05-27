@@ -98,7 +98,7 @@ export default function CollectionRoute({
       {/* HTML Description */}
       {/* <div dangerouslySetInnerHTML={{__html: collection.descriptionHtml}} /> */}
 
-      <div className="p-4">
+      <div className="px-4 pb-overlap pt-4">
         {/* No results */}
         {products.length === 0 && (
           <div className="text-center text-lg font-bold text-darkGray">

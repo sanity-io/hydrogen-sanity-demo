@@ -13,7 +13,7 @@
   .btn {
     -webkit-font-smoothing: antialiased;
     align-items: center;
-    background-color: theme('colors.black');
+    background-color: theme('colors.offBlack');
     border-radius: theme('borderRadius.full');
     color: theme('colors.white');
     display: flex;
