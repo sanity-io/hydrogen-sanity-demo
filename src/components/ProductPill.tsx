@@ -64,14 +64,14 @@ export default function ProductPill({onClick, storefrontProduct}: Props) {
 
             {/* Vendor */}
             {storefrontProduct.vendor && (
-              <div className="truncate text-gray">
+              <div className="truncate text-darkGray">
                 {storefrontProduct.vendor}
               </div>
             )}
 
             {/* Product options */}
             {!hasDefaultVariantOnly && (
-              <div className="truncate text-gray">{productOptions}</div>
+              <div className="truncate text-darkGray">{productOptions}</div>
             )}
           </div>
 
@@ -79,7 +79,7 @@ export default function ProductPill({onClick, storefrontProduct}: Props) {
           {selectedVariant?.availableForSale ? (
             <div className="mt-3 flex font-bold ">
               {selectedVariant.compareAtPriceV2 && (
-                <span className="text-gray">
+                <span className="text-darkGray">
                   <Suspense fallback={null}>
                     <MoneyCompareAtPrice
                       money={selectedVariant.compareAtPriceV2}
@@ -92,7 +92,9 @@ export default function ProductPill({onClick, storefrontProduct}: Props) {
               </Suspense>
             </div>
           ) : (
-            <div className="mt-3 font-bold uppercase text-gray">Sold out</div>
+            <div className="mt-3 font-bold uppercase text-darkGray">
+              Sold out
+            </div>
           )}
         </div>
       </div>

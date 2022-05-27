@@ -39,7 +39,7 @@ export default function MobileNavigation({collections, isOpen, setIsOpen}) {
               {collections.map((collection) => (
                 <li className="border-b border-gray" key={collection.id}>
                   <Link
-                    className="group flex items-center justify-between py-5 text-gray"
+                    className="group flex items-center justify-between py-5 text-darkGray"
                     to={`/collections/${collection.handle}`}
                     onClick={() => setIsOpen(false)}
                   >

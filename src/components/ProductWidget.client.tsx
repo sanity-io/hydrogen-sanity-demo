@@ -93,7 +93,9 @@ export default function ProductWidget({sanityProduct}: Props) {
 
       {/* Vendor */}
       {storefrontProduct?.vendor && (
-        <div className="mt-1 text-xs text-gray">{storefrontProduct.vendor}</div>
+        <div className="mt-1 text-xs text-darkGray">
+          {storefrontProduct.vendor}
+        </div>
       )}
 
       {/* Prices */}

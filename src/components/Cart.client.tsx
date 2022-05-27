@@ -82,7 +82,7 @@ function CartHeader({numLines}: {numLines: number}) {
   return (
     <header className="sticky top-0 flex items-center justify-between px-8 pb-5 pt-8">
       <div className="text-xl font-bold">
-        My Cart {numLines > 0 && `(${numLines})`}
+        Cart {numLines > 0 && `(${numLines})`}
       </div>
       <button type="button" onClick={closeCart}>
         <svg
@@ -161,7 +161,7 @@ function LineInCart() {
 
         {/* Options */}
         {!hasDefaultVariantOnly && (
-          <ul className="mt-1 space-y-1 text-xs text-gray">
+          <ul className="mt-1 space-y-1 text-xs text-darkGray">
             {merchandise.selectedOptions.map(({name, value}) => (
               <li key={name}>
                 {name}: {value}
@@ -292,13 +292,13 @@ function CartEmpty() {
   // @ts-expect-error cartUI shouldnt return null
   const {closeCart} = useCartUI();
   return (
-    <div className="flex flex-col p-4">
-      <p className="mb-4 text-center text-lg font-bold">
-        There's nothing in here...yet.
-      </p>
+    <div className="flex flex-col px-8 pt-6">
+      <p className="mb-4 text-lg font-bold">There's nothing in here...yet.</p>
+      {/*
       <button className="btn" type="button" onClick={closeCart}>
         Continue Shopping
       </button>
+      */}
     </div>
   );
 }

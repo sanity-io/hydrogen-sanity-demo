@@ -56,7 +56,9 @@ const BlockProduct = (props) => {
         </div>
         {/* Caption */}
         {props?.node?.caption && (
-          <div className="mt-2 text-sm text-gray">{props?.node?.caption}</div>
+          <div className="mt-2 text-sm text-darkGray">
+            {props?.node?.caption}
+          </div>
         )}
       </div>
     </ProductProvider>

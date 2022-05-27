@@ -24,16 +24,15 @@ export default function Footer() {
   const renderLinks = footer?.links.map((link) => {
     if (link._type === 'linkExternal') {
       return (
-        <div key={link._key}>
-          <a
-            className="textLink"
-            href={link.url}
-            rel="noreferrer"
-            target={link.newWindow ? '_blank' : '_self'}
-          >
-            {link.title}
-          </a>
-        </div>
+        <a
+          className="textLink mb-7 block"
+          href={link.url}
+          key={link._key}
+          rel="noreferrer"
+          target={link.newWindow ? '_blank' : '_self'}
+        >
+          {link.title}
+        </a>
       );
     }
     if (link._type === 'linkInternal') {
@@ -42,30 +41,37 @@ export default function Footer() {
       }
 
       return (
-        <div key={link._key}>
-          <Link className="textLink" to={link.slug}>
-            {link.title}
-          </Link>
-        </div>
+        <Link className="textLink mb-7 block" key={link._key} to={link.slug}>
+          {link.title}
+        </Link>
       );
     }
     return null;
   });
 
   return (
-    <footer
-      className="align-start flex justify-between bg-peach py-10 pl-8 pr-19"
-      role="contentinfo"
-    >
-      <div>
-        <Logo />
-        <p className="mt-12 text-sm text-gray">
-          Made by Sanity, Companion and Ewa Lefmann
-        </p>
+    <footer role="contentinfo">
+      <div className="align-start relative flex justify-between overflow-hidden rounded-xl bg-peach py-10 pl-8 pr-19">
+        <div>
+          <Logo />
+          <p className="mt-12 text-sm text-darkGray">
+            Made by Sanity, Companion and Ewa Lefmann
+          </p>
+        </div>
+
+        <div className="columns-2 gap-x-17 self-start rounded-xl text-lg font-bold">
+          {renderLinks}
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-x-17 gap-y-7 self-start text-lg font-bold md:grid-cols-2">
-        {renderLinks}
+      <div className="-my-5 bg-[#121923] pt-5 text-white">
+        <div className="mx-auto max-w-[41rem] px-8 py-12 text-center text-xl font-medium">
+          This is a demo store that Sanity have created along with Shopify's
+          Hydrogen framework, powered by our free and official Sanity Connect
+          App on Shopify.
+          <br />
+          (Links to follow)
+        </div>
       </div>
     </footer>
   );

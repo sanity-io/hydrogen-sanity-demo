@@ -57,12 +57,12 @@ export default function ProductCard({storefrontProduct}: Props) {
 
             {/* Vendor */}
             {storefrontProduct.vendor && (
-              <div className="text-gray">{storefrontProduct.vendor}</div>
+              <div className="text-darkGray">{storefrontProduct.vendor}</div>
             )}
 
             {/* Product options */}
             {!hasDefaultVariantOnly && (
-              <div className="text-gray">{productOptions}</div>
+              <div className="text-darkGray">{productOptions}</div>
             )}
           </div>
 
@@ -70,7 +70,7 @@ export default function ProductCard({storefrontProduct}: Props) {
           {selectedVariant?.availableForSale ? (
             <div className="mt-3 flex font-bold">
               {selectedVariant.compareAtPriceV2 && (
-                <span className="text-gray">
+                <span className="text-darkGray">
                   <Suspense fallback={null}>
                     <MoneyCompareAtPrice
                       money={selectedVariant.compareAtPriceV2}
@@ -83,7 +83,9 @@ export default function ProductCard({storefrontProduct}: Props) {
               </Suspense>
             </div>
           ) : (
-            <div className="mt-3 font-bold uppercase text-gray">Sold out</div>
+            <div className="mt-3 font-bold uppercase text-darkGray">
+              Sold out
+            </div>
           )}
         </div>
       </Link>

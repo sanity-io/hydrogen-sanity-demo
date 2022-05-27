@@ -51,7 +51,7 @@ export default function ProductOptionsColor({
   return (
     <fieldset key={name} className="mt-4">
       {/* Name */}
-      <legend className="mb-2 text-xs font-medium text-gray">{name}</legend>
+      <legend className="mb-2 text-xs font-medium text-darkGray">{name}</legend>
 
       <div className="flex flex-wrap items-center gap-x-1 gap-y-2">
         {values.map((value) => {

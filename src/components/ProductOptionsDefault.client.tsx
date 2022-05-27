@@ -27,7 +27,7 @@ export default function ProductOptionsDefault({name, values}: Props) {
   return (
     <fieldset key={name} className="mt-4">
       {/* Name */}
-      <legend className="mb-2 text-xs font-medium text-gray">{name}</legend>
+      <legend className="mb-2 text-xs font-medium text-darkGray">{name}</legend>
 
       <div className="flex flex-wrap items-center gap-2">
         {values.map((value) => {

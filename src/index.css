@@ -4,7 +4,7 @@
 
 @layer base {
   html {
-    @apply text-black;
+    @apply text-offBlack;
     @apply text-md;
   }
 }

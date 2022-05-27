@@ -99,9 +99,10 @@ module.exports = {
     },
     extend: {
       colors: {
-        black: '#2B2E2E',
-        gray: '#757575',
-        lightGray: '#E7E7E7',
+        darkGray: '#757575',
+        gray: '#E7E7E7',
+        lightGray: '#F3F3F3',
+        offBlack: '#2B2E2E',
         peach: '#FFE1D1',
         red: '#EC5039',
       },
