@@ -30,7 +30,7 @@ export default function CollectionGroupDialog({
   }, []);
 
   return (
-    <>
+    <div className="relative flex items-center">
       {/* Title */}
       <button
         className="textLink font-bold"
@@ -40,7 +40,6 @@ export default function CollectionGroupDialog({
       >
         {collectionGroup.title}
       </button>
-
       <Transition show={isOpen}>
         <Dialog className="relative z-50" onClose={handleClose} static>
           {/* Overlay */}
@@ -82,6 +81,6 @@ export default function CollectionGroupDialog({
           </Transition.Child>
         </Dialog>
       </Transition>
-    </>
+    </div>
   );
 }
