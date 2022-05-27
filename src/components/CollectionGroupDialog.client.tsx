@@ -15,12 +15,14 @@ export default function CollectionGroupDialog({
   const refTimeout = useRef<ReturnType<typeof setTimeout>>();
 
   const handleClose = () => {
+    clearTimeout(refTimeout?.current);
     refTimeout.current = setTimeout(() => setIsOpen(false), 250);
   };
   const handleOpen = () => {
     clearTimeout(refTimeout?.current);
-    setIsOpen(true);
+    refTimeout.current = setTimeout(() => setIsOpen(true), 250);
   };
+  const handleOpenCancel = () => clearTimeout(refTimeout?.current);
   const handleToggleOpen = () => setIsOpen(!isOpen);
 
   useEffect(() => {
@@ -28,13 +30,14 @@ export default function CollectionGroupDialog({
   }, []);
 
   return (
-    <div
-      className="relative flex items-center"
-      onMouseEnter={handleOpen}
-      onMouseLeave={handleClose}
-    >
+    <>
       {/* Title */}
-      <button className="textLink font-bold" onKeyPress={handleToggleOpen}>
+      <button
+        className="textLink font-bold"
+        onKeyPress={handleToggleOpen}
+        onMouseEnter={handleOpen}
+        onMouseLeave={handleOpenCancel}
+      >
         {collectionGroup.title}
       </button>
 
@@ -68,6 +71,7 @@ export default function CollectionGroupDialog({
           >
             <Dialog.Panel
               className={`fixed top-0 left-0 right-0 bottom-0 flex h-full w-full flex-col overflow-y-auto rounded-r-lg bg-white md:right-auto md:bottom-auto md:block md:w-[490px]`}
+              onMouseLeave={handleClose}
             >
               <CollectionGroupContent
                 collection={collection}
@@ -78,6 +82,6 @@ export default function CollectionGroupDialog({
           </Transition.Child>
         </Dialog>
       </Transition>
-    </div>
+    </>
   );
 }
