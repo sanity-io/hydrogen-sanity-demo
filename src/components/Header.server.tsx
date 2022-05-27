@@ -1,7 +1,7 @@
 import {SanityMenuLink} from '../types';
 import CartToggle from './CartToggle.client';
 import CountrySelector from './CountrySelector.client';
-import HeaderBackground from './HeaderBackground.client';
+import HeaderBackground from './HeaderBackgroundAndLogo.client';
 import Navigation from './Navigation.server';
 
 type Props = {

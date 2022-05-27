@@ -232,7 +232,7 @@ function LineInCart() {
 
 function CartItemQuantity() {
   return (
-    <div className="flex items-center gap-2 overflow-auto">
+    <div className="flex items-center gap-2">
       <CartLineQuantityAdjustButton
         adjust="decrease"
         aria-label="Decrease quantity"
