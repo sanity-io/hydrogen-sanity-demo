@@ -99,6 +99,13 @@ export default function CollectionRoute({
       {/* <div dangerouslySetInnerHTML={{__html: collection.descriptionHtml}} /> */}
 
       <div className="p-4">
+        {/* No results */}
+        {products.length === 0 && (
+          <div className="text-center text-lg font-bold text-darkGray">
+            No products
+          </div>
+        )}
+
         <ul className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
           {products.map((product) => (
             <li key={product.id}>

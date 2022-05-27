@@ -27,7 +27,7 @@ export default function ButtonSelectedVariantAddToCart(props: Props) {
       quantity={quantity}
       variantId={selectedVariant?.id}
     >
-      {availableForSale ? 'Add to cart' : 'Sold out'}
+      Add to cart
     </AddToCartButton>
   );
 }

@@ -1,6 +1,8 @@
 import {ProductPrice, useProduct} from '@shopify/hydrogen';
+import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import {useState} from 'react';
 import {SanityProductPage} from '../types';
+import {hasMultipleProductOptions} from '../utils/productOptions';
 import ButtonSelectedVariantAddToCart from './ButtonSelectedVariantAddToCart.client';
 import ButtonSelectedVariantBuyNow from './ButtonSelectedVariantBuyNow.client';
 import MinusIcon from './MinusIcon.client';
@@ -13,6 +15,7 @@ type Props = {
 
 function ProductActions() {
   const {selectedVariant} = useProduct();
+
   const [quantity, setQuantity] = useState(1);
   const isOutOfStock = !selectedVariant?.availableForSale;
 
@@ -27,7 +30,7 @@ function ProductActions() {
   };
 
   return (
-    <div className="mt-5 flex flex-col space-y-2">
+    <div className="mt-4 flex flex-col space-y-2">
       {/* Quantity picker */}
       {/*!isOutOfStock && (
         <div className="inline-flex items-center gap-2 overflow-auto">
@@ -52,7 +55,7 @@ function ProductActions() {
         </div>
       )*/}
       <ButtonSelectedVariantAddToCart quantity={quantity} />
-      {!isOutOfStock && <ButtonSelectedVariantBuyNow quantity={quantity} />}
+      <ButtonSelectedVariantBuyNow quantity={quantity} />
     </div>
   );
 }
@@ -65,16 +68,22 @@ function ProductPrices() {
   }
 
   return (
-    <div className="my-4">
-      <ProductPrice
-        className="text-xl font-bold line-through decoration-red"
-        priceType="compareAt"
-        variantId={storefrontProduct.selectedVariant.id}
-      />
-      <ProductPrice
-        className="text-xl font-bold"
-        variantId={storefrontProduct.selectedVariant.id}
-      />
+    <div className="mt-2 text-sm">
+      {storefrontProduct.selectedVariant.availableForSale ? (
+        <>
+          <ProductPrice
+            className="font-bold line-through decoration-red"
+            priceType="compareAt"
+            variantId={storefrontProduct.selectedVariant.id}
+          />
+          <ProductPrice
+            className="text-sm font-bold"
+            variantId={storefrontProduct.selectedVariant.id}
+          />
+        </>
+      ) : (
+        <div className="font-bold uppercase text-darkGray">Sold out</div>
+      )}
     </div>
   );
 }
@@ -82,18 +91,22 @@ function ProductPrices() {
 export default function ProductWidget({sanityProduct}: Props) {
   const storefrontProduct = useProduct();
 
+  const multipleProductOptions = hasMultipleProductOptions(
+    storefrontProduct.options,
+  );
+
   return (
     <div className="pointer-events-auto sticky top-26 w-[315px] rounded bg-white p-6 shadow">
       {/* Title */}
       {storefrontProduct?.title && (
-        <h1 className="text-xl font-bold uppercase">
+        <h1 className="text-lg font-bold uppercase">
           {storefrontProduct.title}
         </h1>
       )}
 
       {/* Vendor */}
       {storefrontProduct?.vendor && (
-        <div className="mt-1 text-xs text-darkGray">
+        <div className="mt-1 text-sm text-darkGray">
           {storefrontProduct.vendor}
         </div>
       )}
@@ -101,10 +114,15 @@ export default function ProductWidget({sanityProduct}: Props) {
       {/* Prices */}
       <ProductPrices />
 
+      {/* Divider */}
+      <div className="my-4 w-full border-b border-gray" />
+
       {/* Product options */}
-      <ProductOptions
-        customProductOptions={sanityProduct.customProductOptions}
-      />
+      {multipleProductOptions && (
+        <ProductOptions
+          customProductOptions={sanityProduct.customProductOptions}
+        />
+      )}
 
       {/* Product actions */}
       <ProductActions />

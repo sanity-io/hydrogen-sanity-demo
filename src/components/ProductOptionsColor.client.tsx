@@ -19,7 +19,7 @@ const ColorChip = ({hex, selected}: {hex: string; selected: boolean}) => {
       <div
         className={clsx([
           'flex h-8 w-8 items-center justify-center rounded-full border',
-          selected ? 'border-black' : 'cursor-pointer border-transparent',
+          selected ? 'border-offBlack' : 'cursor-pointer border-transparent',
         ])}
       >
         <div

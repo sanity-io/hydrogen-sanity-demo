@@ -19,11 +19,6 @@ export default function ProductOptionsDefault({name, values}: Props) {
     }
   };
 
-  // Don't render anything if we only have one option type
-  if (values.length === 1) {
-    return null;
-  }
-
   return (
     <fieldset key={name} className="mt-4">
       {/* Name */}

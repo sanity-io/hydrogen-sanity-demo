@@ -1,7 +1,10 @@
 import {Image, Link} from '@shopify/hydrogen';
 import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
-import pluralize from 'pluralize';
 import {Suspense} from 'react';
+import {
+  getProductOptionString,
+  hasMultipleProductOptions,
+} from '../utils/productOptions';
 import MoneyCompareAtPrice from './MoneyCompareAtPrice.client';
 import MoneyPrice from './MoneyPrice.client';
 
@@ -23,13 +26,10 @@ export default function ProductPill({onClick, storefrontProduct}: Props) {
     return null;
   }
 
-  // TODO: DRY with product card
-  const firstOption = storefrontProduct.options[0];
-  const hasDefaultVariantOnly =
-    firstOption.name === 'Title' && firstOption.values[0] === 'Default Title';
-  const productOptions = storefrontProduct.options
-    ?.map(({name, values}) => pluralize(name, values.length, true))
-    .join(' / ');
+  const multipleProductOptions = hasMultipleProductOptions(
+    storefrontProduct.options,
+  );
+  const productOptions = getProductOptionString(storefrontProduct.options);
 
   return (
     <Link onClick={onClick} to={`/products/${storefrontProduct.handle}`}>
@@ -72,7 +72,7 @@ export default function ProductPill({onClick, storefrontProduct}: Props) {
             )}
 
             {/* Product options */}
-            {!hasDefaultVariantOnly && (
+            {multipleProductOptions && (
               <div className="truncate text-darkGray">{productOptions}</div>
             )}
           </div>

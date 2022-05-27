@@ -24,7 +24,7 @@ export default function Footer() {
   const renderLinks = footer?.links.map((link) => {
     if (link._type === 'linkExternal') {
       return (
-        <div className="mb-7" key={link._key}>
+        <div className="mb-6" key={link._key}>
           <a
             className="textLink"
             href={link.url}
@@ -42,7 +42,7 @@ export default function Footer() {
       }
 
       return (
-        <div className="mb-7" key={link._key}>
+        <div className="mb-6" key={link._key}>
           <Link className="textLink" to={link.slug}>
             {link.title}
           </Link>

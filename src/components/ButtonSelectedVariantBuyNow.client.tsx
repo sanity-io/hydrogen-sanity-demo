@@ -27,7 +27,7 @@ export default function ButtonSelectedVariantBuyNow(props: Props) {
       quantity={quantity}
       variantId={selectedVariant.id}
     >
-      {availableForSale ? 'Buy it now' : 'Sold out'}
+      Buy it now
     </BuyNowButton>
   );
 }

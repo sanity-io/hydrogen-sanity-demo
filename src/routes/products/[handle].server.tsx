@@ -27,7 +27,24 @@ import type {SanityProductPage} from '../../types';
 
 type SanityPayload = {
   sanityData: SanityProductPage;
-  shopifyProducts: Record<string, Product>;
+};
+
+type ShopifyPayload = {
+  data: {
+    product: Pick<
+      Product,
+      | 'compareAtPriceRange'
+      | 'featuredImage'
+      | 'handle'
+      | 'id'
+      | 'media'
+      | 'priceRange'
+      | 'seo'
+      | 'title'
+      | 'variants'
+      | 'vendor'
+    >;
+  };
 };
 
 export default function ProductRoute() {
@@ -35,30 +52,25 @@ export default function ProductRoute() {
   const {handle} = useRouteParams();
   const {countryCode = 'US'} = useSession();
 
-  // TODO: add `preload` support to `useSanityQuery`
-
   // Fetch Sanity document
   const {sanityData: sanityProduct} = useSanityQuery({
     clientConfig,
     getProductGraphQLFragment: () => false,
-    params: {
-      slug: handle,
-    },
+    params: {slug: handle},
     query: QUERY,
   }) as SanityPayload;
 
   // Fetch Shopify document
-  // TODO: use GID received from Sanity payload
   const {
     data: {product: storefrontProduct},
-  } = useShopQuery<{product: Product}>({
+  } = useShopQuery({
     query: QUERY_SHOPIFY,
     variables: {
       country: countryCode,
-      handle,
+      id: sanityProduct.store.gid,
       language: languageCode,
     },
-  });
+  }) as ShopifyPayload;
 
   if (!sanityProduct || !storefrontProduct) {
     // @ts-expect-error <NotFound> doesn't require response
@@ -105,12 +117,9 @@ const QUERY = groq`
 `;
 
 const QUERY_SHOPIFY = gql`
-  query product(
-    $country: CountryCode
-    $language: LanguageCode
-    $handle: String!
-  ) @inContext(country: $country, language: $language) {
-    product: product(handle: $handle) {
+  query product($country: CountryCode, $id: ID!, $language: LanguageCode)
+  @inContext(country: $country, language: $language) {
+    product: product(id: $id) {
       compareAtPriceRange {
         maxVariantPrice {
           currencyCode
@@ -121,8 +130,6 @@ const QUERY_SHOPIFY = gql`
           amount
         }
       }
-      description
-      descriptionHtml
       featuredImage {
         url
         width
@@ -176,34 +183,6 @@ const QUERY_SHOPIFY = gql`
           }
         }
       }
-      metafields(first: 20) {
-        edges {
-          node {
-            id
-            type
-            namespace
-            key
-            value
-            createdAt
-            updatedAt
-            description
-            reference {
-              __typename
-              ... on MediaImage {
-                id
-                mediaContentType
-                image {
-                  id
-                  url
-                  altText
-                  width
-                  height
-                }
-              }
-            }
-          }
-        }
-      }
       priceRange {
         maxVariantPrice {
           currencyCode
@@ -234,34 +213,6 @@ const QUERY_SHOPIFY = gql`
               altText
               width
               height
-            }
-            metafields(first: 10) {
-              edges {
-                node {
-                  id
-                  type
-                  namespace
-                  key
-                  value
-                  createdAt
-                  updatedAt
-                  description
-                  reference {
-                    __typename
-                    ... on MediaImage {
-                      id
-                      mediaContentType
-                      image {
-                        id
-                        url
-                        altText
-                        width
-                        height
-                      }
-                    }
-                  }
-                }
-              }
             }
             priceV2 {
               amount
