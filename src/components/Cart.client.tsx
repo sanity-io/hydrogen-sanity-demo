@@ -177,7 +177,7 @@ function LineInCart() {
       </div>
 
       {/* Price */}
-      <CartLinePrice className="ml-4 mr-6 min-w-[4rem] text-right text-sm font-bold leading-none" />
+      <CartLinePrice className="leading-none ml-4 mr-6 min-w-[4rem] text-right text-sm font-bold" />
 
       {/* Remove */}
       <div role="cell" className="flex flex-col items-end justify-between">
@@ -242,7 +242,7 @@ function CartItemQuantity() {
       </CartLineQuantityAdjustButton>
       <CartLineQuantity
         as="div"
-        className="min-w-[1rem] text-center text-sm font-bold leading-none text-black"
+        className="leading-none min-w-[1rem] text-center text-sm font-bold text-black"
       />
       <CartLineQuantityAdjustButton
         adjust="increase"

@@ -79,14 +79,14 @@ export default function ProductCard({storefrontProduct}: Props) {
           {/* Sale badge */}
           {selectedVariant?.availableForSale &&
             selectedVariant?.compareAtPriceV2 && (
-              <div className="absolute top-6 left-6 flex place-content-center rounded-sm bg-white px-1.5 py-1 text-sm font-bold uppercase leading-none text-red">
+              <div className="leading-none absolute top-6 left-6 flex place-content-center rounded-sm bg-white px-1.5 py-1 text-sm font-bold uppercase text-red">
                 Sale
               </div>
             )}
 
           {/* Sold out badge */}
           {!selectedVariant?.availableForSale && (
-            <div className="absolute top-6 left-6 flex place-content-center rounded-sm bg-white px-1.5 py-1 text-sm font-bold uppercase leading-none text-darkGray">
+            <div className="leading-none absolute top-6 left-6 flex place-content-center rounded-sm bg-white px-1.5 py-1 text-sm font-bold uppercase text-darkGray">
               Sold out
             </div>
           )}

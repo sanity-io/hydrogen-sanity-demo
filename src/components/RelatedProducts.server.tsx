@@ -44,7 +44,7 @@ export default function RelatedProducts({
       className="rounded-t-xl p-8"
       style={{background: colorTheme?.background || 'white'}}
     >
-      <h3 className="mb-6 text-xl font-medium">You might also like</h3>
+      <h3 className="mb-6 text-xl font-bold">You might also like</h3>
       <div className="grid gap-3 pb-overlap md:grid-cols-4">
         {products.map((product) => (
           <ProductCard key={product.id} storefrontProduct={product} />

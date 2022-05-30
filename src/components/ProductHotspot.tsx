@@ -17,7 +17,10 @@ export default function ProductHotspot({storefrontProduct}: Props) {
 
   return (
     <Link to={`/products/${storefrontProduct.handle}`}>
-      <div className="group min-w-[12.5em] rounded-md bg-white p-6" role="row">
+      <div
+        className="group min-w-[12.5em] rounded-md bg-white p-6 transition-all duration-500 ease-out hover:rounded-xl"
+        role="row"
+      >
         {/* TODO: potentially DRY with product card */}
         <div className="mr-3 space-y-0.5 overflow-hidden">
           {/* Title */}

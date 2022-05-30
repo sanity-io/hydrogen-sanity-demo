@@ -98,6 +98,7 @@ module.exports = {
       normal: '-0.03em',
     },
     lineHeight: {
+      none: '1',
       paragraph: '1.6',
     },
     extend: {
