@@ -13,7 +13,7 @@ export default function Gallery() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     draggable: true,
-    loop: false,
+    loop: true,
     skipSnaps: true,
     speed: 7,
   });
@@ -96,14 +96,16 @@ export default function Gallery() {
       </div>
 
       {/* Navigation */}
-      <div className="absolute bottom-8 left-8 flex gap-3">
-        <ButtonCircle onClick={handlePrevious}>
-          <IconArrowRight className="rotate-180" />
-        </ButtonCircle>
-        <ButtonCircle onClick={handleNext}>
-          <IconArrowRight />
-        </ButtonCircle>
-      </div>
+      {galleryMedia.length > 1 && (
+        <div className="absolute bottom-8 left-8 flex gap-3">
+          <ButtonCircle onClick={handlePrevious}>
+            <IconArrowRight className="rotate-180" />
+          </ButtonCircle>
+          <ButtonCircle onClick={handleNext}>
+            <IconArrowRight />
+          </ButtonCircle>
+        </div>
+      )}
     </div>
   );
 }

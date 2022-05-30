@@ -114,8 +114,8 @@ export default function CollectionRoute({
         )}
         {/* No results */}
         {products.length === 0 && (
-          <div className="text-center text-lg font-bold text-darkGray">
-            No products
+          <div className="text-center text-lg text-darkGray">
+            No products...yet.
           </div>
         )}
         <ul className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">

@@ -54,9 +54,7 @@ export default function CollectionHero({
 }: Props) {
   if (!hero) {
     return (
-      <h1 className="mx-8 max-w-[60rem] pt-34 text-5xl font-medium">
-        {fallbackTitle}
-      </h1>
+      <h1 className="mx-8 max-w-[60rem] pt-34 text-5xl">{fallbackTitle}</h1>
     );
   }
 
@@ -68,7 +66,7 @@ export default function CollectionHero({
       {/* Title */}
       {hero.title && (
         <h1
-          className="mx-auto mb-7 max-w-[60rem] whitespace-pre-line text-center text-5xl font-medium"
+          className="mx-auto mb-7 max-w-[60rem] whitespace-pre-line text-center text-5xl"
           style={{color: colorTheme?.text || 'black'}}
         >
           {hero.title}
@@ -78,7 +76,7 @@ export default function CollectionHero({
       {/* Description */}
       {hero.description && (
         <div
-          className="mx-auto mb-8 max-w-[40rem] whitespace-pre-line text-center text-md font-medium leading-paragraph"
+          className="mx-auto mb-8 max-w-[40rem] whitespace-pre-line text-center text-md leading-paragraph"
           style={{color: colorTheme?.text || 'black'}}
         >
           {hero.description}

@@ -33,7 +33,7 @@ export default function CountrySelector() {
               <IconChevronDown className={open ? 'rotate-180' : null} />
             </Listbox.Button>
 
-            <Listbox.Options className="absolute top-full left-1/2 z-10 min-w-[150px] -translate-x-1/2 overflow-hidden rounded shadow">
+            <Listbox.Options className="absolute top-full left-1/2 z-10 mt-3 min-w-[150px] -translate-x-1/2 overflow-hidden rounded shadow">
               <div className="max-h-64 overflow-y-auto bg-white">
                 {listboxOpen && (
                   <Suspense
@@ -73,7 +73,7 @@ export function Countries({selectedCountry, getClassName}) {
         {({active}) => (
           <div className={getClassName(active)}>
             <span className="mr-8">{country.name}</span>
-            <IconRadio checked={isSelected} />
+            <IconRadio checked={isSelected} hovered={active} />
           </div>
         )}
       </Listbox.Option>

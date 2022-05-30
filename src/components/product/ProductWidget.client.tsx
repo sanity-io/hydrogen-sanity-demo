@@ -69,22 +69,13 @@ function ProductPrices() {
   }
 
   return (
-    <div className="mt-2 text-sm">
-      {storefrontProduct.selectedVariant.availableForSale ? (
-        <>
-          <ProductPrice
-            className="font-bold line-through decoration-red"
-            priceType="compareAt"
-            variantId={storefrontProduct.selectedVariant.id}
-          />
-          <ProductPrice
-            className="text-sm font-bold"
-            variantId={storefrontProduct.selectedVariant.id}
-          />
-        </>
-      ) : (
-        <div className="font-bold uppercase text-darkGray">Sold out</div>
-      )}
+    <div className="mt-2 flex text-md font-bold">
+      <ProductPrice
+        className="mr-3 text-darkGray line-through decoration-red"
+        priceType="compareAt"
+        variantId={storefrontProduct.selectedVariant.id}
+      />
+      <ProductPrice variantId={storefrontProduct.selectedVariant.id} />
     </div>
   );
 }
@@ -97,17 +88,17 @@ export default function ProductWidget({sanityProduct}: Props) {
   );
 
   return (
-    <div className="pointer-events-auto sticky top-26 w-[315px] rounded bg-white p-6 shadow">
+    <div className="pointer-events-auto sticky top-30 w-[315px] rounded bg-white p-6 shadow">
       {/* Title */}
       {storefrontProduct?.title && (
-        <h1 className="text-lg font-bold uppercase">
+        <h1 className="text-md font-bold uppercase">
           {storefrontProduct.title}
         </h1>
       )}
 
       {/* Vendor */}
       {storefrontProduct?.vendor && (
-        <div className="mt-1 text-sm text-darkGray">
+        <div className="mt-1 text-md text-darkGray">
           {storefrontProduct.vendor}
         </div>
       )}
@@ -126,7 +117,13 @@ export default function ProductWidget({sanityProduct}: Props) {
       )}
 
       {/* Product actions */}
-      <ProductActions />
+      {storefrontProduct.selectedVariant?.availableForSale ? (
+        <ProductActions />
+      ) : (
+        <div className="text-md font-bold uppercase text-darkGray">
+          Sold out
+        </div>
+      )}
     </div>
   );
 }

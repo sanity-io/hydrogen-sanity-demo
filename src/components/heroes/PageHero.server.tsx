@@ -50,7 +50,7 @@ const renderModule = (hero: SanityHeroPage) => {
 export default function PageHero({colorTheme, fallbackTitle, hero}: Props) {
   if (!hero) {
     return (
-      <h1 className="mx-auto max-w-[60rem] pb-8 pt-34 text-center text-4xl font-medium">
+      <h1 className="mx-auto max-w-[60rem] pb-8 pt-34 text-center text-4xl">
         {fallbackTitle}
       </h1>
     );
@@ -64,7 +64,7 @@ export default function PageHero({colorTheme, fallbackTitle, hero}: Props) {
       {/* Title */}
       {hero.title && (
         <h1
-          className="max-w-[60rem] whitespace-pre-line text-4xl font-medium"
+          className="max-w-[60rem] whitespace-pre-line text-4xl"
           style={{color: colorTheme?.text || 'black'}}
         >
           {hero.title}

@@ -3,7 +3,7 @@ import {useParsedMetafields, useProduct} from '@shopify/hydrogen';
 function SizeChart() {
   return (
     <>
-      <h3 className="mb-2 font-medium" id="size-chart">
+      <h3 className="mb-2" id="size-chart">
         Size Chart
       </h3>
       <table className="min-w-full table-fixed bg-white text-center text-sm">
@@ -102,9 +102,7 @@ export default function ProductMetafields() {
               strokeLinejoin="round"
             />
           </svg>
-          <span className="text-sm font-medium text-darkGray">
-            Lifetime Warranty
-          </span>
+          <span className="text-sm text-darkGray">Lifetime Warranty</span>
         </span>
       )}
 

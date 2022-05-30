@@ -21,7 +21,7 @@ export default function IndexRoute() {
         <SeoForHomepage />
       </Suspense>
       <div className="relative">
-        <h1 className="mx-auto max-w-[60rem] pb-8 pt-34 text-center text-4xl font-medium">
+        <h1 className="mx-auto max-w-[60rem] pb-8 pt-34 text-center text-4xl">
           (Home modules)
         </h1>
         {/*
@@ -87,7 +87,7 @@ function FeaturedProductsBox({country}) {
   return (
     <div>
       {featuredProductsCollection ? (
-        <div className="mb-8 flex items-center justify-between text-md font-medium">
+        <div className="mb-8 flex items-center justify-between text-md">
           <span>{featuredProductsCollection.title}</span>
 
           <span className="hidden md:inline-flex">

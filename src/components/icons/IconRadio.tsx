@@ -1,4 +1,10 @@
-export default function IconRadio({checked}: {checked?: boolean}) {
+export default function IconRadio({
+  checked,
+  hovered,
+}: {
+  checked?: boolean;
+  hovered?: boolean;
+}) {
   return (
     <svg
       width="21"
@@ -26,6 +32,14 @@ export default function IconRadio({checked}: {checked?: boolean}) {
           <path
             d="M10.5 20.5C4.97715 20.5 0.5 16.0228 0.5 10.5C0.5 4.97715 4.97715 0.5 10.5 0.5C16.0228 0.5 20.5 4.97715 20.5 10.5C20.5 16.0228 16.0228 20.5 10.5 20.5Z"
             fill="white"
+          />
+          <path
+            className={hovered ? 'opacity-100' : 'opacity-0'}
+            d="M15.6562 7.21875L9.09375 13.7812L5.8125 10.5"
+            stroke="#E7E7E7"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M10.5 20.5C4.97715 20.5 0.5 16.0228 0.5 10.5C0.5 4.97715 4.97715 0.5 10.5 0.5C16.0228 0.5 20.5 4.97715 20.5 10.5C20.5 16.0228 16.0228 20.5 10.5 20.5Z"

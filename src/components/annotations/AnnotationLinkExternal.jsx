@@ -3,7 +3,7 @@ const AnnotationLinkExternal = (props) => {
 
   return (
     <a
-      className="duration-300 inline-flex font-medium hover:opacity-60 items-center text-black transition-opacity underline"
+      className="inline-flex items-center text-black underline transition-opacity duration-300 hover:opacity-60"
       href={mark?.url}
       rel="noopener noreferrer"
       target={mark?.newWindow ? '_blank' : '_self'}

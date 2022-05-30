@@ -264,7 +264,7 @@ function CartFooter() {
             className="flex justify-between border-t border-gray p-4"
             role="row"
           >
-            <span className="font-medium text-darkGray" role="rowheader">
+            <span className="text-darkGray" role="rowheader">
               Subtotal
             </span>
             <CartEstimatedCost
@@ -278,7 +278,7 @@ function CartFooter() {
             role="row"
             className="flex justify-between border-t border-gray p-4"
           >
-            <span className="font-medium text-darkGray" role="rowheader">
+            <span className="text-darkGray" role="rowheader">
               Shipping
             </span>
             <span role="cell" className="font-bold uppercase">

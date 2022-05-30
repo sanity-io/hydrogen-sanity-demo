@@ -68,7 +68,7 @@ export default function Footer() {
       </div>
 
       <div className="-my-overlap bg-[#121923] pt-overlap text-white">
-        <div className="mx-auto max-w-[41rem] px-8 py-12 text-center text-xl font-medium">
+        <div className="mx-auto max-w-[41rem] px-8 py-12 text-center text-xl">
           This is a demo store that Sanity have created along with Shopify's
           Hydrogen framework, powered by our free and official Sanity Connect
           App on Shopify.

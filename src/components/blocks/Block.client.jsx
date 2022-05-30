@@ -4,7 +4,7 @@ const Block = (props) => {
   const {children, node} = props;
 
   if (node.style === 'h2') {
-    return <h2 className="mb-4 text-2xl font-medium">{children}</h2>;
+    return <h2 className="mb-4 text-2xl">{children}</h2>;
   }
 
   if (node.style === 'blockquote') {

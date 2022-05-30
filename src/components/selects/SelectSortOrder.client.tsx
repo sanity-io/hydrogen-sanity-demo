@@ -117,7 +117,7 @@ export default function SelectSortOrder({initialSortOrder}: Props) {
               <IconChevronDown className={open ? 'rotate-180' : 'rotate-0'} />
             </Listbox.Button>
 
-            <Listbox.Options className="absolute top-full right-0 z-10 min-w-[150px] overflow-hidden rounded shadow">
+            <Listbox.Options className="absolute top-full right-0 z-10 mt-3 min-w-[150px] overflow-hidden rounded shadow">
               <div className="overflow-y-auto bg-white">
                 {listboxOpen && (
                   <Suspense
@@ -164,7 +164,7 @@ export function SortOptions({
         {({active}) => (
           <div className={getClassName(active)}>
             <span className="mr-8">{sortOption.name}</span>
-            <IconRadio checked={isSelected} />
+            <IconRadio checked={isSelected} hovered={active} />
           </div>
         )}
       </Listbox.Option>

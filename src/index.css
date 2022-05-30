@@ -4,6 +4,7 @@
 
 @layer base {
   html {
+    @apply font-medium;
     @apply text-offBlack;
     @apply text-md;
   }
@@ -29,7 +30,7 @@
     opacity: 0.2;
   }
 
-  .btn:hover {
+  .btn:hover:not(:disabled) {
     background-color: theme('colors.black');
   }
 
@@ -52,7 +53,7 @@
     color: theme('colors.darkGray');
   }
 
-  .select:hover {
+  .select:hover:not(:disabled) {
     background-color: theme('colors.gray');
   }
 

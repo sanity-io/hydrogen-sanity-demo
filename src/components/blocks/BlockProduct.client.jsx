@@ -38,9 +38,7 @@ const BlockProduct = (props) => {
               handle={storefrontProduct.handle}
               variantId={product?.variantId}
             >
-              {storefrontProduct?.title && (
-                <div className="font-medium">{storefrontProduct.title}</div>
-              )}
+              {storefrontProduct?.title && <div>{storefrontProduct.title}</div>}
             </LinkProduct>
             <ProductPrice />
           </div>

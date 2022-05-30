@@ -49,7 +49,7 @@ const BlockInlineProduct = (props) => {
                   variantId={product?.variantId}
                 >
                   {storefrontProduct?.title && (
-                    <div className="font-medium">{storefrontProduct.title}</div>
+                    <div>{storefrontProduct.title}</div>
                   )}
                 </LinkProduct>
                 <ProductPrice />
@@ -78,7 +78,7 @@ const BlockInlineProduct = (props) => {
     >
       <span>
         <LinkProduct
-          className="inline-flex items-center whitespace-nowrap border-dotted font-medium text-blue-500 duration-300 hover:opacity-60"
+          className="inline-flex items-center whitespace-nowrap border-dotted text-blue-500 duration-300 hover:opacity-60"
           handle={storefrontProduct.handle}
           variantId={product?.variantId}
         >

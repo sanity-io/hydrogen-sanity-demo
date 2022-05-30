@@ -9,7 +9,7 @@ const AnnotationLinkInternal = (props) => {
 
   return (
     <Link
-      className="inline-flex items-center font-medium text-black underline transition-opacity duration-300 hover:opacity-60"
+      className="inline-flex items-center text-black underline transition-opacity duration-300 hover:opacity-60"
       to={mark?.slug}
     >
       {children}
