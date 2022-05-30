@@ -13,6 +13,7 @@ export type SanityCollectionPage = {
   _id: string;
   colorTheme?: SanityColorTheme;
   hero?: SanityPageHero;
+  manualSort?: boolean;
   slug: string;
   store: Record<string, any>;
   title: string;

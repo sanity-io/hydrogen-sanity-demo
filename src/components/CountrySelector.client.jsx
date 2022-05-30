@@ -1,9 +1,10 @@
-import {useCallback, useState, Suspense} from 'react';
-import {useCountry, fetchSync} from '@shopify/hydrogen';
 import {Listbox} from '@headlessui/react';
-import SpinnerIcon from './SpinnerIcon.client';
-import RadioIcon from './RadioIcon.client';
+import {fetchSync, useCountry} from '@shopify/hydrogen';
 import clsx from 'clsx';
+import {Suspense, useCallback, useState} from 'react';
+import {ArrowIcon} from './icons/Arrow.client';
+import RadioIcon from './RadioIcon.client';
+import SpinnerIcon from './SpinnerIcon.client';
 
 /**
  * A client component that selects the appropriate country to display for products on a website
@@ -22,45 +23,43 @@ export default function CountrySelector() {
   }, []);
 
   return (
-    <div className="relative hidden lg:block">
-      <Listbox onChange={setCountry}>
-        {({open}) => {
-          setTimeout(() => setListboxOpen(open));
-          return (
-            <>
-              <Listbox.Button className="flex items-center p-2 text-sm font-bold">
-                <span className="mr-2">{selectedCountry.name}</span>
-                <ArrowIcon className={open ? 'rotate-180' : null} />
-              </Listbox.Button>
+    <Listbox onChange={setCountry}>
+      {({open}) => {
+        setTimeout(() => setListboxOpen(open));
+        return (
+          <div className="relative inline-flex">
+            <Listbox.Button className="flex items-center p-2 text-sm font-bold">
+              <span className="mr-2">{selectedCountry.name}</span>
+              <ArrowIcon className={open ? 'rotate-180' : null} />
+            </Listbox.Button>
 
-              <Listbox.Options className="absolute left-1/2 z-10 min-w-[150px] -translate-x-1/2 overflow-hidden rounded shadow">
-                <div className="max-h-64 overflow-y-auto bg-white">
-                  {listboxOpen && (
-                    <Suspense
-                      fallback={
-                        <div className="flex justify-center overflow-hidden">
-                          <SpinnerIcon />
-                        </div>
-                      }
-                    >
-                      <Countries
-                        selectedCountry={selectedCountry}
-                        getClassName={(active) => {
-                          return clsx([
-                            'p-3 flex justify-between items-center text-left font-bold text-sm cursor-pointer whitespace-nowrap',
-                            active ? 'bg-lightGray' : null,
-                          ]);
-                        }}
-                      />
-                    </Suspense>
-                  )}
-                </div>
-              </Listbox.Options>
-            </>
-          );
-        }}
-      </Listbox>
-    </div>
+            <Listbox.Options className="absolute top-full left-1/2 z-10 min-w-[150px] -translate-x-1/2 overflow-hidden rounded shadow">
+              <div className="max-h-64 overflow-y-auto bg-white">
+                {listboxOpen && (
+                  <Suspense
+                    fallback={
+                      <div className="flex justify-center overflow-hidden">
+                        <SpinnerIcon />
+                      </div>
+                    }
+                  >
+                    <Countries
+                      selectedCountry={selectedCountry}
+                      getClassName={(active) => {
+                        return clsx([
+                          'p-3 flex justify-between items-center text-left font-bold text-sm cursor-pointer whitespace-nowrap',
+                          active ? 'bg-lightGray' : null,
+                        ]);
+                      }}
+                    />
+                  </Suspense>
+                )}
+              </div>
+            </Listbox.Options>
+          </div>
+        );
+      }}
+    </Listbox>
   );
 }
 
@@ -80,24 +79,4 @@ export function Countries({selectedCountry, getClassName}) {
       </Listbox.Option>
     );
   });
-}
-
-export function ArrowIcon({className}) {
-  return (
-    <svg
-      className={className}
-      width="12"
-      height="12"
-      viewBox="0 0 12 12"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M9.75 4.5L6 8.25L2.25 4.5"
-        stroke="#3A3E3E"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
 }

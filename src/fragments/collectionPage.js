@@ -14,9 +14,11 @@ export const COLLECTION_PAGE = groq`
       ${PAGE_HERO}
     },
   },
+  "manualSort": select(count(store.rules) > 0 => false, true),
   seo {
     ${SEO_PRODUCT}
   },
   "slug": store.slug.current,
+  store,
   "title": store.title,
 `;

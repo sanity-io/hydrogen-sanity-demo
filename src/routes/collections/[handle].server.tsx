@@ -19,17 +19,22 @@ import LoadMoreProducts from '../../components/LoadMoreProducts.client';
 import NotFound from '../../components/NotFound.server';
 import PageHero from '../../components/PageHero.server';
 import ProductCard from '../../components/ProductCard';
+import SortSelector from '../../components/SortSelector.client';
+import {COLLECTION_PAGE_SIZE} from '../../constants';
 import {COLLECTION_PAGE} from '../../fragments/collectionPage';
 import {SanityCollectionPage} from '../../types';
 
 type Props = {
   collectionProductCount: number;
   params: any;
+  productSort?: {
+    key?: string;
+    reverse?: boolean;
+  };
 };
 
 type SanityPayload = {
   sanityData: SanityCollectionPage;
-  // shopifyProducts: Record<string, Product>;
 };
 
 type ShopifyPayload = {
@@ -37,8 +42,9 @@ type ShopifyPayload = {
 };
 
 export default function CollectionRoute({
-  collectionProductCount = 24,
+  collectionProductCount = COLLECTION_PAGE_SIZE,
   params,
+  productSort,
 }: Props) {
   const {languageCode} = useShop();
   const {countryCode = 'US'} = useSession();
@@ -51,15 +57,14 @@ export default function CollectionRoute({
       country: countryCode,
       language: languageCode,
       numProducts: collectionProductCount,
+      productSortKey: productSort?.key,
+      productSortReverse: productSort?.reverse,
     },
     preload: true,
   });
 
   // TODO: add collection support to `useSanityQuery`
-  const {
-    sanityData: sanityCollection,
-    // shopifyProducts
-  } = useSanityQuery({
+  const {sanityData: sanityCollection} = useSanityQuery({
     clientConfig,
     params: {
       slug: handle,
@@ -98,7 +103,17 @@ export default function CollectionRoute({
       {/* HTML Description */}
       {/* <div dangerouslySetInnerHTML={{__html: collection.descriptionHtml}} /> */}
 
-      <div className="px-4 pb-overlap pt-4">
+      <div className="mt-8 px-4 pb-overlap">
+        {products.length > 0 && (
+          <div className="mb-8 flex justify-end">
+            <SortSelector
+              key={sanityCollection._id}
+              manualSort={sanityCollection.manualSort}
+              initialSortOrder={sanityCollection.store.sortOrder}
+            />
+          </div>
+        )}
+
         {/* No results */}
         {products.length === 0 && (
           <div className="text-center text-lg font-bold text-darkGray">
@@ -113,11 +128,10 @@ export default function CollectionRoute({
             </li>
           ))}
         </ul>
+        {hasNextPage && (
+          <LoadMoreProducts startingCount={collectionProductCount} />
+        )}
       </div>
-
-      {hasNextPage && (
-        <LoadMoreProducts startingCount={collectionProductCount} />
-      )}
 
       {/* the seo object will be exposed in API version 2022-04 or later */}
       <Seo type="collection" data={collection} />
@@ -140,6 +154,8 @@ const QUERY = gql`
     $country: CountryCode
     $language: LanguageCode
     $numProducts: Int!
+    $productSortKey: ProductCollectionSortKeys
+    $productSortReverse: Boolean
   ) @inContext(country: $country, language: $language) {
     collection(handle: $handle) {
       title
@@ -154,7 +170,11 @@ const QUERY = gql`
         height
         altText
       }
-      products(first: $numProducts) {
+      products(
+        first: $numProducts
+        reverse: $productSortReverse
+        sortKey: $productSortKey
+      ) {
         edges {
           node {
             compareAtPriceRange {

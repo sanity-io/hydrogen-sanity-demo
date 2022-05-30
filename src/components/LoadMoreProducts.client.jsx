@@ -1,4 +1,6 @@
 import {useServerProps} from '@shopify/hydrogen';
+import clsx from 'clsx';
+import {COLLECTION_PAGE_SIZE} from '../constants';
 import SpinnerIcon from './SpinnerIcon.client';
 
 /**
@@ -8,24 +10,22 @@ export default function LoadMoreProducts({startingCount}) {
   const {pending, serverProps, setServerProps} = useServerProps();
 
   return (
-    <div className="flex h-14 justify-center">
+    <div className="flex h-30 items-center justify-center">
       {pending ? (
         <SpinnerIcon />
       ) : (
         <button
-          type="button"
+          className={clsx(['btn', pending ? 'opacity-50' : undefined])}
           disabled={pending}
-          className={`font-mono border-4 border-black bg-white px-5 py-3 text-center font-bold uppercase text-black drop-shadow-lg hover:border-white hover:bg-black hover:text-white active:drop-shadow-none ${
-            pending ? 'opacity-50' : undefined
-          }`}
           onClick={() => {
             setServerProps(
               'collectionProductCount',
               serverProps.collectionProductCount
-                ? serverProps.collectionProductCount + 24
-                : startingCount + 1,
+                ? serverProps.collectionProductCount + COLLECTION_PAGE_SIZE
+                : startingCount + COLLECTION_PAGE_SIZE,
             );
           }}
+          type="button"
         >
           Load more
         </button>

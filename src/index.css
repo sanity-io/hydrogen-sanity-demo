@@ -11,7 +11,6 @@
 
 @layer components {
   .btn {
-    -webkit-font-smoothing: antialiased;
     align-items: center;
     background-color: theme('colors.offBlack');
     border-radius: theme('borderRadius.full');
@@ -28,6 +27,33 @@
 
   .btn:disabled {
     opacity: 0.2;
+  }
+
+  .btn:hover {
+    background-color: theme('colors.black');
+  }
+
+  .select {
+    align-items: center;
+    background-color: theme('colors.lightGray');
+    border-radius: theme('borderRadius.full');
+    color: theme('colors.offBlack');
+    display: flex;
+    font-size: theme('fontSize.sm');
+    font-weight: theme('fontWeight.bold');
+    height: 2.5rem;
+    justify-content: center;
+    letter-spacing: theme('letterSpacing.normal');
+    overflow: hidden;
+    padding: theme('padding.4');
+  }
+
+  .select:disabled {
+    color: theme('colors.darkGray');
+  }
+
+  .select:hover {
+    background-color: theme('colors.gray');
   }
 
   .textLink {
