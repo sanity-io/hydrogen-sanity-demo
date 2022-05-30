@@ -34,11 +34,11 @@ export default function ProductPill({onClick, storefrontProduct}: Props) {
   return (
     <Link onClick={onClick} to={`/products/${storefrontProduct.handle}`}>
       <div
-        className="group flex h-[110px] gap-4 rounded-md border border-lightGray bg-white p-3 hover:border-darkGray"
+        className="group flex h-[110px] gap-4 rounded-md border border-lightGray bg-white p-3 transition-all duration-500 ease-out hover:rounded-xl hover:border-darkGray"
         role="row"
       >
         <div role="cell" className="relative flex-shrink-0">
-          <div className="relative aspect-[107/84] h-full overflow-hidden rounded-sm bg-lightGray">
+          <div className="relative aspect-[107/84] h-full overflow-hidden rounded-sm bg-lightGray transition-all duration-500 ease-out group-hover:rounded-md">
             {selectedVariant.image && (
               <Image
                 className="absolute inset-0 h-full w-full object-cover"
@@ -47,13 +47,6 @@ export default function ProductPill({onClick, storefrontProduct}: Props) {
               />
             )}
           </div>
-
-          {/* Out of stock sticker */}
-          {/*!selectedVariant?.availableForSale && (
-            <div className="absolute top-0 left-0 bg-black p-2 text-xs text-white">
-              Out of stock
-            </div>
-          )*/}
         </div>
 
         {/* TODO: potentially DRY with product card */}

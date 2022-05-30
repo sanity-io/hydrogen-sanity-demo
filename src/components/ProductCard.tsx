@@ -31,29 +31,23 @@ export default function ProductCard({storefrontProduct}: Props) {
   const productOptions = getProductOptionString(storefrontProduct.options);
 
   return (
-    <div className="relative mb-4">
-      <Link to={`/products/${storefrontProduct.handle}`}>
-        <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded bg-lightGray object-cover">
+    <Link to={`/products/${storefrontProduct.handle}`}>
+      <div className="group relative mb-4">
+        <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded bg-lightGray object-cover transition-all duration-500 ease-out group-hover:rounded-xl">
           {selectedVariant.image && (
             <Image
               className="absolute h-full w-full transform bg-cover bg-center object-cover object-center ease-in-out"
               data={selectedVariant.image}
             />
           )}
-
-          {/* Sale badge */}
-          {selectedVariant?.availableForSale &&
-            selectedVariant?.compareAtPriceV2 && (
-              <div className="absolute top-6 left-6 flex place-content-center rounded-sm bg-white px-1.5 py-1 text-sm font-bold uppercase leading-none text-red">
-                Sale
-              </div>
-            )}
         </div>
 
         <div className="mt-3 text-md">
           <div className="space-y-1">
             {/* Title */}
-            <div className="font-bold">{storefrontProduct.title}</div>
+            <div className="font-bold group-hover:underline">
+              {storefrontProduct.title}
+            </div>
 
             {/* Vendor */}
             {storefrontProduct.vendor && (
@@ -66,29 +60,38 @@ export default function ProductCard({storefrontProduct}: Props) {
             )}
           </div>
 
-          {/* Price / sold out */}
-          {selectedVariant?.availableForSale ? (
-            <div className="mt-3 flex font-bold">
-              {selectedVariant.compareAtPriceV2 && (
-                <span className="text-darkGray">
-                  <Suspense fallback={null}>
-                    <MoneyCompareAtPrice
-                      money={selectedVariant.compareAtPriceV2}
-                    />
-                  </Suspense>
-                </span>
-              )}
-              <Suspense fallback={null}>
-                <MoneyPrice money={selectedVariant.priceV2} />
-              </Suspense>
-            </div>
-          ) : (
-            <div className="mt-3 font-bold uppercase text-darkGray">
+          {/* Price / compare at price */}
+          <div className="mt-3 flex font-bold">
+            {selectedVariant.compareAtPriceV2 && (
+              <span className="text-darkGray">
+                <Suspense fallback={null}>
+                  <MoneyCompareAtPrice
+                    money={selectedVariant.compareAtPriceV2}
+                  />
+                </Suspense>
+              </span>
+            )}
+            <Suspense fallback={null}>
+              <MoneyPrice money={selectedVariant.priceV2} />
+            </Suspense>
+          </div>
+
+          {/* Sale badge */}
+          {selectedVariant?.availableForSale &&
+            selectedVariant?.compareAtPriceV2 && (
+              <div className="absolute top-6 left-6 flex place-content-center rounded-sm bg-white px-1.5 py-1 text-sm font-bold uppercase leading-none text-red">
+                Sale
+              </div>
+            )}
+
+          {/* Sold out badge */}
+          {!selectedVariant?.availableForSale && (
+            <div className="absolute top-6 left-6 flex place-content-center rounded-sm bg-white px-1.5 py-1 text-sm font-bold uppercase leading-none text-darkGray">
               Sold out
             </div>
           )}
         </div>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 }
