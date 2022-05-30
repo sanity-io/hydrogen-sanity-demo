@@ -1,7 +1,7 @@
-import sanityConfig from '../../sanity.config';
-import {SanityColorTheme, SanityHeroPage} from '../types';
-import ProductHero from './ProductHero.server';
-import SanityImage from './SanityImage.client';
+import sanityConfig from '../../../sanity.config';
+import {SanityColorTheme, SanityHeroPage} from '../../types';
+import ProductHero from '../product/ProductHero.server';
+import SanityImage from '../SanityImage.client';
 
 type Props = {
   colorTheme?: SanityColorTheme;
@@ -47,7 +47,7 @@ const renderModule = (hero: SanityHeroPage) => {
   }
 };
 
-export default function HeroPage({colorTheme, fallbackTitle, hero}: Props) {
+export default function PageHero({colorTheme, fallbackTitle, hero}: Props) {
   if (!hero) {
     return (
       <h1 className="mx-auto max-w-[60rem] pb-8 pt-34 text-center text-4xl font-medium">

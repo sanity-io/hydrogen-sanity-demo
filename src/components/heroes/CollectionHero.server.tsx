@@ -1,7 +1,7 @@
-import sanityConfig from '../../sanity.config';
-import {SanityColorTheme, SanityHeroCollection} from '../types';
-import ProductHero from './ProductHero.server';
-import SanityImage from './SanityImage.client';
+import sanityConfig from '../../../sanity.config';
+import {SanityColorTheme, SanityHeroCollection} from '../../types';
+import ProductHero from '../product/ProductHero.server';
+import SanityImage from '../SanityImage.client';
 
 type Props = {
   colorTheme?: SanityColorTheme;
@@ -47,7 +47,7 @@ const renderModule = (hero: SanityHeroCollection) => {
   }
 };
 
-export default function HeroCollection({
+export default function CollectionHero({
   colorTheme,
   fallbackTitle,
   hero,

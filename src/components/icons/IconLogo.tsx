@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-export default function Logo({
+export default function IconLogo({
   className,
   classNameMark,
   classNameType,

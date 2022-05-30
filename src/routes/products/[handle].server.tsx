@@ -18,9 +18,9 @@ import clientConfig from '../../../sanity.config';
 import Gallery from '../../components/Gallery.client';
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
-import ProductDetails from '../../components/ProductDetails.client';
-import ProductEditorial from '../../components/ProductEditorial.server';
-import ProductWidget from '../../components/ProductWidget.client';
+import ProductDetails from '../../components/product/ProductDetails.client';
+import ProductEditorial from '../../components/product/ProductEditorial.server';
+import ProductWidget from '../../components/product/ProductWidget.client';
 import RelatedProducts from '../../components/RelatedProducts.server';
 import {PRODUCT_PAGE} from '../../fragments/productPage';
 import type {SanityProductPage} from '../../types';
@@ -138,17 +138,17 @@ const QUERY_SHOPIFY = gql`
       }
       handle
       id
-      media(first: 6) {
+      media(first: 20) {
         edges {
           node {
             ... on MediaImage {
               mediaContentType
               image {
+                altText
+                height
                 id
                 url
-                altText
                 width
-                height
               }
             }
             ... on Video {
@@ -208,11 +208,11 @@ const QUERY_SHOPIFY = gql`
             }
             id
             image {
+              altText
+              height
               id
               url
-              altText
               width
-              height
             }
             priceV2 {
               amount

@@ -6,7 +6,7 @@ import clientConfig from '../../sanity.config';
 import {LINKS} from '../fragments/links';
 import {PORTABLE_TEXT} from '../fragments/portableText';
 import type {SanityLink} from '../types';
-import Logo from './Logo.client';
+import IconLogo from './icons/IconLogo';
 
 /**
  * A server component that specifies the content of the footer on the website
@@ -56,7 +56,7 @@ export default function Footer() {
     <footer className="-mt-overlap" role="contentinfo">
       <div className="align-start relative flex justify-between overflow-hidden rounded-xl bg-peach py-10 pl-8 pr-19">
         <div>
-          <Logo />
+          <IconLogo />
           <p className="mt-12 text-sm text-darkGray">
             Made by Sanity, Companion and Ewa Lefmann
           </p>

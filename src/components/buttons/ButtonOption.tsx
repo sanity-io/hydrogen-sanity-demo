@@ -5,7 +5,7 @@ type Props = {
   label: string;
 };
 
-export default function OptionButton({checked, label}: Props) {
+export default function ButtonOption({checked, label}: Props) {
   return (
     <div
       className={clsx([

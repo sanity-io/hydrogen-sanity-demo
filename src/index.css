@@ -98,3 +98,8 @@ html {
   -webkit-font-smoothing: antialiased;
   scroll-padding-top: 10rem;
 }
+
+.embla__slide {
+  position: relative;
+  flex: 0 0 100%;
+}

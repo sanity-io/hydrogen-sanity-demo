@@ -4,9 +4,9 @@ import {Suspense} from 'react';
 import {
   getProductOptionString,
   hasMultipleProductOptions,
-} from '../utils/productOptions';
-import MoneyCompareAtPrice from './MoneyCompareAtPrice.client';
-import MoneyPrice from './MoneyPrice.client';
+} from '../../utils/productOptions';
+import MoneyCompareAtPrice from '../MoneyCompareAtPrice.client';
+import MoneyPrice from '../MoneyPrice.client';
 
 type Props = {
   onClick: () => void;
@@ -19,7 +19,7 @@ type Props = {
 /**
  * A shared component that displays a (small) single product to allow buyers to quickly identify a particular item of interest
  */
-export default function ProductPill({onClick, storefrontProduct}: Props) {
+export default function PillProduct({onClick, storefrontProduct}: Props) {
   const selectedVariant = storefrontProduct.variants.edges[0].node;
 
   if (selectedVariant == null) {

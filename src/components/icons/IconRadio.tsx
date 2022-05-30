@@ -1,4 +1,4 @@
-export default function RadioIcon({checked}: {checked?: boolean}) {
+export default function IconRadio({checked}: {checked?: boolean}) {
   return (
     <svg
       width="21"

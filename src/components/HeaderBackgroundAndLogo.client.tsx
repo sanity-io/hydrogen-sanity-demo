@@ -1,5 +1,5 @@
 import {Link} from '@shopify/hydrogen';
-import Logo from './Logo.client';
+import IconLogo from './icons/IconLogo';
 import clsx from 'clsx';
 import {useEffect, useState} from 'react';
 
@@ -30,7 +30,7 @@ export default function HeaderBackground() {
       {/* Logo */}
       <div className="absolute bottom-0 top-0 left-1/2 flex -translate-x-1/2 items-center">
         <Link className="font-bold" to="/">
-          <Logo
+          <IconLogo
             classNameMark={clsx([
               'duration-700',
               scrolledDown ? 'translate-y-1/4' : 'translate-y-0',

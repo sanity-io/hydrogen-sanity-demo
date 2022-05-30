@@ -5,7 +5,7 @@ import {ReactNode, Suspense} from 'react';
 import clientConfig from '../../sanity.config';
 import {LINKS} from '../fragments/links';
 import {SanityMenuLink} from '../types';
-import Cart from './Cart.client';
+import Cart from './cart/Cart.client';
 import Footer from './Footer.server';
 import Header from './Header.server';
 

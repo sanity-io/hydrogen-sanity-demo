@@ -1,9 +1,9 @@
 import {Image, ProductPrice, ProductProvider} from '@shopify/hydrogen';
 import React from 'react';
 import {getProductVariant} from '../../utils/getProductVariant';
-import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.client';
+import ButtonSelectedVariantAddToCart from '../buttons/ButtonSelectedVariantAddToCart.client';
 import LinkProduct from '../LinkProduct.client';
-import {useProductsContext} from '../ProductsProvider.client';
+import {useProductsContext} from '../product/ProductsProvider.client';
 
 const BlockProduct = (props) => {
   const {node} = props;

@@ -14,12 +14,12 @@ import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 // import pluralize from 'pluralize';
 import clientConfig from '../../../sanity.config';
+import CardProduct from '../../components/cards/CardProduct';
+import CollectionHero from '../../components/heroes/CollectionHero.server';
 import Layout from '../../components/Layout.server';
 import LoadMoreProducts from '../../components/LoadMoreProducts.client';
 import NotFound from '../../components/NotFound.server';
-import HeroCollection from '../../components/HeroCollection.server';
-import ProductCard from '../../components/ProductCard';
-import SortSelector from '../../components/SortSelector.client';
+import SelectSortOrder from '../../components/selects/SelectSortOrder.client';
 import {COLLECTION_PAGE_SIZE} from '../../constants';
 import {COLLECTION_PAGE} from '../../fragments/collectionPage';
 import {SanityCollectionPage} from '../../types';
@@ -87,7 +87,7 @@ export default function CollectionRoute({
   return (
     <Layout>
       {/* Hero */}
-      <HeroCollection
+      <CollectionHero
         colorTheme={sanityCollection.colorTheme}
         fallbackTitle={sanityCollection.title}
         hero={sanityCollection.hero}
@@ -106,7 +106,7 @@ export default function CollectionRoute({
       <div className="mb-32 mt-8 px-4 pb-overlap">
         {products.length > 0 && (
           <div className="mb-8 flex justify-end">
-            <SortSelector
+            <SelectSortOrder
               key={sanityCollection._id}
               initialSortOrder={sanityCollection.store.sortOrder}
             />
@@ -121,7 +121,7 @@ export default function CollectionRoute({
         <ul className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
           {products.map((product) => (
             <li key={product.id}>
-              <ProductCard storefrontProduct={product} />
+              <CardProduct storefrontProduct={product} />
             </li>
           ))}
         </ul>

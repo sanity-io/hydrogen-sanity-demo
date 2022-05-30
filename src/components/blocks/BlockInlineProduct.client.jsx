@@ -1,10 +1,10 @@
 import {Image, ProductPrice, ProductProvider} from '@shopify/hydrogen';
 import Tippy from '@tippyjs/react/headless';
 import {getProductVariant} from '../../utils/getProductVariant';
-import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.client';
-import ButtonSelectedVariantBuyNow from '../ButtonSelectedVariantBuyNow.client';
+import ButtonSelectedVariantAddToCart from '../buttons/ButtonSelectedVariantAddToCart.client';
+import ButtonSelectedVariantBuyNow from '../buttons/ButtonSelectedVariantBuyNow.client';
 import LinkProduct from '../LinkProduct.client';
-import {useProductsContext} from '../ProductsProvider.client';
+import {useProductsContext} from '../product/ProductsProvider.client';
 
 const BlockInlineProduct = (props) => {
   const {node} = props;

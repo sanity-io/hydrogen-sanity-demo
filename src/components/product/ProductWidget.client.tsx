@@ -1,13 +1,12 @@
 import {ProductPrice, useProduct} from '@shopify/hydrogen';
-import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import {useState} from 'react';
-import {SanityProductPage} from '../types';
-import {hasMultipleProductOptions} from '../utils/productOptions';
-import ButtonSelectedVariantAddToCart from './ButtonSelectedVariantAddToCart.client';
-import ButtonSelectedVariantBuyNow from './ButtonSelectedVariantBuyNow.client';
-import MinusIcon from './MinusIcon.client';
-import PlusIcon from './PlusIcon.client';
-import ProductOptions from './ProductOptions.client';
+import {SanityProductPage} from '../../types';
+import {hasMultipleProductOptions} from '../../utils/productOptions';
+import ButtonSelectedVariantAddToCart from '../buttons/ButtonSelectedVariantAddToCart.client';
+import ButtonSelectedVariantBuyNow from '../buttons/ButtonSelectedVariantBuyNow.client';
+// import MinusIcon from './MinusIcon.client';
+// import PlusIcon from './PlusIcon.client';
+import ProductOptions from './options/ProductOptions.client';
 
 type Props = {
   sanityProduct: SanityProductPage;
@@ -17,6 +16,7 @@ function ProductActions() {
   const {selectedVariant} = useProduct();
 
   const [quantity, setQuantity] = useState(1);
+  /*
   const isOutOfStock = !selectedVariant?.availableForSale;
 
   const handleDecreaseQuantity = () => {
@@ -28,6 +28,7 @@ function ProductActions() {
   const handleIncreaseQuantity = () => {
     setQuantity(quantity + 1);
   };
+  */
 
   return (
     <div className="mt-4 flex flex-col space-y-2">

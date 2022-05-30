@@ -2,9 +2,9 @@ import {Listbox} from '@headlessui/react';
 import {fetchSync, useCountry} from '@shopify/hydrogen';
 import clsx from 'clsx';
 import {Suspense, useCallback, useState} from 'react';
-import {ArrowIcon} from './icons/Arrow.client';
-import RadioIcon from './RadioIcon.client';
-import SpinnerIcon from './SpinnerIcon.client';
+import {IconChevronDown} from '../icons/IconChevronDown';
+import IconRadio from '../icons/IconRadio';
+import SpinnerIcon from '../icons/IconSpinner';
 
 /**
  * A client component that selects the appropriate country to display for products on a website
@@ -30,7 +30,7 @@ export default function CountrySelector() {
           <div className="relative inline-flex">
             <Listbox.Button className="flex items-center p-2 text-sm font-bold">
               <span className="mr-2">{selectedCountry.name}</span>
-              <ArrowIcon className={open ? 'rotate-180' : null} />
+              <IconChevronDown className={open ? 'rotate-180' : null} />
             </Listbox.Button>
 
             <Listbox.Options className="absolute top-full left-1/2 z-10 min-w-[150px] -translate-x-1/2 overflow-hidden rounded shadow">
@@ -73,7 +73,7 @@ export function Countries({selectedCountry, getClassName}) {
         {({active}) => (
           <div className={getClassName(active)}>
             <span className="mr-8">{country.name}</span>
-            <RadioIcon checked={isSelected} />
+            <IconRadio checked={isSelected} />
           </div>
         )}
       </Listbox.Option>

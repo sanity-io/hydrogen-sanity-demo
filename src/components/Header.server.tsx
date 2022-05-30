@@ -1,6 +1,6 @@
 import {SanityMenuLink} from '../types';
-import CartToggle from './CartToggle.client';
-import CountrySelector from './CountrySelector.client';
+import CartToggle from './cart/CartToggle.client';
+import CountrySelector from './selects/SelectCountry.client';
 import HeaderBackground from './HeaderBackgroundAndLogo.client';
 import Navigation from './Navigation.server';
 

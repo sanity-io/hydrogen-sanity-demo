@@ -1,4 +1,4 @@
-export function ArrowIcon({className}: {className?: string}) {
+export function IconChevronDown({className}: {className?: string}) {
   return (
     <svg
       className={className}

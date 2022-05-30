@@ -1,5 +1,5 @@
-import {SanityProductPage} from '../types';
-import PortableText from './PortableText.client';
+import {SanityProductPage} from '../../types';
+import PortableText from '../PortableText.client';
 
 type Props = {
   sanityProduct: SanityProductPage;

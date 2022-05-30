@@ -6,7 +6,7 @@ import {
 } from '@shopify/hydrogen';
 import gql from 'graphql-tag';
 import Layout from './Layout.server';
-import ProductPill from './ProductPill';
+import PillProduct from './pills/PillProduct';
 
 /**
  * A server component that defines the content to display when a page isn't found (404 error)
@@ -46,7 +46,7 @@ export default function NotFound({response}) {
         <div className="mx-4 mb-18 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
           {products.map((product) => (
             <div key={product.id}>
-              <ProductPill storefrontProduct={product} />
+              <PillProduct storefrontProduct={product} />
             </div>
           ))}
         </div>

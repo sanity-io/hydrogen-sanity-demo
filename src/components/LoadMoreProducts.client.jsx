@@ -1,7 +1,7 @@
 import {useServerProps} from '@shopify/hydrogen';
 import clsx from 'clsx';
 import {COLLECTION_PAGE_SIZE} from '../constants';
-import SpinnerIcon from './SpinnerIcon.client';
+import SpinnerIcon from './icons/IconSpinner';
 
 /**
  * A client component that provides functionality to initially show a subset of products and a button to load more products

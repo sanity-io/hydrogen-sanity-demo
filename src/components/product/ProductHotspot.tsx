@@ -1,8 +1,8 @@
 import {Link} from '@shopify/hydrogen';
 import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import {Suspense} from 'react';
-import MoneyCompareAtPrice from './MoneyCompareAtPrice.client';
-import MoneyPrice from './MoneyPrice.client';
+import MoneyCompareAtPrice from '../MoneyCompareAtPrice.client';
+import MoneyPrice from '../MoneyPrice.client';
 
 type Props = {
   storefrontProduct: Pick<Product, 'handle' | 'title' | 'variants' | 'vendor'>;

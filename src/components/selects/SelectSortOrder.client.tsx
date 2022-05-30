@@ -1,9 +1,9 @@
 import {useState, Suspense, useMemo} from 'react';
 import {Listbox} from '@headlessui/react';
-import SpinnerIcon from './SpinnerIcon.client';
-import RadioIcon from './RadioIcon.client';
+import SpinnerIcon from '../icons/IconSpinner';
+import IconRadio from '../icons/IconRadio';
 import clsx from 'clsx';
-import {ArrowIcon} from './icons/Arrow.client';
+import {IconChevronDown} from '../icons/IconChevronDown';
 import {useServerProps} from '@shopify/hydrogen';
 
 export const SORT_OPTIONS = [
@@ -78,7 +78,7 @@ function __tempToSnakeCase(str?: string) {
   return str?.replace(/-/g, '_').toUpperCase();
 }
 
-export default function SortSelector({initialSortOrder}: Props) {
+export default function SelectSortOrder({initialSortOrder}: Props) {
   const [listboxOpen, setListboxOpen] = useState(false);
   const [selectedSortOrder, setSelectedSortOrder] = useState(
     __tempToSnakeCase(initialSortOrder),
@@ -114,7 +114,7 @@ export default function SortSelector({initialSortOrder}: Props) {
           <div className="relative inline-flex">
             <Listbox.Button className="select">
               <span className="mr-2">Sort by: {currentSortOption?.name}</span>
-              <ArrowIcon className={open ? 'rotate-180' : 'rotate-0'} />
+              <IconChevronDown className={open ? 'rotate-180' : 'rotate-0'} />
             </Listbox.Button>
 
             <Listbox.Options className="absolute top-full right-0 z-10 min-w-[150px] overflow-hidden rounded shadow">
@@ -164,7 +164,7 @@ export function SortOptions({
         {({active}) => (
           <div className={getClassName(active)}>
             <span className="mr-8">{sortOption.name}</span>
-            <RadioIcon checked={isSelected} />
+            <IconRadio checked={isSelected} />
           </div>
         )}
       </Listbox.Option>

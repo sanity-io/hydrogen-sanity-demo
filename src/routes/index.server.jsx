@@ -9,9 +9,8 @@ import {
 } from '@shopify/hydrogen';
 import gql from 'graphql-tag';
 import {Suspense} from 'react';
-import FeaturedCollection from '../components/FeaturedCollection';
+// import FeaturedCollection from '../components/FeaturedCollection';
 import Layout from '../components/Layout.server';
-import ProductCard from '../components/ProductCard';
 
 export default function IndexRoute() {
   const {countryCode = 'US'} = useSession();
@@ -103,7 +102,7 @@ function FeaturedProductsBox({country}) {
         <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {featuredProducts.map((product) => (
             <div key={product.id}>
-              <ProductCard storefrontProduct={product} />
+              <CardProduct storefrontProduct={product} />
             </div>
           ))}
         </div>

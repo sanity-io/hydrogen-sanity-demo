@@ -4,8 +4,8 @@ import {
   Product,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import type {SanityCollectionGroup} from '../types';
-import CollectionCard from './CollectionCard.client';
-import ProductPill from './ProductPill';
+import CardCollection from './cards/CardCollection';
+import PillProduct from './pills/PillProduct';
 
 type Props = {
   collection: Collection;
@@ -28,7 +28,7 @@ export default function CollectionGroupContent({
         return null;
       }
       return (
-        <CollectionCard
+        <CardCollection
           collection={collectionGroupCollection}
           key={collectionGroupCollection._id}
           onClick={onClose}
@@ -39,7 +39,7 @@ export default function CollectionGroupContent({
   const renderCollectionProducts = () =>
     products?.map((product) => (
       <li key={product.id}>
-        <ProductPill onClick={onClose} storefrontProduct={product} />
+        <PillProduct onClick={onClose} storefrontProduct={product} />
       </li>
     ));
 

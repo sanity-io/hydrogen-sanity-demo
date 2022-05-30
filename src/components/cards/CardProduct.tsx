@@ -4,9 +4,9 @@ import {Suspense} from 'react';
 import {
   getProductOptionString,
   hasMultipleProductOptions,
-} from '../utils/productOptions';
-import MoneyCompareAtPrice from './MoneyCompareAtPrice.client';
-import MoneyPrice from './MoneyPrice.client';
+} from '../../utils/productOptions';
+import MoneyCompareAtPrice from '../MoneyCompareAtPrice.client';
+import MoneyPrice from '../MoneyPrice.client';
 
 type Props = {
   storefrontProduct: Pick<
@@ -18,7 +18,7 @@ type Props = {
 /**
  * A shared component that displays a single product to allow buyers to quickly identify a particular item of interest
  */
-export default function ProductCard({storefrontProduct}: Props) {
+export default function CardProduct({storefrontProduct}: Props) {
   const selectedVariant = storefrontProduct.variants.edges[0].node;
 
   if (selectedVariant == null) {
@@ -79,14 +79,14 @@ export default function ProductCard({storefrontProduct}: Props) {
           {/* Sale badge */}
           {selectedVariant?.availableForSale &&
             selectedVariant?.compareAtPriceV2 && (
-              <div className="leading-none absolute top-6 left-6 flex place-content-center rounded-sm bg-white px-1.5 py-1 text-sm font-bold uppercase text-red">
+              <div className="absolute top-6 left-6 flex place-content-center rounded-sm bg-white px-1.5 py-1 text-sm font-bold uppercase leading-none text-red">
                 Sale
               </div>
             )}
 
           {/* Sold out badge */}
           {!selectedVariant?.availableForSale && (
-            <div className="leading-none absolute top-6 left-6 flex place-content-center rounded-sm bg-white px-1.5 py-1 text-sm font-bold uppercase text-darkGray">
+            <div className="absolute top-6 left-6 flex place-content-center rounded-sm bg-white px-1.5 py-1 text-sm font-bold uppercase leading-none text-darkGray">
               Sold out
             </div>
           )}

@@ -1,12 +1,12 @@
 import {Link} from '@shopify/hydrogen';
-import {SanityCollection} from '../types';
+import {SanityCollection} from '../../types';
 
 type Props = {
   collection: SanityCollection;
   onClick?: () => void;
 };
 
-export default function CollectionCard({collection, onClick}: Props) {
+export default function CardCollection({collection, onClick}: Props) {
   return (
     <Link className="text-lg font-bold" onClick={onClick} to={collection.slug}>
       <div

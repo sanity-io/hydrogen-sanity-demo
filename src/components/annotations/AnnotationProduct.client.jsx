@@ -4,7 +4,7 @@ import {
   ProductProvider,
 } from '@shopify/hydrogen';
 import {getProductVariant} from '../../utils/getProductVariant';
-import {useProductsContext} from '../ProductsProvider.client';
+import {useProductsContext} from '../product/ProductsProvider.client';
 
 const AnnotationProduct = (props) => {
   const {children, mark} = props;

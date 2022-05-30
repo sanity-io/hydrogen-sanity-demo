@@ -1,11 +1,26 @@
-import {Image, MediaFile, useProduct} from '@shopify/hydrogen';
+import {MediaFile, useProduct} from '@shopify/hydrogen';
+import useEmblaCarousel from 'embla-carousel-react';
+import {useEffect} from 'react';
+import ButtonCircle from './buttons/ButtonCircle';
+import {IconArrowRight} from './icons/IconArrowRight';
 
 /**
  * A client component that defines a media gallery for hosting images, 3D models, and videos of products
  */
+
 export default function Gallery() {
   const {media, selectedVariant} = useProduct();
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'start',
+    draggable: true,
+    loop: false,
+    skipSnaps: true,
+    speed: 7,
+  });
 
+  /*
+  const featuredMedia = selectedVariant?.image || media[0]?.image;
+  const featuredMediaSrc = featuredMedia?.url.split('?')[0];
   const featuredMedia = selectedVariant?.image || media[0]?.image;
   const featuredMediaSrc = featuredMedia?.url.split('?')[0];
   const galleryMedia = media.filter((med: any) => {
@@ -19,46 +34,76 @@ export default function Gallery() {
 
     return !med.image.url.includes(featuredMediaSrc);
   });
+  */
+  const galleryMedia = media;
+
+  const handleNext = () => {
+    if (emblaApi) {
+      emblaApi.scrollNext();
+    }
+  };
+
+  const handlePrevious = () => {
+    if (emblaApi) {
+      emblaApi.scrollPrev();
+    }
+  };
+
+  useEffect(() => {
+    const variantImageUrl = selectedVariant?.image?.url.split('?')[0];
+    const galleryIndex = galleryMedia.findIndex(
+      (media: any) => media?.image?.url.split('?')[0] === variantImageUrl,
+    );
+
+    if (emblaApi && galleryIndex >= 0) {
+      emblaApi.scrollTo(galleryIndex, true); // instantly scroll
+    }
+  }, [emblaApi, galleryMedia, selectedVariant]);
 
   if (!media.length) {
     return null;
   }
 
   return (
-    <div
-      className="no-scrollbar scroll-snap-x flex min-h-screen w-1/2 place-content-start overflow-x-scroll scroll-smooth bg-lightGray md:grid md:h-auto md:grid-cols-2"
-      tabIndex={-1}
-    >
-      {selectedVariant?.image && (
-        <Image
-          fetchpriority="high"
-          data={selectedVariant.image}
-          className="md:flex-shrink-none order h-full w-[80vw] flex-shrink-0 snap-start object-cover object-center md:col-span-2 md:h-auto md:w-full"
-        />
-      )}
-      {galleryMedia.map((med: any) => {
-        let extraProps = {};
+    <div className="relative h-screen bg-lightGray" tabIndex={-1}>
+      <div className="h-full overflow-hidden" ref={emblaRef}>
+        <div className="flex h-full">
+          {/* Slides */}
+          {galleryMedia.map((med: any) => {
+            let extraProps = {};
 
-        if (med.mediaContentType === MODEL_3D_TYPE) {
-          extraProps = MODEL_3D_PROPS;
-        }
+            if (med.mediaContentType === MODEL_3D_TYPE) {
+              extraProps = MODEL_3D_PROPS;
+            }
 
-        return (
-          <MediaFile
-            // @ts-expect-error <MediaFile> should accept tabIndex
-            tabIndex={0}
-            key={med.id || med.image.id}
-            className="h-full w-[80vw] flex-shrink-0 snap-start object-cover object-center transition-all md:h-auto md:w-auto"
-            data={med}
-            fetchpriority="low"
-            loaderOptions={{
-              height: '485',
-              crop: 'center',
-            }}
-            {...extraProps}
-          />
-        );
-      })}
+            return (
+              <MediaFile
+                // @ts-expect-error <MediaFile> should accept tabIndex
+                tabIndex={0}
+                key={med.id || med.image.id}
+                className="relative flex w-full shrink-0 grow-0 object-cover"
+                data={med}
+                fetchpriority="high"
+                loaderOptions={{
+                  height: '485',
+                  crop: 'center',
+                }}
+                {...extraProps}
+              />
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Navigation */}
+      <div className="absolute bottom-8 left-8 flex gap-3">
+        <ButtonCircle onClick={handlePrevious}>
+          <IconArrowRight className="rotate-180" />
+        </ButtonCircle>
+        <ButtonCircle onClick={handleNext}>
+          <IconArrowRight />
+        </ButtonCircle>
+      </div>
     </div>
   );
 }

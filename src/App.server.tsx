@@ -8,7 +8,7 @@ import {
 } from '@shopify/hydrogen';
 import renderHydrogen from '@shopify/hydrogen/entry-server';
 import {Suspense} from 'react';
-import CartProvider from './components/CartProvider.client';
+import CartProvider from './components/cart/CartProvider.client';
 import DefaultSeo from './components/DefaultSeo.server';
 import LoadingFallback from './components/LoadingFallback';
 import NotFound from './components/NotFound.server';

@@ -15,8 +15,8 @@ import {
 } from '@shopify/hydrogen';
 import {Fragment} from 'react';
 import {useCartUI} from './CartUIProvider.client';
-import MinusIcon from './MinusIcon.client';
-import PlusIcon from './PlusIcon.client';
+import IconMinus from '../icons/IconMinus';
+import IconPlus from '../icons/IconPlus';
 
 /**
  * A client component that contains the merchandise that a customer intends to purchase, and the estimated cost associated with the cart
@@ -177,7 +177,7 @@ function LineInCart() {
       </div>
 
       {/* Price */}
-      <CartLinePrice className="leading-none ml-4 mr-6 min-w-[4rem] text-right text-sm font-bold" />
+      <CartLinePrice className="ml-4 mr-6 min-w-[4rem] text-right text-sm font-bold leading-none" />
 
       {/* Remove */}
       <div role="cell" className="flex flex-col items-end justify-between">
@@ -238,18 +238,18 @@ function CartItemQuantity() {
         aria-label="Decrease quantity"
         className="disabled:pointer-events-all disabled:cursor-wait"
       >
-        <MinusIcon />
+        <IconMinus />
       </CartLineQuantityAdjustButton>
       <CartLineQuantity
         as="div"
-        className="leading-none min-w-[1rem] text-center text-sm font-bold text-black"
+        className="min-w-[1rem] text-center text-sm font-bold leading-none text-black"
       />
       <CartLineQuantityAdjustButton
         adjust="increase"
         aria-label="Increase quantity"
         className="disabled:pointer-events-all text-black disabled:cursor-wait"
       >
-        <PlusIcon />
+        <IconPlus />
       </CartLineQuantityAdjustButton>
     </div>
   );

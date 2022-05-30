@@ -2,7 +2,7 @@ import {useSession, useShop, useShopQuery} from '@shopify/hydrogen';
 import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import gql from 'graphql-tag';
 import {SanityColorTheme} from '../types';
-import ProductCard from './ProductCard';
+import CardProduct from './cards/CardProduct';
 
 type Props = {
   colorTheme?: SanityColorTheme;
@@ -47,7 +47,7 @@ export default function RelatedProducts({
       <h3 className="mb-6 text-xl font-bold">You might also like</h3>
       <div className="grid gap-3 pb-overlap md:grid-cols-4">
         {products.map((product) => (
-          <ProductCard key={product.id} storefrontProduct={product} />
+          <CardProduct key={product.id} storefrontProduct={product} />
         ))}
       </div>
     </div>

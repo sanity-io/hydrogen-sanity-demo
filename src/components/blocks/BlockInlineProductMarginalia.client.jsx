@@ -1,9 +1,9 @@
 import {Image, ProductPrice, ProductProvider} from '@shopify/hydrogen';
 import {getProductVariant} from '../../utils/getProductVariant';
-import ButtonSelectedVariantAddToCart from '../ButtonSelectedVariantAddToCart.client';
-import ButtonSelectedVariantBuyNow from '../ButtonSelectedVariantBuyNow.client';
+import ButtonSelectedVariantAddToCart from '../buttons/ButtonSelectedVariantAddToCart.client';
+import ButtonSelectedVariantBuyNow from '../buttons/ButtonSelectedVariantBuyNow.client';
 import LinkProduct from '../LinkProduct.client';
-import {useProductsContext} from '../ProductsProvider.client';
+import {useProductsContext} from '../product/ProductsProvider.client';
 
 const BlockInlineProductMarginalia = (props) => {
   const {node} = props;
