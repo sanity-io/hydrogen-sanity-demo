@@ -1,6 +1,6 @@
 import groq from 'groq';
 import {COLOR_THEME} from './colorTheme';
-import {PAGE_HERO} from './pageHero';
+import {HERO_PAGE} from './heroPage';
 import {PORTABLE_TEXT} from './portableText';
 import {SEO} from './seo';
 
@@ -13,7 +13,7 @@ export const PAGE = groq`
   },
   (showHero == true) => {
     hero {
-      ${PAGE_HERO}
+      ${HERO_PAGE}
     },
   },
   seo {

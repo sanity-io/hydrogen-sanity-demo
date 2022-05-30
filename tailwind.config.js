@@ -9,11 +9,11 @@ module.exports = {
       xl: '20px',
       full: '9999px',
     },
-    fontFamily: {
-      sans: '"DM Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-    },
     boxShadow: {
       DEFAULT: '0px 0px 4px rgba(0, 0, 0, 0.1)',
+    },
+    fontFamily: {
+      sans: '"DM Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     },
     fontSize: {
       // 12px
@@ -96,6 +96,9 @@ module.exports = {
     },
     letterSpacing: {
       normal: '-0.03em',
+    },
+    lineHeight: {
+      paragraph: '1.6',
     },
     extend: {
       colors: {

@@ -1,20 +1,20 @@
 import sanityConfig from '../../sanity.config';
-import {SanityColorTheme, SanityPageHero} from '../types';
+import {SanityColorTheme, SanityHeroPage} from '../types';
 import ProductHero from './ProductHero.server';
 import SanityImage from './SanityImage.client';
 
 type Props = {
   colorTheme?: SanityColorTheme;
   fallbackTitle: string;
-  hero?: SanityPageHero;
+  hero?: SanityHeroPage;
 };
 
-const renderModule = (hero: SanityPageHero) => {
+const renderModule = (hero: SanityHeroPage) => {
   switch (hero.module?._type) {
     case 'imageWithOptions': {
       const image = hero.module.image;
       return (
-        <div className="relative mt-14 flex aspect-[1300/768] place-content-center overflow-hidden rounded-md bg-lightGray">
+        <div className="relative flex aspect-[1300/768] place-content-center overflow-hidden rounded-md bg-lightGray">
           <SanityImage
             alt={image?.altText}
             crop={image?.crop}
@@ -37,7 +37,7 @@ const renderModule = (hero: SanityPageHero) => {
       }
 
       return (
-        <div className="relative mt-14 flex aspect-[1300/768] place-content-center overflow-hidden rounded-md bg-lightGray">
+        <div className="relative flex aspect-[1300/768] place-content-center overflow-hidden rounded-md bg-lightGray">
           <ProductHero gid={store.gid} />
         </div>
       );
@@ -47,7 +47,7 @@ const renderModule = (hero: SanityPageHero) => {
   }
 };
 
-export default function PageHero({colorTheme, fallbackTitle, hero}: Props) {
+export default function HeroPage({colorTheme, fallbackTitle, hero}: Props) {
   if (!hero) {
     return (
       <h1 className="mx-auto max-w-[60rem] pb-8 pt-34 text-center text-4xl font-medium">
@@ -72,7 +72,7 @@ export default function PageHero({colorTheme, fallbackTitle, hero}: Props) {
       )}
 
       {/* Module */}
-      {renderModule(hero)}
+      <div className="mt-14">{renderModule(hero)}</div>
     </div>
   );
 }

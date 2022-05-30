@@ -1,6 +1,6 @@
 import groq from 'groq';
 import {COLOR_THEME} from './colorTheme';
-import {PAGE_HERO} from './pageHero';
+import {HERO_COLLECTION} from './heroCollection';
 // TODO: rename SEO_PRODUCT or create separate version for collections
 import {SEO_PRODUCT} from './seoProduct';
 
@@ -11,10 +11,9 @@ export const COLLECTION_PAGE = groq`
   },
   (showHero == true) => {
     hero {
-      ${PAGE_HERO}
+      ${HERO_COLLECTION}
     },
   },
-  "manualSort": select(count(store.rules) > 0 => false, true),
   seo {
     ${SEO_PRODUCT}
   },

@@ -2,8 +2,8 @@ import {Block} from '@sanity/types';
 
 export type SanityCollection = {
   _id: string;
-  colorTheme?: SanityColorTheme;
-  hero?: SanityPageHero;
+  colorTheme: SanityColorTheme;
+  hero?: SanityHeroPage;
   slug: string;
   store: Record<string, any>;
   title: string;
@@ -11,9 +11,8 @@ export type SanityCollection = {
 
 export type SanityCollectionPage = {
   _id: string;
-  colorTheme?: SanityColorTheme;
-  hero?: SanityPageHero;
-  manualSort?: boolean;
+  colorTheme: SanityColorTheme;
+  hero?: SanityHeroCollection;
   slug: string;
   store: Record<string, any>;
   title: string;
@@ -74,13 +73,24 @@ export type SanityLinkInternal = {
 export type SanityPage = {
   body: Block[];
   colorTheme?: SanityColorTheme;
-  hero?: SanityPageHero;
+  hero?: SanityHeroPage;
   // seo: null,
   showHeader?: boolean;
   title: string;
 };
 
-export type SanityPageHero = {
+export type SanityHeroCollection = {
+  description?: string;
+  module?:
+    | SanityProductWithVariant
+    | {
+        _type: 'imageWithOptions';
+        image: any;
+      };
+  title?: string;
+};
+
+export type SanityHeroPage = {
   module?:
     | SanityProductWithVariant
     | {

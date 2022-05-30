@@ -9,7 +9,7 @@ import {useServerProps} from '@shopify/hydrogen';
 export const SORT_OPTIONS = [
   {
     name: 'Default',
-    collectionSortOrder: undefined,
+    collectionSortOrder: 'MANUAL',
     productSort: {
       key: undefined,
       reverse: false,
@@ -71,7 +71,6 @@ export const SORT_OPTIONS = [
 
 type Props = {
   initialSortOrder: string;
-  manualSort?: boolean;
 };
 
 // TODO: convert kebab-case to SNAKE_CASE - remove this when sort order is consistently stored with Sanity Connect direct sync
@@ -79,7 +78,7 @@ function __tempToSnakeCase(str?: string) {
   return str?.replace(/-/g, '_').toUpperCase();
 }
 
-export default function SortSelector({initialSortOrder, manualSort}: Props) {
+export default function SortSelector({initialSortOrder}: Props) {
   const [listboxOpen, setListboxOpen] = useState(false);
   const [selectedSortOrder, setSelectedSortOrder] = useState(
     __tempToSnakeCase(initialSortOrder),
@@ -88,10 +87,12 @@ export default function SortSelector({initialSortOrder, manualSort}: Props) {
 
   // Remove 'Default' sort option if current collection is not manual / automated
   const sortOptions = useMemo(() => {
-    return manualSort
+    return selectedSortOrder === 'MANUAL'
       ? SORT_OPTIONS
-      : SORT_OPTIONS.filter((option) => Boolean(option.collectionSortOrder));
-  }, [manualSort]);
+      : SORT_OPTIONS.filter(
+          (option) => option.collectionSortOrder !== 'MANUAL',
+        );
+  }, [selectedSortOrder]);
 
   const handleChange = (sortOption: typeof SORT_OPTIONS[number]) => {
     setSelectedSortOrder(

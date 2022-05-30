@@ -2,7 +2,8 @@ import groq from 'groq';
 import {IMAGE} from './image';
 import {PRODUCT_WITH_VARIANT} from './productWithVariant';
 
-export const PAGE_HERO = groq`
+export const HERO_COLLECTION = groq`
+  description,
   module[0] {
     _type,
     (_type == 'imageWithOptions') => {

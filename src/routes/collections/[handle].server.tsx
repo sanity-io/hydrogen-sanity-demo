@@ -17,7 +17,7 @@ import clientConfig from '../../../sanity.config';
 import Layout from '../../components/Layout.server';
 import LoadMoreProducts from '../../components/LoadMoreProducts.client';
 import NotFound from '../../components/NotFound.server';
-import PageHero from '../../components/PageHero.server';
+import HeroCollection from '../../components/HeroCollection.server';
 import ProductCard from '../../components/ProductCard';
 import SortSelector from '../../components/SortSelector.client';
 import {COLLECTION_PAGE_SIZE} from '../../constants';
@@ -86,8 +86,8 @@ export default function CollectionRoute({
 
   return (
     <Layout>
-      {/* Page hero */}
-      <PageHero
+      {/* Hero */}
+      <HeroCollection
         colorTheme={sanityCollection.colorTheme}
         fallbackTitle={sanityCollection.title}
         hero={sanityCollection.hero}
@@ -103,24 +103,21 @@ export default function CollectionRoute({
       {/* HTML Description */}
       {/* <div dangerouslySetInnerHTML={{__html: collection.descriptionHtml}} /> */}
 
-      <div className="mt-8 px-4 pb-overlap">
+      <div className="mb-32 mt-8 px-4 pb-overlap">
         {products.length > 0 && (
           <div className="mb-8 flex justify-end">
             <SortSelector
               key={sanityCollection._id}
-              manualSort={sanityCollection.manualSort}
               initialSortOrder={sanityCollection.store.sortOrder}
             />
           </div>
         )}
-
         {/* No results */}
         {products.length === 0 && (
           <div className="text-center text-lg font-bold text-darkGray">
             No products
           </div>
         )}
-
         <ul className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
           {products.map((product) => (
             <li key={product.id}>
