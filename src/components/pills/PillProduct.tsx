@@ -39,7 +39,7 @@ export default function PillProduct({onClick, storefrontProduct}: Props) {
         role="row"
       >
         <div role="cell" className="relative flex-shrink-0">
-          <div className="relative aspect-[107/84] h-full overflow-hidden rounded-sm bg-lightGray transition-all duration-500 ease-out group-hover:rounded-md">
+          <div className="relative h-full w-[110px] overflow-hidden rounded-sm bg-lightGray transition-all duration-500 ease-out group-hover:rounded-md">
             {selectedVariant.image && (
               <Image
                 className="absolute inset-0 h-full w-full object-cover"
