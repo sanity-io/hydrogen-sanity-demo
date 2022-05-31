@@ -22,7 +22,11 @@ export default function CollectionGroupDialog({
     clearTimeout(refTimeout?.current);
     refTimeout.current = setTimeout(() => setIsOpen(true), 250);
   };
-  const handleOpenCancel = () => clearTimeout(refTimeout?.current);
+  const handleOpenCancel = () => {
+    if (isOpen) {
+      clearTimeout(refTimeout?.current);
+    }
+  };
   const handleToggleOpen = () => setIsOpen(!isOpen);
 
   useEffect(() => {
