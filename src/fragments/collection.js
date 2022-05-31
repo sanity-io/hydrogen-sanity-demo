@@ -8,5 +8,6 @@ export const COLLECTION = groq`
   },
   "slug": "/collections/" + store.slug.current,
   store,
-  "title": store.title
+  "title": store.title,
+  "vector": vector.asset->url,
 `;

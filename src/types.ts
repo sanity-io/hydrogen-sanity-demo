@@ -7,6 +7,7 @@ export type SanityCollection = {
   slug: string;
   store: Record<string, any>;
   title: string;
+  vector?: string;
 };
 
 export type SanityCollectionPage = {
