@@ -1,5 +1,6 @@
 import {Image, Link} from '@shopify/hydrogen';
 import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import clsx from 'clsx';
 import {Suspense} from 'react';
 import {
   getProductOptionString,
@@ -9,6 +10,7 @@ import MoneyCompareAtPrice from '../MoneyCompareAtPrice.client';
 import MoneyPrice from '../MoneyPrice.client';
 
 type Props = {
+  imageAspectClassName?: string;
   storefrontProduct: Pick<
     Product,
     'handle' | 'options' | 'title' | 'variants' | 'vendor'
@@ -18,7 +20,10 @@ type Props = {
 /**
  * A shared component that displays a single product to allow buyers to quickly identify a particular item of interest
  */
-export default function CardProduct({storefrontProduct}: Props) {
+export default function CardProduct({
+  imageAspectClassName = 'aspect-square',
+  storefrontProduct,
+}: Props) {
   const selectedVariant = storefrontProduct.variants.edges[0].node;
 
   if (selectedVariant == null) {
@@ -33,7 +38,12 @@ export default function CardProduct({storefrontProduct}: Props) {
   return (
     <Link to={`/products/${storefrontProduct.handle}`}>
       <div className="group relative mb-4">
-        <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded bg-lightGray object-cover transition-all duration-500 ease-out group-hover:rounded-xl">
+        <div
+          className={clsx([
+            imageAspectClassName,
+            'relative flex items-center justify-center overflow-hidden rounded bg-lightGray object-cover transition-all duration-500 ease-out group-hover:rounded-xl',
+          ])}
+        >
           {selectedVariant.image && (
             <Image
               className="absolute h-full w-full transform bg-cover bg-center object-cover object-center ease-in-out"

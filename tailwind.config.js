@@ -145,6 +145,12 @@ module.exports = {
         32: '128px',
         33: '132px',
         34: '136px',
+        35: '140px',
+        36: '144px',
+        37: '148px',
+        38: '152px',
+        39: '156px',
+        40: '160px',
         overlap: '20px',
       },
       typography: (theme) => ({

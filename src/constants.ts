@@ -1,1 +1,1 @@
-export const COLLECTION_PAGE_SIZE = 6;
+export const COLLECTION_PAGE_SIZE = 8;
