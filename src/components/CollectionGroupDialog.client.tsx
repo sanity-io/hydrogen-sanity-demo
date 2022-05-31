@@ -1,4 +1,5 @@
 import {Dialog, Transition} from '@headlessui/react';
+import {useServerProps} from '@shopify/hydrogen';
 import {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import {Fragment, useEffect, useRef, useState} from 'react';
 import type {SanityCollectionGroup} from '../types';
@@ -13,17 +14,21 @@ export default function CollectionGroupDialog({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const refTimeout = useRef<ReturnType<typeof setTimeout>>();
+  const {pending} = useServerProps();
 
   const handleClose = () => {
     clearTimeout(refTimeout?.current);
     refTimeout.current = setTimeout(() => setIsOpen(false), 250);
   };
   const handleOpen = () => {
+    // Don't open if a transition is pending
+    if (pending) {
+      return;
+    }
     clearTimeout(refTimeout?.current);
     refTimeout.current = setTimeout(() => setIsOpen(true), 250);
   };
   const handleOpenCancel = () => clearTimeout(refTimeout?.current);
-  const handleToggleOpen = () => setIsOpen(!isOpen);
 
   useEffect(() => {
     return () => clearTimeout(refTimeout?.current);
@@ -34,7 +39,8 @@ export default function CollectionGroupDialog({
       {/* Title */}
       <button
         className="textLink font-bold"
-        onKeyPress={handleToggleOpen}
+        onClick={handleOpen}
+        onKeyPress={handleOpen}
         onMouseEnter={handleOpen}
         onMouseLeave={handleOpenCancel}
       >
