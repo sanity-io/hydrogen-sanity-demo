@@ -6,6 +6,7 @@ import {
   getProductOptionString,
   hasMultipleProductOptions,
 } from '../../utils/productOptions';
+import Badge from '../Badge';
 import MoneyCompareAtPrice from '../MoneyCompareAtPrice.client';
 import MoneyPrice from '../MoneyPrice.client';
 
@@ -50,6 +51,15 @@ export default function CardProduct({
               data={selectedVariant.image}
             />
           )}
+
+          {/* Sale badge */}
+          {selectedVariant?.availableForSale &&
+            selectedVariant?.compareAtPriceV2 && (
+              <Badge label="Sale" tone="critical" />
+            )}
+
+          {/* Sold out badge */}
+          {!selectedVariant?.availableForSale && <Badge label="Sold out" />}
         </div>
 
         <div className="mt-3 text-md">
@@ -85,21 +95,6 @@ export default function CardProduct({
               <MoneyPrice money={selectedVariant.priceV2} />
             </Suspense>
           </div>
-
-          {/* Sale badge */}
-          {selectedVariant?.availableForSale &&
-            selectedVariant?.compareAtPriceV2 && (
-              <div className="absolute top-6 left-6 flex place-content-center rounded-sm bg-white px-1.5 py-1 text-sm font-bold uppercase leading-none text-red">
-                Sale
-              </div>
-            )}
-
-          {/* Sold out badge */}
-          {!selectedVariant?.availableForSale && (
-            <div className="absolute top-6 left-6 flex place-content-center rounded-sm bg-white px-1.5 py-1 text-sm font-bold uppercase leading-none text-darkGray">
-              Sold out
-            </div>
-          )}
         </div>
       </div>
     </Link>

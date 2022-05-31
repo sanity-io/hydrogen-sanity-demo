@@ -43,7 +43,7 @@ export default function NotFound({response}) {
           But that’s okay, because we’ve brought everything to you instead.
         </p>
 
-        <div className="mx-4 mb-18 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
+        <div className="mx-4 mb-18 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {products.map((product) => (
             <div key={product.id}>
               <PillProduct storefrontProduct={product} />

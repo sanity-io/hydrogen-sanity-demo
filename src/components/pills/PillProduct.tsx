@@ -5,6 +5,7 @@ import {
   getProductOptionString,
   hasMultipleProductOptions,
 } from '../../utils/productOptions';
+import Badge from '../Badge';
 import MoneyCompareAtPrice from '../MoneyCompareAtPrice.client';
 import MoneyPrice from '../MoneyPrice.client';
 
@@ -46,6 +47,17 @@ export default function PillProduct({onClick, storefrontProduct}: Props) {
                 loaderOptions={{width: 100, height: 100, crop: 'center'}}
               />
             )}
+
+            {/* Sale badge */}
+            {selectedVariant?.availableForSale &&
+              selectedVariant?.compareAtPriceV2 && (
+                <Badge label="Sale" small tone="critical" />
+              )}
+
+            {/* Sold out badge */}
+            {!selectedVariant?.availableForSale && (
+              <Badge label="Sold out" small />
+            )}
           </div>
         </div>
 
@@ -70,27 +82,21 @@ export default function PillProduct({onClick, storefrontProduct}: Props) {
             )}
           </div>
 
-          {/* Price / sold out */}
-          {selectedVariant?.availableForSale ? (
-            <div className="mt-3 flex font-bold ">
-              {selectedVariant.compareAtPriceV2 && (
-                <span className="text-darkGray">
-                  <Suspense fallback={null}>
-                    <MoneyCompareAtPrice
-                      money={selectedVariant.compareAtPriceV2}
-                    />
-                  </Suspense>
-                </span>
-              )}
-              <Suspense fallback={null}>
-                <MoneyPrice money={selectedVariant.priceV2} />
-              </Suspense>
-            </div>
-          ) : (
-            <div className="mt-3 font-bold uppercase text-darkGray">
-              Sold out
-            </div>
-          )}
+          {/* Price */}
+          <div className="mt-3 flex font-bold ">
+            {selectedVariant.compareAtPriceV2 && (
+              <span className="text-darkGray">
+                <Suspense fallback={null}>
+                  <MoneyCompareAtPrice
+                    money={selectedVariant.compareAtPriceV2}
+                  />
+                </Suspense>
+              </span>
+            )}
+            <Suspense fallback={null}>
+              <MoneyPrice money={selectedVariant.priceV2} />
+            </Suspense>
+          </div>
         </div>
       </div>
     </Link>
