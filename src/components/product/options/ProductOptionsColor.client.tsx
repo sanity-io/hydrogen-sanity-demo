@@ -1,7 +1,9 @@
 import {useProduct} from '@shopify/hydrogen';
+import Tippy from '@tippyjs/react/headless';
 import clsx from 'clsx';
 import {SanityCustomProductOptionColor} from '../../../types';
 import ButtonOption from '../../buttons/ButtonOption';
+import Tooltip from '../../Tooltip';
 
 /**
  * A client component that tracks a selected variant and/or selling plan state, as well as callbacks for modifying the state
@@ -19,7 +21,9 @@ const ColorChip = ({hex, selected}: {hex: string; selected: boolean}) => {
       <div
         className={clsx([
           'flex h-8 w-8 items-center justify-center rounded-full border',
-          selected ? 'border-offBlack' : 'cursor-pointer border-transparent',
+          selected
+            ? 'border-offBlack'
+            : 'cursor-pointer border-transparent hover:border-black hover:border-opacity-30',
         ])}
       >
         <div
@@ -74,11 +78,22 @@ export default function ProductOptionsColor({
                 onChange={() => handleChange(name, value)}
               />
 
+              {/* Display a tooltip only if we're displaying color chips */}
               {foundCustomOptionValue ? (
-                <ColorChip
-                  hex={foundCustomOptionValue.hex}
-                  selected={checked}
-                />
+                <Tippy
+                  placement="top"
+                  render={() => (
+                    <Tooltip label={foundCustomOptionValue.title} />
+                  )}
+                >
+                  {/* Tippy requires a wrapping element! */}
+                  <div>
+                    <ColorChip
+                      hex={foundCustomOptionValue.hex}
+                      selected={checked}
+                    />
+                  </div>
+                </Tippy>
               ) : (
                 <ButtonOption checked={checked} label={value} />
               )}
