@@ -10,4 +10,11 @@ export const CUSTOM_PRODUCT_OPTIONS = groq`
       title,
     },
   },
+  (_type == 'customProductOption.size') => {
+    sizes[] {
+      height,
+      title,
+      width
+    },
+  },
 `;

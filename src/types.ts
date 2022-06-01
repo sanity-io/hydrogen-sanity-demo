@@ -34,7 +34,9 @@ export type SanityColorTheme = {
   text: string;
 };
 
-export type SanityCustomProductOption = SanityCustomProductOptionColor;
+export type SanityCustomProductOption =
+  | SanityCustomProductOptionColor
+  | SanityCustomProductOptionSize;
 
 interface SanityCustomProductOptionBase {
   _key: string;
@@ -46,6 +48,16 @@ export interface SanityCustomProductOptionColor
   colors: {
     hex: string;
     title: string;
+  }[];
+}
+
+export interface SanityCustomProductOptionSize
+  extends SanityCustomProductOptionBase {
+  _type: 'customProductOption.size';
+  sizes: {
+    height: number;
+    title: string;
+    width: number;
   }[];
 }
 
