@@ -1,6 +1,5 @@
-import {useSession, useShop, useShopQuery} from '@shopify/hydrogen';
+import {gql, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
 import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
-import gql from 'graphql-tag';
 import {SanityColorTheme} from '../types';
 import CardProduct from './cards/CardProduct';
 

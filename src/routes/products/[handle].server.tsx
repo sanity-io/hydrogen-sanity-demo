@@ -1,5 +1,6 @@
 import {
   flattenConnection,
+  gql,
   ProductProvider,
   Seo,
   useRouteParams,
@@ -11,7 +12,6 @@ import {
   Product,
   ProductVariant,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
-import gql from 'graphql-tag';
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import clientConfig from '../../../sanity.config';

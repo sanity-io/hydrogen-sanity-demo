@@ -1,5 +1,6 @@
 import {
   flattenConnection,
+  gql,
   Image,
   useSession,
   useShop,
@@ -9,7 +10,6 @@ import {
   Product,
   ProductVariant,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
-import gql from 'graphql-tag';
 import ProductHotspot from './ProductHotspot';
 
 type Props = {

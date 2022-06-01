@@ -1,5 +1,6 @@
 import {
   flattenConnection,
+  gql,
   Seo,
   useSession,
   useShop,
@@ -9,7 +10,6 @@ import {
   Collection,
   Product,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
-import gql from 'graphql-tag';
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import {useMemo} from 'react';

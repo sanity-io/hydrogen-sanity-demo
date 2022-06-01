@@ -5,7 +5,7 @@ import {
 } from '@shopify/hydrogen';
 
 export default defineConfig({
-  routes: import.meta.globEager('./src/routes/**/*.server.[jt](s|sx)'),
+  routes: '/src/routes',
   shopify: {
     storeDomain: 'oxygenator.myshopify.com',
     storefrontToken: '87f9f62622ee57ee7fe8beaf50ecedb9',

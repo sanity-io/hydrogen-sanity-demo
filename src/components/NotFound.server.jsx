@@ -1,10 +1,10 @@
 import {
+  gql,
   flattenConnection,
   useShop,
   useSession,
   useShopQuery,
 } from '@shopify/hydrogen';
-import gql from 'graphql-tag';
 import Layout from './Layout.server';
 import PillProduct from './pills/PillProduct';
 

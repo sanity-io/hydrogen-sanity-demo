@@ -1,6 +1,5 @@
-import {useSession, useShop, useShopQuery} from '@shopify/hydrogen';
+import {gql, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
 import {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
-import gql from 'graphql-tag';
 import type {SanityCollectionGroup} from '../types';
 import CollectionGroupDialog from './CollectionGroupDialog.client';
 
