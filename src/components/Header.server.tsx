@@ -14,7 +14,7 @@ type Props = {
 export default function Header({menuLinks}: Props) {
   return (
     <header
-      className="align-center fixed top-0 z-40 flex h-[100px] w-full justify-between px-8"
+      className="align-center fixed top-0 z-40 flex h-[4.375rem] w-full justify-between px-8 lg:h-[6.25rem]"
       role="banner"
     >
       {/*

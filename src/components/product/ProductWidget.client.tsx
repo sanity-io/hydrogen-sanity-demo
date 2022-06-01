@@ -1,4 +1,5 @@
 import {ProductPrice, useProduct} from '@shopify/hydrogen';
+import clsx from 'clsx';
 import {useState} from 'react';
 import {SanityProductPage} from '../../types';
 import {hasMultipleProductOptions} from '../../utils/productOptions';
@@ -87,8 +88,10 @@ export default function ProductWidget({sanityProduct}: Props) {
     storefrontProduct.options,
   );
 
+  const availableForSale = storefrontProduct.selectedVariant?.availableForSale;
+
   return (
-    <div className="pointer-events-auto sticky top-30 mb-8 w-[315px] rounded bg-white p-6 shadow">
+    <div className="pointer-events-auto z-10 ml-auto rounded bg-white p-6 shadow">
       {/* Title */}
       {storefrontProduct?.title && (
         <h1 className="text-md font-bold uppercase">
@@ -117,11 +120,17 @@ export default function ProductWidget({sanityProduct}: Props) {
       )}
 
       {/* Product actions */}
-      {storefrontProduct.selectedVariant?.availableForSale ? (
-        <ProductActions />
-      ) : (
-        <div className="text-md uppercase text-darkGray">Sold out</div>
-      )}
+      <div className="relative">
+        <div className={clsx(availableForSale ? 'opacity-100' : 'opacity-0')}>
+          <ProductActions />
+        </div>
+
+        {!availableForSale && (
+          <div className="absolute top-0 text-md uppercase text-darkGray">
+            Sold out
+          </div>
+        )}
+      </div>
     </div>
   );
 }

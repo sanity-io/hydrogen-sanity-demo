@@ -16,6 +16,7 @@ export default function IconLogo({
       height="58"
       viewBox="0 0 65 58"
       fill="none"
+      preserveAspectRatio="xMidYMid meet"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path

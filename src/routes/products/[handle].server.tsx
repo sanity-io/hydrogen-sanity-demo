@@ -88,12 +88,25 @@ export default function ProductRoute() {
     >
       <Layout>
         <div className="relative min-h-screen w-full">
-          <div className="w-50 pointer-events-none absolute right-8 z-10 h-full">
+          <Gallery />
+          {/* Mobile */}
+          <div className="mb-8 lg:hidden">
             <ProductWidget sanityProduct={sanityProduct} />
           </div>
-          <Gallery />
-          <ProductDetails />
-          <ProductEditorial sanityProduct={sanityProduct} />
+
+          <div className="w-full border-2 border-blue-500 lg:w-[calc(100%-315px)]">
+            <ProductDetails />
+            <ProductEditorial sanityProduct={sanityProduct} />
+          </div>
+
+          {/* Desktop */}
+          <div className="pointer-events-none absolute top-0 right-0 z-10 hidden h-full w-[315px] lg:block">
+            <div className="sticky top-0 h-screen">
+              <div className="absolute bottom-0 w-full p-4">
+                <ProductWidget sanityProduct={sanityProduct} />
+              </div>
+            </div>
+          </div>
         </div>
 
         <RelatedProducts
