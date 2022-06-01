@@ -12,17 +12,19 @@ import {
 import gql from 'graphql-tag';
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
+import {useMemo} from 'react';
 // import pluralize from 'pluralize';
 import clientConfig from '../../../sanity.config';
 import CollectionHero from '../../components/heroes/CollectionHero.server';
 import Layout from '../../components/Layout.server';
 import LoadMoreProducts from '../../components/LoadMoreProducts.client';
 import NotFound from '../../components/NotFound.server';
-import ProductsGrid from '../../components/ProductsGrid.server';
+import LayoutGrid from '../../components/LayoutGrid.server';
 import SelectSortOrder from '../../components/selects/SelectSortOrder.client';
 import {COLLECTION_PAGE_SIZE} from '../../constants';
 import {COLLECTION_PAGE} from '../../fragments/collectionPage';
 import {SanityCollectionPage} from '../../types';
+import {combineProductsAndModules} from '../../utils/combineProductsAndModules';
 
 type Props = {
   collectionProductCount: number;
@@ -75,14 +77,22 @@ export default function CollectionRoute({
     },
   }) as SanityPayload;
 
+  const collection = data.collection;
+  const products = flattenConnection(collection.products) as Product[];
+  const hasNextPage = data.collection.products.pageInfo.hasNextPage;
+
+  const items = useMemo(() => {
+    // Create combined list of both products and modules, with modules inserted at regular intervals
+    return combineProductsAndModules({
+      modules: sanityCollection.modules,
+      products,
+    });
+  }, []);
+
   if (data?.collection == null || !sanityCollection) {
     // @ts-expect-error <NotFound> doesn't require response
     return <NotFound />;
   }
-
-  const collection = data.collection;
-  const products = flattenConnection(collection.products) as Product[];
-  const hasNextPage = data.collection.products.pageInfo.hasNextPage;
 
   return (
     <Layout>
@@ -119,9 +129,9 @@ export default function CollectionRoute({
           </div>
         )}
 
-        <ProductsGrid
-          className="grid grid-cols-1 gap-y-[2.5vw] gap-x-[10vw] md:grid-cols-2"
-          products={products}
+        <LayoutGrid
+          className="grid grid-cols-1 gap-y-[5vw] gap-x-[7.5vw] md:grid-cols-2"
+          items={items}
         />
 
         {hasNextPage && (

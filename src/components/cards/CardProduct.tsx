@@ -51,13 +51,11 @@ export default function CardProduct({
               data={selectedVariant.image}
             />
           )}
-
           {/* Sale badge */}
           {selectedVariant?.availableForSale &&
             selectedVariant?.compareAtPriceV2 && (
               <Badge label="Sale" tone="critical" />
             )}
-
           {/* Sold out badge */}
           {!selectedVariant?.availableForSale && <Badge label="Sold out" />}
         </div>

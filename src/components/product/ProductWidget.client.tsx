@@ -120,9 +120,7 @@ export default function ProductWidget({sanityProduct}: Props) {
       {storefrontProduct.selectedVariant?.availableForSale ? (
         <ProductActions />
       ) : (
-        <div className="text-md font-bold uppercase text-darkGray">
-          Sold out
-        </div>
+        <div className="text-md uppercase text-darkGray">Sold out</div>
       )}
     </div>
   );

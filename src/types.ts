@@ -14,6 +14,7 @@ export type SanityCollectionPage = {
   _id: string;
   colorTheme: SanityColorTheme;
   hero?: SanityHeroCollection;
+  modules: (SanityModuleImage | SanityModuleInstagram)[];
   slug: string;
   store: Record<string, any>;
   title: string;
@@ -48,38 +49,6 @@ export interface SanityCustomProductOptionColor
   }[];
 }
 
-export type SanityMenuLink =
-  | SanityCollectionGroup
-  | SanityLinkExternal
-  | SanityLinkInternal;
-
-export type SanityLink = SanityLinkExternal | SanityLinkInternal;
-
-export type SanityLinkExternal = {
-  _key: string;
-  _type: 'linkExternal';
-  newWindow?: boolean;
-  url: string;
-  title: string;
-};
-
-export type SanityLinkInternal = {
-  _key: string;
-  _type: 'linkInternal';
-  documentType: string;
-  slug: string;
-  title: string;
-};
-
-export type SanityPage = {
-  body: Block[];
-  colorTheme?: SanityColorTheme;
-  hero?: SanityHeroPage;
-  // seo: null,
-  showHeader?: boolean;
-  title: string;
-};
-
 export type SanityHeroCollection = {
   description?: string;
   module?:
@@ -99,6 +68,74 @@ export type SanityHeroPage = {
         image: any;
       };
   title?: string;
+};
+
+export type SanityLink = SanityLinkExternal | SanityLinkInternal;
+
+export type SanityLinkExternal = {
+  _key: string;
+  _type: 'linkExternal';
+  newWindow?: boolean;
+  url: string;
+  title: string;
+};
+
+export type SanityLinkInternal = {
+  _key: string;
+  _type: 'linkInternal';
+  documentType: string;
+  slug: string;
+  title: string;
+};
+
+export type SanityMenuLink =
+  | SanityCollectionGroup
+  | SanityLinkExternal
+  | SanityLinkInternal;
+
+export type SanityModule = SanityModuleImage | SanityModuleInstagram;
+
+export type SanityModuleImage =
+  | SanityModuleImageCallToAction
+  | SanityModuleImageCaption
+  | SanityModuleImageProducts;
+
+export type SanityModuleImageBase = {
+  _key?: string;
+  _type: 'module.image';
+  image: any;
+};
+
+export interface SanityModuleImageCallToAction extends SanityModuleImageBase {
+  callToAction?: {
+    link: SanityLink;
+    title?: string;
+  };
+  variant: 'callToAction';
+}
+
+export interface SanityModuleImageCaption extends SanityModuleImageBase {
+  caption?: string;
+  variant: 'caption';
+}
+export interface SanityModuleImageProducts extends SanityModuleImageBase {
+  products: SanityProductWithVariant[];
+  variant: 'products';
+}
+
+export type SanityModuleInstagram = {
+  _key?: string;
+  _type: 'module.instagram';
+  url: string;
+};
+
+export type SanityPage = {
+  body: Block[];
+  colorTheme?: SanityColorTheme;
+  hero?: SanityHeroPage;
+  // seo: null,
+  showHeader?: boolean;
+  title: string;
 };
 
 export type SanityProductWithVariant = {

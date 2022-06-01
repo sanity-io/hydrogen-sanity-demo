@@ -9,7 +9,7 @@ export default function ButtonCircleOutline(props: Props) {
   return (
     <button
       className={clsx([
-        'aspect-square w-[2.375rem] place-content-center rounded-full border border-offBlack fill-offBlack text-sm font-bold',
+        'aspect-square w-[2.375rem] place-content-center rounded-full border border-offBlack fill-offBlack text-sm font-bold hover:border-opacity-50',
         className,
       ])}
       type="button"

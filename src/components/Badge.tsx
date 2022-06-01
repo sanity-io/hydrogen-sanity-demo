@@ -13,7 +13,7 @@ export default function Badge({
     <div
       className={clsx(
         'absolute flex place-content-center rounded-sm bg-white px-1.5 py-1 font-bold uppercase leading-none',
-        small ? 'top-2 left-2 text-xs' : 'top-6 left-6 text-sm',
+        small ? 'top-2 left-2 text-xs' : 'top-4 left-4 text-sm',
         tone === 'critical' && 'text-red',
         tone === 'default' && 'text-darkGray',
       )}

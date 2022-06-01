@@ -3,6 +3,7 @@ module.exports = {
   theme: {
     borderRadius: {
       DEFAULT: '8px',
+      xs: '2px',
       sm: '4px',
       md: '8px',
       lg: '15px',

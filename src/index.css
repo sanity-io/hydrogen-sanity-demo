@@ -24,6 +24,7 @@
     letter-spacing: theme('letterSpacing.normal');
     overflow: hidden;
     padding: theme('padding.4');
+    transition: all 200ms ease-out;
   }
 
   .btn:disabled {
@@ -32,6 +33,15 @@
 
   .btn:hover:not(:disabled) {
     background-color: theme('colors.black');
+  }
+
+  .btn-invert {
+    background-color: theme('colors.white');
+    color: theme('colors.offBlack');
+  }
+
+  .btn-invert:hover:not(:disabled) {
+    background-color: theme('colors.gray');
   }
 
   .select {
@@ -47,6 +57,7 @@
     letter-spacing: theme('letterSpacing.normal');
     overflow: hidden;
     padding: theme('padding.4');
+    transition: all 200ms ease-out;
   }
 
   .select:disabled {
