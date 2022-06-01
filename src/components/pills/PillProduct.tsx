@@ -1,5 +1,6 @@
 import {Image, Link} from '@shopify/hydrogen';
 import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import clsx from 'clsx';
 import {Suspense} from 'react';
 import {
   getProductOptionString,
@@ -31,6 +32,7 @@ export default function PillProduct({onClick, storefrontProduct}: Props) {
     storefrontProduct.options,
   );
   const productOptions = getProductOptionString(storefrontProduct.options);
+  const availableForSale = selectedVariant?.availableForSale;
 
   return (
     <Link onClick={onClick} to={`/products/${storefrontProduct.handle}`}>
@@ -42,22 +44,25 @@ export default function PillProduct({onClick, storefrontProduct}: Props) {
           <div className="relative h-full w-[110px] overflow-hidden rounded-sm bg-lightGray transition-all duration-500 ease-out group-hover:rounded-md">
             {selectedVariant.image && (
               <Image
-                className="absolute inset-0 h-full w-full object-cover"
+                className={clsx(
+                  'absolute inset-0 h-full w-full object-cover',
+                  !availableForSale && 'opacity-50',
+                )}
                 data={selectedVariant.image}
                 loaderOptions={{width: 100, height: 100, crop: 'center'}}
               />
             )}
 
-            {/* Sale badge */}
-            {selectedVariant?.availableForSale &&
-              selectedVariant?.compareAtPriceV2 && (
+            {/* Badges */}
+            <div className="absolute top-2 left-2">
+              {/* Sale */}
+              {availableForSale && selectedVariant?.compareAtPriceV2 && (
                 <Badge label="Sale" small tone="critical" />
               )}
 
-            {/* Sold out badge */}
-            {!selectedVariant?.availableForSale && (
-              <Badge label="Sold out" small />
-            )}
+              {/* Sold out */}
+              {!availableForSale && <Badge label="Sold out" small />}
+            </div>
           </div>
         </div>
 
