@@ -3,14 +3,19 @@ import ModuleCallout from './ModuleCallout.server';
 import ModuleCollection from './ModuleCollection.server';
 import ModuleImage from './ModuleImage.server';
 import ModuleInstagram from './ModuleInstagram.client';
+import ModuleProduct from './ModuleProduct.server';
+
+type Props = {
+  colorTheme?: SanityColorTheme;
+  imageAspectClassName?: string;
+  module: SanityModule;
+};
 
 export default function Module({
   colorTheme,
+  imageAspectClassName,
   module,
-}: {
-  colorTheme?: SanityColorTheme;
-  module: SanityModule;
-}) {
+}: Props) {
   switch (module._type) {
     case 'module.callout':
       return <ModuleCallout colorTheme={colorTheme} module={module} />;
@@ -21,7 +26,12 @@ export default function Module({
     case 'module.instagram':
       return <ModuleInstagram module={module} />;
     case 'module.product':
-      return <div>module product</div>;
+      return (
+        <ModuleProduct
+          imageAspectClassName={imageAspectClassName}
+          module={module}
+        />
+      );
     default:
       return null;
   }

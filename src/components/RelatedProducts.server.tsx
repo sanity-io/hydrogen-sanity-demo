@@ -12,12 +12,10 @@ type Props = {
 };
 
 type ShopifyPayload = {
-  data: {
-    productRecommendations: Pick<
-      Product,
-      'handle' | 'id' | 'options' | 'title' | 'variants' | 'vendor'
-    >[];
-  };
+  productRecommendations: Pick<
+    Product,
+    'handle' | 'id' | 'options' | 'title' | 'variants' | 'vendor'
+  >[];
 };
 
 // TODO: understand why `useProduct` doesn't work here
@@ -27,14 +25,14 @@ export default function RelatedProducts({
 }: Props) {
   const {countryCode = 'US'} = useSession();
   const {languageCode} = useShop();
-  const {data} = useShopQuery({
+  const {data} = useShopQuery<ShopifyPayload>({
     query: QUERY,
     variables: {
       country: countryCode,
       language: languageCode,
       productId: storefrontProduct.id,
     },
-  }) as ShopifyPayload;
+  });
 
   const products = data?.productRecommendations?.slice(0, 4);
 

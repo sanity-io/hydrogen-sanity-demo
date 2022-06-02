@@ -170,16 +170,6 @@ const QUERY = gql`
       ) {
         edges {
           node {
-            compareAtPriceRange {
-              maxVariantPrice {
-                currencyCode
-                amount
-              }
-              minVariantPrice {
-                currencyCode
-                amount
-              }
-            }
             handle
             options {
               name

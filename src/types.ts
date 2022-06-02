@@ -167,7 +167,7 @@ export type SanityModuleInstagram = {
 export type SanityModuleProduct = {
   _key?: string;
   _type: 'module.product';
-  // collection: SanityCollection;
+  productWithVariant: SanityProductWithVariant;
 };
 
 export type SanityPage = {

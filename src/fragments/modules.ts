@@ -56,7 +56,7 @@ export const MODULES = groq`
   },      
   (_type == "module.product") => {
     productWithVariant {
-      ${PRODUCT_WITH_VARIANT}
+      ...${PRODUCT_WITH_VARIANT}
     }
   },      
 `;

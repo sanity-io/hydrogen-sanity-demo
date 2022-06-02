@@ -21,6 +21,9 @@ type ShopifyPayload = {
 export default function ProductHero({gid, variantGid}: Props) {
   const {countryCode = 'US'} = useSession();
   const {languageCode} = useShop();
+
+  // TODO: harden against undefined values
+
   const {data} = useShopQuery<ShopifyPayload>({
     query: QUERY,
     variables: {

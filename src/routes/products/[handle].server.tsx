@@ -30,21 +30,10 @@ type SanityPayload = {
 };
 
 type ShopifyPayload = {
-  data: {
-    product: Pick<
-      Product,
-      | 'compareAtPriceRange'
-      | 'featuredImage'
-      | 'handle'
-      | 'id'
-      | 'media'
-      | 'priceRange'
-      | 'seo'
-      | 'title'
-      | 'variants'
-      | 'vendor'
-    >;
-  };
+  product: Pick<
+    Product,
+    'handle' | 'id' | 'media' | 'seo' | 'title' | 'variants' | 'vendor'
+  >;
 };
 
 export default function ProductRoute() {
@@ -63,14 +52,14 @@ export default function ProductRoute() {
   // Fetch Shopify document
   const {
     data: {product: storefrontProduct},
-  } = useShopQuery({
+  } = useShopQuery<ShopifyPayload>({
     query: QUERY_SHOPIFY,
     variables: {
       country: countryCode,
       id: sanityProduct.store.gid,
       language: languageCode,
     },
-  }) as ShopifyPayload;
+  });
 
   if (!sanityProduct || !storefrontProduct) {
     // @ts-expect-error <NotFound> doesn't require response
@@ -133,22 +122,6 @@ const QUERY_SHOPIFY = gql`
   query product($country: CountryCode, $id: ID!, $language: LanguageCode)
   @inContext(country: $country, language: $language) {
     product: product(id: $id) {
-      compareAtPriceRange {
-        maxVariantPrice {
-          currencyCode
-          amount
-        }
-        minVariantPrice {
-          currencyCode
-          amount
-        }
-      }
-      featuredImage {
-        url
-        width
-        height
-        altText
-      }
       handle
       id
       media(first: 20) {
@@ -194,16 +167,6 @@ const QUERY_SHOPIFY = gql`
               }
             }
           }
-        }
-      }
-      priceRange {
-        maxVariantPrice {
-          currencyCode
-          amount
-        }
-        minVariantPrice {
-          currencyCode
-          amount
         }
       }
       seo {

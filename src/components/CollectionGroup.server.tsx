@@ -8,9 +8,7 @@ type Props = {
 };
 
 type ShopifyPayload = {
-  data: {
-    collection: Collection;
-  };
+  collection: Collection;
 };
 
 export default function CollectionGroup({collectionGroup}: Props) {
@@ -21,7 +19,7 @@ export default function CollectionGroup({collectionGroup}: Props) {
   const {languageCode} = useShop();
 
   // Fetch collection
-  const {data} = useShopQuery({
+  const {data} = useShopQuery<ShopifyPayload>({
     query: QUERY_SHOPIFY,
     variables: {
       country: countryCode,
@@ -30,7 +28,7 @@ export default function CollectionGroup({collectionGroup}: Props) {
       numProducts: 4,
     },
     preload: true,
-  }) as ShopifyPayload;
+  });
 
   return (
     <CollectionGroupDialog
@@ -59,16 +57,6 @@ const QUERY_SHOPIFY = gql`
       products(first: $numProducts) {
         edges {
           node {
-            compareAtPriceRange {
-              maxVariantPrice {
-                currencyCode
-                amount
-              }
-              minVariantPrice {
-                currencyCode
-                amount
-              }
-            }
             handle
             id
             options {

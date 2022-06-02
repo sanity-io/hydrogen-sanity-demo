@@ -108,6 +108,8 @@ type Props = {
   items: (SanityModule | Product)[];
 };
 
+// TODO: convert to module grid
+
 export default function LayoutGrid({colorTheme, items}: Props) {
   return (
     <ul className="grid grid-cols-1 gap-y-[5vw] gap-x-[7.5vw] md:grid-cols-2">
@@ -124,14 +126,27 @@ export default function LayoutGrid({colorTheme, items}: Props) {
           return (
             <li
               className={clsx([
-                'flex items-center justify-center overflow-hidden', //
+                'flex overflow-hidden', //
+                item._type === 'module.product'
+                  ? [flexAlign, flexJustify, marginTop]
+                  : 'items-center justify-center',
                 FULL_WIDTH_MODULE_TYPES.includes(item._type)
                   ? 'md:col-span-2'
                   : 'md:col-span-1',
               ])}
               key={item._key}
             >
-              <Module colorTheme={colorTheme} module={item} />
+              <div
+                className={clsx(
+                  item._type === 'module.product' ? width : 'w-full',
+                )}
+              >
+                <Module
+                  colorTheme={colorTheme}
+                  imageAspectClassName={imageAspect}
+                  module={item}
+                />
+              </div>
             </li>
           );
         } else {
