@@ -17,6 +17,8 @@ import {Fragment} from 'react';
 import {useCartUI} from './CartUIProvider.client';
 import IconMinus from '../icons/IconMinus';
 import IconPlus from '../icons/IconPlus';
+import clsx from 'clsx';
+import {DEFAULT_BUTTON_STYLES} from '../../constants';
 
 /**
  * A client component that contains the merchandise that a customer intends to purchase, and the estimated cost associated with the cart
@@ -288,8 +290,10 @@ function CartFooter() {
         </div>
 
         <div className="flex w-full gap-3 border-t border-gray p-4">
-          <CartShopPayButton className="btn w-1/2 bg-[#5a31f4]" />
-          <CartCheckoutButton className="btn w-1/2">
+          <CartShopPayButton
+            className={clsx([DEFAULT_BUTTON_STYLES, 'w-1/2 bg-[#5a31f4]'])}
+          />
+          <CartCheckoutButton className={clsx(DEFAULT_BUTTON_STYLES, 'w-1/2')}>
             Checkout
           </CartCheckoutButton>
         </div>
@@ -305,7 +309,7 @@ function CartEmpty() {
     <div className="flex flex-col px-8 pt-6">
       <p className="mb-4 text-lg font-bold">There's nothing in here...yet.</p>
       {/*
-      <button className="btn" type="button" onClick={closeCart}>
+      <button type="button" onClick={closeCart}>
         Continue Shopping
       </button>
       */}

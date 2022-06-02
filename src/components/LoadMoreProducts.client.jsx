@@ -1,6 +1,6 @@
 import {useServerProps} from '@shopify/hydrogen';
 import clsx from 'clsx';
-import {COLLECTION_PAGE_SIZE} from '../constants';
+import {COLLECTION_PAGE_SIZE, DEFAULT_BUTTON_STYLES} from '../constants';
 import SpinnerIcon from './icons/IconSpinner';
 
 /**
@@ -15,7 +15,10 @@ export default function LoadMoreProducts({startingCount}) {
         <SpinnerIcon />
       ) : (
         <button
-          className={clsx(['btn', pending ? 'opacity-50' : undefined])}
+          className={clsx([
+            DEFAULT_BUTTON_STYLES,
+            pending ? 'opacity-50' : undefined,
+          ])}
           disabled={pending}
           onClick={() => {
             setServerProps(

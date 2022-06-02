@@ -7,6 +7,17 @@ import {PRODUCT_WITH_VARIANT} from './productWithVariant';
 export const MODULES = groq`
   _key,
   _type,
+  (_type == "module.callout") => {
+    "link": links[0] {
+      (_type == 'linkExternal') => {
+        ${LINK_EXTERNAL}
+      },
+      (_type == 'linkInternal') => {
+        ${LINK_INTERNAL}
+      },
+    },      
+    text
+  },
   (_type == "module.image") => {
     image {
       ${IMAGE}

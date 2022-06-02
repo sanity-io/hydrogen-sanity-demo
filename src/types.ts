@@ -61,26 +61,31 @@ export interface SanityCustomProductOptionSize
   }[];
 }
 
+export type SanityHero = SanityHeroCollection | SanityHeroHome | SanityHeroPage;
+
 export type SanityHeroCollection = {
+  content?: SanityAssetImage | SanityProductWithVariant;
   description?: string;
-  module?:
-    | SanityProductWithVariant
-    | {
-        _type: 'imageWithOptions';
-        image: any;
-      };
+  title?: string;
+};
+
+export type SanityHeroHome = {
+  content?: SanityAssetImage | SanityProductWithVariant;
+  link?: SanityLink;
   title?: string;
 };
 
 export type SanityHeroPage = {
-  module?:
-    | SanityProductWithVariant
-    | {
-        _type: 'imageWithOptions';
-        image: any;
-      };
+  content?: SanityAssetImage | SanityProductWithVariant;
   title?: string;
 };
+
+export type SanityHomePage = {
+  hero?: SanityHeroHome;
+  modules: (SanityModuleImage | SanityModuleInstagram)[];
+};
+
+export type SanityAssetImage = any;
 
 export type SanityLink = SanityLinkExternal | SanityLinkInternal;
 
@@ -105,7 +110,17 @@ export type SanityMenuLink =
   | SanityLinkExternal
   | SanityLinkInternal;
 
-export type SanityModule = SanityModuleImage | SanityModuleInstagram;
+export type SanityModule =
+  | SanityModuleCallout
+  | SanityModuleImage
+  | SanityModuleInstagram;
+
+export type SanityModuleCallout = {
+  _key?: string;
+  _type: 'module.callout';
+  link: SanityLink;
+  text: string;
+};
 
 export type SanityModuleImage =
   | SanityModuleImageCallToAction
@@ -115,7 +130,7 @@ export type SanityModuleImage =
 export type SanityModuleImageBase = {
   _key?: string;
   _type: 'module.image';
-  image: any;
+  image: SanityAssetImage;
 };
 
 export interface SanityModuleImageCallToAction extends SanityModuleImageBase {
@@ -165,7 +180,7 @@ export type SanityProductPage = {
   body: Block[];
   colorTheme?: SanityColorTheme;
   customProductOptions?: SanityCustomProductOption[];
-  images?: any;
+  images?: SanityAssetImage[];
   slug: string;
   sections?: any;
   seo?: any;

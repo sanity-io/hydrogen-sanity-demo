@@ -11,39 +11,6 @@
 }
 
 @layer components {
-  .btn {
-    align-items: center;
-    background-color: theme('colors.offBlack');
-    border-radius: theme('borderRadius.full');
-    color: theme('colors.white');
-    display: flex;
-    font-size: theme('fontSize.sm');
-    font-weight: theme('fontWeight.bold');
-    height: 2.5rem;
-    justify-content: center;
-    letter-spacing: theme('letterSpacing.normal');
-    overflow: hidden;
-    padding: theme('padding.4');
-    transition: all 200ms ease-out;
-  }
-
-  .btn:disabled {
-    opacity: 0.2;
-  }
-
-  .btn:hover:not(:disabled) {
-    background-color: theme('colors.black');
-  }
-
-  .btn-invert {
-    background-color: theme('colors.white');
-    color: theme('colors.offBlack');
-  }
-
-  .btn-invert:hover:not(:disabled) {
-    background-color: theme('colors.gray');
-  }
-
   .select {
     align-items: center;
     background-color: theme('colors.lightGray');
@@ -65,7 +32,8 @@
   }
 
   .select:hover:not(:disabled) {
-    background-color: theme('colors.gray');
+    /* background-color: theme('colors.gray'); */
+    opacity: 0.9;
   }
 
   .textLink {

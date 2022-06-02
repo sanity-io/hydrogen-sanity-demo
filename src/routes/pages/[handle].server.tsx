@@ -2,7 +2,7 @@
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import clientConfig from '../../../sanity.config';
-import PageHero from '../../components/heroes/PageHero.server';
+import HeroPage from '../../components/heroes/HeroPage.server';
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
 import PortableText from '../../components/PortableText.client';
@@ -35,7 +35,7 @@ export default function PageRoute({params}: Props) {
   return (
     <Layout>
       {/* Page hero */}
-      <PageHero
+      <HeroPage
         colorTheme={page.colorTheme}
         fallbackTitle={page.title}
         hero={page.hero}

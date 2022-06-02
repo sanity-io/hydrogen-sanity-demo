@@ -1,20 +1,28 @@
 import {Link} from '@shopify/hydrogen';
 import clsx from 'clsx';
+import {DEFAULT_BUTTON_STYLES} from '../../constants';
 import {SanityLink} from '../../types';
 
-export default function ButtonLink({
-  invert,
-  link,
-}: {
-  invert?: boolean;
+type Props = {
+  backgroundColor?: string;
+  className?: string;
   link: SanityLink;
-}) {
+  textColor?: string;
+};
+
+export default function ButtonLink({
+  backgroundColor,
+  className,
+  link,
+  textColor,
+}: Props) {
   if (link._type === 'linkExternal') {
     return (
       <a
-        className={clsx('btn', invert && 'btn-invert')}
+        className={clsx(DEFAULT_BUTTON_STYLES, className)}
         href={link.url}
         rel="noreferrer"
+        style={{background: backgroundColor, color: textColor}}
         target={link.newWindow ? '_blank' : '_self'}
       >
         {link.title}
@@ -24,7 +32,11 @@ export default function ButtonLink({
 
   if (link._type === 'linkInternal') {
     return (
-      <Link className={clsx('btn', invert && 'btn-invert')} to={link.slug}>
+      <Link
+        className={clsx(DEFAULT_BUTTON_STYLES, className)}
+        to={link.slug}
+        style={{background: backgroundColor, color: textColor}}
+      >
         {link.title}
       </Link>
     );

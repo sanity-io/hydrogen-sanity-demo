@@ -1,8 +1,10 @@
 import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
-import type {SanityModule} from '../types';
+import type {SanityColorTheme, SanityModule} from '../types';
 import CardProduct from './cards/CardProduct';
 import Module from './modules/Module.server';
+
+const FULL_WIDTH_MODULE_TYPES: SanityModule['_type'][] = ['module.callout'];
 
 const CLASSES = {
   flexAlign: {
@@ -102,48 +104,56 @@ const LAYOUTS = [
 ] as const;
 
 type Props = {
-  className?: string;
+  colorTheme?: SanityColorTheme;
   items: (SanityModule | Product)[];
 };
 
-const isModule = (item: SanityModule | Product): item is SanityModule => {
-  return (item as SanityModule)._type?.startsWith('module');
-};
+export default function LayoutGrid({colorTheme, items}: Props) {
+  return (
+    <ul className="grid grid-cols-1 gap-y-[5vw] gap-x-[7.5vw] md:grid-cols-2">
+      {items.map((item, index) => {
+        const layout = LAYOUTS[index % LAYOUTS.length];
 
-export default function LayoutGrid({className, items}: Props) {
-  return <ul className={className}>{renderItemLayout({items})}</ul>;
+        const flexAlign = CLASSES.flexAlign[layout.flex.align];
+        const flexJustify = CLASSES.flexJustify[layout.flex.justify];
+        const imageAspect = CLASSES.imageAspect[layout.aspect];
+        const marginTop = layout.offsetY ? 'md:mt-[5vw]' : 'mt-0';
+        const width = CLASSES.width[layout.width];
+
+        if (isModule(item)) {
+          return (
+            <li
+              className={clsx([
+                'flex items-center justify-center', //
+                FULL_WIDTH_MODULE_TYPES.includes(item._type)
+                  ? 'col-span-2'
+                  : 'col-span-1',
+              ])}
+              key={item._key}
+            >
+              <Module colorTheme={colorTheme} module={item} />
+            </li>
+          );
+        } else {
+          return (
+            <li
+              className={clsx(['flex', flexAlign, flexJustify, marginTop])}
+              key={item.id}
+            >
+              <div className={clsx([width])}>
+                <CardProduct
+                  imageAspectClassName={imageAspect}
+                  storefrontProduct={item}
+                />
+              </div>
+            </li>
+          );
+        }
+      })}
+    </ul>
+  );
 }
 
-const renderItemLayout = ({items}: {items: (Product | SanityModule)[]}) => {
-  return items.map((item, index) => {
-    const layout = LAYOUTS[index % LAYOUTS.length];
-
-    const flexAlign = CLASSES.flexAlign[layout.flex.align];
-    const flexJustify = CLASSES.flexJustify[layout.flex.justify];
-    const imageAspect = CLASSES.imageAspect[layout.aspect];
-    const marginTop = layout.offsetY ? 'md:mt-[5vw]' : 'mt-0';
-    const width = CLASSES.width[layout.width];
-
-    if (isModule(item)) {
-      return (
-        <li className="flex items-center justify-center" key={item._key}>
-          <Module module={item} />
-        </li>
-      );
-    } else {
-      return (
-        <li
-          className={clsx(['flex', flexAlign, flexJustify, marginTop])}
-          key={item.id}
-        >
-          <div className={clsx([width])}>
-            <CardProduct
-              imageAspectClassName={imageAspect}
-              storefrontProduct={item}
-            />
-          </div>
-        </li>
-      );
-    }
-  });
+const isModule = (item: SanityModule | Product): item is SanityModule => {
+  return (item as SanityModule)._type?.startsWith('module');
 };

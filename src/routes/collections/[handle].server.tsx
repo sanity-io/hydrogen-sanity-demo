@@ -13,9 +13,8 @@ import {
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import {useMemo} from 'react';
-// import pluralize from 'pluralize';
 import clientConfig from '../../../sanity.config';
-import CollectionHero from '../../components/heroes/CollectionHero.server';
+import HeroCollection from '../../components/heroes/HeroCollection.server';
 import Layout from '../../components/Layout.server';
 import LoadMoreProducts from '../../components/LoadMoreProducts.client';
 import NotFound from '../../components/NotFound.server';
@@ -23,7 +22,7 @@ import LayoutGrid from '../../components/LayoutGrid.server';
 import SelectSortOrder from '../../components/selects/SelectSortOrder.client';
 import {COLLECTION_PAGE_SIZE} from '../../constants';
 import {COLLECTION_PAGE} from '../../fragments/collectionPage';
-import {SanityCollectionPage} from '../../types';
+import type {SanityCollectionPage} from '../../types';
 import {combineProductsAndModules} from '../../utils/combineProductsAndModules';
 
 type Props = {
@@ -68,13 +67,11 @@ export default function CollectionRoute({
   // TODO: add collection support to `useSanityQuery`
   const {sanityData: sanityCollection} = useSanityQuery({
     clientConfig,
+    getProductGraphQLFragment: () => false,
     params: {
       slug: handle,
     },
     query: SANITY_QUERY,
-    shopifyVariables: {
-      country: countryCode,
-    },
   }) as SanityPayload;
 
   const collection = data.collection;
@@ -97,18 +94,11 @@ export default function CollectionRoute({
   return (
     <Layout>
       {/* Hero */}
-      <CollectionHero
+      <HeroCollection
         colorTheme={sanityCollection.colorTheme}
         fallbackTitle={sanityCollection.title}
         hero={sanityCollection.hero}
       />
-
-      {/* Collection count */}
-      {/*
-      <p className="my-5 text-sm">
-        {pluralize('product', products.length, true)}
-      </p>
-      */}
 
       {/* HTML Description */}
       {/* <div dangerouslySetInnerHTML={{__html: collection.descriptionHtml}} /> */}
@@ -124,15 +114,12 @@ export default function CollectionRoute({
         )}
         {/* No results */}
         {products.length === 0 && (
-          <div className="text-center text-lg text-darkGray">
-            No products...yet.
+          <div className="mt-16 text-center text-lg text-darkGray">
+            No products.
           </div>
         )}
 
-        <LayoutGrid
-          className="grid grid-cols-1 gap-y-[5vw] gap-x-[7.5vw] md:grid-cols-2"
-          items={items}
-        />
+        <LayoutGrid colorTheme={sanityCollection.colorTheme} items={items} />
 
         {hasNextPage && (
           <LoadMoreProducts startingCount={collectionProductCount} />

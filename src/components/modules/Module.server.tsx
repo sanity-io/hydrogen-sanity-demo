@@ -1,9 +1,18 @@
-import {SanityModule} from '../../types';
+import {SanityColorTheme, SanityModule} from '../../types';
+import ModuleCallout from './ModuleCallout.server';
 import ModuleImage from './ModuleImage.server';
 import ModuleInstagram from './ModuleInstagram.client';
 
-export default function Module({module}: {module: SanityModule}) {
+export default function Module({
+  colorTheme,
+  module,
+}: {
+  colorTheme?: SanityColorTheme;
+  module: SanityModule;
+}) {
   switch (module._type) {
+    case 'module.callout':
+      return <ModuleCallout colorTheme={colorTheme} module={module} />;
     case 'module.image':
       return <ModuleImage module={module} />;
     case 'module.instagram':

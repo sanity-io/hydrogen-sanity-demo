@@ -1,3 +1,4 @@
+// import resolveConfig from 'tailwindcss/resolveConfig';
 import sanityConfig from '../../../sanity.config';
 import {SanityModuleImage} from '../../types';
 import ButtonLink from '../buttons/ButtonLink';
@@ -34,7 +35,10 @@ export default function ModuleImage({module}: {module: SanityModuleImage}) {
 
               {/* Button */}
               {module.callToAction?.link && (
-                <ButtonLink invert link={module.callToAction.link} />
+                <ButtonLink
+                  className="bg-white text-offBlack"
+                  link={module.callToAction.link}
+                />
               )}
             </div>
           </div>

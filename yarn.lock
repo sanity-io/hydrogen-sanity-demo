@@ -4784,10 +4784,10 @@ react-refresh@^0.13.0:
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.13.0.tgz#cbd01a4482a177a5da8d44c9755ebb1f26d5a1c1"
   integrity sha512-XP8A9BT0CpRBD+NYLLeIhld/RqG9+gktUjW1FkE+Vm7OCinbG1SshcK5tb9ls4kzvjZr9mOQc7HYgBngEyPAXg==
 
-react-social-media-embed@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/react-social-media-embed/-/react-social-media-embed-2.1.2.tgz#91e13b47f2be8e43173834a3e200a49374d017d8"
-  integrity sha512-wzY/YkPUDU+zSazmp/0WkpbZIW6ayHveY5VfPx0JxuBYyLho/TSBZTNSNKy2VtHUGz/MYwj5y55mKr8O6YTp8A==
+react-social-media-embed@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/react-social-media-embed/-/react-social-media-embed-2.2.2.tgz#f1dd610a824a6d947b90063e83d523df54e61746"
+  integrity sha512-ZXiti7uxbukMTbME8Xx4Q2ZIADLiYsaKaOqS5zFzUNku1bwNq3XUC0AdyL3CCls0JgaWd/dwK+7BmN36e3h2Kg==
   dependencies:
     classnames "^2.3.1"
     react-twitter-embed "^4.0.4"

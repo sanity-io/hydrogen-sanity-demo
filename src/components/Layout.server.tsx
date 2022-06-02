@@ -42,7 +42,6 @@ export default function Layout({children}: Props) {
         </Suspense>
 
         <main className="relative grow" id="mainContent" role="main">
-          {/* <div className="mx-auto max-w-7xl"> */}
           <div className="mx-auto">
             <Suspense fallback={null}>{children}</Suspense>
           </div>
