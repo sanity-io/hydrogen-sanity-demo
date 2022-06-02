@@ -47,7 +47,12 @@ export default function CollectionGroupDialog({
         {collectionGroup.title}
       </button>
       <Transition show={isOpen}>
-        <Dialog className="relative z-50" onClose={handleClose} static>
+        <Dialog
+          open={isOpen}
+          className="relative z-50"
+          onClose={handleClose}
+          static
+        >
           {/* Overlay */}
           <Transition.Child
             as={Fragment}
@@ -76,6 +81,7 @@ export default function CollectionGroupDialog({
           >
             <Dialog.Panel
               className={`fixed top-0 left-0 right-0 bottom-0 flex h-full w-full flex-col overflow-y-auto rounded-r-lg bg-white md:right-auto md:bottom-auto md:block md:w-[490px]`}
+              onMouseEnter={handleOpen}
               onMouseLeave={handleClose}
             >
               <CollectionGroupContent
