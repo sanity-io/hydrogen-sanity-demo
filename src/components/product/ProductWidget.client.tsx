@@ -92,6 +92,19 @@ export default function ProductWidget({sanityProduct}: Props) {
 
   return (
     <div className="pointer-events-auto z-10 ml-auto rounded bg-white p-6 shadow">
+      {/* Sold out */}
+      {!availableForSale && (
+        <div className="mb-3 text-xs font-bold uppercase text-darkGray">
+          Sold out
+        </div>
+      )}
+
+      {/* Sale */}
+      {availableForSale &&
+        storefrontProduct.selectedVariant?.compareAtPriceV2 && (
+          <div className="mb-3 text-xs font-bold uppercase text-red">Sale</div>
+        )}
+
       {/* Title */}
       {storefrontProduct?.title && (
         <h1 className="text-md font-bold uppercase">
@@ -120,17 +133,7 @@ export default function ProductWidget({sanityProduct}: Props) {
       )}
 
       {/* Product actions */}
-      <div className="relative">
-        <div className={clsx(availableForSale ? 'opacity-100' : 'opacity-0')}>
-          <ProductActions />
-        </div>
-
-        {!availableForSale && (
-          <div className="absolute top-0 text-md uppercase text-darkGray">
-            Sold out
-          </div>
-        )}
-      </div>
+      <ProductActions />
     </div>
   );
 }

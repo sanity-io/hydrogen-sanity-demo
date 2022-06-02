@@ -5,5 +5,5 @@ import {useMoney} from '@shopify/hydrogen';
  */
 export default function MoneyPrice({money}) {
   const {localizedString} = useMoney(money);
-  return <span className="text-md">{localizedString}</span>;
+  return <span>{localizedString}</span>;
 }

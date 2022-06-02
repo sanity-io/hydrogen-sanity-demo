@@ -1,4 +1,5 @@
 import groq from 'groq';
+import {COLLECTION} from './collection';
 import {IMAGE} from './image';
 import {LINK_EXTERNAL} from './linkExternal';
 import {LINK_INTERNAL} from './linkInternal';
@@ -18,6 +19,11 @@ export const MODULES = groq`
     },      
     text
   },
+  (_type == "module.collection") => {
+    collection->{
+      ${COLLECTION}
+    }
+  },      
   (_type == "module.image") => {
     image {
       ${IMAGE}
@@ -47,5 +53,10 @@ export const MODULES = groq`
   },
   (_type == "module.instagram") => {
     url
+  },      
+  (_type == "module.product") => {
+    productWithVariant {
+      ${PRODUCT_WITH_VARIANT}
+    }
   },      
 `;

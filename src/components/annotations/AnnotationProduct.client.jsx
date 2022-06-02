@@ -23,7 +23,7 @@ const AnnotationProduct = (props) => {
     product?.variantId,
   );
 
-  const availableForSale = currentVariant?.availableForSale;
+  const {availableForSale} = currentVariant;
 
   // Return text only if no longer available for sale or if variant isn't accessible
   if (!availableForSale || !currentVariant) {

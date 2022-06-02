@@ -15,7 +15,11 @@ export default function ButtonSelectedVariantAddToCart(props: Props) {
   const {quantity = 1, showSoldOut = true} = props;
   const {selectedVariant} = useProduct();
 
-  const availableForSale = selectedVariant?.availableForSale;
+  if (!selectedVariant) {
+    return null;
+  }
+
+  const {availableForSale} = selectedVariant;
 
   if (!showSoldOut && !availableForSale) {
     return null;

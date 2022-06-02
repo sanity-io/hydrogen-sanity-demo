@@ -7,7 +7,7 @@ export default function ModuleInstagram({
   module: SanityModuleInstagram;
 }) {
   return (
-    <div className="max-w-[400px] overflow-hidden">
+    <div className="min-h-full max-w-[400px] overflow-hidden">
       <InstagramEmbed
         placeholderDisabled //
         url={module.url}

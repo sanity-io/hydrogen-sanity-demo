@@ -1,11 +1,4 @@
-import {
-  flattenConnection,
-  gql,
-  Image,
-  useSession,
-  useShop,
-  useShopQuery,
-} from '@shopify/hydrogen';
+import {gql, Image, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
 import {
   Product,
   ProductVariant,
@@ -14,23 +7,18 @@ import ProductHotspot from './ProductHotspot';
 
 type Props = {
   gid: string;
+  variantGid: string;
 };
 
 type ShopifyPayload = {
-  product: Pick<
-    Product,
-    | 'compareAtPriceRange'
-    | 'featuredImage'
-    | 'handle'
-    | 'id'
-    | 'priceRange'
-    | 'title'
-    | 'variants'
-    | 'vendor'
+  productVariant: Pick<
+    ProductVariant,
+    'availableForSale' | 'compareAtPriceV2' | 'image' | 'priceV2'
   >;
+  product: Pick<Product, 'handle' | 'id' | 'options' | 'title' | 'vendor'>;
 };
 
-export default function ProductHero({gid}: Props) {
+export default function ProductHero({gid, variantGid}: Props) {
   const {countryCode = 'US'} = useSession();
   const {languageCode} = useShop();
   const {data} = useShopQuery<ShopifyPayload>({
@@ -39,105 +27,68 @@ export default function ProductHero({gid}: Props) {
       country: countryCode,
       language: languageCode,
       id: gid,
+      variantId: variantGid,
     },
   });
 
   const storefrontProduct = data?.product;
 
-  const selectedVariant = flattenConnection<ProductVariant>(
-    storefrontProduct.variants,
-  )[0];
-
   return (
     <>
-      {selectedVariant.image && (
+      {data.productVariant.image && (
         <Image
           className="absolute h-full w-full transform bg-cover bg-center object-cover object-center"
-          data={selectedVariant.image}
+          data={data.productVariant.image}
           loaderOptions={{width: 2000}}
         />
       )}
 
       <div className="absolute bottom-4 right-4">
-        <ProductHotspot storefrontProduct={storefrontProduct} />
+        <ProductHotspot
+          storefrontProduct={storefrontProduct}
+          storefrontProductVariant={data.productVariant}
+        />
       </div>
     </>
   );
 }
 
 const QUERY = gql`
-  query product($country: CountryCode, $language: LanguageCode, $id: ID!)
-  @inContext(country: $country, language: $language) {
+  query product(
+    $country: CountryCode
+    $language: LanguageCode
+    $id: ID!
+    $variantId: ID!
+  ) @inContext(country: $country, language: $language) {
+    productVariant: node(id: $variantId) {
+      ... on ProductVariant {
+        availableForSale
+        compareAtPriceV2 {
+          amount
+          currencyCode
+        }
+        image {
+          id
+          url
+          altText
+          width
+          height
+        }
+        priceV2 {
+          amount
+          currencyCode
+        }
+        title
+      }
+    }
     product: product(id: $id) {
-      compareAtPriceRange {
-        maxVariantPrice {
-          currencyCode
-          amount
-        }
-        minVariantPrice {
-          currencyCode
-          amount
-        }
-      }
-      featuredImage {
-        url
-        width
-        height
-        altText
-      }
       handle
       id
-      priceRange {
-        maxVariantPrice {
-          currencyCode
-          amount
-        }
-        minVariantPrice {
-          currencyCode
-          amount
-        }
+      options {
+        name
+        values
       }
       title
-      variants(first: 1) {
-        edges {
-          node {
-            availableForSale
-            compareAtPriceV2 {
-              amount
-              currencyCode
-            }
-            id
-            image {
-              id
-              url
-              altText
-              width
-              height
-            }
-            priceV2 {
-              amount
-              currencyCode
-            }
-            selectedOptions {
-              name
-              value
-            }
-            sku
-            title
-            unitPrice {
-              amount
-              currencyCode
-            }
-            unitPriceMeasurement {
-              measuredType
-              quantityUnit
-              quantityValue
-              referenceUnit
-              referenceValue
-            }
-          }
-        }
-      }
       vendor
     }
   }

@@ -124,10 +124,10 @@ export default function LayoutGrid({colorTheme, items}: Props) {
           return (
             <li
               className={clsx([
-                'flex items-center justify-center', //
+                'flex items-center justify-center overflow-hidden', //
                 FULL_WIDTH_MODULE_TYPES.includes(item._type)
-                  ? 'col-span-2'
-                  : 'col-span-1',
+                  ? 'md:col-span-2'
+                  : 'md:col-span-1',
               ])}
               key={item._key}
             >

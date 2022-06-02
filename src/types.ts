@@ -112,14 +112,22 @@ export type SanityMenuLink =
 
 export type SanityModule =
   | SanityModuleCallout
+  | SanityModuleCollection
   | SanityModuleImage
-  | SanityModuleInstagram;
+  | SanityModuleInstagram
+  | SanityModuleProduct;
 
 export type SanityModuleCallout = {
   _key?: string;
   _type: 'module.callout';
   link: SanityLink;
   text: string;
+};
+
+export type SanityModuleCollection = {
+  _key?: string;
+  _type: 'module.collection';
+  collection: SanityCollection;
 };
 
 export type SanityModuleImage =
@@ -156,6 +164,12 @@ export type SanityModuleInstagram = {
   url: string;
 };
 
+export type SanityModuleProduct = {
+  _key?: string;
+  _type: 'module.product';
+  // collection: SanityCollection;
+};
+
 export type SanityPage = {
   body: Block[];
   colorTheme?: SanityColorTheme;
@@ -171,7 +185,7 @@ export type SanityProductWithVariant = {
   available: boolean;
   slug: string;
   store: Record<string, any>;
-  variantId: number;
+  variantGid: string;
 };
 
 export type SanityProductPage = {

@@ -2,8 +2,9 @@
 import sanityConfig from '../../../sanity.config';
 import {SanityModuleImage} from '../../types';
 import ButtonLink from '../buttons/ButtonLink';
-import SanityImage from '../SanityImage.client';
+import Link from '../Link';
 import ProductTag from '../ProductTag';
+import SanityImage from '../SanityImage.client';
 
 export default function ModuleImage({module}: {module: SanityModuleImage}) {
   const image = module.image;
@@ -11,9 +12,10 @@ export default function ModuleImage({module}: {module: SanityModuleImage}) {
   if (!image) {
     return null;
   }
-  return (
+
+  const Content = (
     <div>
-      <div className="relative overflow-hidden rounded">
+      <div className="relative overflow-hidden rounded transition-all duration-500 ease-out group-hover:rounded-xl">
         <SanityImage
           crop={image?.crop}
           dataset={sanityConfig.dataset}
@@ -26,7 +28,7 @@ export default function ModuleImage({module}: {module: SanityModuleImage}) {
 
         {/* Call to action */}
         {module.variant === 'callToAction' && (
-          <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center bg-black bg-opacity-10">
+          <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center bg-black bg-opacity-20">
             <div className="mt-[1em] flex flex-col items-center gap-5">
               {/* Title */}
               <div className="max-w-[30rem] text-xl text-white md:text-2xl lg:text-3xl">
@@ -36,7 +38,7 @@ export default function ModuleImage({module}: {module: SanityModuleImage}) {
               {/* Button */}
               {module.callToAction?.link && (
                 <ButtonLink
-                  className="bg-white text-offBlack"
+                  className="pointer-events-none bg-white text-offBlack group-hover:opacity-90"
                   link={module.callToAction.link}
                 />
               )}
@@ -44,14 +46,12 @@ export default function ModuleImage({module}: {module: SanityModuleImage}) {
           </div>
         )}
       </div>
-
       {/* Caption */}
       {module.variant === 'caption' && module.caption && (
         <div className="mt-2 max-w-[35rem] text-sm text-darkGray">
           {module.caption}
         </div>
       )}
-
       {/* Products */}
       {module.variant === 'products' && (
         <div className="mt-2 inline-flex gap-1">
@@ -62,4 +62,14 @@ export default function ModuleImage({module}: {module: SanityModuleImage}) {
       )}
     </div>
   );
+
+  if (module.variant === 'callToAction' && module.callToAction?.link) {
+    return (
+      <Link className="group" link={module.callToAction.link}>
+        {Content}
+      </Link>
+    );
+  }
+
+  return Content;
 }
