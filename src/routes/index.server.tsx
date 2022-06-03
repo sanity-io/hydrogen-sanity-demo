@@ -4,7 +4,7 @@ import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import {Suspense} from 'react';
 import clientConfig from '../../sanity.config';
 import Layout from '../components/Layout.server';
-import LayoutGrid from '../components/LayoutGrid.server';
+import ModuleGrid from '../components/ModuleGrid.server';
 import HeroHome from '../components/heroes/HeroHome.server';
 import {HOME_PAGE} from '../fragments/homePage';
 import type {SanityHomePage} from '../types';
@@ -30,7 +30,7 @@ export default function IndexRoute() {
       </Suspense>
 
       <div className="mb-32 mt-8 px-8 pb-overlap">
-        <LayoutGrid items={sanityHome.modules} />
+        <ModuleGrid items={sanityHome.modules} />
       </div>
     </Layout>
   );

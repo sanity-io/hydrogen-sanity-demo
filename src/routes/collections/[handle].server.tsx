@@ -18,7 +18,7 @@ import HeroCollection from '../../components/heroes/HeroCollection.server';
 import Layout from '../../components/Layout.server';
 import LoadMoreProducts from '../../components/LoadMoreProducts.client';
 import NotFound from '../../components/NotFound.server';
-import LayoutGrid from '../../components/LayoutGrid.server';
+import ModuleGrid from '../../components/ModuleGrid.server';
 import SelectSortOrder from '../../components/selects/SelectSortOrder.client';
 import {COLLECTION_PAGE_SIZE} from '../../constants';
 import {COLLECTION_PAGE} from '../../fragments/collectionPage';
@@ -119,7 +119,7 @@ export default function CollectionRoute({
           </div>
         )}
 
-        <LayoutGrid colorTheme={sanityCollection.colorTheme} items={items} />
+        <ModuleGrid colorTheme={sanityCollection.colorTheme} items={items} />
 
         {hasNextPage && (
           <LoadMoreProducts startingCount={collectionProductCount} />

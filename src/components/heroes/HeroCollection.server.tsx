@@ -34,7 +34,10 @@ export default function HeroCollection({
       {/* Title */}
       {hero.title && (
         <h1
-          className="mx-auto mb-7 max-w-[60rem] whitespace-pre-line text-center text-5xl"
+          className={clsx(
+            'mx-auto mb-7 max-w-[60rem] whitespace-pre-line text-center text-3xl',
+            'md:text-5xl',
+          )}
           style={{color: colorTheme?.text || 'black'}}
         >
           {hero.title}

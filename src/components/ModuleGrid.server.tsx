@@ -4,11 +4,13 @@ import type {SanityColorTheme, SanityModule} from '../types';
 import CardProduct from './cards/CardProduct';
 import Module from './modules/Module.server';
 
+// Sanity modules to render in full width (across all grid columns)
 const FULL_WIDTH_MODULE_TYPES: SanityModule['_type'][] = [
   'module.callout',
   'module.callToAction',
 ];
 
+// Tailwind class map
 const CLASSES = {
   flexAlign: {
     center: 'items-center',
@@ -31,76 +33,55 @@ const CLASSES = {
   },
 };
 
-const LAYOUTS = [
+// Layout rules for grid children.
+// Each child iterates (and loops) through this array of rules.
+// These layout rules only apply to both product modules and non-module products.
+const PRODUCT_LAYOUT = [
   {
     aspect: 'square',
-    flex: {
-      align: 'start',
-      justify: 'start',
-    },
+    flex: {align: 'start', justify: 'start'},
     offsetY: false,
     width: 'md',
   },
   {
     aspect: 'square',
-    flex: {
-      align: 'start',
-      justify: 'end',
-    },
+    flex: {align: 'start', justify: 'end'},
     offsetY: false,
     width: 'lg',
   },
   {
     aspect: 'square',
-    flex: {
-      align: 'start',
-      justify: 'start',
-    },
+    flex: {align: 'start', justify: 'start'},
     offsetY: false,
     width: 'lg',
   },
   {
     aspect: 'square',
-    flex: {
-      align: 'center',
-      justify: 'start',
-    },
+    flex: {align: 'center', justify: 'start'},
     offsetY: false,
     width: 'sm',
   },
   {
     aspect: 'square',
-    flex: {
-      align: 'start',
-      justify: 'end',
-    },
+    flex: {align: 'start', justify: 'end'},
     offsetY: false,
     width: 'md',
   },
   {
     aspect: 'square',
-    flex: {
-      align: 'start',
-      justify: 'end',
-    },
+    flex: {align: 'start', justify: 'end'},
     offsetY: true,
     width: 'md',
   },
   {
     aspect: 'square',
-    flex: {
-      align: 'start',
-      justify: 'start',
-    },
+    flex: {align: 'start', justify: 'start'},
     offsetY: false,
     width: 'lg',
   },
   {
     aspect: 'landscape',
-    flex: {
-      align: 'center',
-      justify: 'end',
-    },
+    flex: {align: 'center', justify: 'end'},
     offsetY: false,
     width: 'lg',
   },
@@ -111,27 +92,29 @@ type Props = {
   items: (SanityModule | Product)[];
 };
 
-// TODO: convert to module grid
-
-export default function LayoutGrid({colorTheme, items}: Props) {
+export default function ModuleGrid({colorTheme, items}: Props) {
   return (
     <ul className="grid grid-cols-1 gap-y-[7.5vw] gap-x-[7.5vw] md:grid-cols-2">
       {items.map((item, index) => {
-        const layout = LAYOUTS[index % LAYOUTS.length];
-
-        const flexAlign = CLASSES.flexAlign[layout.flex.align];
-        const flexJustify = CLASSES.flexJustify[layout.flex.justify];
-        const imageAspect = CLASSES.imageAspect[layout.aspect];
-        const marginTop = layout.offsetY ? 'md:mt-[5vw]' : 'mt-0';
-        const width = CLASSES.width[layout.width];
+        const productLayout = PRODUCT_LAYOUT[index % PRODUCT_LAYOUT.length];
+        const productImageAspect = CLASSES.imageAspect[productLayout.aspect];
+        const productWidth = CLASSES.width[productLayout.width];
+        const productLayoutClasses = clsx([
+          CLASSES.flexAlign[productLayout.flex.align],
+          CLASSES.flexJustify[productLayout.flex.justify],
+          productLayout.offsetY ? 'md:mt-[5vw]' : 'mt-0',
+        ]);
 
         if (isModule(item)) {
+          const isProductModule = item._type === 'module.product';
+
+          // Render modules
           return (
             <li
               className={clsx([
-                'flex overflow-hidden', //
-                item._type === 'module.product'
-                  ? [flexAlign, flexJustify, marginTop]
+                'flex overflow-hidden',
+                isProductModule
+                  ? productLayoutClasses
                   : 'items-center justify-center',
                 FULL_WIDTH_MODULE_TYPES.includes(item._type)
                   ? 'md:col-span-2'
@@ -139,28 +122,22 @@ export default function LayoutGrid({colorTheme, items}: Props) {
               ])}
               key={item._key}
             >
-              <div
-                className={clsx(
-                  item._type === 'module.product' ? width : 'w-full',
-                )}
-              >
+              <div className={clsx(isProductModule ? productWidth : 'w-full')}>
                 <Module
                   colorTheme={colorTheme}
-                  imageAspectClassName={imageAspect}
+                  imageAspectClassName={productImageAspect}
                   module={item}
                 />
               </div>
             </li>
           );
         } else {
+          // Render product cards
           return (
-            <li
-              className={clsx(['flex', flexAlign, flexJustify, marginTop])}
-              key={item.id}
-            >
-              <div className={clsx([width])}>
+            <li className={productLayoutClasses} key={item.id}>
+              <div className={productWidth}>
                 <CardProduct
-                  imageAspectClassName={imageAspect}
+                  imageAspectClassName={productImageAspect}
                   storefrontProduct={item}
                 />
               </div>
