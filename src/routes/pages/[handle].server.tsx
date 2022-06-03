@@ -13,11 +13,9 @@ type Props = {
   params: any;
 };
 
-type ShopifyPayload = SanityPage;
-
 export default function PageRoute({params}: Props) {
   const {handle} = params;
-  const {sanityData: page} = useSanityQuery<ShopifyPayload>({
+  const {sanityData: page} = useSanityQuery<SanityPage>({
     query: QUERY,
     params: {
       slug: handle,

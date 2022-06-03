@@ -11,7 +11,7 @@ import MoneyCompareAtPrice from '../MoneyCompareAtPrice.client';
 import MoneyPrice from '../MoneyPrice.client';
 
 type Props = {
-  onClick: () => void;
+  onClick?: () => void;
   storefrontProduct: Pick<
     Product,
     'handle' | 'options' | 'title' | 'variants' | 'vendor'

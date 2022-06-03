@@ -181,6 +181,13 @@ export type SanityModuleProduct = {
   productWithVariant: SanityProductWithVariant;
 };
 
+export type SanityNotFoundPage = {
+  body?: string;
+  collectionGid?: string;
+  colorTheme?: SanityColorTheme;
+  title: string;
+};
+
 export type SanityPage = {
   body: Block[];
   colorTheme?: SanityColorTheme;

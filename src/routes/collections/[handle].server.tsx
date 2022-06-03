@@ -151,11 +151,6 @@ const QUERY = gql`
     $productSortReverse: Boolean
   ) @inContext(country: $country, language: $language) {
     collection(handle: $handle) {
-      title
-      seo {
-        description
-        title
-      }
       image {
         id
         url
@@ -207,6 +202,11 @@ const QUERY = gql`
           hasNextPage
         }
       }
+      seo {
+        description
+        title
+      }
+      title
     }
   }
 `;

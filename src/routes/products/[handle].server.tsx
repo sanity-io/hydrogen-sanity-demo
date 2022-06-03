@@ -25,10 +25,6 @@ import RelatedProducts from '../../components/RelatedProducts.server';
 import {PRODUCT_PAGE} from '../../fragments/productPage';
 import type {SanityProductPage} from '../../types';
 
-type SanityPayload = {
-  sanityData: SanityProductPage;
-};
-
 type ShopifyPayload = {
   product: Pick<
     Product,
@@ -42,24 +38,28 @@ export default function ProductRoute() {
   const {countryCode = 'US'} = useSession();
 
   // Fetch Sanity document
-  const {sanityData: sanityProduct} = useSanityQuery({
+  const {sanityData: sanityProduct} = useSanityQuery<SanityProductPage>({
     clientConfig,
     getProductGraphQLFragment: () => false,
     params: {slug: handle},
     query: QUERY,
-  }) as SanityPayload;
+  });
 
   // Fetch Shopify document
-  const {
-    data: {product: storefrontProduct},
-  } = useShopQuery<ShopifyPayload>({
-    query: QUERY_SHOPIFY,
-    variables: {
-      country: countryCode,
-      id: sanityProduct.store.gid,
-      language: languageCode,
-    },
-  });
+  let storefrontProduct;
+  if (sanityProduct?.store.gid) {
+    const {
+      data: {product},
+    } = useShopQuery<ShopifyPayload>({
+      query: QUERY_SHOPIFY,
+      variables: {
+        country: countryCode,
+        id: sanityProduct.store.gid,
+        language: languageCode,
+      },
+    });
+    storefrontProduct = product;
+  }
 
   if (!sanityProduct || !storefrontProduct) {
     // @ts-expect-error <NotFound> doesn't require response

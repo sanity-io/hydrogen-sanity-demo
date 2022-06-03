@@ -9,29 +9,29 @@ import HeroHome from '../components/heroes/HeroHome.server';
 import {HOME_PAGE} from '../fragments/homePage';
 import type {SanityHomePage} from '../types';
 
-type SanityPayload = {
-  sanityData: SanityHomePage;
-};
+type SanityPayload = SanityHomePage;
 
 export default function IndexRoute() {
-  const {sanityData: sanityHome} = useSanityQuery({
+  const {sanityData: sanityHome} = useSanityQuery<SanityPayload>({
     clientConfig,
     getProductGraphQLFragment: () => false,
     query: SANITY_QUERY,
-  }) as SanityPayload;
+  });
 
   return (
     <Layout>
       {/* Page hero */}
-      {sanityHome.hero && <HeroHome hero={sanityHome.hero} />}
+      {sanityHome?.hero && <HeroHome hero={sanityHome.hero} />}
 
       <Suspense fallback={null}>
         <SeoForHomepage />
       </Suspense>
 
-      <div className="mb-32 mt-8 px-8 pb-overlap">
-        <ModuleGrid items={sanityHome.modules} />
-      </div>
+      {sanityHome?.modules && (
+        <div className="mb-32 mt-8 px-8 pb-overlap">
+          <ModuleGrid items={sanityHome.modules} />
+        </div>
+      )}
     </Layout>
   );
 }
