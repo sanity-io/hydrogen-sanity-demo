@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import {SanityColorTheme, SanityHeroCollection} from '../../types';
 import HeroContent from '../HeroContent.server';
 
@@ -14,7 +15,14 @@ export default function HeroCollection({
 }: Props) {
   if (!hero) {
     return (
-      <h1 className="mx-8 max-w-[60rem] pt-34 text-5xl">{fallbackTitle}</h1>
+      <h1
+        className={clsx(
+          'mx-8 max-w-[60rem] pt-34 text-3xl', //
+          'md:text-5xl',
+        )}
+      >
+        {fallbackTitle}
+      </h1>
     );
   }
 

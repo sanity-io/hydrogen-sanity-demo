@@ -112,6 +112,7 @@ export type SanityMenuLink =
 
 export type SanityModule =
   | SanityModuleCallout
+  | SanityModuleCallToAction
   | SanityModuleCollection
   | SanityModuleImage
   | SanityModuleInstagram
@@ -122,6 +123,16 @@ export type SanityModuleCallout = {
   _type: 'module.callout';
   link: SanityLink;
   text: string;
+};
+
+export type SanityModuleCallToAction = {
+  _key?: string;
+  _type: 'module.callToAction';
+  body?: string;
+  content?: SanityAssetImage | SanityProductWithVariant;
+  layout: 'left' | 'right';
+  link: SanityLink;
+  title: string;
 };
 
 export type SanityModuleCollection = {

@@ -38,7 +38,7 @@ export default function ModuleImage({module}: {module: SanityModuleImage}) {
               {/* Button */}
               {module.callToAction?.link && (
                 <ButtonLink
-                  className="pointer-events-none bg-white text-offBlack group-hover:opacity-90"
+                  className="pointer-events-none bg-white text-offBlack group-hover:bg-lightGray"
                   link={module.callToAction.link}
                 />
               )}

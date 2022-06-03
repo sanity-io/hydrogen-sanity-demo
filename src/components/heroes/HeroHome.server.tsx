@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import {SanityHeroHome} from '../../types';
 import ButtonLink from '../buttons/ButtonLink';
 import HeroContent from '../HeroContent.server';
@@ -11,7 +12,12 @@ export default function HeroHome({hero}: Props) {
     <div className="flex flex-col items-center rounded-b-xl bg-peach px-8 pb-8 pt-34">
       {/* Title */}
       {hero.title && (
-        <h1 className="mb-7 max-w-[60rem] whitespace-pre-line text-center text-5xl">
+        <h1
+          className={clsx(
+            'mb-7 max-w-[60rem] whitespace-pre-line text-center text-3xl',
+            'md:text-5xl',
+          )}
+        >
           {hero.title}
         </h1>
       )}

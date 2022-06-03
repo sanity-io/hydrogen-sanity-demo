@@ -19,6 +19,28 @@ export const MODULES = groq`
     },      
     text
   },
+  (_type == 'module.callToAction') => {
+    body,
+    content[0] {
+      _type,
+      (_type == 'image') => {
+        ${IMAGE}
+      },
+      (_type == 'productWithVariant') => {
+        ...${PRODUCT_WITH_VARIANT}
+      },
+    },
+    layout,
+    "link": links[0] {
+      (_type == 'linkExternal') => {
+        ${LINK_EXTERNAL}
+      },
+      (_type == 'linkInternal') => {
+        ${LINK_INTERNAL}
+      },
+    },      
+    title,
+  },
   (_type == "module.collection") => {
     collection->{
       ${COLLECTION}

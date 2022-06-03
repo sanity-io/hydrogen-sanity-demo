@@ -26,7 +26,7 @@ export default function Footer() {
       return (
         <div className="mb-6" key={link._key}>
           <a
-            className="textLink"
+            className="linkTextNavigation"
             href={link.url}
             rel="noreferrer"
             target={link.newWindow ? '_blank' : '_self'}
@@ -43,7 +43,7 @@ export default function Footer() {
 
       return (
         <div className="mb-6" key={link._key}>
-          <Link className="textLink" to={link.slug}>
+          <Link className="linkTextNavigation" to={link.slug}>
             {link.title}
           </Link>
         </div>

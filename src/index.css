@@ -11,6 +11,26 @@
 }
 
 @layer components {
+  .linkText {
+    display: inline-block;
+    border-bottom-width: 0.125em;
+    border-bottom-style: solid;
+    border-bottom-color: transparent;
+  }
+  .linkText:hover {
+    border-bottom-color: inherit;
+  }
+
+  .linkTextNavigation {
+    display: inline-block;
+    border-bottom-width: 0.125em;
+    border-bottom-style: solid;
+    border-bottom-color: transparent;
+  }
+  .linkTextNavigation:hover {
+    border-bottom-color: inherit;
+  }
+
   .select {
     align-items: center;
     background-color: theme('colors.lightGray');
@@ -34,16 +54,6 @@
   .select:hover:not(:disabled) {
     /* background-color: theme('colors.gray'); */
     opacity: 0.9;
-  }
-
-  .textLink {
-    display: inline-block;
-    border-bottom-width: 0.125em;
-    border-bottom-style: solid;
-    border-bottom-color: transparent;
-  }
-  .textLink:hover {
-    border-bottom-color: inherit;
   }
 }
 

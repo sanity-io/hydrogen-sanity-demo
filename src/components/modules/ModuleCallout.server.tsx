@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import {SanityColorTheme, SanityModuleCallout} from '../../types';
 import ButtonLink from '../buttons/ButtonLink';
 
@@ -13,7 +14,14 @@ export default function ModuleCallout({colorTheme, module}: Props) {
       style={{color: colorTheme?.text}}
     >
       {/* Text */}
-      <div className="max-w-[60rem] text-4xl">{module.text}</div>
+      <div
+        className={clsx(
+          'max-w-[60rem] text-2xl', //
+          'md:text-4xl',
+        )}
+      >
+        {module.text}
+      </div>
 
       {/* Link */}
       {module.link && (

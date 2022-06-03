@@ -38,7 +38,7 @@ export default function CollectionGroupDialog({
     <div className="relative flex items-center">
       {/* Title */}
       <button
-        className="textLink font-bold"
+        className="linkTextNavigation font-bold"
         onClick={handleOpen}
         onKeyPress={handleOpen}
         onMouseEnter={handleOpen}

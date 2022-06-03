@@ -4,7 +4,10 @@ import type {SanityColorTheme, SanityModule} from '../types';
 import CardProduct from './cards/CardProduct';
 import Module from './modules/Module.server';
 
-const FULL_WIDTH_MODULE_TYPES: SanityModule['_type'][] = ['module.callout'];
+const FULL_WIDTH_MODULE_TYPES: SanityModule['_type'][] = [
+  'module.callout',
+  'module.callToAction',
+];
 
 const CLASSES = {
   flexAlign: {
@@ -112,7 +115,7 @@ type Props = {
 
 export default function LayoutGrid({colorTheme, items}: Props) {
   return (
-    <ul className="grid grid-cols-1 gap-y-[5vw] gap-x-[7.5vw] md:grid-cols-2">
+    <ul className="grid grid-cols-1 gap-y-[7.5vw] gap-x-[7.5vw] md:grid-cols-2">
       {items.map((item, index) => {
         const layout = LAYOUTS[index % LAYOUTS.length];
 

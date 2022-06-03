@@ -14,7 +14,7 @@ export default function ModuleCollection({module}: Props) {
 
   return (
     <Link
-      className="group relative flex aspect-square h-full w-full flex-col items-center justify-center"
+      className="group relative flex aspect-[4/3] h-full w-full flex-col items-center justify-center md:aspect-square"
       to={collection.slug}
     >
       <div className="relative flex h-full w-full flex-col items-center justify-center">
@@ -33,7 +33,8 @@ export default function ModuleCollection({module}: Props) {
         {/* Title */}
         <div
           className={clsx(
-            'relative mt-[0.5em] w-[65%] text-center text-3xl font-bold group-hover:underline',
+            'relative mt-[0.5em] w-[65%] text-center text-2xl font-bold group-hover:underline',
+            'md:text-3xl',
             collection.vector ? 'text-white' : 'text-offBlack',
           )}
         >
@@ -43,7 +44,7 @@ export default function ModuleCollection({module}: Props) {
         <div
           className={clsx(
             DEFAULT_BUTTON_STYLES,
-            'pointer-events-none relative mt-6 bg-white text-offBlack group-hover:bg-opacity-90',
+            'pointer-events-none relative mt-6 bg-white text-offBlack group-hover:bg-lightGray',
           )}
         >
           Shop collection

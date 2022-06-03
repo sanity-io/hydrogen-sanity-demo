@@ -1,5 +1,6 @@
 import {SanityColorTheme, SanityModule} from '../../types';
 import ModuleCallout from './ModuleCallout.server';
+import ModuleCallToAction from './ModuleCallToAction.server';
 import ModuleCollection from './ModuleCollection.server';
 import ModuleImage from './ModuleImage.server';
 import ModuleInstagram from './ModuleInstagram.client';
@@ -19,6 +20,8 @@ export default function Module({
   switch (module._type) {
     case 'module.callout':
       return <ModuleCallout colorTheme={colorTheme} module={module} />;
+    case 'module.callToAction':
+      return <ModuleCallToAction module={module} />;
     case 'module.collection':
       return <ModuleCollection module={module} />;
     case 'module.image':
