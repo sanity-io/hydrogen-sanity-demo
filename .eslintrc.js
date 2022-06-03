@@ -4,8 +4,8 @@ module.exports = {
     // Typescript
     {
       extends: [
-        'plugin:hydrogen/recommended',
         'plugin:@typescript-eslint/recommended',
+        'plugin:hydrogen/recommended', // Must be last in this list
       ],
       files: ['**/*.ts', '**/*.tsx'],
       parser: '@typescript-eslint/parser',
