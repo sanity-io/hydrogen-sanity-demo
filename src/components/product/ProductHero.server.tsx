@@ -22,26 +22,33 @@ export default function ProductHero({gid, variantGid}: Props) {
   const {countryCode = 'US'} = useSession();
   const {languageCode} = useShop();
 
-  // TODO: harden against undefined values
+  // Conditionally fetch Shopify document
+  let storefrontProduct;
+  let storefrontProductVariant;
+  if (gid && variantGid) {
+    const {data} = useShopQuery<ShopifyPayload>({
+      query: QUERY,
+      variables: {
+        country: countryCode,
+        language: languageCode,
+        id: gid,
+        variantId: variantGid,
+      },
+    });
+    storefrontProduct = data?.product;
+    storefrontProductVariant = data?.productVariant;
+  }
 
-  const {data} = useShopQuery<ShopifyPayload>({
-    query: QUERY,
-    variables: {
-      country: countryCode,
-      language: languageCode,
-      id: gid,
-      variantId: variantGid,
-    },
-  });
-
-  const storefrontProduct = data?.product;
+  if (!storefrontProduct || !storefrontProductVariant) {
+    return null;
+  }
 
   return (
     <>
-      {data.productVariant.image && (
+      {storefrontProductVariant.image && (
         <Image
           className="absolute h-full w-full transform bg-cover bg-center object-cover object-center"
-          data={data.productVariant.image}
+          data={storefrontProductVariant.image}
           loaderOptions={{width: 2000}}
         />
       )}
@@ -49,7 +56,7 @@ export default function ProductHero({gid, variantGid}: Props) {
       <div className="absolute bottom-4 right-4">
         <ProductHotspot
           storefrontProduct={storefrontProduct}
-          storefrontProductVariant={data.productVariant}
+          storefrontProductVariant={storefrontProductVariant}
         />
       </div>
     </>

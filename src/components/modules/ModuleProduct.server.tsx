@@ -26,23 +26,32 @@ export default function ModuleProduct({imageAspectClassName, module}: Props) {
   const {languageCode} = useShop();
   const {countryCode = 'US'} = useSession();
 
-  // TODO: harden against undefined values
+  const productGid = module.productWithVariant.store.gid;
+  const productVariantGid = module.productWithVariant.variantGid;
 
-  // Fetch Shopify document
-  const {data} = useShopQuery<ShopifyPayload>({
-    query: QUERY,
-    variables: {
-      country: countryCode,
-      id: module.productWithVariant.store.gid,
-      language: languageCode,
-      variantId: module.productWithVariant.variantGid,
-    },
-  });
+  // Conditionally fetch Shopify document
+  let storefrontProduct;
+  if (productGid && productVariantGid) {
+    const {data} = useShopQuery<ShopifyPayload>({
+      query: QUERY,
+      variables: {
+        country: countryCode,
+        id: module.productWithVariant.store.gid,
+        language: languageCode,
+        variantId: module.productWithVariant.variantGid,
+      },
+    });
+    storefrontProduct = data.product;
+  }
+
+  if (!storefrontProduct) {
+    return null;
+  }
 
   return (
     <CardProduct
       imageAspectClassName={imageAspectClassName}
-      storefrontProduct={data.product}
+      storefrontProduct={storefrontProduct}
     />
   );
 }

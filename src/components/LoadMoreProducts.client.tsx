@@ -6,7 +6,12 @@ import SpinnerIcon from './icons/IconSpinner';
 /**
  * A client component that provides functionality to initially show a subset of products and a button to load more products
  */
-export default function LoadMoreProducts({startingCount}) {
+
+type Props = {
+  startingCount: number;
+};
+
+export default function LoadMoreProducts({startingCount}: Props) {
   const {pending, serverProps, setServerProps} = useServerProps();
 
   return (

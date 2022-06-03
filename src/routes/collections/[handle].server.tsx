@@ -64,7 +64,6 @@ export default function CollectionRoute({
     preload: true,
   });
 
-  // TODO: add collection support to `useSanityQuery`
   const {sanityData: sanityCollection} = useSanityQuery({
     clientConfig,
     getProductGraphQLFragment: () => false,

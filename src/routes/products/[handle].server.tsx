@@ -45,7 +45,7 @@ export default function ProductRoute() {
     query: QUERY,
   });
 
-  // Fetch Shopify document
+  // Conditionally fetch Shopify document
   let storefrontProduct;
   if (sanityProduct?.store.gid) {
     const {
