@@ -1,8 +1,8 @@
 // import resolveConfig from 'tailwindcss/resolveConfig';
 import clsx from 'clsx';
 import sanityConfig from '../../../sanity.config';
+import {DEFAULT_BUTTON_STYLES} from '../../constants';
 import {SanityModuleImage} from '../../types';
-import ButtonLink from '../buttons/ButtonLink';
 import Link from '../Link';
 import ProductTag from '../ProductTag';
 import SanityImage from '../SanityImage.client';
@@ -44,10 +44,14 @@ export default function ModuleImage({module}: {module: SanityModuleImage}) {
 
               {/* Button */}
               {module.callToAction?.link && (
-                <ButtonLink
-                  className="pointer-events-none bg-white text-offBlack group-hover:bg-lightGray"
-                  link={module.callToAction.link}
-                />
+                <div
+                  className={clsx(
+                    DEFAULT_BUTTON_STYLES,
+                    'pointer-events-none bg-white text-offBlack group-hover:bg-lightGray',
+                  )}
+                >
+                  {module.callToAction.title}
+                </div>
               )}
             </div>
           </div>
