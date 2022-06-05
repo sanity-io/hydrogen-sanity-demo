@@ -5,7 +5,7 @@ import clientConfig from '../../../sanity.config';
 import HeroPage from '../../components/heroes/HeroPage.server';
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
-import PortableText from '../../components/PortableText.client';
+import PortableText from '../../components/PortableText.server';
 import {PAGE} from '../../fragments/page';
 import {SanityPage} from '../../types';
 
@@ -41,7 +41,11 @@ export default function PageRoute({params}: Props) {
 
       {/* Body */}
       {page.body && (
-        <PortableText blocks={page.body} className="mt-8 pb-overlap" />
+        <PortableText
+          blocks={page.body}
+          className="mt-8 flex justify-center border border-blue-500 pb-overlap"
+          colorTheme={page.colorTheme}
+        />
       )}
 
       {/* TODO: re-add */}

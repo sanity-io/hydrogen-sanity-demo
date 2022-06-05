@@ -12,6 +12,7 @@ import {
   Product,
   ProductVariant,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import clsx from 'clsx';
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import clientConfig from '../../../sanity.config';
@@ -83,13 +84,23 @@ export default function ProductRoute() {
             <ProductWidget sanityProduct={sanityProduct} />
           </div>
 
-          <div className="w-full border-2 border-blue-500 lg:w-[calc(100%-315px)]">
+          <div
+            className={clsx(
+              'w-full', //
+              'lg:w-[calc(100%-315px)]',
+            )}
+          >
             <ProductDetails />
             <ProductEditorial sanityProduct={sanityProduct} />
           </div>
 
           {/* Desktop */}
-          <div className="pointer-events-none absolute top-0 right-0 z-10 hidden h-full w-[315px] lg:block">
+          <div
+            className={clsx(
+              'pointer-events-none absolute top-0 right-0 z-10 hidden h-full w-[315px]',
+              'lg:block',
+            )}
+          >
             <div className="sticky top-0 h-screen">
               <div className="absolute bottom-0 w-full p-4">
                 <ProductWidget sanityProduct={sanityProduct} />

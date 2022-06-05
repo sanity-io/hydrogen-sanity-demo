@@ -1,13 +1,20 @@
 import BlockContent from '@sanity/block-content-to-react';
+import {SanityColorTheme} from '../types';
 import AnnotationLinkEmail from './annotations/AnnotationLinkEmail';
 import AnnotationLinkExternal from './annotations/AnnotationLinkExternal';
 import AnnotationLinkInternal from './annotations/AnnotationLinkInternal';
 import AnnotationProduct from './annotations/AnnotationProduct.client';
-import Block from './blocks/Block.client';
-import BlockImage from './blocks/BlockImage.client';
-import BlockInlineProduct from './blocks/BlockInlineProduct.client';
-import BlockInlineProductMarginalia from './blocks/BlockInlineProductMarginalia.client';
-import BlockProduct from './blocks/BlockProduct.client';
+import Block from './blocks/Block.server';
+import BlockCallout from './blocks/BlockCallout.server';
+import BlockImages from './blocks/BlockImages.server';
+import BlockProducts from './blocks/BlockProducts.server';
+// import BlockInlineProduct from './blocks/BlockInlineProduct.client';
+// import BlockInlineProductMarginalia from './blocks/BlockInlineProductMarginalia.client';
+// import BlockProduct from './blocks/BlockProduct.client';
+
+type Props = {
+  colorTheme?: SanityColorTheme;
+};
 
 const portableTextMarks = {
   annotationLinkEmail: AnnotationLinkEmail,
@@ -19,14 +26,12 @@ const portableTextMarks = {
   },
 };
 
-const PortableText = (props) => {
-  const {blocks, className} = props;
-
+const PortableText = ({blocks, className, colorTheme}: Props) => {
   return (
     <div className={className}>
       <BlockContent
         blocks={blocks}
-        className="portableText"
+        className="max-w-[650px] px-8"
         renderContainerOnSingleChild
         serializers={{
           // Marks
@@ -34,10 +39,15 @@ const PortableText = (props) => {
           // Block types
           types: {
             block: Block,
-            blockImage: BlockImage,
-            blockProduct: BlockProduct,
+            blockCallout: (props) => (
+              <BlockCallout colorTheme={colorTheme} {...props} />
+            ),
+            blockImages: BlockImages,
+            blockProducts: BlockProducts,
+            /*
             blockInlineProduct: BlockInlineProduct,
             blockInlineProductMarginalia: BlockInlineProductMarginalia,
+            */
           },
         }}
       />

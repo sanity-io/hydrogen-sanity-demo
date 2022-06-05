@@ -5,9 +5,11 @@ import {
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import type {SanityModuleProduct} from '../../types';
 import CardProduct from '../cards/CardProduct';
+import PillProduct from '../pills/PillProduct';
 
 type Props = {
   imageAspectClassName?: string;
+  layout?: 'card' | 'pill';
   module: SanityModuleProduct;
 };
 
@@ -28,7 +30,11 @@ type ShopifyPayload = {
   >;
 };
 
-export default function ModuleProduct({imageAspectClassName, module}: Props) {
+export default function ModuleProduct({
+  imageAspectClassName,
+  layout = 'card',
+  module,
+}: Props) {
   const {languageCode} = useShop();
   const {countryCode = 'US'} = useSession();
 
@@ -56,13 +62,26 @@ export default function ModuleProduct({imageAspectClassName, module}: Props) {
     return null;
   }
 
-  return (
-    <CardProduct
-      imageAspectClassName={imageAspectClassName}
-      storefrontProduct={storefrontProduct}
-      storefrontProductVariant={storefrontProductVariant}
-    />
-  );
+  if (layout === 'pill') {
+    return (
+      <PillProduct
+        storefrontProduct={storefrontProduct}
+        storefrontProductVariant={storefrontProductVariant}
+      />
+    );
+  }
+
+  if (layout === 'card') {
+    return (
+      <CardProduct
+        imageAspectClassName={imageAspectClassName}
+        storefrontProduct={storefrontProduct}
+        storefrontProductVariant={storefrontProductVariant}
+      />
+    );
+  }
+
+  return null;
 }
 
 const QUERY = gql`

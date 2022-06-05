@@ -13,6 +13,10 @@ import Badge from '../Badge';
 import MoneyCompareAtPrice from '../MoneyCompareAtPrice.client';
 import MoneyPrice from '../MoneyPrice.client';
 
+/**
+ * A shared component that displays a single product to allow buyers to quickly identify a particular item of interest
+ */
+
 type Props = {
   imageAspectClassName?: string;
   storefrontProduct: Pick<
@@ -31,9 +35,6 @@ type Props = {
   >;
 };
 
-/**
- * A shared component that displays a single product to allow buyers to quickly identify a particular item of interest
- */
 export default function CardProduct({
   imageAspectClassName = 'aspect-square',
   storefrontProduct,

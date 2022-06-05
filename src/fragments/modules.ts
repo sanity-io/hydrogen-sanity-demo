@@ -1,84 +1,30 @@
 import groq from 'groq';
-import {COLLECTION} from './collection';
-import {IMAGE} from './image';
-import {LINK_EXTERNAL} from './linkExternal';
-import {LINK_INTERNAL} from './linkInternal';
-import {PRODUCT_WITH_VARIANT} from './productWithVariant';
+import {MODULE_CALLOUT} from './modules/moduleCallout';
+import {MODULE_CALL_TO_ACTION} from './modules/moduleCallToAction';
+import {MODULE_COLLECTION} from './modules/moduleCollection';
+import {MODULE_IMAGE} from './modules/moduleImage';
+import {MODULE_INSTAGRAM} from './modules/moduleInstagram';
+import {MODULE_PRODUCT} from './modules/moduleProduct';
 
 export const MODULES = groq`
   _key,
   _type,
   (_type == "module.callout") => {
-    "link": links[0] {
-      (_type == 'linkExternal') => {
-        ${LINK_EXTERNAL}
-      },
-      (_type == 'linkInternal') => {
-        ${LINK_INTERNAL}
-      },
-    },      
-    text
+    ${MODULE_CALLOUT}
   },
   (_type == 'module.callToAction') => {
-    body,
-    content[0] {
-      _type,
-      (_type == 'image') => {
-        ${IMAGE}
-      },
-      (_type == 'productWithVariant') => {
-        ...${PRODUCT_WITH_VARIANT}
-      },
-    },
-    layout,
-    "link": links[0] {
-      (_type == 'linkExternal') => {
-        ${LINK_EXTERNAL}
-      },
-      (_type == 'linkInternal') => {
-        ${LINK_INTERNAL}
-      },
-    },      
-    title,
+    ${MODULE_CALL_TO_ACTION}
   },
   (_type == "module.collection") => {
-    collection->{
-      ${COLLECTION}
-    }
+    ${MODULE_COLLECTION}
   },      
   (_type == "module.image") => {
-    image {
-      ${IMAGE}
-    },
-    (variant == 'callToAction') => {
-      callToAction {
-        "link": links[0] {
-          (_type == 'linkExternal') => {
-            ${LINK_EXTERNAL}
-          },
-          (_type == 'linkInternal') => {
-            ${LINK_INTERNAL}
-          },
-        },      
-        title,
-      }
-    },      
-    (variant == 'caption') => {
-      caption,
-    },
-    (variant == 'products') => {
-      products[] {
-        ...${PRODUCT_WITH_VARIANT}
-      },
-    },
-    variant,
+    ${MODULE_IMAGE}
   },
   (_type == "module.instagram") => {
-    url
+    ${MODULE_INSTAGRAM}
   },      
   (_type == "module.product") => {
-    productWithVariant {
-      ...${PRODUCT_WITH_VARIANT}
-    }
+    ${MODULE_PRODUCT}
   },      
 `;

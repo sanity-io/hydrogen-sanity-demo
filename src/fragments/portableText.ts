@@ -1,22 +1,21 @@
 import groq from 'groq';
-import {IMAGE} from './image';
 import {LINK_EXTERNAL} from './linkExternal';
 import {LINK_INTERNAL} from './linkInternal';
+import {MODULE_CALLOUT} from './modules/moduleCallout';
+import {MODULE_IMAGES} from './modules/moduleImages';
+import {MODULE_PRODUCTS} from './modules/moduleProducts';
 import {PRODUCT_WITH_VARIANT} from './productWithVariant';
 
 export const PORTABLE_TEXT = groq`
   ...,
-  (_type == 'blockImage') => {
-    ...,
-    image {
-      ${IMAGE}
-    }
+  (_type == 'blockCallout') => {
+    ${MODULE_CALLOUT}
   },
-  (_type == 'blockProduct') => {
-    ...,
-    productWithVariant {
-      ${PRODUCT_WITH_VARIANT}
-    }
+  (_type == 'blockImages') => {
+    ${MODULE_IMAGES}
+  },
+  (_type == 'blockProducts') => {
+    ${MODULE_PRODUCTS}
   },
   children[] {
     ...,

@@ -33,7 +33,11 @@ type ShopifyPayload = {
   >[];
 };
 
-export default function ModuleImage({module}: {module: SanityModuleImage}) {
+type Props = {
+  module: SanityModuleImage;
+};
+
+export default function ModuleImage({module}: Props) {
   const image = module.image;
 
   if (!image) {

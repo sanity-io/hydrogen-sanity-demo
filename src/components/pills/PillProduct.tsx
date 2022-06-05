@@ -1,5 +1,8 @@
 import {Image, Link} from '@shopify/hydrogen';
-import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import {
+  Product,
+  ProductVariant,
+} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import {Suspense} from 'react';
 import {
@@ -10,19 +13,35 @@ import Badge from '../Badge';
 import MoneyCompareAtPrice from '../MoneyCompareAtPrice.client';
 import MoneyPrice from '../MoneyPrice.client';
 
+/**
+ * A shared component that displays a (small) single product to allow buyers to quickly identify a particular item of interest
+ */
+
 type Props = {
   onClick?: () => void;
   storefrontProduct: Pick<
     Product,
     'handle' | 'options' | 'title' | 'variants' | 'vendor'
   >;
+  storefrontProductVariant?: Pick<
+    ProductVariant,
+    | 'availableForSale'
+    | 'compareAtPriceV2'
+    | 'id'
+    | 'image'
+    | 'priceV2'
+    | 'selectedOptions'
+    | 'title'
+  >;
 };
 
-/**
- * A shared component that displays a (small) single product to allow buyers to quickly identify a particular item of interest
- */
-export default function PillProduct({onClick, storefrontProduct}: Props) {
-  const selectedVariant = storefrontProduct.variants.edges[0].node;
+export default function PillProduct({
+  onClick,
+  storefrontProduct,
+  storefrontProductVariant,
+}: Props) {
+  const selectedVariant =
+    storefrontProductVariant || storefrontProduct.variants.edges[0].node;
 
   if (selectedVariant == null) {
     return null;

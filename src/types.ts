@@ -168,6 +168,13 @@ export interface SanityModuleImageProducts extends SanityModuleImageBase {
   variant: 'products';
 }
 
+export type SanityModuleImages = {
+  _key?: string;
+  _type: 'module.images';
+  fullWidth?: boolean;
+  modules: SanityModuleImage[];
+};
+
 export type SanityModuleInstagram = {
   _key?: string;
   _type: 'module.instagram';
@@ -178,6 +185,13 @@ export type SanityModuleProduct = {
   _key?: string;
   _type: 'module.product';
   productWithVariant: SanityProductWithVariant;
+};
+
+export type SanityModuleProducts = {
+  _key?: string;
+  _type: 'module.products';
+  layout?: 'card' | 'pill';
+  modules: SanityModuleProduct[];
 };
 
 export type SanityNotFoundPage = {
