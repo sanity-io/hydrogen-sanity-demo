@@ -117,7 +117,12 @@ export default function SelectSortOrder({initialSortOrder}: Props) {
               <IconChevronDown className={open ? 'rotate-180' : 'rotate-0'} />
             </Listbox.Button>
 
-            <Listbox.Options className="absolute top-full right-0 z-10 mt-3 min-w-[150px] overflow-hidden rounded shadow">
+            <Listbox.Options
+              className={clsx(
+                'absolute top-full left-0 right-auto z-10 mt-3 min-w-[150px] overflow-hidden rounded shadow',
+                'md:left-auto md:right-0',
+              )}
+            >
               <div className="overflow-y-auto bg-white">
                 {listboxOpen && (
                   <Suspense

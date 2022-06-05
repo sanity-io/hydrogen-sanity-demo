@@ -200,17 +200,6 @@ const QUERY_SHOPIFY = gql`
             }
             sku
             title
-            unitPrice {
-              amount
-              currencyCode
-            }
-            unitPriceMeasurement {
-              measuredType
-              quantityUnit
-              quantityValue
-              referenceUnit
-              referenceValue
-            }
           }
         }
       }

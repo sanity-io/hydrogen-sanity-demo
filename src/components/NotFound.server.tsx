@@ -123,11 +123,11 @@ const SHOPIFY_QUERY = gql`
                   title
                   availableForSale
                   image {
+                    altText
+                    height
                     id
                     url
-                    altText
                     width
-                    height
                   }
                   priceV2 {
                     currencyCode

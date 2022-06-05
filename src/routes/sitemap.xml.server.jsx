@@ -116,14 +116,14 @@ const QUERY = gql`
     ) {
       edges {
         node {
-          updatedAt
+          featuredImage {
+            altText
+            url
+          }
           handle
           onlineStoreUrl
           title
-          featuredImage {
-            url
-            altText
-          }
+          updatedAt
         }
       }
     }

@@ -48,11 +48,11 @@ const QUERY_SHOPIFY = gql`
     collection(handle: $handle) {
       title
       image {
+        altText
+        height
         id
         url
         width
-        height
-        altText
       }
       products(first: $numProducts) {
         edges {
@@ -71,11 +71,11 @@ const QUERY_SHOPIFY = gql`
                   title
                   availableForSale
                   image {
+                    altText
+                    height
                     id
                     url
-                    altText
                     width
-                    height
                   }
                   priceV2 {
                     currencyCode

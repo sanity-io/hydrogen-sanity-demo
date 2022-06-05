@@ -24,6 +24,7 @@ import {COLLECTION_PAGE_SIZE} from '../../constants';
 import {COLLECTION_PAGE} from '../../fragments/collectionPage';
 import type {SanityCollectionPage} from '../../types';
 import {combineProductsAndModules} from '../../utils/combineProductsAndModules';
+import clsx from 'clsx';
 
 type Props = {
   collectionProductCount: number;
@@ -104,7 +105,12 @@ export default function CollectionRoute({
 
       <div className="mb-32 mt-8 px-8 pb-overlap">
         {products.length > 0 && (
-          <div className="mb-8 flex justify-end">
+          <div
+            className={clsx(
+              'mb-8 flex justify-start', //
+              'md:justify-end',
+            )}
+          >
             <SelectSortOrder
               key={sanityCollection._id}
               initialSortOrder={sanityCollection.store.sortOrder}
@@ -151,11 +157,11 @@ const QUERY = gql`
   ) @inContext(country: $country, language: $language) {
     collection(handle: $handle) {
       image {
+        altText
+        height
         id
         url
         width
-        height
-        altText
       }
       products(
         first: $numProducts
@@ -165,6 +171,7 @@ const QUERY = gql`
         edges {
           node {
             handle
+            id
             options {
               name
               values
@@ -173,24 +180,28 @@ const QUERY = gql`
             variants(first: 1) {
               edges {
                 node {
-                  id
-                  title
                   availableForSale
+                  compareAtPriceV2 {
+                    currencyCode
+                    amount
+                  }
+                  id
                   image {
+                    altText
+                    height
                     id
                     url
-                    altText
                     width
-                    height
                   }
                   priceV2 {
                     currencyCode
                     amount
                   }
-                  compareAtPriceV2 {
-                    currencyCode
-                    amount
+                  selectedOptions {
+                    name
+                    value
                   }
+                  title
                 }
               }
             }

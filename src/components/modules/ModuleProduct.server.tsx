@@ -12,13 +12,19 @@ type Props = {
 };
 
 type ShopifyPayload = {
-  productVariant: Pick<
-    ProductVariant,
-    'availableForSale' | 'compareAtPriceV2' | 'image' | 'priceV2'
-  >;
   product: Pick<
     Product,
     'handle' | 'id' | 'options' | 'title' | 'variants' | 'vendor'
+  >;
+  productVariant: Pick<
+    ProductVariant,
+    | 'availableForSale'
+    | 'compareAtPriceV2'
+    | 'id'
+    | 'image'
+    | 'priceV2'
+    | 'selectedOptions'
+    | 'title'
   >;
 };
 
@@ -31,6 +37,7 @@ export default function ModuleProduct({imageAspectClassName, module}: Props) {
 
   // Conditionally fetch Shopify document
   let storefrontProduct;
+  let storefrontProductVariant;
   if (productGid && productVariantGid) {
     const {data} = useShopQuery<ShopifyPayload>({
       query: QUERY,
@@ -42,9 +49,10 @@ export default function ModuleProduct({imageAspectClassName, module}: Props) {
       },
     });
     storefrontProduct = data.product;
+    storefrontProductVariant = data.productVariant;
   }
 
-  if (!storefrontProduct) {
+  if (!storefrontProduct || !storefrontProductVariant) {
     return null;
   }
 
@@ -52,6 +60,7 @@ export default function ModuleProduct({imageAspectClassName, module}: Props) {
     <CardProduct
       imageAspectClassName={imageAspectClassName}
       storefrontProduct={storefrontProduct}
+      storefrontProductVariant={storefrontProductVariant}
     />
   );
 }
@@ -63,27 +72,6 @@ const QUERY = gql`
     $language: LanguageCode
     $variantId: ID!
   ) @inContext(country: $country, language: $language) {
-    productVariant: node(id: $variantId) {
-      ... on ProductVariant {
-        availableForSale
-        compareAtPriceV2 {
-          amount
-          currencyCode
-        }
-        image {
-          id
-          url
-          altText
-          width
-          height
-        }
-        priceV2 {
-          amount
-          currencyCode
-        }
-        title
-      }
-    }
     product: product(id: $id) {
       handle
       id
@@ -92,31 +80,33 @@ const QUERY = gql`
         values
       }
       title
-      variants(first: 1) {
-        edges {
-          node {
-            id
-            title
-            availableForSale
-            image {
-              id
-              url
-              altText
-              width
-              height
-            }
-            priceV2 {
-              currencyCode
-              amount
-            }
-            compareAtPriceV2 {
-              currencyCode
-              amount
-            }
-          }
-        }
-      }
       vendor
+    }
+    productVariant: node(id: $variantId) {
+      ... on ProductVariant {
+        availableForSale
+        compareAtPriceV2 {
+          amount
+          currencyCode
+        }
+        id
+        image {
+          altText
+          height
+          id
+          url
+          width
+        }
+        priceV2 {
+          amount
+          currencyCode
+        }
+        selectedOptions {
+          name
+          value
+        }
+        title
+      }
     }
   }
 `;

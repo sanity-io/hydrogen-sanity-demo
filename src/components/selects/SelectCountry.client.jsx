@@ -14,7 +14,7 @@ export default function CountrySelector() {
   const [selectedCountry] = useCountry();
 
   const setCountry = useCallback(({isoCode, name}) => {
-    fetch(`/countries`, {
+    fetch(`/api/countries`, {
       body: JSON.stringify({isoCode, name}),
       method: 'POST',
     }).then(() => {
@@ -64,7 +64,7 @@ export default function CountrySelector() {
 }
 
 export function Countries({selectedCountry, getClassName}) {
-  const countries = fetchSync('/countries').json();
+  const countries = fetchSync('/api/countries').json();
 
   return countries.map((country) => {
     const isSelected = country.isoCode === selectedCountry.isoCode;

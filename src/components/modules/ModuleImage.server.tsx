@@ -1,17 +1,74 @@
-// import resolveConfig from 'tailwindcss/resolveConfig';
+import {
+  gql,
+  ProductProvider,
+  useSession,
+  useShop,
+  useShopQuery,
+} from '@shopify/hydrogen';
+import {
+  Product,
+  ProductVariant,
+} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import sanityConfig from '../../../sanity.config';
 import {DEFAULT_BUTTON_STYLES} from '../../constants';
 import {SanityModuleImage} from '../../types';
 import Link from '../Link';
-import ProductTag from '../ProductTag';
+import ProductTag from '../ProductTag.client';
 import SanityImage from '../SanityImage.client';
+
+// TODO: refactor picked product + product variants
+
+type ShopifyPayload = {
+  products: Pick<Product, 'handle' | 'id' | 'options' | 'title' | 'vendor'>[];
+  productVariants: Pick<
+    ProductVariant,
+    | 'availableForSale'
+    | 'compareAtPriceV2'
+    | 'id'
+    | 'image'
+    | 'priceV2'
+    | 'selectedOptions'
+    | 'title'
+  >[];
+};
 
 export default function ModuleImage({module}: {module: SanityModuleImage}) {
   const image = module.image;
 
   if (!image) {
     return null;
+  }
+
+  // Conditionally fetch Shopify products if this is an image module of variant `products`
+  let storefrontProducts: Pick<
+    Product,
+    'handle' | 'id' | 'options' | 'title' | 'vendor'
+  >[];
+  let storefrontProductVariants: Pick<
+    ProductVariant,
+    | 'availableForSale'
+    | 'compareAtPriceV2'
+    | 'id'
+    | 'image'
+    | 'priceV2'
+    | 'title'
+  >[];
+  if (module.variant === 'products') {
+    const {languageCode} = useShop();
+    const {countryCode = 'US'} = useSession();
+
+    const {data} = useShopQuery<ShopifyPayload>({
+      query: QUERY,
+      variables: {
+        country: countryCode,
+        ids: module.products.map((p) => p.store.gid),
+        language: languageCode,
+        variantIds: module.products.map((p) => p.variantGid),
+      },
+    });
+    storefrontProducts = data.products;
+    storefrontProductVariants = data.productVariants;
   }
 
   const Content = (
@@ -66,9 +123,30 @@ export default function ModuleImage({module}: {module: SanityModuleImage}) {
       {/* Products */}
       {module.variant === 'products' && (
         <div className="mt-2 inline-flex gap-1">
-          {module.products.map((product) => (
-            <ProductTag key={product._id} product={product} />
-          ))}
+          {module.products.map((product, index) => {
+            // Add selected variant
+            const storefrontProductVariant = storefrontProductVariants[index];
+            const storefrontProductWithVariant = {
+              ...storefrontProducts[index],
+              variants: {
+                edges: [
+                  {
+                    node: storefrontProductVariant,
+                  },
+                ],
+              },
+            };
+
+            return (
+              <ProductProvider
+                data={storefrontProductWithVariant}
+                initialVariantId={storefrontProductVariant.id}
+                key={product._id}
+              >
+                <ProductTag key={product._id} />
+              </ProductProvider>
+            );
+          })}
         </div>
       )}
     </div>
@@ -84,3 +162,58 @@ export default function ModuleImage({module}: {module: SanityModuleImage}) {
 
   return Content;
 }
+
+const QUERY = gql`
+  query products(
+    $country: CountryCode
+    $language: LanguageCode
+    $ids: [ID!]!
+    $variantIds: [ID!]!
+  ) @inContext(country: $country, language: $language) {
+    products: nodes(ids: $ids) {
+      ... on Product {
+        handle
+        id
+        options {
+          name
+          values
+        }
+        title
+        variants(first: 1) {
+          edges {
+            node {
+              availableForSale
+            }
+          }
+        }
+        vendor
+      }
+    }
+    productVariants: nodes(ids: $variantIds) {
+      ... on ProductVariant {
+        availableForSale
+        compareAtPriceV2 {
+          amount
+          currencyCode
+        }
+        id
+        image {
+          altText
+          height
+          id
+          url
+          width
+        }
+        priceV2 {
+          amount
+          currencyCode
+        }
+        selectedOptions {
+          name
+          value
+        }
+        title
+      }
+    }
+  }
+`;

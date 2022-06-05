@@ -1,5 +1,8 @@
 import {Image, Link} from '@shopify/hydrogen';
-import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import {
+  Product,
+  ProductVariant,
+} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import {Suspense} from 'react';
 import {
@@ -16,6 +19,16 @@ type Props = {
     Product,
     'handle' | 'options' | 'title' | 'variants' | 'vendor'
   >;
+  storefrontProductVariant?: Pick<
+    ProductVariant,
+    | 'availableForSale'
+    | 'compareAtPriceV2'
+    | 'id'
+    | 'image'
+    | 'priceV2'
+    | 'selectedOptions'
+    | 'title'
+  >;
 };
 
 /**
@@ -24,8 +37,10 @@ type Props = {
 export default function CardProduct({
   imageAspectClassName = 'aspect-square',
   storefrontProduct,
+  storefrontProductVariant,
 }: Props) {
-  const selectedVariant = storefrontProduct.variants.edges[0].node;
+  const selectedVariant =
+    storefrontProductVariant || storefrontProduct.variants.edges[0].node;
 
   if (selectedVariant == null) {
     return null;

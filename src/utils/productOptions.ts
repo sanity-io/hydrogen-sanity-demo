@@ -12,7 +12,7 @@ export const hasMultipleProductOptions = (options?: OptionWithValues[]) => {
   );
 };
 
-export const getProductOptionString = (options: OptionWithValues[]) => {
+export const getProductOptionString = (options?: OptionWithValues[]) => {
   return options
     ?.map(({name, values}) => pluralize(name, values.length, true))
     .join(' / ');

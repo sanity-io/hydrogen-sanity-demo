@@ -70,27 +70,6 @@ const QUERY = gql`
     $id: ID!
     $variantId: ID!
   ) @inContext(country: $country, language: $language) {
-    productVariant: node(id: $variantId) {
-      ... on ProductVariant {
-        availableForSale
-        compareAtPriceV2 {
-          amount
-          currencyCode
-        }
-        image {
-          id
-          url
-          altText
-          width
-          height
-        }
-        priceV2 {
-          amount
-          currencyCode
-        }
-        title
-      }
-    }
     product: product(id: $id) {
       handle
       id
@@ -100,6 +79,27 @@ const QUERY = gql`
       }
       title
       vendor
+    }
+    productVariant: node(id: $variantId) {
+      ... on ProductVariant {
+        availableForSale
+        compareAtPriceV2 {
+          amount
+          currencyCode
+        }
+        image {
+          altText
+          height
+          id
+          url
+          width
+        }
+        priceV2 {
+          amount
+          currencyCode
+        }
+        title
+      }
     }
   }
 `;
