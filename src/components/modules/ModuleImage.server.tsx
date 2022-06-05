@@ -62,7 +62,7 @@ export default function ModuleImage({module}: {module: SanityModuleImage}) {
       query: QUERY,
       variables: {
         country: countryCode,
-        ids: module.products.map((p) => p.store.gid),
+        ids: module.products.map((p) => p?.gid),
         language: languageCode,
         variantIds: module.products.map((p) => p.variantGid),
       },

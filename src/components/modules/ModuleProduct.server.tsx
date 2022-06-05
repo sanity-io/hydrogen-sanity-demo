@@ -32,7 +32,7 @@ export default function ModuleProduct({imageAspectClassName, module}: Props) {
   const {languageCode} = useShop();
   const {countryCode = 'US'} = useSession();
 
-  const productGid = module.productWithVariant.store.gid;
+  const productGid = module.productWithVariant.gid;
   const productVariantGid = module.productWithVariant.variantGid;
 
   // Conditionally fetch Shopify document
@@ -43,7 +43,7 @@ export default function ModuleProduct({imageAspectClassName, module}: Props) {
       query: QUERY,
       variables: {
         country: countryCode,
-        id: module.productWithVariant.store.gid,
+        id: module.productWithVariant.gid,
         language: languageCode,
         variantId: module.productWithVariant.variantGid,
       },

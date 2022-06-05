@@ -6,8 +6,8 @@ export const COLLECTION = groq`
   colorTheme->{
     ${COLOR_THEME}
   },
+  "gid": store.gid,
   "slug": "/collections/" + store.slug.current,
-  store,
   "title": store.title,
   "vector": vector.asset->url,
 `;

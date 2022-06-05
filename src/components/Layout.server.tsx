@@ -4,7 +4,7 @@ import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import {ReactNode, Suspense} from 'react';
 import clientConfig from '../../sanity.config';
 import {LINKS} from '../fragments/links';
-import {SanityColorTheme, SanityMenuLink} from '../types';
+import {SanityMenuLink} from '../types';
 import Cart from './cart/Cart.client';
 import Footer from './Footer.server';
 import Header from './Header.server';

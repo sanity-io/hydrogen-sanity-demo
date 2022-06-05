@@ -17,6 +17,7 @@ export const PRODUCT_PAGE = groq`
   "customProductOptions": *[_type == 'settings'][0].customProductOptions[title in ^.store.options[].name] {
     ${CUSTOM_PRODUCT_OPTIONS}
   },
+  "gid": store.gid,
   images[] {
     ${IMAGE}
   },
@@ -30,6 +31,5 @@ export const PRODUCT_PAGE = groq`
   seo {
     ${SEO_PRODUCT}
   },
-  store,
   "slug": store.slug.current,
 `;

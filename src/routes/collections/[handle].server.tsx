@@ -113,7 +113,7 @@ export default function CollectionRoute({
           >
             <SelectSortOrder
               key={sanityCollection._id}
-              initialSortOrder={sanityCollection.store.sortOrder}
+              initialSortOrder={sanityCollection.sortOrder}
             />
           </div>
         )}

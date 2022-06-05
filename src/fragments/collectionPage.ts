@@ -22,6 +22,6 @@ export const COLLECTION_PAGE = groq`
     ${SEO_PRODUCT}
   },
   "slug": store.slug.current,
-  store,
+  "sortOrder": store.sortOrder,
   "title": store.title,
 `;

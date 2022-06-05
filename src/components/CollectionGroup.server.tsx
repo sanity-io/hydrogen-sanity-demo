@@ -1,5 +1,5 @@
 import {gql, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
-import {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import type {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import type {SanityCollectionGroup} from '../types';
 import CollectionGroupDialog from './CollectionGroupDialog.client';
 
@@ -12,18 +12,20 @@ type ShopifyPayload = {
 };
 
 export default function CollectionGroup({collectionGroup}: Props) {
-  const collectionHandle =
-    collectionGroup?.collectionProducts?.store.slug.current || '';
-
+  const collectionGid = collectionGroup?.collectionProducts?.gid;
   const {countryCode = 'US'} = useSession();
   const {languageCode} = useShop();
 
-  // Fetch collection
+  if (!collectionGid) {
+    return null;
+  }
+
+  // Conditionally fetch Shopify collection
   const {data} = useShopQuery<ShopifyPayload>({
     query: QUERY_SHOPIFY,
     variables: {
       country: countryCode,
-      handle: collectionHandle,
+      id: collectionGid,
       language: languageCode,
       numProducts: 4,
     },
@@ -32,7 +34,7 @@ export default function CollectionGroup({collectionGroup}: Props) {
 
   return (
     <CollectionGroupDialog
-      collection={data?.collection}
+      collection={data.collection}
       collectionGroup={collectionGroup}
     />
   );
@@ -41,12 +43,11 @@ export default function CollectionGroup({collectionGroup}: Props) {
 const QUERY_SHOPIFY = gql`
   query CollectionDetails(
     $country: CountryCode
+    $id: ID!
     $language: LanguageCode
-    $handle: String!
     $numProducts: Int!
   ) @inContext(country: $country, language: $language) {
-    collection(handle: $handle) {
-      title
+    collection(id: $id) {
       image {
         altText
         height
@@ -92,6 +93,7 @@ const QUERY_SHOPIFY = gql`
           }
         }
       }
+      title
     }
   }
 `;

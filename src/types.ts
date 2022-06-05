@@ -3,9 +3,9 @@ import {Block} from '@sanity/types';
 export type SanityCollection = {
   _id: string;
   colorTheme: SanityColorTheme;
+  gid: string;
   hero?: SanityHeroPage;
   slug: string;
-  store: Record<string, any>;
   title: string;
   vector?: string;
 };
@@ -16,14 +16,13 @@ export type SanityCollectionPage = {
   hero?: SanityHeroCollection;
   modules: (SanityModuleImage | SanityModuleInstagram)[];
   slug: string;
-  store: Record<string, any>;
+  sortOrder: string;
   title: string;
 };
 
 export type SanityCollectionGroup = {
   _key: string;
   _type: 'collectionGroup';
-  // TODO: use separate type
   collectionLinks?: SanityCollection[];
   collectionProducts?: SanityCollection;
   title: string;
@@ -201,8 +200,8 @@ export type SanityProductWithVariant = {
   _id: string;
   _type: 'productWithVariant';
   available: boolean;
+  gid: string;
   slug: string;
-  store: Record<string, any>;
   variantGid: string;
 };
 
@@ -212,9 +211,9 @@ export type SanityProductPage = {
   body: Block[];
   colorTheme?: SanityColorTheme;
   customProductOptions?: SanityCustomProductOption[];
+  gid: string;
   images?: SanityAssetImage[];
   slug: string;
   sections?: any;
   seo?: any;
-  store: Record<string, any>;
 };

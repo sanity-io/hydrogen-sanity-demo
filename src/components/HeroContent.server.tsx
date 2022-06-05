@@ -27,15 +27,12 @@ export default function HeroContent({content}: Props) {
         );
       }
       case 'productWithVariant': {
-        if (!content.store?.gid || !content.variantGid) {
+        if (!content?.gid || !content.variantGid) {
           return null;
         }
 
         return (
-          <ProductHero
-            gid={content.store.gid}
-            variantGid={content.variantGid}
-          />
+          <ProductHero gid={content?.gid} variantGid={content.variantGid} />
         );
       }
     }

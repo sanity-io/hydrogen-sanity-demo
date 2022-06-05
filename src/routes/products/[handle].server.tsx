@@ -47,14 +47,14 @@ export default function ProductRoute() {
 
   // Conditionally fetch Shopify document
   let storefrontProduct;
-  if (sanityProduct?.store.gid) {
+  if (sanityProduct?.gid) {
     const {
       data: {product},
     } = useShopQuery<ShopifyPayload>({
       query: QUERY_SHOPIFY,
       variables: {
         country: countryCode,
-        id: sanityProduct.store.gid,
+        id: sanityProduct.gid,
         language: languageCode,
       },
     });
