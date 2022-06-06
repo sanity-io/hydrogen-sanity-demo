@@ -9,7 +9,12 @@ export default function ProductEditorial({sanityProduct}: Props) {
   return (
     <div>
       {/* Body */}
-      {sanityProduct?.body && <PortableText blocks={sanityProduct.body} />}
+      {sanityProduct?.body && (
+        <PortableText
+          blocks={sanityProduct.body}
+          className="my-8 max-w-[650px] px-8"
+        />
+      )}
     </div>
   );
 }

@@ -25,7 +25,7 @@ export default function BlockImages({node}: Props) {
   return (
     <div
       className={clsx(
-        'first:mt-0',
+        'first:mt-0 last:mb-0', //
         'my-8 grid grid-cols-1 gap-3',
         node.fullWidth &&
           'relative left-1/2 right-1/2 mr-[-50vw] ml-[-50vw] w-screen px-8',

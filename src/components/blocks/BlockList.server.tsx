@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 
 const SHARED_LIST_CLASSES = clsx(
-  'first:mt-0', //
+  'first:mt-0 last:mb-0', //
   'my-8 space-y-1',
 );
 

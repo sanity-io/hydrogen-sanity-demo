@@ -7,6 +7,7 @@ import {LINKS} from '../fragments/links';
 import {PORTABLE_TEXT} from '../fragments/portableText';
 import type {SanityLink} from '../types';
 import IconLogo from './icons/IconLogo';
+import PortableText from './PortableText.server';
 
 /**
  * A server component that specifies the content of the footer on the website
@@ -57,9 +58,12 @@ export default function Footer() {
       <div className="align-start relative flex justify-between overflow-hidden rounded-xl bg-peach py-10 pl-8 pr-19">
         <div>
           <IconLogo />
-          <p className="mt-12 text-sm text-darkGray">
-            Made by Sanity, Companion and Ewa Lefmann
-          </p>
+          {footer?.text && (
+            <PortableText
+              blocks={footer.text}
+              className="mt-12 text-sm text-darkGray"
+            />
+          )}
         </div>
 
         <div className="columns-2 gap-x-17 self-start rounded-xl text-lg font-bold">

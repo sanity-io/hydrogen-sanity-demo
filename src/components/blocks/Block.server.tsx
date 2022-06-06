@@ -12,7 +12,7 @@ const Block = ({children, node}: Props) => {
     return (
       <h2
         className={clsx(
-          'first:mt-0', //
+          'first:mt-0 last:mb-0', //
           'mt-16 mb-4 text-xl font-bold',
         )}
       >
@@ -30,7 +30,7 @@ const Block = ({children, node}: Props) => {
   return (
     <p
       className={clsx(
-        'first:mt-0', //
+        'first:mt-0 last:mb-0', //
         'relative my-4 leading-paragraph',
       )}
     >

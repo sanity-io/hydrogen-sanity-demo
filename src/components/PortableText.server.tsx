@@ -14,6 +14,7 @@ import BlockList from './blocks/BlockList.server';
 // import BlockProduct from './blocks/BlockProduct.client';
 
 type Props = {
+  className?: string;
   colorTheme?: SanityColorTheme;
 };
 
@@ -29,32 +30,30 @@ const portableTextMarks = {
 
 const PortableText = ({blocks, className, colorTheme}: Props) => {
   return (
-    <div className={className}>
-      <BlockContent
-        blocks={blocks}
-        className="max-w-[650px] px-8"
-        renderContainerOnSingleChild
-        serializers={{
-          // Lists
-          list: BlockList,
-          // Marks
-          marks: portableTextMarks,
-          // Block types
-          types: {
-            block: Block,
-            blockCallout: (props) => (
-              <BlockCallout colorTheme={colorTheme} {...props} />
-            ),
-            blockImages: BlockImages,
-            blockProducts: BlockProducts,
-            /*
+    <BlockContent
+      blocks={blocks}
+      className={className}
+      renderContainerOnSingleChild
+      serializers={{
+        // Lists
+        list: BlockList,
+        // Marks
+        marks: portableTextMarks,
+        // Block types
+        types: {
+          block: Block,
+          blockCallout: (props) => (
+            <BlockCallout colorTheme={colorTheme} {...props} />
+          ),
+          blockImages: BlockImages,
+          blockProducts: BlockProducts,
+          /*
             blockInlineProduct: BlockInlineProduct,
             blockInlineProductMarginalia: BlockInlineProductMarginalia,
             */
-          },
-        }}
-      />
-    </div>
+        },
+      }}
+    />
   );
 };
 
