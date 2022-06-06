@@ -31,7 +31,7 @@ export default function TooltipProduct({
   const productOptions = getProductOptionString(options);
 
   return (
-    <div className="border-1 relative mb-4 w-[14rem] rounded border border-gray bg-white p-3">
+    <div className="border-1 relative w-[14rem] rounded border border-gray bg-white p-3">
       <div
         className={clsx([
           imageAspectClassName,

@@ -22,13 +22,13 @@ export const PORTABLE_TEXT = groq`
     (_type == 'blockInlineProduct') => {
       ...,
       productWithVariant {
-        ${PRODUCT_WITH_VARIANT}
+        ...${PRODUCT_WITH_VARIANT}
       }
     },
     (_type == 'blockInlineProductMarginalia') => {
       ...,
       productWithVariant {
-        ${PRODUCT_WITH_VARIANT}
+        ...${PRODUCT_WITH_VARIANT}
       }
     },
   },
@@ -41,9 +41,12 @@ export const PORTABLE_TEXT = groq`
       ${LINK_INTERNAL}
     },
     (_type == 'annotationProduct') => {
-      ...,
+      linkAction,
       productWithVariant {
-        ${PRODUCT_WITH_VARIANT}
+        ...${PRODUCT_WITH_VARIANT}
+      },
+      (linkAction != 'link') => {
+        quantity
       }
     },
   }

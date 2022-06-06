@@ -87,6 +87,7 @@
 html {
   -webkit-font-smoothing: antialiased;
   scroll-padding-top: 10rem;
+  overflow-x: hidden;
 }
 
 .embla__slide {

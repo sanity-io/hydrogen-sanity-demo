@@ -19,13 +19,12 @@ type ShopifyPayload = {
 };
 
 export default function ProductHero({gid, variantGid}: Props) {
-  const {countryCode = 'US'} = useSession();
-  const {languageCode} = useShop();
-
   // Conditionally fetch Shopify document
   let storefrontProduct;
   let storefrontProductVariant;
   if (gid && variantGid) {
+    const {countryCode = 'US'} = useSession();
+    const {languageCode} = useShop();
     const {data} = useShopQuery<ShopifyPayload>({
       query: QUERY,
       variables: {

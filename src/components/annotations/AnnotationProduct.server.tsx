@@ -1,16 +1,28 @@
-import {gql, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
+import type {
+  PortableTextBlock,
+  PortableTextMarkDefinition,
+} from '@portabletext/types';
+import {
+  gql,
+  ProductProvider,
+  useSession,
+  useShop,
+  useShopQuery,
+} from '@shopify/hydrogen';
 import {
   Product,
   ProductVariant,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
-import type {SanityModuleProduct} from '../../types';
-import CardProduct from '../cards/CardProduct';
-import PillProduct from '../pills/PillProduct';
+import type {SanityColorTheme, SanityProductWithVariant} from '../../types';
+import ProductInlineLink from '../ProductInlineLink.client';
 
-type Props = {
-  imageAspectClassName?: string;
-  layout?: 'card' | 'pill';
-  module: SanityModuleProduct;
+type Props = PortableTextBlock & {
+  colorTheme?: SanityColorTheme;
+  mark: PortableTextMarkDefinition & {
+    linkAction: 'addToCart' | 'buyNow' | 'link';
+    productWithVariant: SanityProductWithVariant;
+    quantity?: number;
+  };
 };
 
 type ShopifyPayload = {
@@ -30,27 +42,22 @@ type ShopifyPayload = {
   >;
 };
 
-export default function ModuleProduct({
-  imageAspectClassName,
-  layout = 'card',
-  module,
-}: Props) {
-  const productGid = module.productWithVariant.gid;
-  const productVariantGid = module.productWithVariant.variantGid;
+export default function AnnotationProduct({children, colorTheme, mark}: Props) {
+  const {productWithVariant} = mark;
 
   // Conditionally fetch Shopify document
   let storefrontProduct;
   let storefrontProductVariant;
-  if (productGid && productVariantGid) {
+  if (productWithVariant.gid && productWithVariant.variantGid) {
     const {languageCode} = useShop();
     const {countryCode = 'US'} = useSession();
     const {data} = useShopQuery<ShopifyPayload>({
       query: QUERY,
       variables: {
         country: countryCode,
-        id: productGid,
+        id: productWithVariant.gid,
         language: languageCode,
-        variantId: productVariantGid,
+        variantId: productWithVariant.variantGid,
       },
     });
     storefrontProduct = data.product;
@@ -58,29 +65,35 @@ export default function ModuleProduct({
   }
 
   if (!storefrontProduct || !storefrontProductVariant) {
-    return null;
+    return <>{children}</>;
   }
 
-  if (layout === 'pill') {
-    return (
-      <PillProduct
-        storefrontProduct={storefrontProduct}
-        storefrontProductVariant={storefrontProductVariant}
-      />
-    );
-  }
+  // TODO: refactor
+  const storefrontProductWithVariant = {
+    ...storefrontProduct,
+    variants: {
+      edges: [
+        {
+          node: storefrontProductVariant,
+        },
+      ],
+    },
+  };
 
-  if (layout === 'card') {
-    return (
-      <CardProduct
-        imageAspectClassName={imageAspectClassName}
-        storefrontProduct={storefrontProduct}
-        storefrontProductVariant={storefrontProductVariant}
-      />
-    );
-  }
-
-  return null;
+  return (
+    <ProductProvider
+      data={storefrontProductWithVariant}
+      initialVariantId={storefrontProductVariant.id}
+    >
+      <ProductInlineLink
+        colorTheme={colorTheme}
+        linkAction={mark.linkAction || 'link'}
+        quantity={mark.quantity}
+      >
+        <>{children}</>
+      </ProductInlineLink>
+    </ProductProvider>
+  );
 }
 
 const QUERY = gql`

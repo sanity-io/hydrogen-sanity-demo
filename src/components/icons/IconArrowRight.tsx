@@ -1,12 +1,8 @@
-export function IconArrowRight({className}: {className?: string}) {
+import {HTMLAttributes} from 'react';
+
+export function IconArrowRight(props: HTMLAttributes<SVGElement>) {
   return (
-    <svg
-      className={className}
-      fill="none"
-      height="24"
-      viewBox="0 0 24 24"
-      width="24"
-    >
+    <svg fill="none" height="24" viewBox="0 0 24 24" width="24" {...props}>
       <path
         className="fill-offBlack"
         clipRule="evenodd"

@@ -1,5 +1,4 @@
 import {ProductPrice, useProduct} from '@shopify/hydrogen';
-import clsx from 'clsx';
 import {useState} from 'react';
 import {SanityProductPage} from '../../types';
 import {hasMultipleProductOptions} from '../../utils/productOptions';

@@ -34,9 +34,7 @@ type ShopifyPayload = {
 };
 
 export default function ProductRoute() {
-  const {languageCode} = useShop();
   const {handle} = useRouteParams();
-  const {countryCode = 'US'} = useSession();
 
   // Fetch Sanity document
   const {sanityData: sanityProduct} = useSanityQuery<SanityProductPage>({
@@ -49,6 +47,8 @@ export default function ProductRoute() {
   // Conditionally fetch Shopify document
   let storefrontProduct;
   if (sanityProduct?.gid) {
+    const {languageCode} = useShop();
+    const {countryCode = 'US'} = useSession();
     const {
       data: {product},
     } = useShopQuery<ShopifyPayload>({

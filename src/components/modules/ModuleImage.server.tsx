@@ -61,7 +61,6 @@ export default function ModuleImage({module}: Props) {
   if (module.variant === 'products') {
     const {languageCode} = useShop();
     const {countryCode = 'US'} = useSession();
-
     const {data} = useShopQuery<ShopifyPayload>({
       query: QUERY,
       variables: {

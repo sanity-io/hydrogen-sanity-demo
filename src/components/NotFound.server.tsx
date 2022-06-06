@@ -30,14 +30,10 @@ type ShopifyPayload = {
 };
 
 export default function NotFound({response}: Props) {
-  const {countryCode = 'US'} = useSession();
-
   if (response) {
     response.doNotStream();
     response.writeHead({status: 404, statusText: 'Not found'});
   }
-
-  const {languageCode} = useShop();
 
   const {sanityData} = useSanityQuery<SanityNotFoundPage>({
     query: SANITY_QUERY,
@@ -49,6 +45,8 @@ export default function NotFound({response}: Props) {
   // Conditionally fetch collection products
   let products;
   if (sanityData?.collectionGid) {
+    const {countryCode = 'US'} = useSession();
+    const {languageCode} = useShop();
     const {data} = useShopQuery<ShopifyPayload>({
       query: SHOPIFY_QUERY,
       variables: {

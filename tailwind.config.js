@@ -93,7 +93,6 @@ module.exports = {
     fontWeight: {
       bold: 700,
       medium: 500,
-      regular: 400,
     },
     letterSpacing: {
       normal: '-0.03em',

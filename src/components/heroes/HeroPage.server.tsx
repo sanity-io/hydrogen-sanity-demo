@@ -18,8 +18,8 @@ export default function HeroPage({colorTheme, fallbackTitle, hero}: Props) {
 
   return (
     <div
-      className="rounded-b-xl px-8 pb-8 pt-34"
-      style={{background: colorTheme?.background || 'white'}}
+      className="rounded-b-xl bg-peach px-8 pb-8 pt-34"
+      style={{background: colorTheme?.background}}
     >
       {/* Title */}
       {hero.title && (
