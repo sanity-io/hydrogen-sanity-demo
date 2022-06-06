@@ -88,7 +88,12 @@ export default function ModuleImage({module}: Props) {
 
       {/* Call to action */}
       {module.variant === 'callToAction' && (
-        <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center bg-black bg-opacity-20">
+        <div
+          className={clsx(
+            'absolute top-0 left-0 flex h-full w-full items-center justify-center bg-black bg-opacity-20 duration-500 ease-out',
+            'group-hover:bg-opacity-30',
+          )}
+        >
           <div className="mt-[1em] flex flex-col items-center gap-5">
             {/* Title */}
             <div
@@ -106,7 +111,7 @@ export default function ModuleImage({module}: Props) {
               <div
                 className={clsx(
                   DEFAULT_BUTTON_STYLES,
-                  'pointer-events-none bg-white text-offBlack group-hover:bg-lightGray',
+                  'pointer-events-none bg-white text-offBlack',
                 )}
               >
                 {module.callToAction.title}

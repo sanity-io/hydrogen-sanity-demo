@@ -39,7 +39,10 @@ export default function ModuleCollection({module}: Props) {
         {/* Vector artwork */}
         {collection.vector && (
           <div
-            className="absolute top-2 left-2 bottom-2 right-1 duration-1000 ease-out group-hover:scale-[1.01]"
+            className={clsx(
+              'absolute top-2 left-2 bottom-2 right-1 duration-1000 ease-out',
+              'group-hover:scale-[1.01]',
+            )}
             style={{
               WebkitMask: `url(${collection.vector}) center center / contain no-repeat`,
               mask: `url(${collection.vector}) center center / contain no-repeat`,
@@ -52,7 +55,12 @@ export default function ModuleCollection({module}: Props) {
                   data={storefrontCollection.image}
                 />
                 {/* Overlay */}
-                <div className="absolute top-0 left-0 h-full w-full bg-black bg-opacity-20" />
+                <div
+                  className={clsx(
+                    'absolute top-0 left-0 h-full w-full bg-black bg-opacity-20 duration-500 ease-out',
+                    'group-hover:bg-opacity-30',
+                  )}
+                />
               </>
             ) : (
               <div
@@ -66,7 +74,8 @@ export default function ModuleCollection({module}: Props) {
         {/* Title */}
         <div
           className={clsx(
-            'relative mt-[0.5em] w-[65%] text-center text-2xl group-hover:underline',
+            'relative mt-[0.5em] w-[65%] text-center text-2xl',
+            'group-hover:underline',
             'md:text-3xl',
             collection.vector ? 'text-white' : 'text-offBlack',
           )}
@@ -77,7 +86,7 @@ export default function ModuleCollection({module}: Props) {
         <div
           className={clsx(
             DEFAULT_BUTTON_STYLES,
-            'pointer-events-none relative mt-6 bg-white text-offBlack group-hover:bg-lightGray',
+            'pointer-events-none relative mt-6 bg-white text-offBlack',
           )}
         >
           Shop collection
