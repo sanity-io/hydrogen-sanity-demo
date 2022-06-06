@@ -49,9 +49,9 @@ export default function ModuleProduct({
       query: QUERY,
       variables: {
         country: countryCode,
-        id: module.productWithVariant.gid,
+        id: productGid,
         language: languageCode,
-        variantId: module.productWithVariant.variantGid,
+        variantId: productVariantGid,
       },
     });
     storefrontProduct = data.product;

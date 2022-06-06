@@ -1,4 +1,5 @@
-import {Link} from '@shopify/hydrogen';
+import {gql, Image, Link, useShopQuery} from '@shopify/hydrogen';
+import {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import {DEFAULT_BUTTON_STYLES} from '../../constants';
 import {SanityModuleCollection} from '../../types';
@@ -6,10 +7,27 @@ import {SanityModuleCollection} from '../../types';
 type Props = {
   module: SanityModuleCollection;
 };
+
+type ShopifyPayload = {
+  collection: Pick<Collection, 'image'>;
+};
+
 export default function ModuleCollection({module}: Props) {
   const collection = module.collection;
-  if (!collection) {
+  if (!collection.gid) {
     return null;
+  }
+
+  // Conditionally fetch Shopify document
+  let storefrontCollection: Pick<Collection, 'image'> | undefined;
+  if (collection.gid) {
+    const {data} = useShopQuery<ShopifyPayload>({
+      query: QUERY,
+      variables: {
+        id: collection.gid,
+      },
+    });
+    storefrontCollection = data.collection;
   }
 
   return (
@@ -23,17 +41,32 @@ export default function ModuleCollection({module}: Props) {
           <div
             className="absolute top-2 left-2 bottom-2 right-1 duration-1000 ease-out group-hover:scale-[1.01]"
             style={{
-              background: collection?.colorTheme?.text || 'darkGray',
               WebkitMask: `url(${collection.vector}) center center / contain no-repeat`,
               mask: `url(${collection.vector}) center center / contain no-repeat`,
             }}
-          />
+          >
+            {module.showBackground && storefrontCollection?.image ? (
+              <>
+                <Image
+                  className="absolute h-full w-full bg-cover bg-center object-cover object-center"
+                  data={storefrontCollection.image}
+                />
+                {/* Overlay */}
+                <div className="absolute top-0 left-0 h-full w-full bg-black bg-opacity-20" />
+              </>
+            ) : (
+              <div
+                className="h-full w-full"
+                style={{background: collection?.colorTheme?.text || 'darkGray'}}
+              />
+            )}
+          </div>
         )}
 
         {/* Title */}
         <div
           className={clsx(
-            'relative mt-[0.5em] w-[65%] text-center text-2xl font-bold group-hover:underline',
+            'relative mt-[0.5em] w-[65%] text-center text-2xl group-hover:underline',
             'md:text-3xl',
             collection.vector ? 'text-white' : 'text-offBlack',
           )}
@@ -53,3 +86,17 @@ export default function ModuleCollection({module}: Props) {
     </Link>
   );
 }
+
+const QUERY = gql`
+  query collection($id: ID!) {
+    collection: collection(id: $id) {
+      image {
+        altText
+        height
+        id
+        url
+        width
+      }
+    }
+  }
+`;

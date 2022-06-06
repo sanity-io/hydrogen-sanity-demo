@@ -4,5 +4,6 @@ import {COLLECTION} from '../collection';
 export const MODULE_COLLECTION = groq`
   collection->{
     ${COLLECTION}
-  }
+  },
+  showBackground
 `;

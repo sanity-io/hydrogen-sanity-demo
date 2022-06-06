@@ -13,6 +13,7 @@ export default function BlockProducts({node}: Props) {
   return (
     <div
       className={clsx(
+        'first:mt-0', //
         'my-8 grid grid-cols-1 gap-3',
         multipleProducts ? 'md:grid-cols-2' : 'md:grid-cols-1',
       )}

@@ -6,6 +6,7 @@ export const MODULE_IMAGES = groq`
     count(modules) > 1 => true,
     fullWidth,
   ),
+  layout,
   modules[] {
     ${MODULE_IMAGE}
   }

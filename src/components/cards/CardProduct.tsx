@@ -54,7 +54,7 @@ export default function CardProduct({
 
   return (
     <Link to={`/products/${storefrontProduct.handle}`}>
-      <div className="group relative mb-4">
+      <div className="group relative">
         <div
           className={clsx([
             imageAspectClassName,

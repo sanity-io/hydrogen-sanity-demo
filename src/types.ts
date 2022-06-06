@@ -138,6 +138,7 @@ export type SanityModuleCollection = {
   _key?: string;
   _type: 'module.collection';
   collection: SanityCollection;
+  showBackground?: boolean;
 };
 
 export type SanityModuleImage =
@@ -173,6 +174,7 @@ export type SanityModuleImages = {
   _type: 'module.images';
   fullWidth?: boolean;
   modules: SanityModuleImage[];
+  verticalAlign?: 'bottom' | 'center' | 'top';
 };
 
 export type SanityModuleInstagram = {

@@ -75,49 +75,60 @@ export default function ModuleImage({module}: Props) {
     storefrontProductVariants = data.productVariants;
   }
 
-  const Content = (
-    <div>
-      <div className="relative overflow-hidden rounded transition-all duration-500 ease-out group-hover:rounded-xl">
-        <SanityImage
-          crop={image?.crop}
-          dataset={sanityConfig.dataset}
-          hotspot={image?.hotspot}
-          layout="responsive"
-          projectId={sanityConfig.projectId}
-          sizes={['50vw, 100vw']}
-          src={image?.asset._ref}
-        />
+  const ImageContent = (
+    <div className="relative overflow-hidden rounded transition-all duration-500 ease-out group-hover:rounded-xl">
+      <SanityImage
+        crop={image?.crop}
+        dataset={sanityConfig.dataset}
+        hotspot={image?.hotspot}
+        layout="responsive"
+        projectId={sanityConfig.projectId}
+        sizes={['50vw, 100vw']}
+        src={image?.asset._ref}
+      />
 
-        {/* Call to action */}
-        {module.variant === 'callToAction' && (
-          <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center bg-black bg-opacity-20">
-            <div className="mt-[1em] flex flex-col items-center gap-5">
-              {/* Title */}
+      {/* Call to action */}
+      {module.variant === 'callToAction' && (
+        <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center bg-black bg-opacity-20">
+          <div className="mt-[1em] flex flex-col items-center gap-5">
+            {/* Title */}
+            <div
+              className={clsx(
+                'max-w-[30rem] text-xl text-white', //
+                'lg:text-2xl',
+                'xl:text-3xl',
+              )}
+            >
+              {module.callToAction?.title}
+            </div>
+
+            {/* Button */}
+            {module.callToAction?.link && (
               <div
                 className={clsx(
-                  'max-w-[30rem] text-xl text-white', //
-                  'lg:text-2xl',
-                  'xl:text-3xl',
+                  DEFAULT_BUTTON_STYLES,
+                  'pointer-events-none bg-white text-offBlack group-hover:bg-lightGray',
                 )}
               >
-                {module.callToAction?.title}
+                {module.callToAction.title}
               </div>
-
-              {/* Button */}
-              {module.callToAction?.link && (
-                <div
-                  className={clsx(
-                    DEFAULT_BUTTON_STYLES,
-                    'pointer-events-none bg-white text-offBlack group-hover:bg-lightGray',
-                  )}
-                >
-                  {module.callToAction.title}
-                </div>
-              )}
-            </div>
+            )}
           </div>
-        )}
-      </div>
+        </div>
+      )}
+    </div>
+  );
+
+  return (
+    <div>
+      {module.variant === 'callToAction' && module.callToAction?.link ? (
+        <Link className="group" link={module.callToAction.link}>
+          {ImageContent}
+        </Link>
+      ) : (
+        ImageContent
+      )}
+
       {/* Caption */}
       {module.variant === 'caption' && module.caption && (
         <div className="mt-2 max-w-[35rem] text-sm text-darkGray">
@@ -155,16 +166,6 @@ export default function ModuleImage({module}: Props) {
       )}
     </div>
   );
-
-  if (module.variant === 'callToAction' && module.callToAction?.link) {
-    return (
-      <Link className="group" link={module.callToAction.link}>
-        {Content}
-      </Link>
-    );
-  }
-
-  return Content;
 }
 
 const QUERY = gql`

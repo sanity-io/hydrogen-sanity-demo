@@ -8,6 +8,7 @@ import Block from './blocks/Block.server';
 import BlockCallout from './blocks/BlockCallout.server';
 import BlockImages from './blocks/BlockImages.server';
 import BlockProducts from './blocks/BlockProducts.server';
+import BlockList from './blocks/BlockList.server';
 // import BlockInlineProduct from './blocks/BlockInlineProduct.client';
 // import BlockInlineProductMarginalia from './blocks/BlockInlineProductMarginalia.client';
 // import BlockProduct from './blocks/BlockProduct.client';
@@ -34,6 +35,8 @@ const PortableText = ({blocks, className, colorTheme}: Props) => {
         className="max-w-[650px] px-8"
         renderContainerOnSingleChild
         serializers={{
+          // Lists
+          list: BlockList,
           // Marks
           marks: portableTextMarks,
           // Block types
