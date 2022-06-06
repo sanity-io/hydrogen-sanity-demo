@@ -1,4 +1,4 @@
-import {Image, Link} from '@shopify/hydrogen';
+import {Image, Link, ProductProvider} from '@shopify/hydrogen';
 import {
   Product,
   ProductVariant,
@@ -10,6 +10,7 @@ import {
   hasMultipleProductOptions,
 } from '../../utils/productOptions';
 import Badge from '../Badge';
+import ButtonSelectedVariantAddToCart from '../buttons/ButtonSelectedVariantAddToCart.client';
 import MoneyCompareAtPrice from '../MoneyCompareAtPrice.client';
 import MoneyPrice from '../MoneyPrice.client';
 
@@ -40,6 +41,14 @@ export default function CardProduct({
   storefrontProduct,
   storefrontProductVariant,
 }: Props) {
+  // TODO: Refactor
+  const storefrontProductWithVariant = {
+    ...storefrontProduct,
+    ...(storefrontProductVariant
+      ? {variants: {edges: [{node: storefrontProductVariant}]}}
+      : {}),
+  };
+
   const selectedVariant =
     storefrontProductVariant || storefrontProduct.variants.edges[0].node;
 
@@ -53,38 +62,65 @@ export default function CardProduct({
   const productOptions = getProductOptionString(storefrontProduct.options);
 
   return (
-    <Link to={`/products/${storefrontProduct.handle}`}>
+    <ProductProvider
+      data={storefrontProductWithVariant}
+      initialVariantId={selectedVariant.id}
+    >
       <div className="group relative">
         <div
           className={clsx([
             imageAspectClassName,
-            'relative flex items-center justify-center overflow-hidden rounded bg-lightGray object-cover transition-all duration-500 ease-out group-hover:rounded-xl',
+            'relative flex items-center justify-center overflow-hidden rounded bg-lightGray object-cover transition-all duration-500 ease-out',
+            'hover:rounded-xl',
           ])}
         >
-          {selectedVariant.image && (
-            <Image
-              className="absolute h-full w-full transform bg-cover bg-center object-cover object-center ease-in-out"
-              data={selectedVariant.image}
-            />
-          )}
-          {/* Badges */}
-          <div className="absolute top-4 left-4">
-            {/* Sale */}
-            {selectedVariant?.availableForSale &&
-              selectedVariant?.compareAtPriceV2 && (
-                <Badge label="Sale" tone="critical" />
-              )}
-            {/* Sold out */}
-            {!selectedVariant?.availableForSale && <Badge label="Sold out" />}
+          <Link
+            className="absolute top-0 left-0 h-full w-full"
+            to={`/products/${storefrontProduct.handle}`}
+          >
+            {selectedVariant.image && (
+              <Image
+                className="absolute h-full w-full transform bg-cover bg-center object-cover object-center ease-in-out"
+                data={selectedVariant.image}
+              />
+            )}
+
+            {/* Badges */}
+            <div className="absolute top-4 left-4">
+              {/* Sale */}
+              {selectedVariant?.availableForSale &&
+                selectedVariant?.compareAtPriceV2 && (
+                  <Badge label="Sale" tone="critical" />
+                )}
+              {/* Sold out */}
+              {!selectedVariant?.availableForSale && <Badge label="Sold out" />}
+            </div>
+          </Link>
+
+          {/* Quick add to cart */}
+          <div
+            className={clsx(
+              'absolute bottom-0 right-4 translate-y-full pb-4 transition-all duration-300 ease-in-out',
+              'group-hover:block group-hover:translate-y-0',
+            )}
+          >
+            <ButtonSelectedVariantAddToCart label="Quick add" />
           </div>
         </div>
 
         <div className="mt-3 text-md">
           <div className="space-y-1">
             {/* Title */}
-            <div className="font-bold group-hover:underline">
+
+            <Link
+              className={clsx(
+                'font-bold', //
+                'hover:underline',
+              )}
+              to={`/products/${storefrontProduct.handle}`}
+            >
               {storefrontProduct.title}
-            </div>
+            </Link>
 
             {/* Vendor */}
             {storefrontProduct.vendor && (
@@ -114,6 +150,6 @@ export default function CardProduct({
           </div>
         </div>
       </div>
-    </Link>
+    </ProductProvider>
   );
 }

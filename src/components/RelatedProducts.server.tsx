@@ -68,9 +68,12 @@ const QUERY = gql`
       variants(first: 1) {
         edges {
           node {
-            id
-            title
             availableForSale
+            compareAtPriceV2 {
+              currencyCode
+              amount
+            }
+            id
             image {
               id
               url
@@ -82,10 +85,11 @@ const QUERY = gql`
               currencyCode
               amount
             }
-            compareAtPriceV2 {
-              currencyCode
-              amount
+            selectedOptions {
+              name
+              value
             }
+            title
           }
         }
       }

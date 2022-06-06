@@ -7,12 +7,13 @@ import {DEFAULT_BUTTON_STYLES} from '../../constants';
  */
 
 type Props = {
+  label?: string;
   quantity?: number;
   showSoldOut?: boolean;
 };
 
 export default function ButtonSelectedVariantAddToCart(props: Props) {
-  const {quantity = 1, showSoldOut = true} = props;
+  const {label = 'Add to cart', quantity = 1, showSoldOut = true} = props;
   const {selectedVariant} = useProduct();
 
   if (!selectedVariant) {
@@ -32,7 +33,7 @@ export default function ButtonSelectedVariantAddToCart(props: Props) {
       quantity={quantity}
       variantId={selectedVariant?.id}
     >
-      Add to cart
+      {label}
     </AddToCartButton>
   );
 }
