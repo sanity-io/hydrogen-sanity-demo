@@ -6,7 +6,7 @@ import {Link, useServerProps} from '@shopify/hydrogen';
  * @param {string}  props.handle - The handle of the product in Shopify
  * @param {string}  [props.variantId] - The 'raw' product variant number.
  */
-const LinkProduct = (props) => {
+export default function LinkProduct(props) {
   const {children, className, handle, onClick, variantId} = props;
 
   const {setServerState} = useServerProps();
@@ -35,6 +35,4 @@ const LinkProduct = (props) => {
       {children}
     </Link>
   );
-};
-
-export default LinkProduct;
+}

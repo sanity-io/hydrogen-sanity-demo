@@ -6,7 +6,7 @@ import ButtonSelectedVariantBuyNow from '../buttons/ButtonSelectedVariantBuyNow.
 import LinkProduct from '../LinkProduct.client';
 import {useProductsContext} from '../product/ProductsProvider.client';
 
-const BlockInlineProduct = (props) => {
+export default function BlockInlineProduct(props) {
   const {node} = props;
 
   const product = node?.productWithVariant?.product;
@@ -87,6 +87,4 @@ const BlockInlineProduct = (props) => {
       </span>
     </Tippy>
   );
-};
-
-export default BlockInlineProduct;
+}

@@ -8,6 +8,7 @@ import {PORTABLE_TEXT} from '../fragments/portableText';
 import type {SanityLink} from '../types';
 import IconLogo from './icons/IconLogo';
 import PortableText from './PortableText.server';
+import SanityFooter from './SanityFooter.server';
 
 /**
  * A server component that specifies the content of the footer on the website
@@ -71,15 +72,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="-my-overlap bg-[#121923] pt-overlap text-white">
-        <div className="mx-auto max-w-[41rem] px-8 py-12 text-center text-xl">
-          This is a demo store that Sanity have created along with Shopify's
-          Hydrogen framework, powered by our free and official Sanity Connect
-          App on Shopify.
-          <br />
-          (Links to follow)
-        </div>
-      </div>
+      <SanityFooter />
     </footer>
   );
 }

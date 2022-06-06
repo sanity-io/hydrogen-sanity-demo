@@ -19,7 +19,7 @@ type Props = {
   colorTheme?: SanityColorTheme;
 };
 
-const PortableText = ({blocks, className, colorTheme}: Props) => {
+export default function PortableText({blocks, className, colorTheme}: Props) {
   return (
     <BlockContent
       blocks={blocks}
@@ -51,6 +51,4 @@ const PortableText = ({blocks, className, colorTheme}: Props) => {
       }}
     />
   );
-};
-
-export default PortableText;
+}

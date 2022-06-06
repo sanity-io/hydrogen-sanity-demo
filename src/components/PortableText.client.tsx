@@ -5,14 +5,13 @@ import AnnotationLinkExternal from './annotations/AnnotationLinkExternal';
 import AnnotationLinkInternal from './annotations/AnnotationLinkInternal';
 import Block from './blocks/Block';
 import BlockList from './blocks/BlockList';
-// import BlockInlineProductMarginalia from './blocks/BlockInlineProductMarginalia.client';
 
 type Props = {
   blocks: SanityBlock[];
   className?: string;
 };
 
-const PortableText = ({blocks, className}: Props) => {
+export default function PortableText({blocks, className}: Props) {
   return (
     <BlockContent
       blocks={blocks}
@@ -34,6 +33,4 @@ const PortableText = ({blocks, className}: Props) => {
       }}
     />
   );
-};
-
-export default PortableText;
+}

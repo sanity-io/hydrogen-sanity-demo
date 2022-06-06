@@ -33,12 +33,6 @@ export const PORTABLE_TEXT = groq`
         ...${PRODUCT_WITH_VARIANT}
       }
     },
-    (_type == 'blockInlineProductMarginalia') => {
-      ...,
-      productWithVariant {
-        ...${PRODUCT_WITH_VARIANT}
-      }
-    },
   },
   markDefs[] {
     ...,

@@ -7,7 +7,7 @@ type Props = {
   node: PortableTextBlock;
 };
 
-const Block = ({children, node}: Props) => {
+export default function Block({children, node}: Props) {
   if (node.style === 'h2') {
     return (
       <h2
@@ -32,6 +32,4 @@ const Block = ({children, node}: Props) => {
       {children}
     </p>
   );
-};
-
-export default Block;
+}

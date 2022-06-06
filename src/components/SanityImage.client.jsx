@@ -51,7 +51,7 @@ const generateSizes = (breakpoints, sizes) => {
 /**
  * A simple image component that wraps around `@sanity/image-url`
  */
-const SanityImage = (props) => {
+export default function SanityImage(props) {
   const {
     // blurDataURL,
     crop,
@@ -148,6 +148,4 @@ const SanityImage = (props) => {
       }}
     />
   );
-};
-
-export default SanityImage;
+}
