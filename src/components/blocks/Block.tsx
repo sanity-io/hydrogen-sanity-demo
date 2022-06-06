@@ -1,6 +1,6 @@
 import type {PortableTextBlock} from '@portabletext/types';
 import clsx from 'clsx';
-import {Children, ReactNode} from 'react';
+import {ReactNode} from 'react';
 
 type Props = {
   children?: ReactNode;
@@ -21,12 +21,7 @@ const Block = ({children, node}: Props) => {
     );
   }
 
-  // Don't render empty paragraphs
-  if (Children.count(children) === 1 && Children.toArray(children)[0] === '') {
-    return null;
-  }
-
-  // Non-empty paragraphs
+  // Pragraphs
   return (
     <p
       className={clsx(

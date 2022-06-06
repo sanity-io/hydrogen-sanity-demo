@@ -48,7 +48,6 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.6.2",
-    "@heroicons/react": "^1.0.6",
     "@portabletext/react": "^1.0.6",
     "@sanity/block-content-to-react": "^3.0.0",
     "@sanity/image-url": "^1.0.1",

@@ -110,12 +110,24 @@ export type SanityMenuLink =
   | SanityLinkInternal;
 
 export type SanityModule =
+  | SanityModuleAccordion
   | SanityModuleCallout
   | SanityModuleCallToAction
   | SanityModuleCollection
   | SanityModuleImage
   | SanityModuleInstagram
   | SanityModuleProduct;
+
+export type SanityModuleAccordion = {
+  _key?: string;
+  _type: 'module.accordion';
+  groups: {
+    _key: string;
+    _type: 'group';
+    body: Block[];
+    title: string;
+  }[];
+};
 
 export type SanityModuleCallout = {
   _key?: string;

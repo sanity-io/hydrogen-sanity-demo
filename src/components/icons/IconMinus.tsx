@@ -1,15 +1,17 @@
 export default function IconMinus() {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
-        d="M0 8C0 12.3975 3.5649 16 7.96244 16C12.36 16 15.9249 12.3975 15.9249 8C15.9249 3.60246 12.36 0 7.96244 0C3.5649 0 0 3.60246 0 8Z"
-        fill="#E7E7E7"
-      />
-      <path
-        d="M3.98047 8H11.9429"
-        stroke="#2B2E2E"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M3 12C3 11.5858 3.33579 11.25 3.75 11.25H20.25C20.6642 11.25 21 11.5858 21 12C21 12.4142 20.6642 12.75 20.25 12.75H3.75C3.33579 12.75 3 12.4142 3 12Z"
+        fill="#3A3E3E"
       />
     </svg>
   );

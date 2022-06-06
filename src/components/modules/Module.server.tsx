@@ -1,4 +1,5 @@
 import {SanityColorTheme, SanityModule} from '../../types';
+import ModuleAccordion from './ModuleAccordion.server';
 import ModuleCallout from './ModuleCallout.server';
 import ModuleCallToAction from './ModuleCallToAction.server';
 import ModuleCollection from './ModuleCollection.server';
@@ -18,6 +19,8 @@ export default function Module({
   module,
 }: Props) {
   switch (module._type) {
+    case 'module.accordion':
+      return <ModuleAccordion module={module} />;
     case 'module.callout':
       return <ModuleCallout colorTheme={colorTheme} module={module} />;
     case 'module.callToAction':

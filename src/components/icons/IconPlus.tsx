@@ -1,21 +1,23 @@
 export default function IconPlus() {
   return (
-    <svg width="17" height="16" viewBox="0 0 17 16" fill="none">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
-        d="M0.765625 8C0.765625 12.3975 4.33053 16 8.72807 16C13.1256 16 16.6905 12.3975 16.6905 8C16.6905 3.60246 13.1256 0 8.72807 0C4.33053 0 0.765625 3.60246 0.765625 8Z"
-        fill="#E7E7E7"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M3 12C3 11.5858 3.33579 11.25 3.75 11.25H20.25C20.6642 11.25 21 11.5858 21 12C21 12.4142 20.6642 12.75 20.25 12.75H3.75C3.33579 12.75 3 12.4142 3 12Z"
+        fill="#3A3E3E"
       />
       <path
-        d="M4.74609 8H12.7085"
-        stroke="#2B2E2E"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M8.72852 4V12"
-        stroke="#2B2E2E"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M12 3C12.4142 3 12.75 3.33579 12.75 3.75V20.25C12.75 20.6642 12.4142 21 12 21C11.5858 21 11.25 20.6642 11.25 20.25V3.75C11.25 3.33579 11.5858 3 12 3Z"
+        fill="#3A3E3E"
       />
     </svg>
   );

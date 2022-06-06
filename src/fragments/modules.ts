@@ -1,4 +1,5 @@
 import groq from 'groq';
+import {MODULE_ACCORDION} from './modules/moduleAccordion';
 import {MODULE_CALLOUT} from './modules/moduleCallout';
 import {MODULE_CALL_TO_ACTION} from './modules/moduleCallToAction';
 import {MODULE_COLLECTION} from './modules/moduleCollection';
@@ -9,6 +10,9 @@ import {MODULE_PRODUCT} from './modules/moduleProduct';
 export const MODULES = groq`
   _key,
   _type,
+  (_type == "module.accordion") => {
+    ${MODULE_ACCORDION}
+  },
   (_type == "module.callout") => {
     ${MODULE_CALLOUT}
   },

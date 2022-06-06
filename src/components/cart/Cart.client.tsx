@@ -15,8 +15,8 @@ import {
 } from '@shopify/hydrogen';
 import {Fragment} from 'react';
 import {useCartUI} from './CartUIProvider.client';
-import IconMinus from '../icons/IconMinus';
-import IconPlus from '../icons/IconPlus';
+import IconMinusCircle from '../icons/IconMinusCircle';
+import IconPlusCircle from '../icons/IconPlusCircle';
 import clsx from 'clsx';
 import {DEFAULT_BUTTON_STYLES} from '../../constants';
 
@@ -240,7 +240,7 @@ function CartItemQuantity() {
         aria-label="Decrease quantity"
         className="disabled:pointer-events-all disabled:cursor-wait"
       >
-        <IconMinus />
+        <IconMinusCircle />
       </CartLineQuantityAdjustButton>
       <CartLineQuantity
         as="div"
@@ -251,7 +251,7 @@ function CartItemQuantity() {
         aria-label="Increase quantity"
         className="disabled:pointer-events-all text-black disabled:cursor-wait"
       >
-        <IconPlus />
+        <IconPlusCircle />
       </CartLineQuantityAdjustButton>
     </div>
   );
