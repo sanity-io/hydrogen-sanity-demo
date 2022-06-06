@@ -12,7 +12,7 @@ export default function ProductEditorial({sanityProduct}: Props) {
       {sanityProduct?.body && (
         <PortableText
           blocks={sanityProduct.body}
-          className="my-8 max-w-[650px] px-8"
+          className="my-8 max-w-[660px] px-8"
         />
       )}
     </div>

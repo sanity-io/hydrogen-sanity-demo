@@ -1,15 +1,23 @@
 import groq from 'groq';
 import {LINK_EXTERNAL} from './linkExternal';
 import {LINK_INTERNAL} from './linkInternal';
+import {MODULE_ACCORDION} from './modules/moduleAccordion';
 import {MODULE_CALLOUT} from './modules/moduleCallout';
+import {MODULE_GRID} from './modules/moduleGrid';
 import {MODULE_IMAGES} from './modules/moduleImages';
 import {MODULE_PRODUCTS} from './modules/moduleProducts';
 import {PRODUCT_WITH_VARIANT} from './productWithVariant';
 
 export const PORTABLE_TEXT = groq`
   ...,
+  (_type == 'blockAccordion') => {
+    ${MODULE_ACCORDION},
+  },
   (_type == 'blockCallout') => {
     ${MODULE_CALLOUT}
+  },
+  (_type == 'blockGrid') => {
+    ${MODULE_GRID},
   },
   (_type == 'blockImages') => {
     ${MODULE_IMAGES}

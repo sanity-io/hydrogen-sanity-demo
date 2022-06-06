@@ -6,11 +6,12 @@ import AnnotationLinkExternal from './annotations/AnnotationLinkExternal';
 import AnnotationLinkInternal from './annotations/AnnotationLinkInternal';
 import AnnotationProduct from './annotations/AnnotationProduct.server';
 import Block from './blocks/Block';
-import BlockCallout from './blocks/BlockCallout.server';
-import BlockImages from './blocks/BlockImages.server';
-import BlockProducts from './blocks/BlockProducts.server';
-import BlockList from './blocks/BlockList';
 import BlockAccordion from './blocks/BlockAccordion.client';
+import BlockCallout from './blocks/BlockCallout.server';
+import BlockGrid from './blocks/BlockGrid.server';
+import BlockImages from './blocks/BlockImages.server';
+import BlockList from './blocks/BlockList';
+import BlockProducts from './blocks/BlockProducts.server';
 
 type Props = {
   blocks: SanityBlock[];
@@ -43,6 +44,7 @@ const PortableText = ({blocks, className, colorTheme}: Props) => {
           blockCallout: (props) => (
             <BlockCallout colorTheme={colorTheme} {...props} />
           ),
+          blockGrid: BlockGrid,
           blockImages: BlockImages,
           blockProducts: BlockProducts,
         },

@@ -61,7 +61,7 @@ export default function ProductInlineLink({
 
   return (
     <Tippy
-      interactive
+      interactive={linkAction === 'link'}
       placement="top"
       render={() => {
         if (linkAction === 'addToCart') {

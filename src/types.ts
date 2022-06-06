@@ -114,6 +114,7 @@ export type SanityModule =
   | SanityModuleCallout
   | SanityModuleCallToAction
   | SanityModuleCollection
+  | SanityModuleGrid
   | SanityModuleImage
   | SanityModuleInstagram
   | SanityModuleProduct;
@@ -157,6 +158,18 @@ export type SanityModuleImage =
   | SanityModuleImageCallToAction
   | SanityModuleImageCaption
   | SanityModuleImageProducts;
+
+export type SanityModuleGrid = {
+  _key?: string;
+  _type: 'module.grid';
+  items: {
+    _key: string;
+    _type: 'items';
+    body: Block[];
+    image: SanityAssetImage;
+    title: string;
+  }[];
+};
 
 export type SanityModuleImageBase = {
   _key?: string;
