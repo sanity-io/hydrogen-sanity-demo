@@ -5,4 +5,4 @@ export const DEFAULT_BUTTON_STYLES = clsx([
   'hover:opacity-80',
 ]);
 
-export const COLLECTION_PAGE_SIZE = 8;
+export const COLLECTION_PAGE_SIZE = 12;

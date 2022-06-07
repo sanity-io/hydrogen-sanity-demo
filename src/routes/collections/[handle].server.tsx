@@ -74,6 +74,11 @@ export default function CollectionRoute({
     query: SANITY_QUERY,
   }) as SanityPayload;
 
+  if (data?.collection == null || !sanityCollection) {
+    // @ts-expect-error <NotFound> doesn't require response
+    return <NotFound />;
+  }
+
   const collection = data.collection;
   const products = flattenConnection(collection.products) as Product[];
   const hasNextPage = data.collection.products.pageInfo.hasNextPage;
@@ -85,11 +90,6 @@ export default function CollectionRoute({
       products,
     });
   }, []);
-
-  if (data?.collection == null || !sanityCollection) {
-    // @ts-expect-error <NotFound> doesn't require response
-    return <NotFound />;
-  }
 
   return (
     <Layout>

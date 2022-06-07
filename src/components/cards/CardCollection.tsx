@@ -11,9 +11,9 @@ export default function CardCollection({collection, onClick}: Props) {
   return (
     <Link onClick={onClick} to={collection.slug}>
       <div
-        className="group relative flex aspect-[4/3] items-center justify-center rounded transition-all duration-500 ease-out hover:rounded-xl"
+        className="group relative flex aspect-[4/3] items-center justify-center rounded bg-lightGray transition-all duration-500 ease-out hover:rounded-xl"
         style={{
-          background: collection?.colorTheme?.background || 'darkGray',
+          background: collection?.colorTheme?.background,
         }}
       >
         {/* Vector artwork */}
@@ -21,7 +21,7 @@ export default function CardCollection({collection, onClick}: Props) {
           <div
             className="absolute top-2 left-2 bottom-2 right-1 duration-1000 ease-out group-hover:scale-[1.03]"
             style={{
-              background: collection?.colorTheme?.text || 'darkGray',
+              background: collection?.colorTheme?.text,
               WebkitMask: `url(${collection.vector}) center center / contain no-repeat`,
               mask: `url(${collection.vector}) center center / contain no-repeat`,
             }}
@@ -32,7 +32,7 @@ export default function CardCollection({collection, onClick}: Props) {
         <div
           className={clsx(
             'relative text-center text-lg font-bold group-hover:underline',
-            collection.vector ? 'text-white' : 'text-offBlack',
+            collection.vector ? 'text-white' : 'text-darkGray',
           )}
         >
           {collection.title}

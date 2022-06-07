@@ -98,14 +98,16 @@ export default function CardProduct({
           </Link>
 
           {/* Quick add to cart */}
-          <div
-            className={clsx(
-              'absolute bottom-0 right-4 translate-y-full pb-4 transition-all duration-300 ease-in-out',
-              'group-hover:block group-hover:translate-y-0',
-            )}
-          >
-            <ButtonSelectedVariantAddToCart label="Quick add" />
-          </div>
+          {selectedVariant.availableForSale && (
+            <div
+              className={clsx(
+                'absolute bottom-0 right-4 translate-y-full pb-4 transition-all duration-300 ease-in-out',
+                'group-hover:block group-hover:translate-y-0',
+              )}
+            >
+              <ButtonSelectedVariantAddToCart label="Quick add" />
+            </div>
+          )}
         </div>
 
         <div className="mt-3 text-md">

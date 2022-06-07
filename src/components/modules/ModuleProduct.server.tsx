@@ -10,7 +10,7 @@ import PillProduct from '../pills/PillProduct';
 type Props = {
   imageAspectClassName?: string;
   layout?: 'card' | 'pill';
-  module: SanityModuleProduct;
+  module?: SanityModuleProduct;
 };
 
 type ShopifyPayload = {
@@ -35,8 +35,8 @@ export default function ModuleProduct({
   layout = 'card',
   module,
 }: Props) {
-  const productGid = module.productWithVariant.gid;
-  const productVariantGid = module.productWithVariant.variantGid;
+  const productGid = module?.productWithVariant.gid;
+  const productVariantGid = module?.productWithVariant.variantGid;
 
   // Conditionally fetch Shopify document
   let storefrontProduct;

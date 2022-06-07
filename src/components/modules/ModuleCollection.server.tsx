@@ -5,7 +5,7 @@ import {DEFAULT_BUTTON_STYLES} from '../../constants';
 import {SanityModuleCollection} from '../../types';
 
 type Props = {
-  module: SanityModuleCollection;
+  module?: SanityModuleCollection;
 };
 
 type ShopifyPayload = {
@@ -13,8 +13,8 @@ type ShopifyPayload = {
 };
 
 export default function ModuleCollection({module}: Props) {
-  const collection = module.collection;
-  if (!collection.gid) {
+  const collection = module?.collection;
+  if (!collection?.gid) {
     return null;
   }
 
