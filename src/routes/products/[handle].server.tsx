@@ -91,7 +91,10 @@ export default function ProductRoute() {
             )}
           >
             <ProductDetails />
-            <ProductEditorial sanityProduct={sanityProduct} />
+            <ProductEditorial
+              colorTheme={sanityProduct?.colorTheme}
+              sanityProduct={sanityProduct}
+            />
           </div>
 
           {/* Desktop */}

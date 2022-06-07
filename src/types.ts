@@ -253,8 +253,6 @@ export type SanityProductPage = {
   colorTheme?: SanityColorTheme;
   customProductOptions?: SanityCustomProductOption[];
   gid: string;
-  images?: SanityAssetImage[];
   slug: string;
-  sections?: any;
   seo?: any;
 };
