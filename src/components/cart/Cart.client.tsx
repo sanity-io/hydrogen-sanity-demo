@@ -26,7 +26,23 @@ import {DEFAULT_BUTTON_STYLES} from '../../constants';
 export default function Cart() {
   // @ts-expect-error cartUI shouldnt return null
   const {isCartOpen, closeCart} = useCartUI();
-  const {lines, totalQuantity} = useCart();
+  const {checkoutUrl, lines, totalQuantity} = useCart();
+
+  let CartContent = <CartLoading />;
+  if (checkoutUrl) {
+    CartContent = (
+      <>
+        {totalQuantity === 0 ? (
+          <CartEmpty />
+        ) : (
+          <>
+            <CartItems />
+            <CartFooter />
+          </>
+        )}
+      </>
+    );
+  }
 
   return (
     <>
@@ -62,14 +78,7 @@ export default function Cart() {
               className={`fixed top-0 left-0 right-0 bottom-0 z-40 flex h-full w-full flex-col overflow-y-auto rounded-l-xl bg-white md:left-auto md:bottom-auto md:w-[470px]`}
             >
               <CartHeader numLines={lines.length} />
-              {totalQuantity === 0 ? (
-                <CartEmpty />
-              ) : (
-                <>
-                  <CartItems />
-                  <CartFooter />
-                </>
-              )}
+              {CartContent}
             </Dialog.Panel>
           </Transition.Child>
         </Dialog>
@@ -306,13 +315,27 @@ function CartEmpty() {
   // @ts-expect-error cartUI shouldnt return null
   const {closeCart} = useCartUI();
   return (
-    <div className="flex flex-col px-8 pt-6">
-      <p className="mb-4 text-lg font-bold">There's nothing in here...yet.</p>
-      {/*
-      <button type="button" onClick={closeCart}>
+    <div className="flex grow flex-col justify-between p-4">
+      <p className="flex grow items-center justify-center px-4 text-lg font-bold text-darkGray">
+        There's nothing in here...yet.
+      </p>
+      <button
+        className={clsx(DEFAULT_BUTTON_STYLES)}
+        onClick={closeCart}
+        type="button"
+      >
         Continue Shopping
       </button>
-      */}
+    </div>
+  );
+}
+
+function CartLoading() {
+  return (
+    <div className="flex grow flex-col justify-between p-4">
+      <p className="flex grow items-center justify-center px-4 text-lg font-bold text-darkGray">
+        Loading cart...
+      </p>
     </div>
   );
 }
