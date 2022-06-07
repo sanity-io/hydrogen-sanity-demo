@@ -43,6 +43,7 @@ export default function PageRoute({params}: Props) {
       {page.body && (
         <PortableText
           blocks={page.body}
+          centered
           className="my-8 mx-auto max-w-[660px] px-8 pb-overlap"
           colorTheme={page.colorTheme}
         />

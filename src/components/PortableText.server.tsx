@@ -16,10 +16,16 @@ import BlockProducts from './blocks/BlockProducts.server';
 type Props = {
   blocks: SanityBlock[];
   className?: string;
+  centered?: boolean;
   colorTheme?: SanityColorTheme;
 };
 
-export default function PortableText({blocks, className, colorTheme}: Props) {
+export default function PortableText({
+  blocks,
+  centered,
+  className,
+  colorTheme,
+}: Props) {
   return (
     <BlockContent
       blocks={blocks}
@@ -42,10 +48,16 @@ export default function PortableText({blocks, className, colorTheme}: Props) {
           block: Block,
           blockAccordion: BlockAccordion,
           blockCallout: (props) => (
-            <BlockCallout colorTheme={colorTheme} {...props} />
+            <BlockCallout
+              centered={centered}
+              colorTheme={colorTheme}
+              {...props}
+            />
           ),
           blockGrid: BlockGrid,
-          blockImages: BlockImages,
+          blockImages: (props) => (
+            <BlockImages centered={centered} {...props} />
+          ),
           blockProducts: BlockProducts,
         },
       }}

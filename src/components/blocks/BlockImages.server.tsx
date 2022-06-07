@@ -4,10 +4,11 @@ import type {SanityModuleImages} from '../../types';
 import ModuleImage from '../modules/ModuleImage.server';
 
 type Props = {
+  centered?: boolean;
   node: PortableTextBlock & SanityModuleImages;
 };
 
-export default function BlockImages({node}: Props) {
+export default function BlockImages({centered, node}: Props) {
   const multipleImages = node.modules.length > 1;
   let alignClass;
   switch (node.verticalAlign) {
@@ -28,7 +29,9 @@ export default function BlockImages({node}: Props) {
         'first:mt-0 last:mb-0', //
         'my-8 grid grid-cols-1 gap-3',
         node.fullWidth &&
+          centered &&
           'relative left-1/2 right-1/2 mr-[-50vw] ml-[-50vw] w-screen px-8',
+        node.fullWidth && !centered && '-ml-8 w-screen px-8',
         multipleImages ? 'md:grid-cols-2' : 'md:grid-cols-1',
         alignClass,
       )}
