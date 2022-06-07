@@ -11,9 +11,8 @@ import {
   Product,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import groq from 'groq';
-import {useSanityQuery} from 'hydrogen-plugin-sanity';
+import useSanityQuery from '../../hooks/useSanityQuery';
 import {useMemo} from 'react';
-import clientConfig from '../../../sanity.config';
 import HeroCollection from '../../components/heroes/HeroCollection.server';
 import Layout from '../../components/Layout.server';
 import LoadMoreProducts from '../../components/LoadMoreProducts.client';
@@ -33,10 +32,6 @@ type Props = {
     key?: string;
     reverse?: boolean;
   };
-};
-
-type SanityPayload = {
-  sanityData: SanityCollectionPage;
 };
 
 type ShopifyPayload = {
@@ -65,14 +60,10 @@ export default function CollectionRoute({
     preload: true,
   });
 
-  const {sanityData: sanityCollection} = useSanityQuery({
-    clientConfig,
-    getProductGraphQLFragment: () => false,
-    params: {
-      slug: handle,
-    },
+  const {data: sanityCollection} = useSanityQuery<SanityCollectionPage>({
+    params: {slug: handle},
     query: SANITY_QUERY,
-  }) as SanityPayload;
+  });
 
   if (data?.collection == null || !sanityCollection) {
     // @ts-expect-error <NotFound> doesn't require response

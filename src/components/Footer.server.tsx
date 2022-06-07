@@ -2,10 +2,9 @@ import type {Block} from '@sanity/types';
 import {Link} from '@shopify/hydrogen';
 import clsx from 'clsx';
 import groq from 'groq';
-import {useSanityQuery} from 'hydrogen-plugin-sanity';
-import clientConfig from '../../sanity.config';
 import {LINKS} from '../fragments/links';
 import {PORTABLE_TEXT} from '../fragments/portableText';
+import useSanityQuery from '../hooks/useSanityQuery';
 import type {SanityLink} from '../types';
 import IconLogo from './icons/IconLogo';
 import PortableText from './PortableText.server';
@@ -15,14 +14,10 @@ import SanityFooter from './SanityFooter.server';
  * A server component that specifies the content of the footer on the website
  */
 export default function Footer() {
-  const {sanityData: footer} = useSanityQuery<{
+  const {data: footer} = useSanityQuery<{
     links: SanityLink[];
     text: Block[];
-  }>({
-    clientConfig,
-    getProductGraphQLFragment: () => false,
-    query: QUERY,
-  });
+  }>({query: QUERY});
 
   const renderLinks = footer?.links.map((link) => {
     if (link._type === 'linkExternal') {

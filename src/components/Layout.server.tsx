@@ -1,13 +1,12 @@
 import {LocalizationProvider} from '@shopify/hydrogen';
 import groq from 'groq';
-import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import {ReactNode, Suspense} from 'react';
-import clientConfig from '../../sanity.config';
 import {LINKS} from '../fragments/links';
 import {SanityMenuLink} from '../types';
 import Cart from './cart/Cart.client';
 import Footer from './Footer.server';
 import Header from './Header.server';
+import useSanityQuery from '../hooks/useSanityQuery';
 
 /**
  * A server component that defines a structure and organization of a page that can be used in different parts of the Hydrogen app
@@ -19,11 +18,7 @@ type Props = {
 };
 
 export default function Layout({backgroundColor, children}: Props) {
-  const {sanityData: menuLinks} = useSanityQuery<SanityMenuLink[]>({
-    clientConfig,
-    getProductGraphQLFragment: () => false,
-    query: QUERY,
-  });
+  const {data: menuLinks} = useSanityQuery<SanityMenuLink>({query: QUERY});
 
   return (
     <LocalizationProvider preload="*">

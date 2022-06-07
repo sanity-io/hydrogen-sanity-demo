@@ -1,8 +1,8 @@
 import {
-  gql,
   flattenConnection,
-  useShop,
+  gql,
   useSession,
+  useShop,
   useShopQuery,
 } from '@shopify/hydrogen';
 import {
@@ -10,9 +10,8 @@ import {
   Product,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import groq from 'groq';
-import {useSanityQuery} from 'hydrogen-plugin-sanity';
-import clientConfig from '../../sanity.config';
 import {NOT_FOUND_PAGE} from '../fragments/notFoundPage';
+import useSanityQuery from '../hooks/useSanityQuery';
 import {SanityNotFoundPage} from '../types';
 import Layout from './Layout.server';
 import PillProduct from './pills/PillProduct';
@@ -35,11 +34,8 @@ export default function NotFound({response}: Props) {
     response.writeHead({status: 404, statusText: 'Not found'});
   }
 
-  const {sanityData} = useSanityQuery<SanityNotFoundPage>({
+  const {data: sanityData} = useSanityQuery<SanityNotFoundPage>({
     query: SANITY_QUERY,
-    // No need to query Shopify product data ✨
-    getProductGraphQLFragment: () => false,
-    clientConfig,
   });
 
   // Conditionally fetch collection products

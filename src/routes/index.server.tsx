@@ -1,20 +1,15 @@
 import {CacheDays, gql, Seo, useShopQuery} from '@shopify/hydrogen';
 import groq from 'groq';
-import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import {Suspense} from 'react';
-import clientConfig from '../../sanity.config';
+import HeroHome from '../components/heroes/HeroHome.server';
 import Layout from '../components/Layout.server';
 import ModuleGrid from '../components/ModuleGrid.server';
-import HeroHome from '../components/heroes/HeroHome.server';
 import {HOME_PAGE} from '../fragments/homePage';
+import useSanityQuery from '../hooks/useSanityQuery';
 import type {SanityHomePage} from '../types';
 
-type SanityPayload = SanityHomePage;
-
 export default function IndexRoute() {
-  const {sanityData: sanityHome} = useSanityQuery<SanityPayload>({
-    clientConfig,
-    getProductGraphQLFragment: () => false,
+  const {data: sanityHome} = useSanityQuery<SanityHomePage>({
     query: SANITY_QUERY,
   });
 

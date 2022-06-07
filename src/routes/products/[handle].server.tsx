@@ -14,8 +14,6 @@ import {
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import groq from 'groq';
-import {useSanityQuery} from 'hydrogen-plugin-sanity';
-import clientConfig from '../../../sanity.config';
 import Gallery from '../../components/Gallery.client';
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
@@ -24,6 +22,7 @@ import ProductEditorial from '../../components/product/ProductEditorial.server';
 import ProductWidget from '../../components/product/ProductWidget.client';
 import RelatedProducts from '../../components/RelatedProducts.server';
 import {PRODUCT_PAGE} from '../../fragments/productPage';
+import useSanityQuery from '../../hooks/useSanityQuery';
 import type {SanityProductPage} from '../../types';
 
 type ShopifyPayload = {
@@ -37,9 +36,7 @@ export default function ProductRoute() {
   const {handle} = useRouteParams();
 
   // Fetch Sanity document
-  const {sanityData: sanityProduct} = useSanityQuery<SanityProductPage>({
-    clientConfig,
-    getProductGraphQLFragment: () => false,
+  const {data: sanityProduct} = useSanityQuery<SanityProductPage>({
     params: {slug: handle},
     query: QUERY,
   });
