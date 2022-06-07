@@ -23,7 +23,7 @@ export default function IndexRoute() {
       </Suspense>
 
       {sanityHome?.modules && (
-        <div className="mb-32 mt-8 px-8 pb-overlap">
+        <div className="mb-32 mt-24 px-8 pb-overlap">
           <ModuleGrid items={sanityHome.modules} />
         </div>
       )}
