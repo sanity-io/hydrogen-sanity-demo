@@ -1,5 +1,6 @@
 import type {Block} from '@sanity/types';
 import {Link} from '@shopify/hydrogen';
+import clsx from 'clsx';
 import groq from 'groq';
 import {useSanityQuery} from 'hydrogen-plugin-sanity';
 import clientConfig from '../../sanity.config';
@@ -56,22 +57,34 @@ export default function Footer() {
 
   return (
     <footer className="-mt-overlap" role="contentinfo">
-      <div className="align-start relative flex justify-between overflow-hidden rounded-xl bg-peach py-10 pl-8 pr-19">
-        <div>
-          <IconLogo />
-          {footer?.text && (
-            <PortableText
-              blocks={footer.text}
-              className="mt-12 text-sm text-darkGray"
-            />
+      {/* AVKA Footer */}
+      <div className="align-start relative overflow-hidden rounded-xl bg-peach py-10 pl-8 pr-19">
+        <div
+          className={clsx(
+            'flex flex-col justify-between', //
+            'md:flex-row',
           )}
-        </div>
+        >
+          <IconLogo />
 
-        <div className="columns-2 gap-x-17 self-start rounded-xl text-lg font-bold">
-          {renderLinks}
+          <div
+            className={clsx(
+              'my-16 w-full max-w-[27rem] columns-2 gap-x-8 self-start text-md font-bold',
+              'md:my-0',
+            )}
+          >
+            {renderLinks}
+          </div>
         </div>
+        {footer?.text && (
+          <PortableText
+            blocks={footer.text}
+            className="text-sm text-darkGray"
+          />
+        )}
       </div>
 
+      {/* Sanity Footer */}
       <SanityFooter />
     </footer>
   );
