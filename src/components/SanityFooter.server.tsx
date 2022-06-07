@@ -11,9 +11,8 @@ export default function SanityFooter() {
       >
         {/* Intro */}
         <div>
-          This is a demo store that Sanity have created along with Shopify's
-          Hydrogen framework, powered by our free and official Sanity Connect
-          App on Shopify.
+          This demo shows how Sanity.io can power remarkable storefronts on Shopify's
+          Hydrogen framework.
         </div>
         {/* Links */}
         <div
@@ -53,7 +52,7 @@ export default function SanityFooter() {
                 strokeLinejoin="round"
               />
             </svg>
-            <div>Clone our Hydrogen template</div>
+            <div>Clone this demo Hydrogen project</div>
           </a>
 
           <a
@@ -87,7 +86,7 @@ export default function SanityFooter() {
                 strokeLinejoin="round"
               />
             </svg>
-            <div>Try our pre-configured Sanity Studio</div>
+            <div>Try the pre-configured Sanity Studio behind this experience</div>
           </a>
 
           <a
@@ -135,7 +134,7 @@ export default function SanityFooter() {
                 strokeLinejoin="round"
               />
             </svg>
-            <div>Install the free Sanity Connect app on Shopify</div>
+            <div>Install Sanity Connect on the Shopify App Store. It's totally free.</div>
           </a>
         </div>
         {/* Learn more */}
