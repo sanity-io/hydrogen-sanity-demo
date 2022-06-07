@@ -1,5 +1,6 @@
 import {gql, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
 import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import clsx from 'clsx';
 import {SanityColorTheme} from '../types';
 import CardProduct from './cards/CardProduct';
 
@@ -38,11 +39,26 @@ export default function RelatedProducts({
 
   return (
     <div
-      className="rounded-t-xl p-8"
+      className={clsx(
+        'rounded-t-xl px-4 py-8', //
+        'md:px-8',
+      )}
       style={{background: colorTheme?.background || 'white'}}
     >
-      <h3 className="mb-6 text-xl font-bold">You might also like</h3>
-      <div className="grid gap-3 pb-overlap md:grid-cols-4">
+      <h3
+        className={clsx(
+          'mb-6 text-lg font-bold', //
+          'md:text-xl',
+        )}
+      >
+        Related products
+      </h3>
+      <div
+        className={clsx(
+          'grid grid-cols-2 gap-3 pb-overlap', //
+          'md:grid-cols-4',
+        )}
+      >
         {products.map((product) => (
           <CardProduct key={product.id} storefrontProduct={product} />
         ))}

@@ -1,4 +1,5 @@
 import {CacheDays, gql, Seo, useShopQuery} from '@shopify/hydrogen';
+import clsx from 'clsx';
 import groq from 'groq';
 import {Suspense} from 'react';
 import HeroHome from '../components/heroes/HeroHome.server';
@@ -23,7 +24,12 @@ export default function IndexRoute() {
       </Suspense>
 
       {sanityHome?.modules && (
-        <div className="mb-32 mt-24 px-8 pb-overlap">
+        <div
+          className={clsx(
+            'mb-32 mt-24 px-4 pb-overlap', //
+            'md:px-8',
+          )}
+        >
           <ModuleGrid items={sanityHome.modules} />
         </div>
       )}

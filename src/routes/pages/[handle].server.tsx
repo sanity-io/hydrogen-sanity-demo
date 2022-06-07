@@ -7,6 +7,7 @@ import PortableText from '../../components/PortableText.server';
 import useSanityQuery from '../../hooks/useSanityQuery';
 import {PAGE} from '../../fragments/page';
 import {SanityPage} from '../../types';
+import clsx from 'clsx';
 
 type Props = {
   params: any;
@@ -38,7 +39,10 @@ export default function PageRoute({params}: Props) {
         <PortableText
           blocks={page.body}
           centered
-          className="my-8 mx-auto max-w-[660px] px-8 pb-overlap"
+          className={clsx(
+            'my-8 mx-auto max-w-[660px] px-4 pb-overlap', //
+            'md:px-8',
+          )}
           colorTheme={page.colorTheme}
         />
       )}

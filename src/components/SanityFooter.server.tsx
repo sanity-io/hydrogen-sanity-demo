@@ -3,7 +3,12 @@ import clsx from 'clsx';
 export default function SanityFooter() {
   return (
     <div className="-my-overlap bg-[#121923] pt-overlap text-white">
-      <div className="mx-auto max-w-[45rem] px-8 py-12 text-center text-xl">
+      <div
+        className={clsx(
+          'mx-auto max-w-[45rem] px-4 py-12 text-center text-xl', //
+          'md:px-8',
+        )}
+      >
         {/* Intro */}
         <div>
           This is a demo store that Sanity have created along with Shopify's

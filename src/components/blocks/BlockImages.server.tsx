@@ -27,11 +27,11 @@ export default function BlockImages({centered, node}: Props) {
     <div
       className={clsx(
         'first:mt-0 last:mb-0', //
-        'my-8 grid grid-cols-1 gap-3',
+        'my-8 grid grid-cols-1 gap-4',
         node.fullWidth &&
           centered &&
-          'relative left-1/2 right-1/2 mr-[-50vw] ml-[-50vw] w-screen px-8',
-        node.fullWidth && !centered && '-ml-8 w-screen px-8',
+          'relative left-1/2 right-1/2 mr-[-50vw] ml-[-50vw] w-screen px-6 md:px-8',
+        node.fullWidth && !centered && '-ml-8 w-screen px-6 md:px-8',
         multipleImages ? 'md:grid-cols-2' : 'md:grid-cols-1',
         alignClass,
       )}

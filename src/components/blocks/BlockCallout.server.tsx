@@ -13,8 +13,11 @@ export default function BlockCallout({centered, colorTheme, node}: Props) {
   return (
     <div
       className={clsx(
-        'relative w-screen px-8',
-        centered ? 'left-1/2 right-1/2 mr-[-50vw] ml-[-50vw]' : '-ml-8',
+        'relative w-screen px-6',
+        'md:px-8',
+        centered
+          ? 'left-1/2 right-1/2 mr-[-50vw] ml-[-50vw]'
+          : '-ml-6 md:-ml-8',
       )}
     >
       <ModuleCallout colorTheme={colorTheme} module={node} />

@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import {SanityColorTheme, SanityHeroPage} from '../../types';
 import HeroContent from '../HeroContent.server';
 
@@ -18,13 +19,19 @@ export default function HeroPage({colorTheme, fallbackTitle, hero}: Props) {
 
   return (
     <div
-      className="rounded-b-xl bg-peach px-8 pb-8 pt-34"
+      className={clsx(
+        'rounded-b-xl bg-peach px-4 pb-4 pt-24', //
+        'md:px-8 md:pb-8 md:pt-34',
+      )}
       style={{background: colorTheme?.background}}
     >
       {/* Title */}
       {hero.title && (
         <h1
-          className="max-w-[60rem] whitespace-pre-line text-4xl"
+          className={clsx(
+            'max-w-[60rem] whitespace-pre-line text-2xl',
+            'md:text-4xl',
+          )}
           style={{color: colorTheme?.text || 'black'}}
         >
           {hero.title}

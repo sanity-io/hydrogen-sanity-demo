@@ -17,8 +17,8 @@ export default function HeroCollection({
     return (
       <h1
         className={clsx(
-          'mx-8 max-w-[60rem] pt-34 text-3xl', //
-          'md:text-5xl',
+          'max-w-[60rem] px-4 pt-24 text-3xl', //
+          'md:px-8 md:pt-34 md:text-5xl',
         )}
       >
         {fallbackTitle}
@@ -28,14 +28,17 @@ export default function HeroCollection({
 
   return (
     <div
-      className="rounded-b-xl px-8 pb-8 pt-34"
+      className={clsx(
+        'rounded-b-xl px-4 pb-4 pt-24', //
+        'md:px-8 md:pb-8 md:pt-34',
+      )}
       style={{background: colorTheme?.background || 'white'}}
     >
       {/* Title */}
       {hero.title && (
         <h1
           className={clsx(
-            'mx-auto mb-7 max-w-[60rem] whitespace-pre-line text-center text-3xl',
+            'mx-auto mb-7 max-w-[60rem] whitespace-pre-line bg-red text-center text-3xl',
             'md:text-5xl',
           )}
           style={{color: colorTheme?.text || 'black'}}
@@ -56,7 +59,12 @@ export default function HeroCollection({
 
       {/* Hero content */}
       {hero.content && (
-        <div className="mt-12">
+        <div
+          className={clsx(
+            'mt-6', //
+            'md:mt-12',
+          )}
+        >
           <HeroContent content={hero.content} />
         </div>
       )}

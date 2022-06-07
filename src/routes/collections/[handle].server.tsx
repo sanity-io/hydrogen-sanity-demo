@@ -91,10 +91,12 @@ export default function CollectionRoute({
         hero={sanityCollection.hero}
       />
 
-      {/* HTML Description */}
-      {/* <div dangerouslySetInnerHTML={{__html: collection.descriptionHtml}} /> */}
-
-      <div className="mb-32 mt-8 px-8 pb-overlap">
+      <div
+        className={clsx(
+          'mb-32 mt-8 px-4 pb-overlap', //
+          'md:px-8',
+        )}
+      >
         {products.length > 0 && (
           <div
             className={clsx(

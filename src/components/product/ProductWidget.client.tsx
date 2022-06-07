@@ -1,4 +1,5 @@
 import {ProductPrice, useProduct} from '@shopify/hydrogen';
+import clsx from 'clsx';
 import {SanityProductPage} from '../../types';
 import {hasMultipleProductOptions} from '../../utils/productOptions';
 import ButtonSelectedVariantAddToCart from '../buttons/ButtonSelectedVariantAddToCart.client';
@@ -38,7 +39,12 @@ export default function ProductWidget({sanityProduct}: Props) {
   const availableForSale = storefrontProduct.selectedVariant?.availableForSale;
 
   return (
-    <div className="pointer-events-auto z-10 ml-auto rounded bg-white p-6 shadow">
+    <div
+      className={clsx(
+        'pointer-events-auto z-10 ml-auto rounded bg-white px-4 py-6 shadow',
+        'md:px-6',
+      )}
+    >
       {/* Sold out */}
       {!availableForSale && (
         <div className="mb-3 text-xs font-bold uppercase text-darkGray">

@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import {SanityColorTheme, SanityProductPage} from '../../types';
 import PortableText from '../PortableText.server';
 
@@ -13,7 +14,10 @@ export default function ProductEditorial({colorTheme, sanityProduct}: Props) {
       {sanityProduct?.body && (
         <PortableText
           blocks={sanityProduct.body}
-          className="my-8 max-w-[660px] px-8"
+          className={clsx(
+            'my-8 max-w-[660px] px-4', //
+            'md:px-8',
+          )}
           colorTheme={colorTheme}
         />
       )}

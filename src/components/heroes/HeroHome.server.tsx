@@ -9,7 +9,12 @@ type Props = {
 
 export default function HeroHome({hero}: Props) {
   return (
-    <div className="flex flex-col items-center rounded-b-xl bg-peach px-8 pb-8 pt-34">
+    <div
+      className={clsx(
+        'flex flex-col items-center rounded-b-xl bg-peach px-4 pb-4 pt-24',
+        'md:px-8 md:pb-8 md:pt-34',
+      )}
+    >
       {/* Title */}
       {hero.title && (
         <h1
@@ -27,7 +32,12 @@ export default function HeroHome({hero}: Props) {
 
       {/* Hero content */}
       {hero.content && (
-        <div className="mt-12 w-full">
+        <div
+          className={clsx(
+            'mt-6 w-full', //
+            'md:mt-12',
+          )}
+        >
           <HeroContent content={hero.content} />
         </div>
       )}

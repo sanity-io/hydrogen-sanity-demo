@@ -3,6 +3,7 @@ import CartToggle from './cart/CartToggle.client';
 import CountrySelector from './selects/SelectCountry.client';
 import HeaderBackground from './HeaderBackgroundAndLogo.client';
 import Navigation from './Navigation.server';
+import clsx from 'clsx';
 
 type Props = {
   menuLinks: SanityMenuLink[];
@@ -14,7 +15,10 @@ type Props = {
 export default function Header({menuLinks}: Props) {
   return (
     <header
-      className="align-center fixed top-0 z-40 flex h-[4.375rem] w-full justify-between px-8 lg:h-[6.25rem]"
+      className={clsx(
+        'align-center fixed top-0 z-40 flex h-[4.375rem] w-full justify-between px-4 lg:h-[6.25rem]',
+        'md:px-8',
+      )}
       role="banner"
     >
       <HeaderBackground />
@@ -27,7 +31,14 @@ export default function Header({menuLinks}: Props) {
 
       {/* Country selector + Cart toggle */}
       <div className="relative flex items-center gap-2">
-        <CountrySelector />
+        <div
+          className={clsx(
+            'hidden', //
+            'lg:block',
+          )}
+        >
+          <CountrySelector />
+        </div>
         <CartToggle />
       </div>
     </header>
