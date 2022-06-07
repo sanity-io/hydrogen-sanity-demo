@@ -113,7 +113,6 @@ export default function CardProduct({
         <div className="mt-3 text-md">
           <div className="space-y-1">
             {/* Title */}
-
             <Link
               className={clsx(
                 'font-bold', //

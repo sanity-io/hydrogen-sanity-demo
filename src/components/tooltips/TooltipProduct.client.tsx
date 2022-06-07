@@ -36,31 +36,40 @@ export default function TooltipProduct({
         className={clsx([
           imageAspectClassName,
           'relative flex items-center justify-center overflow-hidden rounded bg-lightGray object-cover transition-all duration-500 ease-out',
+          'hover:rounded-xl',
         ])}
       >
-        {selectedVariant.image && (
-          <Image
-            className="absolute h-full w-full transform bg-cover bg-center object-cover object-center ease-in-out"
-            data={selectedVariant.image}
-          />
-        )}
-        {/* Badges */}
-        <div className="absolute top-4 left-4">
-          {/* Sale */}
-          {selectedVariant?.availableForSale &&
-            selectedVariant?.compareAtPriceV2 && (
-              <Badge label="Sale" tone="critical" />
-            )}
-          {/* Sold out */}
-          {!selectedVariant?.availableForSale && <Badge label="Sold out" />}
-        </div>
+        <Link
+          className="absolute top-0 left-0 h-full w-full"
+          to={`/products/${handle}`}
+        >
+          {selectedVariant.image && (
+            <Image
+              className="absolute h-full w-full transform bg-cover bg-center object-cover object-center ease-in-out"
+              data={selectedVariant.image}
+            />
+          )}
+          {/* Badges */}
+          <div className="absolute top-4 left-4">
+            {/* Sale */}
+            {selectedVariant?.availableForSale &&
+              selectedVariant?.compareAtPriceV2 && (
+                <Badge label="Sale" tone="critical" />
+              )}
+            {/* Sold out */}
+            {!selectedVariant?.availableForSale && <Badge label="Sold out" />}
+          </div>
+        </Link>
       </div>
 
       <div className="mt-3 text-md">
         <div className="space-y-1">
           {/* Title */}
-          <Link to={`/products/${handle}`}>
-            <div className="font-bold hover:underline">{title}</div>
+          <Link
+            className="font-bold hover:underline"
+            to={`/products/${handle}`}
+          >
+            {title}
           </Link>
 
           {/* Vendor */}
