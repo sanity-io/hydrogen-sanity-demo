@@ -5,19 +5,19 @@ export default function SanityFooter() {
     <div className="-my-overlap bg-[#121923] pt-overlap text-white">
       <div
         className={clsx(
-          'mx-auto max-w-[45rem] px-4 py-12 text-center text-xl', //
+          'mx-auto max-w-[45rem] px-4 py-12 text-center text-xl leading-[1.25]', //
           'md:px-8',
         )}
       >
         {/* Intro */}
         <div>
-          This demo shows how Sanity.io can power remarkable storefronts on Shopify's
-          Hydrogen framework.
+          This demo shows how Sanity.io can power remarkable storefronts on
+          Shopify's Hydrogen framework.
         </div>
         {/* Links */}
         <div
           className={clsx(
-            'mt-8 grid grid-cols-1 gap-3 text-left text-sm',
+            'mt-8 grid grid-cols-1 gap-3 text-left text-sm leading-[1.25]',
             'md:grid-cols-3',
           )}
         >
@@ -86,7 +86,9 @@ export default function SanityFooter() {
                 strokeLinejoin="round"
               />
             </svg>
-            <div>Try the pre-configured Sanity Studio behind this experience</div>
+            <div>
+              Try the pre-configured Sanity Studio behind this experience
+            </div>
           </a>
 
           <a
@@ -134,7 +136,10 @@ export default function SanityFooter() {
                 strokeLinejoin="round"
               />
             </svg>
-            <div>Install Sanity Connect on the Shopify App Store. It's totally free.</div>
+            <div>
+              Install Sanity Connect on the Shopify App Store. It's totally
+              free.
+            </div>
           </a>
         </div>
         {/* Learn more */}
