@@ -6,7 +6,16 @@ import clsx from 'clsx';
 import {IconChevronDown} from '../icons/IconChevronDown';
 import {useServerProps} from '@shopify/hydrogen';
 
-export const SORT_OPTIONS = [
+type SortOption = {
+  collectionSortOrder: string;
+  name: string;
+  productSort: {
+    key?: string;
+    reverse?: boolean;
+  };
+};
+
+export const SORT_OPTIONS: SortOption[] = [
   {
     name: 'Default',
     collectionSortOrder: 'MANUAL',
@@ -63,7 +72,7 @@ export const SORT_OPTIONS = [
       reverse: false,
     },
   },
-] as const;
+];
 
 /**
  * A client component that selects the appropriate country to display for products on a website
@@ -79,41 +88,38 @@ function __tempToSnakeCase(str?: string) {
 }
 
 export default function SelectSortOrder({initialSortOrder}: Props) {
-  const [listboxOpen, setListboxOpen] = useState(false);
-  const [selectedSortOrder, setSelectedSortOrder] = useState(
-    __tempToSnakeCase(initialSortOrder),
-  );
-  const {setServerProps} = useServerProps();
-
   // Remove 'Default' sort option if current collection is not manual / automated
   const sortOptions = useMemo(() => {
-    return selectedSortOrder === 'MANUAL'
+    return initialSortOrder === 'MANUAL'
       ? SORT_OPTIONS
       : SORT_OPTIONS.filter(
           (option) => option.collectionSortOrder !== 'MANUAL',
         );
-  }, [selectedSortOrder]);
+  }, [initialSortOrder]);
 
-  const handleChange = (sortOption: typeof SORT_OPTIONS[number]) => {
-    setSelectedSortOrder(
-      sortOption?.collectionSortOrder
-        ? __tempToSnakeCase(sortOption.collectionSortOrder)
-        : undefined,
-    );
+  const [listboxOpen, setListboxOpen] = useState(false);
+  const {setServerProps} = useServerProps();
+
+  const [selectedSortOption, setSelectedSortOption] = useState(
+    sortOptions.find(
+      (option) =>
+        option.collectionSortOrder === __tempToSnakeCase(initialSortOrder),
+    ),
+  );
+
+  const handleChange = (sortOption: SortOption) => {
+    setSelectedSortOption(sortOption);
     setServerProps('productSort', sortOption.productSort);
   };
 
   return (
-    <Listbox onChange={handleChange}>
+    <Listbox onChange={handleChange} value={selectedSortOption}>
       {({open}) => {
-        const currentSortOption = sortOptions.find(
-          (option) => option.collectionSortOrder === selectedSortOrder,
-        );
         setTimeout(() => setListboxOpen(open));
         return (
           <div className="relative inline-flex">
             <Listbox.Button className="select">
-              <span className="mr-2">Sort by: {currentSortOption?.name}</span>
+              <span className="mr-2">Sort by: {selectedSortOption?.name}</span>
               <IconChevronDown className={open ? 'rotate-180' : 'rotate-0'} />
             </Listbox.Button>
 
@@ -133,7 +139,7 @@ export default function SelectSortOrder({initialSortOrder}: Props) {
                     }
                   >
                     <SortOptions
-                      selectedSortOrder={selectedSortOrder}
+                      selectedSortOption={selectedSortOption}
                       getClassName={(active) => {
                         return clsx([
                           'p-3 flex justify-between items-center text-left font-bold text-sm cursor-pointer whitespace-nowrap',
@@ -154,25 +160,29 @@ export default function SelectSortOrder({initialSortOrder}: Props) {
 }
 
 export function SortOptions({
-  selectedSortOrder,
+  selectedSortOption,
   getClassName,
   options,
 }: {
-  selectedSortOrder?: any;
+  selectedSortOption?: SortOption;
   getClassName: (active: boolean) => string;
-  options: typeof SORT_OPTIONS;
+  options: SortOption[];
 }) {
-  return options.map((sortOption) => {
-    const isSelected = sortOption.collectionSortOrder === selectedSortOrder;
-    return (
-      <Listbox.Option key={sortOption.name} value={sortOption}>
-        {({active}) => (
-          <div className={getClassName(active)}>
-            <span className="mr-8">{sortOption.name}</span>
-            <IconRadio checked={isSelected} hovered={active} />
-          </div>
-        )}
-      </Listbox.Option>
-    );
-  });
+  return (
+    <>
+      {options.map((sortOption) => {
+        const isSelected = sortOption === selectedSortOption;
+        return (
+          <Listbox.Option key={sortOption.name} value={sortOption}>
+            {({active}) => (
+              <div className={getClassName(active)}>
+                <span className="mr-8">{sortOption.name}</span>
+                <IconRadio checked={isSelected} hovered={active} />
+              </div>
+            )}
+          </Listbox.Option>
+        );
+      })}
+    </>
+  );
 }

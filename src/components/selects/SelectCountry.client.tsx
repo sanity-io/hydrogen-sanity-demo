@@ -6,6 +6,8 @@ import {IconChevronDown} from '../icons/IconChevronDown';
 import IconRadio from '../icons/IconRadio';
 import SpinnerIcon from '../icons/IconSpinner';
 
+type Country = ReturnType<typeof useCountry>[number];
+
 /**
  * A client component that selects the appropriate country to display for products on a website
  */
@@ -18,7 +20,11 @@ export default function CountrySelector({align = 'center'}: Props) {
   const [listboxOpen, setListboxOpen] = useState(false);
   const [selectedCountry] = useCountry();
 
-  const setCountry = useCallback(({isoCode, name}) => {
+  const setCountry = useCallback((country: Country) => {
+    if (!country) {
+      return;
+    }
+    const {isoCode, name} = country;
     fetch(`/api/countries`, {
       body: JSON.stringify({isoCode, name}),
       method: 'POST',
@@ -32,7 +38,7 @@ export default function CountrySelector({align = 'center'}: Props) {
   }
 
   return (
-    <Listbox onChange={setCountry}>
+    <Listbox onChange={setCountry} value={selectedCountry}>
       {({open}) => {
         setTimeout(() => setListboxOpen(open));
         return (
@@ -66,7 +72,7 @@ export default function CountrySelector({align = 'center'}: Props) {
                   >
                     <Countries
                       selectedCountry={selectedCountry}
-                      getClassName={(active) => {
+                      getClassName={(active: boolean) => {
                         return clsx([
                           'p-3 flex justify-between items-center text-left font-bold text-sm cursor-pointer whitespace-nowrap',
                           active ? 'bg-darkGray bg-opacity-5' : null,
@@ -84,20 +90,36 @@ export default function CountrySelector({align = 'center'}: Props) {
   );
 }
 
-export function Countries({selectedCountry, getClassName}) {
-  const countries = fetchSync('/api/countries').json();
+export function Countries({
+  getClassName,
+  selectedCountry,
+}: {
+  getClassName: (active: boolean) => string;
+  selectedCountry: Country;
+}) {
+  const countries: {
+    currency: {
+      isoCode: string;
+    };
+    isoCode: string;
+    name: string;
+  }[] = fetchSync('/api/countries').json();
 
-  return countries.map((country) => {
-    const isSelected = country.isoCode === selectedCountry.isoCode;
-    return (
-      <Listbox.Option key={country.isoCode} value={country}>
-        {({active}) => (
-          <div className={getClassName(active)}>
-            <span className="mr-8">{country.name}</span>
-            <IconRadio checked={isSelected} hovered={active} />
-          </div>
-        )}
-      </Listbox.Option>
-    );
-  });
+  return (
+    <>
+      {countries.map((country) => {
+        const isSelected = country.isoCode === selectedCountry?.isoCode;
+        return (
+          <Listbox.Option key={country.isoCode} value={country}>
+            {({active}) => (
+              <div className={getClassName(active)}>
+                <span className="mr-8">{country.name}</span>
+                <IconRadio checked={isSelected} hovered={active} />
+              </div>
+            )}
+          </Listbox.Option>
+        );
+      })}
+    </>
+  );
 }

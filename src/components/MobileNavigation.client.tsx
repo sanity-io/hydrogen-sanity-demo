@@ -69,7 +69,7 @@ export default function MobileNavigation({menuLinks}: Props) {
                   {menuLinks?.map((link) => {
                     if (link._type === 'collectionGroup') {
                       return (
-                        <div>
+                        <div key={link._key}>
                           <div className="linkTextNavigation hover:border-b-transparent">
                             {link.title} –
                           </div>
