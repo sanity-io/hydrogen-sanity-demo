@@ -25,15 +25,6 @@ export const PORTABLE_TEXT = groq`
   (_type == 'blockProducts') => {
     ${MODULE_PRODUCTS}
   },
-  children[] {
-    ...,
-    (_type == 'blockInlineProduct') => {
-      ...,
-      productWithVariant {
-        ...${PRODUCT_WITH_VARIANT}
-      }
-    },
-  },
   markDefs[] {
     ...,
     (_type == 'annotationLinkExternal') => {
