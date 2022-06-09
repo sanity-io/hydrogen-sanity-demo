@@ -23,44 +23,39 @@ export default function CollectionGroupDialog({
       <>
         <button
           className={clsx(
-            'flex h-[2.4rem] items-center rounded-sm bg-darkGray bg-opacity-0 p-2 text-sm duration-150',
+            '-mx-2 flex h-[2.4rem] items-center rounded-sm bg-darkGray bg-opacity-0 p-2 text-sm duration-150',
             'hover:bg-opacity-5',
           )}
           onClick={handleOpen}
         >
           <svg
-            className="mb-[0.1rem] mr-[0.25rem] w-5"
+            className="mr-[0.15rem] w-6"
             xmlns="http://www.w3.org/2000/svg"
-            width="192"
-            height="auto"
-            fill="#000000"
-            viewBox="0 0 256 256"
+            width="25"
+            height="25"
+            viewBox="0 0 25 25"
+            fill="none"
           >
-            <rect width="256" height="256" fill="none" />
-            <line
-              x1="88"
-              y1="48"
-              x2="88"
-              y2="208"
-              fill="none"
-              stroke="#000000"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="16"
+            <rect
+              x="5"
+              y="14"
+              width="6"
+              height="6"
+              stroke="#2C2E2E"
+              strokeWidth="1.2"
             />
             <rect
-              x="32"
-              y="48"
-              width="192"
-              height="160"
-              rx="8"
-              fill="none"
-              stroke="#000000"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="16"
+              x="14"
+              y="5"
+              width="6"
+              height="6"
+              stroke="#2C2E2E"
+              strokeWidth="1.2"
             />
+            <circle cx="8" cy="8" r="3" stroke="#2C2E2E" strokeWidth="1.2" />
+            <circle cx="17" cy="17" r="3" stroke="#2C2E2E" strokeWidth="1.2" />
           </svg>
+
           <div className="inline-flex items-center font-bold">
             {collectionGroup.title}
           </div>
