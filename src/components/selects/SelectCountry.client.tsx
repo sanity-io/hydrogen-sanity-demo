@@ -9,7 +9,12 @@ import SpinnerIcon from '../icons/IconSpinner';
 /**
  * A client component that selects the appropriate country to display for products on a website
  */
-export default function CountrySelector() {
+
+type Props = {
+  align?: 'center' | 'left' | 'right';
+};
+
+export default function CountrySelector({align = 'center'}: Props) {
   const [listboxOpen, setListboxOpen] = useState(false);
   const [selectedCountry] = useCountry();
 
@@ -21,6 +26,10 @@ export default function CountrySelector() {
       window.location.reload();
     });
   }, []);
+
+  if (!selectedCountry) {
+    return null;
+  }
 
   return (
     <Listbox onChange={setCountry}>
@@ -35,10 +44,17 @@ export default function CountrySelector() {
               )}
             >
               <span className="mr-2">{selectedCountry.name}</span>
-              <IconChevronDown className={open ? 'rotate-180' : null} />
+              <IconChevronDown className={clsx(open && 'rotate-180')} />
             </Listbox.Button>
 
-            <Listbox.Options className="absolute top-full left-1/2 z-10 mt-3 min-w-[150px] -translate-x-1/2 overflow-hidden rounded shadow">
+            <Listbox.Options
+              className={clsx(
+                'absolute top-full z-10 mt-3 min-w-[150px] overflow-hidden rounded shadow',
+                align === 'center' && 'left-1/2 -translate-x-1/2',
+                align === 'left' && 'left-0',
+                align === 'right' && 'right-0',
+              )}
+            >
               <div className="max-h-64 overflow-y-auto bg-white">
                 {listboxOpen && (
                   <Suspense

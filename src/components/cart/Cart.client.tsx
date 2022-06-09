@@ -19,6 +19,7 @@ import IconMinusCircle from '../icons/IconMinusCircle';
 import IconPlusCircle from '../icons/IconPlusCircle';
 import clsx from 'clsx';
 import {DEFAULT_BUTTON_STYLES} from '../../constants';
+import IconClose from '../icons/IconClose';
 
 /**
  * A client component that contains the merchandise that a customer intends to purchase, and the estimated cost associated with the cart
@@ -59,7 +60,10 @@ export default function Cart() {
             leaveTo="translate-x-full"
           >
             <Dialog.Panel
-              className={`fixed top-0 left-0 right-0 bottom-0 z-40 flex h-full w-full flex-col overflow-y-auto rounded-l-xl bg-white md:left-auto md:bottom-auto md:w-[470px]`}
+              className={clsx(
+                'rounded-l-none fixed top-0 left-0 right-0 bottom-0 z-40 flex h-full w-full flex-col overflow-y-auto bg-white md:left-auto md:bottom-auto md:w-[470px]',
+                'md:rounded-l-xl',
+              )}
             >
               <CartHeader numLines={lines.length} />
               {totalQuantity === 0 ? (
@@ -82,31 +86,17 @@ function CartHeader({numLines}: {numLines: number}) {
   // @ts-expect-error cartUI shouldnt return null
   const {closeCart} = useCartUI();
   return (
-    <header className="sticky top-0 flex items-center justify-between px-8 pb-5 pt-8">
-      <div className="text-xl font-bold">
+    <header
+      className={clsx(
+        'sticky top-0 flex h-header-sm items-center justify-between px-8',
+        'lg:h-header-lg',
+      )}
+    >
+      <div className="text-xl font-bold leading-none">
         Cart {numLines > 0 && `(${numLines})`}
       </div>
       <button type="button" onClick={closeCart}>
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M19.2803 4.71967C19.5732 5.01256 19.5732 5.48744 19.2803 5.78033L5.78033 19.2803C5.48744 19.5732 5.01256 19.5732 4.71967 19.2803C4.42678 18.9874 4.42678 18.5126 4.71967 18.2197L18.2197 4.71967C18.5126 4.42678 18.9874 4.42678 19.2803 4.71967Z"
-            fill="#2B2E2E"
-          />
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M4.71967 4.71967C5.01256 4.42678 5.48744 4.42678 5.78033 4.71967L19.2803 18.2197C19.5732 18.5126 19.5732 18.9874 19.2803 19.2803C18.9874 19.5732 18.5126 19.5732 18.2197 19.2803L4.71967 5.78033C4.42678 5.48744 4.42678 5.01256 4.71967 4.71967Z"
-            fill="#2B2E2E"
-          />
-        </svg>
+        <IconClose />
       </button>
     </header>
   );

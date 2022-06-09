@@ -11,7 +11,12 @@ type Props = {
 export default function HeroPage({colorTheme, fallbackTitle, hero}: Props) {
   if (!hero) {
     return (
-      <h1 className="mx-auto max-w-[60rem] pb-8 pt-34 text-center text-4xl">
+      <h1
+        className={clsx(
+          'mx-auto max-w-[60rem] px-4 pb-8 pt-34 text-center text-3xl',
+          'md:px-8 md:text-4xl',
+        )}
+      >
         {fallbackTitle}
       </h1>
     );

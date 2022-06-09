@@ -3,8 +3,10 @@ import {
   Collection,
   Product,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import clsx from 'clsx';
 import type {SanityCollectionGroup} from '../types';
 import CardCollection from './cards/CardCollection';
+import IconClose from './icons/IconClose';
 import PillProduct from './pills/PillProduct';
 
 type Props = {
@@ -44,9 +46,24 @@ export default function CollectionGroupContent({
     ));
 
   return (
-    <div className="px-8 py-10">
+    <div className="pb-10">
+      {/* Header */}
+      <header
+        className={clsx(
+          'flex h-header-sm items-center justify-between px-8',
+          'lg:h-header-lg',
+        )}
+      >
+        <div className="text-xl font-bold leading-none">
+          {collectionGroup?.title}
+        </div>
+        <button type="button" onClick={onClose}>
+          <IconClose />
+        </button>
+      </header>
+
       {/* Collections */}
-      <div>
+      <div className="px-8">
         <div className="text-lg font-bold">Collections</div>
         <div className="relative mt-3 grid grid-cols-2 gap-2">
           {renderCollections()}
@@ -54,7 +71,7 @@ export default function CollectionGroupContent({
       </div>
 
       {/* Collection products */}
-      <div className="mt-8 ">
+      <div className="mt-8 px-8">
         <div className="text-lg font-bold">{collection.title}</div>
         <ul className="mt-3 grid grid-cols-1 gap-2">
           {renderCollectionProducts()}

@@ -110,6 +110,10 @@ module.exports = {
         peach: '#FFE1D1',
         red: '#EC5039',
       },
+      height: {
+        'header-sm': '4.375rem',
+        'header-lg': '6.25rem',
+      },
       spacing: {
         1: '4px',
         2: '8px',

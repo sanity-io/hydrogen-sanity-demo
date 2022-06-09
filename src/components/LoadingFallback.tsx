@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import IconLogo from './icons/IconLogo';
 
 /**
@@ -6,7 +7,10 @@ import IconLogo from './icons/IconLogo';
 export default function LoadingFallback() {
   return (
     <header
-      className="align-center fixed top-0 z-40 flex h-[4.375rem] w-full justify-between px-8 lg:h-[6.25rem]"
+      className={clsx(
+        'align-center fixed top-0 z-40 flex h-header-sm w-full justify-between px-8',
+        'lg:h-header-lg',
+      )}
       role="banner"
     >
       <div className="absolute bottom-0 top-0 left-1/2 flex w-[50px] -translate-x-1/2 items-center lg:w-auto">

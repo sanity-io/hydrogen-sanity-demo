@@ -4,6 +4,7 @@ import CountrySelector from './selects/SelectCountry.client';
 import HeaderBackground from './HeaderBackgroundAndLogo.client';
 import Navigation from './Navigation.server';
 import clsx from 'clsx';
+import MobileNavigation from './MobileNavigation.client';
 
 type Props = {
   menuLinks: SanityMenuLink[];
@@ -16,16 +17,15 @@ export default function Header({menuLinks}: Props) {
   return (
     <header
       className={clsx(
-        'align-center fixed top-0 z-40 flex h-[4.375rem] w-full justify-between px-4 lg:h-[6.25rem]',
+        'align-center fixed top-0 z-40 flex h-header-sm w-full justify-between px-4',
         'md:px-8',
+        'lg:h-header-lg',
       )}
       role="banner"
     >
       <HeaderBackground />
 
-      <div className="flex items-center text-sm font-bold text-red lg:hidden">
-        (Menu)
-      </div>
+      <MobileNavigation menuLinks={menuLinks} />
 
       <Navigation menuLinks={menuLinks} />
 

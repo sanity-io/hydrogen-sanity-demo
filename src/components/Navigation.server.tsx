@@ -2,13 +2,13 @@ import {Link} from '@shopify/hydrogen';
 import type {SanityMenuLink} from '../types';
 import CollectionGroup from './CollectionGroup.server';
 
-type Props = {
-  menuLinks: SanityMenuLink[];
-};
-
 /**
  * A server component that defines the navigation for a web storefront
  */
+
+type Props = {
+  menuLinks: SanityMenuLink[];
+};
 
 export default function Navigation({menuLinks}: Props) {
   const renderLinks = () => {
