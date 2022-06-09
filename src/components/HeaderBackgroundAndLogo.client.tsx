@@ -22,7 +22,7 @@ export default function HeaderBackground() {
       {/* Background */}
       <div
         className={clsx([
-          'absolute inset-0 bg-white duration-500',
+          'absolute inset-0 bg-white bg-opacity-90 backdrop-blur-lg backdrop-filter duration-500',
           scrolledDown ? 'opacity-100' : 'opacity-0',
         ])}
       />

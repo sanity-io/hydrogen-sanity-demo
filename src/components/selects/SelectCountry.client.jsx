@@ -30,7 +30,7 @@ export default function CountrySelector() {
           <div className="relative inline-flex">
             <Listbox.Button
               className={clsx(
-                'flex h-[2.4rem] items-center rounded-sm bg-offBlack bg-opacity-0 p-2 text-sm font-bold duration-150',
+                'flex h-[2.4rem] items-center rounded-sm bg-darkGray bg-opacity-0 p-2 text-sm font-bold duration-150',
                 'hover:bg-opacity-5',
               )}
             >
