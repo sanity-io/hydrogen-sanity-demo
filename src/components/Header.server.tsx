@@ -17,7 +17,7 @@ export default function Header({menuLinks}: Props) {
   return (
     <header
       className={clsx(
-        'align-center fixed top-0 z-40 flex h-header-sm w-full justify-between px-4',
+        'align-center fixed top-0 z-40 flex h-header-sm w-full px-4',
         'md:px-8',
         'lg:h-header-lg',
       )}
@@ -30,7 +30,12 @@ export default function Header({menuLinks}: Props) {
       <Navigation menuLinks={menuLinks} />
 
       {/* Country selector + Cart toggle */}
-      <div className="relative flex items-center gap-2">
+      <div
+        className={clsx(
+          'absolute right-0 flex h-full items-center', //
+          'md:mr-4',
+        )}
+      >
         <div
           className={clsx(
             'hidden', //
@@ -39,7 +44,9 @@ export default function Header({menuLinks}: Props) {
         >
           <CountrySelector />
         </div>
-        <CartToggle />
+        <div className="flex h-full items-center justify-center p-4">
+          <CartToggle />
+        </div>
       </div>
     </header>
   );

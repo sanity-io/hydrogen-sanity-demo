@@ -21,7 +21,9 @@ export default function MobileNavigation({menuLinks}: Props) {
     <>
       <button
         className={clsx(
-          'relative left-0 -ml-4 flex items-center p-4 text-sm font-bold',
+          'absolute left-0 flex h-header-sm items-center p-4 text-sm font-bold duration-200',
+          'hover:opacity-50',
+          'md:ml-4',
           'lg:hidden',
         )}
         onClick={handleOpen}
@@ -68,8 +70,8 @@ export default function MobileNavigation({menuLinks}: Props) {
                     if (link._type === 'collectionGroup') {
                       return (
                         <div>
-                          <div className="linkTextNavigation text-offBlack text-opacity-50 hover:border-b-transparent">
-                            {link.title}
+                          <div className="linkTextNavigation hover:border-b-transparent">
+                            {link.title} –
                           </div>
                           <div className="ml-8">
                             {link.collectionLinks?.map((collectionLink) => (
