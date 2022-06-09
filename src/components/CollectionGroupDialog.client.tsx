@@ -23,7 +23,7 @@ export default function CollectionGroupDialog({
       <>
         <button
           className={clsx(
-            '-mx-2 flex h-[2.4rem] items-center rounded-sm bg-darkGray bg-opacity-0 p-2 text-sm duration-150',
+            '-mx-3 flex h-[2.4rem] items-center rounded-sm bg-darkGray bg-opacity-0 p-2 text-sm duration-150',
             'hover:bg-opacity-5',
           )}
           onClick={handleOpen}

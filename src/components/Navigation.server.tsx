@@ -20,7 +20,7 @@ export default function Navigation({menuLinks}: Props) {
         return (
           <div className="flex items-center" key={link._key}>
             <a
-              className="linkTextNavigation relative z-20 mr-1 whitespace-nowrap"
+              className="linkTextNavigation relative z-20 whitespace-nowrap"
               href={link.url}
               rel="noreferrer"
               target={link.newWindow ? '_blank' : '_self'}
@@ -38,7 +38,7 @@ export default function Navigation({menuLinks}: Props) {
         return (
           <div className="flex items-center" key={link._key}>
             <Link
-              className="linkTextNavigation relative z-20 mr-1 whitespace-nowrap"
+              className="linkTextNavigation relative z-20 whitespace-nowrap"
               to={link.slug}
             >
               {link.title}
@@ -52,7 +52,7 @@ export default function Navigation({menuLinks}: Props) {
   };
 
   return (
-    <nav className="hidden items-stretch justify-start gap-4 text-sm font-bold lg:flex">
+    <nav className="hidden items-stretch justify-start gap-6 text-sm font-bold lg:flex">
       {renderLinks()}
     </nav>
   );
