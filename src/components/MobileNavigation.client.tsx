@@ -11,7 +11,7 @@ type Props = {
   menuLinks: SanityMenuLink[];
 };
 
-export default function MobileNavigationDialog({menuLinks}: Props) {
+export default function MobileNavigation({menuLinks}: Props) {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => setOpen(false);
@@ -34,14 +34,14 @@ export default function MobileNavigationDialog({menuLinks}: Props) {
           {/* Panel */}
           <Transition.Child
             as={Fragment}
-            enter="ease-in-out duration-[450ms]"
+            enter="ease-in-out duration-500"
             enterFrom="-translate-x-full"
             enterTo="translate-x-0"
-            leave="ease-in-out duration-[400ms]"
+            leave="ease-in-out duration-500"
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-full"
           >
-            <Dialog.Panel className="fixed top-0 left-0 right-0 bottom-0 z-50 h-full w-full overflow-y-auto bg-white">
+            <Dialog.Panel className="fixed top-0 left-0 right-0 bottom-0 z-50 h-full w-full overflow-y-auto bg-white pb-40">
               {/* Header */}
               <header className="flex h-header-sm items-center justify-start px-4">
                 <button
@@ -56,11 +56,34 @@ export default function MobileNavigationDialog({menuLinks}: Props) {
               {/* Links */}
               <div className="mt-6 space-y-4 px-4">
                 <div className="text-2xl font-bold">
+                  <Link
+                    className="linkTextNavigation"
+                    onClick={handleClose}
+                    to="/"
+                  >
+                    Home
+                  </Link>
+
                   {menuLinks?.map((link) => {
                     if (link._type === 'collectionGroup') {
                       return (
-                        <div className="rounded bg-indigo-500 p-2 text-white">
-                          (Add collection groups)
+                        <div>
+                          <div className="linkTextNavigation text-offBlack text-opacity-50 hover:border-b-transparent">
+                            {link.title}
+                          </div>
+                          <div className="ml-8">
+                            {link.collectionLinks?.map((collectionLink) => (
+                              <div key={collectionLink._id}>
+                                <Link
+                                  className="linkTextNavigation relative inline-flex whitespace-nowrap"
+                                  onClick={handleClose}
+                                  to={collectionLink.slug}
+                                >
+                                  {collectionLink.title}
+                                </Link>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       );
                     }

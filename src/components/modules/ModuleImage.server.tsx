@@ -75,7 +75,12 @@ export default function ModuleImage({module}: Props) {
   }
 
   const ImageContent = (
-    <div className="relative overflow-hidden rounded transition-all duration-500 ease-out group-hover:rounded-xl">
+    <div
+      className={clsx(
+        'relative overflow-hidden rounded duration-500 ease-out',
+        'group-hover:rounded-xl',
+      )}
+    >
       <SanityImage
         crop={image?.crop}
         dataset={sanityConfig.dataset}

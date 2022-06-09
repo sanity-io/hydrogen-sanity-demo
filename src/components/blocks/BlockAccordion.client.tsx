@@ -24,7 +24,7 @@ export default function BlockAccordion({node}: Props) {
             <div className="flex flex-col border-b border-b-gray">
               <Disclosure.Button
                 className={clsx(
-                  'flex items-center justify-between py-4 text-lg font-bold transition-opacity duration-500 ease-out',
+                  'flex items-center justify-between py-4 text-lg font-bold transition-opacity duration-200 ease-out',
                   'hover:opacity-60',
                 )}
               >

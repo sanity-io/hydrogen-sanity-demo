@@ -15,7 +15,7 @@ const AnnotationLinkExternal = ({children, mark}: Props) => {
   return (
     <a
       className={clsx(
-        'inline-flex items-center underline transition-opacity duration-300',
+        'inline-flex items-center underline transition-opacity duration-200',
         'hover:opacity-60',
       )}
       href={mark?.url}

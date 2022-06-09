@@ -56,11 +56,19 @@ export default function PillProduct({
   return (
     <Link onClick={onClick} to={`/products/${storefrontProduct.handle}`}>
       <div
-        className="group flex h-[108px] gap-4 rounded-md border border-lightGray bg-white p-3 text-sm transition-all duration-500 ease-out hover:rounded-lg hover:border-darkGray"
+        className={clsx(
+          'group flex h-[108px] gap-4 rounded-md border border-lightGray bg-white p-3 text-sm duration-500 ease-out',
+          'hover:rounded-lg hover:border-darkGray',
+        )}
         role="row"
       >
         <div role="cell" className="relative flex-shrink-0">
-          <div className="relative h-full w-[110px] overflow-hidden rounded-sm bg-lightGray transition-all duration-500 ease-out group-hover:rounded-md">
+          <div
+            className={clsx(
+              'relative h-full w-[110px] overflow-hidden rounded-sm bg-lightGray duration-500 ease-out',
+              'group-hover:rounded-md',
+            )}
+          >
             {image && (
               <Image
                 className={clsx(

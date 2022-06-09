@@ -18,7 +18,7 @@ export default function HeaderBackground() {
   }, []);
 
   return (
-    <div className="absolute inset-0 transition-all">
+    <div className="absolute inset-0">
       {/* Background */}
       <div
         className={clsx([

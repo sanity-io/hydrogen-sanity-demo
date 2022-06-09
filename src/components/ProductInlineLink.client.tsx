@@ -48,7 +48,7 @@ export default function ProductInlineLink({
   const LinkContent = (
     <span
       className={clsx(
-        'inline-flex place-content-center items-center rounded-xs bg-peach p-0.5 leading-none duration-300 ease-out',
+        'inline-flex place-content-center items-center rounded-xs bg-peach p-0.5 leading-none duration-200 ease-out',
         'hover:opacity-80',
       )}
       style={{background: colorTheme?.background}}

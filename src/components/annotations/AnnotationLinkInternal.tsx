@@ -19,7 +19,7 @@ export default function AnnotationLinkInternal({children, mark}: Props) {
   return (
     <Link
       className={clsx(
-        'inline-flex items-center underline transition-opacity duration-300',
+        'inline-flex items-center underline transition-opacity duration-200',
         'hover:opacity-60',
       )}
       to={mark?.slug}

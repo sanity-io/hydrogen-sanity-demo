@@ -35,7 +35,7 @@ export default function TooltipProduct({
       <div
         className={clsx([
           imageAspectClassName,
-          'relative flex items-center justify-center overflow-hidden rounded bg-lightGray object-cover transition-all duration-500 ease-out',
+          'relative flex items-center justify-center overflow-hidden rounded bg-lightGray object-cover duration-500 ease-out',
           'hover:rounded-xl',
         ])}
       >

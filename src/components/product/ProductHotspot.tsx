@@ -3,6 +3,7 @@ import {
   Product,
   ProductVariant,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import clsx from 'clsx';
 import {Suspense} from 'react';
 import {
   getProductOptionString,
@@ -38,7 +39,10 @@ export default function ProductHotspot({
   return (
     <Link to={`/products/${storefrontProduct.handle}`}>
       <div
-        className="group min-w-[12.5em] rounded-md bg-white p-5 transition-all duration-500 ease-out hover:rounded-xl"
+        className={clsx(
+          'group min-w-[12.5em] rounded-md bg-white p-5 duration-500 ease-out',
+          'hover:rounded-xl',
+        )}
         role="row"
       >
         {/* TODO: potentially DRY with product card */}

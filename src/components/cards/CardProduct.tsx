@@ -70,7 +70,7 @@ export default function CardProduct({
         <div
           className={clsx([
             imageAspectClassName,
-            'relative flex items-center justify-center overflow-hidden rounded bg-lightGray object-cover transition-all duration-500 ease-out',
+            'relative flex items-center justify-center overflow-hidden rounded bg-lightGray object-cover duration-500 ease-out',
             'hover:rounded-xl',
           ])}
         >
@@ -101,7 +101,7 @@ export default function CardProduct({
           {selectedVariant.availableForSale && (
             <div
               className={clsx(
-                'absolute bottom-0 right-4 translate-y-full pb-4 transition-all duration-300 ease-in-out',
+                'absolute bottom-0 right-4 translate-y-full pb-4 duration-200 ease-in-out',
                 'group-hover:block group-hover:translate-y-0',
               )}
             >
