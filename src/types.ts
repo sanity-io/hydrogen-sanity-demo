@@ -1,4 +1,4 @@
-import {Block} from '@sanity/types';
+import {Block, Reference} from '@sanity/types';
 
 export type SanityCollection = {
   _id: string;
@@ -15,6 +15,7 @@ export type SanityCollectionPage = {
   colorTheme: SanityColorTheme;
   hero?: SanityHeroCollection;
   modules: (SanityModuleImage | SanityModuleInstagram)[];
+  seo: SanitySeo;
   slug: string;
   sortOrder: string;
   title: string;
@@ -82,9 +83,18 @@ export type SanityHeroPage = {
 export type SanityHomePage = {
   hero?: SanityHeroHome;
   modules: (SanityModuleImage | SanityModuleInstagram)[];
+  seo: SanitySeo;
 };
 
-export type SanityAssetImage = any;
+export type SanityAssetImage = {
+  _type: 'image';
+  altText?: string;
+  asset: Reference;
+  blurDataURL: string;
+  height: number;
+  url: string;
+  width: number;
+};
 
 export type SanityLink = SanityLinkExternal | SanityLinkInternal;
 
@@ -232,7 +242,7 @@ export type SanityPage = {
   body: Block[];
   colorTheme?: SanityColorTheme;
   hero?: SanityHeroPage;
-  // seo: null,
+  seo: SanitySeo;
   showHeader?: boolean;
   title: string;
 };
@@ -254,5 +264,11 @@ export type SanityProductPage = {
   customProductOptions?: SanityCustomProductOption[];
   gid: string;
   slug: string;
-  seo?: any;
+  seo: SanitySeo;
+};
+
+export type SanitySeo = {
+  description?: string;
+  image?: SanityAssetImage;
+  title: string;
 };

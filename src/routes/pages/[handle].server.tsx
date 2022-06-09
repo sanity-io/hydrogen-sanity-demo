@@ -1,13 +1,13 @@
-// import {Seo} from '@shopify/hydrogen';
+import {Seo} from '@shopify/hydrogen';
+import clsx from 'clsx';
 import groq from 'groq';
 import HeroPage from '../../components/heroes/HeroPage.server';
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
 import PortableText from '../../components/PortableText.server';
-import useSanityQuery from '../../hooks/useSanityQuery';
 import {PAGE} from '../../fragments/page';
+import useSanityQuery from '../../hooks/useSanityQuery';
 import {SanityPage} from '../../types';
-import clsx from 'clsx';
 
 type Props = {
   params: any;
@@ -15,44 +15,53 @@ type Props = {
 
 export default function PageRoute({params}: Props) {
   const {handle} = params;
-  const {data: page} = useSanityQuery<SanityPage>({
-    query: QUERY,
+  const {data: sanityPage} = useSanityQuery<SanityPage>({
+    query: QUERY_SANITY,
     params: {slug: handle},
   });
 
-  if (!page) {
+  if (!sanityPage) {
     // @ts-expect-error <NotFound> doesn't require response
     return <NotFound />;
   }
+
+  const sanitySeo = sanityPage.seo;
 
   return (
     <Layout>
       {/* Page hero */}
       <HeroPage
-        colorTheme={page.colorTheme}
-        fallbackTitle={page.title}
-        hero={page.hero}
+        colorTheme={sanityPage.colorTheme}
+        fallbackTitle={sanityPage.title}
+        hero={sanityPage.hero}
       />
 
       {/* Body */}
-      {page.body && (
+      {sanityPage.body && (
         <PortableText
-          blocks={page.body}
+          blocks={sanityPage.body}
           centered
           className={clsx(
             'my-8 mx-auto max-w-[660px] px-4 pb-overlap', //
             'md:px-8',
           )}
-          colorTheme={page.colorTheme}
+          colorTheme={sanityPage.colorTheme}
         />
       )}
 
-      {/* TODO: re-add */}
-      {/* <Seo type="page" data={page} /> */}
+      <Seo
+        data={{
+          seo: {
+            description: sanitySeo.description,
+            title: sanitySeo.title,
+          },
+        }}
+        type="page"
+      />
     </Layout>
   );
 }
-const QUERY = groq`
+const QUERY_SANITY = groq`
   *[
     _type == 'page'
     && slug.current == $slug

@@ -2,8 +2,7 @@ import groq from 'groq';
 import {COLOR_THEME} from './colorTheme';
 import {HERO_COLLECTION} from './heroCollection';
 import {MODULES} from './modules';
-// TODO: rename SEO_PRODUCT or create separate version for collections
-import {SEO_PRODUCT} from './seoProduct';
+import {SEO_SHOPIFY} from './seoShopify';
 
 export const COLLECTION_PAGE = groq`
   _id,
@@ -18,9 +17,7 @@ export const COLLECTION_PAGE = groq`
   modules[] {
     ${MODULES}
   },
-  seo {
-    ${SEO_PRODUCT}
-  },
+  ${SEO_SHOPIFY},
   "slug": store.slug.current,
   "sortOrder": store.sortOrder,
   "title": store.title,

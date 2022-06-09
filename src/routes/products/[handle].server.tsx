@@ -38,7 +38,7 @@ export default function ProductRoute() {
   // Fetch Sanity document
   const {data: sanityProduct} = useSanityQuery<SanityProductPage>({
     params: {slug: handle},
-    query: QUERY,
+    query: QUERY_SANITY,
   });
 
   // Conditionally fetch Shopify document
@@ -63,6 +63,8 @@ export default function ProductRoute() {
     // @ts-expect-error <NotFound> doesn't require response
     return <NotFound />;
   }
+
+  const sanitySeo = sanityProduct.seo;
 
   const initialVariant = flattenConnection(
     storefrontProduct.variants,
@@ -114,13 +116,30 @@ export default function ProductRoute() {
           storefrontProduct={storefrontProduct}
         />
 
-        <Seo type="product" data={storefrontProduct} />
+        <Seo
+          data={{
+            ...(sanitySeo.image
+              ? {
+                  featuredImage: {
+                    height: sanitySeo.image.height,
+                    url: sanitySeo.image.url,
+                    width: sanitySeo.image.width,
+                  },
+                }
+              : {}),
+            seo: {
+              description: sanitySeo.description,
+              title: sanitySeo.title,
+            },
+          }}
+          type="product"
+        />
       </Layout>
     </ProductProvider>
   );
 }
 
-const QUERY = groq`
+const QUERY_SANITY = groq`
   *[
     _type == 'product'
     && store.slug.current == $slug
@@ -179,10 +198,6 @@ const QUERY_SHOPIFY = gql`
             }
           }
         }
-      }
-      seo {
-        description
-        title
       }
       title
       variants(first: 250) {

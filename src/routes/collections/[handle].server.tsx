@@ -10,20 +10,20 @@ import {
   Collection,
   Product,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import clsx from 'clsx';
 import groq from 'groq';
-import useSanityQuery from '../../hooks/useSanityQuery';
 import {useMemo} from 'react';
 import HeroCollection from '../../components/heroes/HeroCollection.server';
 import Layout from '../../components/Layout.server';
 import LoadMoreProducts from '../../components/LoadMoreProducts.client';
-import NotFound from '../../components/NotFound.server';
 import ModuleGrid from '../../components/ModuleGrid.server';
+import NotFound from '../../components/NotFound.server';
 import SelectSortOrder from '../../components/selects/SelectSortOrder.client';
 import {COLLECTION_PAGE_SIZE} from '../../constants';
 import {COLLECTION_PAGE} from '../../fragments/collectionPage';
+import useSanityQuery from '../../hooks/useSanityQuery';
 import type {SanityCollectionPage} from '../../types';
 import {combineProductsAndModules} from '../../utils/combineProductsAndModules';
-import clsx from 'clsx';
 
 type Props = {
   collectionProductCount: number;
@@ -48,7 +48,7 @@ export default function CollectionRoute({
 
   const {handle} = params;
   const {data} = useShopQuery<ShopifyPayload>({
-    query: QUERY,
+    query: QUERY_SHOPIFY,
     variables: {
       handle,
       country: countryCode,
@@ -62,7 +62,7 @@ export default function CollectionRoute({
 
   const {data: sanityCollection} = useSanityQuery<SanityCollectionPage>({
     params: {slug: handle},
-    query: SANITY_QUERY,
+    query: QUERY_SANITY,
   });
 
   if (data?.collection == null || !sanityCollection) {
@@ -70,6 +70,7 @@ export default function CollectionRoute({
     return <NotFound />;
   }
 
+  const sanitySeo = sanityCollection.seo;
   const collection = data.collection;
   const products = flattenConnection(collection.products) as Product[];
   const hasNextPage = data.collection.products.pageInfo.hasNextPage;
@@ -124,13 +125,29 @@ export default function CollectionRoute({
         )}
       </div>
 
-      {/* the seo object will be exposed in API version 2022-04 or later */}
-      <Seo type="collection" data={collection} />
+      <Seo
+        data={{
+          ...(sanitySeo.image
+            ? {
+                image: {
+                  height: sanitySeo.image.height,
+                  url: sanitySeo.image.url,
+                  width: sanitySeo.image.width,
+                },
+              }
+            : {}),
+          seo: {
+            description: sanitySeo.description,
+            title: sanitySeo.title,
+          },
+        }}
+        type="collection"
+      />
     </Layout>
   );
 }
 
-const SANITY_QUERY = groq`
+const QUERY_SANITY = groq`
   *[
     _type == 'collection'
     && store.slug.current == $slug
@@ -139,7 +156,7 @@ const SANITY_QUERY = groq`
   }
 `;
 
-const QUERY = gql`
+const QUERY_SHOPIFY = gql`
   query CollectionDetails(
     $handle: String!
     $country: CountryCode
@@ -204,10 +221,6 @@ const QUERY = gql`
         pageInfo {
           hasNextPage
         }
-      }
-      seo {
-        description
-        title
       }
       title
     }

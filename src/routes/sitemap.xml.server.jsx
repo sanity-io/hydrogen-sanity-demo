@@ -1,17 +1,14 @@
-import {flattenConnection, gql} from '@shopify/hydrogen';
+import sanityClient from '@sanity/client';
+import groq from 'groq';
+import sanityConfig from '../../sanity.config';
 
-const MAX_URLS = 250; // the google limit is 50K, however, SF API only allow querying for 250 resources each time
+const client = sanityClient(sanityConfig);
 
-export async function api(request, {queryShop}) {
-  const {data} = await queryShop({
-    query: QUERY,
-    variables: {
-      language: 'EN',
-      urlLimits: MAX_URLS,
-    },
-  });
+export async function api(request) {
+  const baseUrl = new URL(request.url).origin;
+  const sanityData = await client.fetch(SANITY_QUERY, {baseUrl});
 
-  return new Response(shopSitemap(data, new URL(request.url).origin), {
+  return new Response(shopSitemap(sanityData, baseUrl), {
     headers: {
       'content-type': 'application/xml',
       // Cache for 24 hours
@@ -21,68 +18,55 @@ export async function api(request, {queryShop}) {
 }
 
 function shopSitemap(data, baseUrl) {
-  const productsData = flattenConnection(data.products).map((product) => {
-    const url = product.onlineStoreUrl
-      ? product.onlineStoreUrl
-      : `${baseUrl}/products/${product.handle}`;
+  const {collections, home, pages, products} = data;
 
-    const finalObject = {
-      url,
-      lastMod: product.updatedAt,
-      changeFreq: 'daily',
-    };
+  const homePage = {
+    changeFreq: 'daily',
+    ...(home.imageUrl ? {image: {url: home.imageUrl}} : {}),
+    lastMod: home._updatedAt,
+    url: baseUrl,
+  };
 
-    if (product.featuredImage.url) {
-      finalObject.image = {
-        url: product.featuredImage.url,
-      };
-
-      if (product.title) {
-        finalObject.image.title = product.title;
-      }
-
-      if (product.featuredImage.altText) {
-        finalObject.image.caption = product.featuredImage.altText;
-      }
-
-      return finalObject;
-    }
-  });
-
-  const collectionsData = flattenConnection(data.collections).map(
-    (collection) => {
-      const url = collection.onlineStoreUrl
-        ? collection.onlineStoreUrl
-        : `${baseUrl}/collections/${collection.handle}`;
-
-      return {
-        url,
-        lastMod: collection.updatedAt,
-        changeFreq: 'daily',
-      };
-    },
-  );
-
-  const pagesData = flattenConnection(data.pages).map((page) => {
-    const url = page.onlineStoreUrl
-      ? page.onlineStoreUrl
-      : `${baseUrl}/pages/${page.handle}`;
-
+  const productPages = products.map((product) => {
     return {
-      url,
-      lastMod: page.updatedAt,
-      changeFreq: 'weekly',
+      changeFreq: 'daily',
+      ...(product.imageUrl ? {image: {url: product.imageUrl}} : {}),
+      lastMod: product._updatedAt,
+      url: product.url,
     };
   });
 
-  const urlsDatas = [...productsData, ...collectionsData, ...pagesData];
+  const collectionPages = collections.map((collection) => {
+    return {
+      changeFreq: 'daily',
+      ...(collection.imageUrl ? {image: {url: collection.imageUrl}} : {}),
+      lastMod: collection._updatedAt,
+      url: collection.url,
+    };
+  });
+
+  const standardPages = pages.map((page) => {
+    return {
+      changeFreq: 'weekly',
+      ...(page.imageUrl ? {image: {url: page.imageUrl}} : {}),
+      lastMod: page._updatedAt,
+      url: page.url,
+    };
+  });
+
+  const allPages = [
+    homePage,
+    ...productPages,
+    ...collectionPages,
+    ...standardPages,
+  ];
 
   return `
     <urlset
       xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
       xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
     >
-      ${urlsDatas.map((url) => renderUrlTag(url)).join('')}
+      ${allPages.map((url) => renderUrlTag(url)).join('')}
     </urlset>`;
 }
 
@@ -90,63 +74,49 @@ function renderUrlTag({url, lastMod, changeFreq, image}) {
   return `
     <url>
       <loc>${url}</loc>
-      <lastmod>${lastMod}</lastmod>
+      ${lastMod ? `<lastmod>${lastMod}</lastmod>` : ''}
       <changefreq>${changeFreq}</changefreq>
       ${
         image
           ? `
         <image:image>
-          <image:loc>${image.url}</image:loc>
-          <image:title>${image.title ?? ''}</image:title>
-          <image:caption>${image.caption ?? ''}</image:caption>
+          <image:loc>${image.url ?? ''}</image:loc>
         </image:image>`
           : ''
       }
-
     </url>
   `;
 }
 
-const QUERY = gql`
-  query sitemaps($urlLimits: Int, $language: LanguageCode)
-  @inContext(language: $language) {
-    products(
-      first: $urlLimits
-      query: "published_status:'online_store:visible'"
-    ) {
-      edges {
-        node {
-          featuredImage {
-            altText
-            url
-          }
-          handle
-          onlineStoreUrl
-          title
-          updatedAt
-        }
-      }
-    }
-    collections(
-      first: $urlLimits
-      query: "published_status:'online_store:visible'"
-    ) {
-      edges {
-        node {
-          updatedAt
-          handle
-          onlineStoreUrl
-        }
-      }
-    }
-    pages(first: $urlLimits, query: "published_status:'published'") {
-      edges {
-        node {
-          updatedAt
-          handle
-          onlineStoreUrl
-        }
-      }
-    }
-  }
+const SANITY_QUERY = groq`
+{
+  "collections": *[
+    _type == 'collection'
+  ] {
+    _updatedAt,
+    "imageUrl": coalesce(seo.image.asset->url, store.imageUrl),
+    "url": $baseUrl + "/collections/" + store.slug.current,
+  },
+  "home": *[
+    _type == 'home'
+  ][0] {
+    _updatedAt,
+    "imageUrl": coalesce(seo.image.asset->url, store.imageUrl),
+  },
+  "pages": *[
+    _type == 'page'
+  ] {
+    _updatedAt,
+    "imageUrl": seo.image.asset->url,
+    "url": $baseUrl + "/pages/" + slug.current,
+  },
+  "products": *[
+    _type == 'product'
+    && store.status == 'active'
+  ] {
+    _updatedAt,
+    "imageUrl": coalesce(seo.image.asset->url, store.previewImageUrl),
+    "url": $baseUrl + "/products/" + store.slug.current,
+  },
+}
 `;

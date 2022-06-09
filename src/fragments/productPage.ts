@@ -2,7 +2,7 @@ import groq from 'groq';
 import {COLOR_THEME} from './colorTheme';
 import {CUSTOM_PRODUCT_OPTIONS} from './customProductOptions';
 import {PORTABLE_TEXT} from './portableText';
-import {SEO_PRODUCT} from './seoProduct';
+import {SEO_SHOPIFY} from './seoShopify';
 
 export const PRODUCT_PAGE = groq`
   _id,
@@ -17,8 +17,6 @@ export const PRODUCT_PAGE = groq`
     ${CUSTOM_PRODUCT_OPTIONS}
   },
   "gid": store.gid,
-  seo {
-    ${SEO_PRODUCT}
-  },
+  ${SEO_SHOPIFY},
   "slug": store.slug.current,
 `;

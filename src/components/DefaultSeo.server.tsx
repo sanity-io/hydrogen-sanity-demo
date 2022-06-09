@@ -1,0 +1,36 @@
+import {Seo} from '@shopify/hydrogen';
+import groq from 'groq';
+import useSanityQuery from '../hooks/useSanityQuery';
+
+/**
+ * A server component that fetches global seo settings from your Sanity dataset
+ * and sets default values and templates for every page.
+ */
+export default function DefaultSeo() {
+  const {data: seo} = useSanityQuery<{
+    description?: string;
+    title: string;
+  }>({
+    hydrogenQueryOptions: {
+      preload: '*',
+    },
+    query: SANITY_QUERY,
+  });
+
+  return (
+    // @ts-expect-error <Seo> shouldn't require a value for data that extends the `Shop` type
+    <Seo
+      data={{
+        title: seo?.title,
+        description: seo?.description,
+      }}
+      type="defaultSeo"
+    />
+  );
+}
+
+const SANITY_QUERY = groq`
+  *[_type == 'settings'][0].seo {
+    ...
+  }
+`;
