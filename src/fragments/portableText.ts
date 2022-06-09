@@ -1,12 +1,10 @@
 import groq from 'groq';
-import {LINK_EXTERNAL} from './linkExternal';
-import {LINK_INTERNAL} from './linkInternal';
+import {MARK_DEFS} from './markDefs';
 import {MODULE_ACCORDION} from './modules/moduleAccordion';
 import {MODULE_CALLOUT} from './modules/moduleCallout';
 import {MODULE_GRID} from './modules/moduleGrid';
 import {MODULE_IMAGES} from './modules/moduleImages';
 import {MODULE_PRODUCTS} from './modules/moduleProducts';
-import {PRODUCT_WITH_VARIANT} from './productWithVariant';
 
 export const PORTABLE_TEXT = groq`
   ...,
@@ -26,21 +24,6 @@ export const PORTABLE_TEXT = groq`
     ${MODULE_PRODUCTS}
   },
   markDefs[] {
-    ...,
-    (_type == 'annotationLinkExternal') => {
-      ${LINK_EXTERNAL}
-    },
-    (_type == 'annotationLinkInternal') => {
-      ${LINK_INTERNAL}
-    },
-    (_type == 'annotationProduct') => {
-      linkAction,
-      productWithVariant {
-        ...${PRODUCT_WITH_VARIANT}
-      },
-      (linkAction != 'link') => {
-        quantity
-      }
-    },
+    ${MARK_DEFS}
   }
 `;

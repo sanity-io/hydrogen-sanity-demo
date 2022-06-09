@@ -26,6 +26,7 @@ export const MODULE_IMAGE = groq`
   },
   (variant == 'products') => {
     products[] {
+      _key,
       ...${PRODUCT_WITH_VARIANT}
     },
   },

@@ -8,6 +8,7 @@ export const MODULE_IMAGES = groq`
   ),
   layout,
   modules[] {
+    _key,
     ${MODULE_IMAGE}
   }
 `;

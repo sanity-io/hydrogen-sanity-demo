@@ -187,6 +187,7 @@ export type SanityModuleImageBase = {
 };
 
 export interface SanityModuleImageCallToAction extends SanityModuleImageBase {
+  _key?: string;
   callToAction?: {
     link: SanityLink;
     title?: string;
@@ -195,10 +196,12 @@ export interface SanityModuleImageCallToAction extends SanityModuleImageBase {
 }
 
 export interface SanityModuleImageCaption extends SanityModuleImageBase {
+  _key?: string;
   caption?: string;
   variant: 'caption';
 }
 export interface SanityModuleImageProducts extends SanityModuleImageBase {
+  _key?: string;
   products: SanityProductWithVariant[];
   variant: 'products';
 }
@@ -248,6 +251,7 @@ export type SanityPage = {
 
 export type SanityProductWithVariant = {
   _id: string;
+  _key?: string;
   _type: 'productWithVariant';
   available: boolean;
   gid: string;

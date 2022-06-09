@@ -1,4 +1,5 @@
 import {Link} from '@shopify/hydrogen';
+import {useCallback} from 'react';
 import type {SanityMenuLink} from '../types';
 import CollectionGroup from './CollectionGroup.server';
 
@@ -11,7 +12,7 @@ type Props = {
 };
 
 export default function Navigation({menuLinks}: Props) {
-  const renderLinks = () => {
+  const renderLinks = useCallback(() => {
     return menuLinks?.map((link) => {
       if (link._type === 'collectionGroup') {
         return <CollectionGroup collectionGroup={link} key={link._key} />;
@@ -49,7 +50,7 @@ export default function Navigation({menuLinks}: Props) {
 
       return null;
     });
-  };
+  }, [menuLinks]);
 
   return (
     <nav className="hidden items-stretch justify-start gap-6 text-sm font-bold lg:flex">

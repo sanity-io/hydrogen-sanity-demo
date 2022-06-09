@@ -1,31 +1,14 @@
 import groq from 'groq';
 import {IMAGE} from '../image';
-import {LINK_EXTERNAL} from '../linkExternal';
-import {LINK_INTERNAL} from '../linkInternal';
-import {PRODUCT_WITH_VARIANT} from '../productWithVariant';
+import {MARK_DEFS} from '../markDefs';
 
-// TODO: refaactor mark defs
 export const MODULE_GRID = groq`
   items[] {
+    _key,
     body[]{
       ...,
       markDefs[] {
-        ...,
-        (_type == 'annotationLinkExternal') => {
-          ${LINK_EXTERNAL}
-        },
-        (_type == 'annotationLinkInternal') => {
-          ${LINK_INTERNAL}
-        },
-        (_type == 'annotationProduct') => {
-          linkAction,
-          productWithVariant {
-            ...${PRODUCT_WITH_VARIANT}
-          },
-          (linkAction != 'link') => {
-            quantity
-          }
-        },
+        ${MARK_DEFS}
       }
     },
     image {

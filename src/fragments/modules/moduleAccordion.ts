@@ -1,20 +1,14 @@
 import groq from 'groq';
-import {LINK_EXTERNAL} from '../linkExternal';
-import {LINK_INTERNAL} from '../linkInternal';
+import {MARK_DEFS} from '../markDefs';
 
 // TODO: refaactor mark defs
 export const MODULE_ACCORDION = groq`
   groups[] {
+    _key,
     body[] {
       ...,
       markDefs[] {
-        ...,
-        (_type == 'annotationLinkExternal') => {
-          ${LINK_EXTERNAL}
-        },
-        (_type == 'annotationLinkInternal') => {
-          ${LINK_INTERNAL}
-        },
+        ${MARK_DEFS}
       }
     },
     title,

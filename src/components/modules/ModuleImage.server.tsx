@@ -167,7 +167,7 @@ export default function ModuleImage({module}: Props) {
                 initialVariantId={storefrontProductVariant.id}
                 key={product._id}
               >
-                <ProductTag key={product._id} />
+                <ProductTag key={product._key} />
               </ProductProvider>
             );
           })}
