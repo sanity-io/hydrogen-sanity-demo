@@ -28,7 +28,12 @@ export default function CountrySelector() {
         setTimeout(() => setListboxOpen(open));
         return (
           <div className="relative inline-flex">
-            <Listbox.Button className="flex items-center p-2 text-sm font-bold">
+            <Listbox.Button
+              className={clsx(
+                'flex h-[2.4rem] items-center rounded-sm bg-offBlack bg-opacity-0 p-2 text-sm font-bold duration-150',
+                'hover:bg-opacity-5',
+              )}
+            >
               <span className="mr-2">{selectedCountry.name}</span>
               <IconChevronDown className={open ? 'rotate-180' : null} />
             </Listbox.Button>
@@ -48,7 +53,7 @@ export default function CountrySelector() {
                       getClassName={(active) => {
                         return clsx([
                           'p-3 flex justify-between items-center text-left font-bold text-sm cursor-pointer whitespace-nowrap',
-                          active ? 'bg-lightGray' : null,
+                          active ? 'bg-darkGray bg-opacity-5' : null,
                         ]);
                       }}
                     />

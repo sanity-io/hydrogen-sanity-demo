@@ -11,21 +11,14 @@
 }
 
 @layer components {
-  .linkText {
-    display: inline-block;
-    border-bottom-width: 0.125em;
-    border-bottom-style: solid;
-    border-bottom-color: transparent;
-  }
-  .linkText:hover {
-    border-bottom-color: inherit;
-  }
-
   .linkTextNavigation {
     display: inline-block;
     border-bottom-width: 0.125em;
     border-bottom-style: solid;
     border-bottom-color: transparent;
+    border-top-width: 0.125em;
+    border-top-style: solid;
+    border-top-color: transparent;
   }
   .linkTextNavigation:hover {
     border-bottom-color: inherit;

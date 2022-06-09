@@ -1,7 +1,7 @@
 import {Dialog, Transition} from '@headlessui/react';
-import {useServerProps} from '@shopify/hydrogen';
 import {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
-import {Fragment, useEffect, useRef, useState} from 'react';
+import clsx from 'clsx';
+import {Fragment, useState} from 'react';
 import type {SanityCollectionGroup} from '../types';
 import CollectionGroupContent from './CollectionGroupContent.client';
 
@@ -13,39 +13,59 @@ export default function CollectionGroupDialog({
   collectionGroup: SanityCollectionGroup;
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const refTimeout = useRef<ReturnType<typeof setTimeout>>();
-  const {pending} = useServerProps();
 
-  const handleClose = () => {
-    clearTimeout(refTimeout?.current);
-    refTimeout.current = setTimeout(() => setIsOpen(false), 250);
-  };
-  const handleOpen = () => {
-    // Don't open if a transition is pending
-    if (pending) {
-      return;
-    }
-    clearTimeout(refTimeout?.current);
-    refTimeout.current = setTimeout(() => setIsOpen(true), 250);
-  };
-  const handleOpenCancel = () => clearTimeout(refTimeout?.current);
-
-  useEffect(() => {
-    return () => clearTimeout(refTimeout?.current);
-  }, []);
+  const handleClose = () => setIsOpen(false);
+  const handleOpen = () => setIsOpen(true);
 
   return (
     <div className="relative flex items-center">
       {/* Title */}
-      <button
-        className="linkTextNavigation font-bold"
-        onClick={handleOpen}
-        onKeyPress={handleOpen}
-        onMouseEnter={handleOpen}
-        onMouseLeave={handleOpenCancel}
-      >
-        {collectionGroup.title}
-      </button>
+      <>
+        <button
+          className={clsx(
+            'flex h-[2.4rem] items-center rounded-sm bg-offBlack bg-opacity-0 p-2 text-sm duration-150',
+            'hover:bg-opacity-5',
+          )}
+          onClick={handleOpen}
+        >
+          <svg
+            className="mb-[0.1rem] mr-[0.25rem] w-5"
+            xmlns="http://www.w3.org/2000/svg"
+            width="192"
+            height="auto"
+            fill="#000000"
+            viewBox="0 0 256 256"
+          >
+            <rect width="256" height="256" fill="none" />
+            <line
+              x1="88"
+              y1="48"
+              x2="88"
+              y2="208"
+              fill="none"
+              stroke="#000000"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="16"
+            />
+            <rect
+              x="32"
+              y="48"
+              width="192"
+              height="160"
+              rx="8"
+              fill="none"
+              stroke="#000000"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="16"
+            />
+          </svg>
+          <div className="inline-flex items-center font-bold">
+            {collectionGroup.title}
+          </div>
+        </button>
+      </>
       <Transition show={isOpen}>
         <Dialog
           open={isOpen}
@@ -81,8 +101,6 @@ export default function CollectionGroupDialog({
           >
             <Dialog.Panel
               className={`fixed top-0 left-0 right-0 bottom-0 flex h-full w-full flex-col overflow-y-auto rounded-r-lg bg-white md:right-auto md:bottom-auto md:block md:w-[490px]`}
-              onMouseEnter={handleOpen}
-              onMouseLeave={handleClose}
             >
               <CollectionGroupContent
                 collection={collection}
