@@ -32,7 +32,7 @@ export default function Layout({backgroundColor, children}: Props) {
       </div>
 
       <div
-        className="max-w-screen flex min-h-screen flex-col font-sans"
+        className="max-w-screen flex min-h-screen flex-col"
         style={{background: backgroundColor}}
       >
         {/* TODO: Find out why Suspense needs to be here to prevent hydration errors. */}
@@ -46,9 +46,9 @@ export default function Layout({backgroundColor, children}: Props) {
             <Suspense fallback={null}>{children}</Suspense>
           </div>
         </main>
-
-        <Footer />
       </div>
+
+      <Footer />
     </LocalizationProvider>
   );
 }

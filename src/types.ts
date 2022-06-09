@@ -1,4 +1,4 @@
-import {Block, Reference} from '@sanity/types';
+import {Block, Image} from '@sanity/types';
 
 export type SanityCollection = {
   _id: string;
@@ -86,15 +86,14 @@ export type SanityHomePage = {
   seo: SanitySeo;
 };
 
-export type SanityAssetImage = {
+export interface SanityAssetImage extends Image {
   _type: 'image';
   altText?: string;
-  asset: Reference;
   blurDataURL: string;
   height: number;
   url: string;
   width: number;
-};
+}
 
 export type SanityLink = SanityLinkExternal | SanityLinkInternal;
 

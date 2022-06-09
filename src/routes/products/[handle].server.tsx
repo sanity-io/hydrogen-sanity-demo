@@ -76,9 +76,10 @@ export default function ProductRoute() {
       initialVariantId={initialVariant.id}
     >
       <Layout>
-        <div className="relative min-h-screen w-full">
+        <div className="relative w-full">
           <Gallery />
-          {/* Mobile */}
+
+          {/* Mobile widget layout */}
           <div className="mb-8 lg:hidden">
             <ProductWidget sanityProduct={sanityProduct} />
           </div>

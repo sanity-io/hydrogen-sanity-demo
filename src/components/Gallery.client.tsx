@@ -12,7 +12,7 @@ export default function Gallery() {
   const {media, selectedVariant} = useProduct();
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
-    draggable: true,
+    draggable: media && media.length > 1,
     loop: true,
     skipSnaps: true,
     speed: 7,
@@ -78,16 +78,17 @@ export default function Gallery() {
 
             return (
               <MediaFile
-                // @ts-expect-error <MediaFile> should accept tabIndex
-                tabIndex={0}
-                key={med.id || med.image.id}
-                className="relative flex w-full shrink-0 grow-0 object-cover"
+                // @ts-expect-error <MediaFile> should accept HTMLAttributes
+                className="relative flex w-full shrink-0 grow-0 select-none object-cover"
                 data={med}
+                draggable={false}
                 fetchpriority="high"
+                key={med.id || med.image.id}
                 loaderOptions={{
                   height: '485',
                   crop: 'center',
                 }}
+                tabIndex={0}
                 {...extraProps}
               />
             );
