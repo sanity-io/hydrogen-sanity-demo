@@ -3,9 +3,9 @@ import {Link} from '@shopify/hydrogen';
 import clsx from 'clsx';
 import {Fragment, useState} from 'react';
 import {SanityMenuLink} from '../types';
-import IconClose from './icons/IconClose';
-import IconMenu from './icons/IconMenu';
-import CountrySelector from './selects/SelectCountry.client';
+import CloseIcon from './icons/Close';
+import MenuIcon from './icons/Menu';
+import CountrySelect from './selects/Country.client';
 
 type Props = {
   menuLinks: SanityMenuLink[];
@@ -28,7 +28,7 @@ export default function MobileNavigation({menuLinks}: Props) {
         )}
         onClick={handleOpen}
       >
-        <IconMenu />
+        <MenuIcon />
       </button>
 
       <Transition show={open}>
@@ -51,7 +51,7 @@ export default function MobileNavigation({menuLinks}: Props) {
                   type="button"
                   onClick={handleClose}
                 >
-                  <IconClose />
+                  <CloseIcon />
                 </button>
               </header>
 
@@ -128,7 +128,7 @@ export default function MobileNavigation({menuLinks}: Props) {
                 </div>
 
                 <div className="-ml-2">
-                  <CountrySelector align="left" />
+                  <CountrySelect align="left" />
                 </div>
               </div>
             </Dialog.Panel>

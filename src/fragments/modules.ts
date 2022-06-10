@@ -1,11 +1,11 @@
 import groq from 'groq';
-import {MODULE_ACCORDION} from './modules/moduleAccordion';
-import {MODULE_CALLOUT} from './modules/moduleCallout';
-import {MODULE_CALL_TO_ACTION} from './modules/moduleCallToAction';
-import {MODULE_COLLECTION} from './modules/moduleCollection';
-import {MODULE_IMAGE} from './modules/moduleImage';
-import {MODULE_INSTAGRAM} from './modules/moduleInstagram';
-import {MODULE_PRODUCT} from './modules/moduleProduct';
+import {MODULE_ACCORDION} from './modules/accordion';
+import {MODULE_CALLOUT} from './modules/callout';
+import {MODULE_CALL_TO_ACTION} from './modules/callToAction';
+import {MODULE_COLLECTION} from './modules/collection';
+import {MODULE_IMAGE} from './modules/image';
+import {MODULE_INSTAGRAM} from './modules/instagram';
+import {MODULE_PRODUCT} from './modules/product';
 
 export const MODULES = groq`
   _key,

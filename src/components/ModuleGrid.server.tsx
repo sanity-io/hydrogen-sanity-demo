@@ -1,7 +1,7 @@
 import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import type {SanityColorTheme, SanityModule} from '../types';
-import CardProduct from './cards/CardProduct';
+import ProductCard from './product/Card';
 import Module from './modules/Module.server';
 
 // Sanity modules to render in full width (across all grid columns)
@@ -136,7 +136,7 @@ export default function ModuleGrid({colorTheme, items}: Props) {
           return (
             <li className={productLayoutClasses} key={item.id}>
               <div className={productWidth}>
-                <CardProduct
+                <ProductCard
                   imageAspectClassName={productImageAspect}
                   storefrontProduct={item}
                 />

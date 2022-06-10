@@ -10,11 +10,11 @@ import {
   Product,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import groq from 'groq';
-import {NOT_FOUND_PAGE} from '../fragments/notFoundPage';
+import {NOT_FOUND_PAGE} from '../fragments/pages/notFound';
 import useSanityQuery from '../hooks/useSanityQuery';
 import {SanityNotFoundPage} from '../types';
 import Layout from './Layout.server';
-import PillProduct from './pills/PillProduct';
+import ProductPill from './product/Pill';
 
 /**
  * A server component that defines the content to display when a page isn't found (404 error)
@@ -76,7 +76,7 @@ export default function NotFound({response}: Props) {
         <div className="mx-4 mb-18 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {products?.map((product) => (
             <div key={product.id}>
-              <PillProduct storefrontProduct={product} />
+              <ProductPill storefrontProduct={product} />
             </div>
           ))}
         </div>

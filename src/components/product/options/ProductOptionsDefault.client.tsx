@@ -1,5 +1,5 @@
 import {useProduct} from '@shopify/hydrogen';
-import ButtonOption from '../../buttons/ButtonOption';
+import OptionButton from '../../buttons/Option';
 
 /**
  * A client component that tracks a selected variant and/or selling plan state, as well as callbacks for modifying the state
@@ -40,7 +40,7 @@ export default function ProductOptionsDefault({name, values}: Props) {
                 checked={checked}
                 onChange={() => handleChange(name, value)}
               />
-              <ButtonOption checked={checked} label={value} />
+              <OptionButton checked={checked} label={value} />
             </label>
           );
         })}

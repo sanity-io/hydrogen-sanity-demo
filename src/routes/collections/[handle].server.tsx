@@ -13,14 +13,14 @@ import {
 import clsx from 'clsx';
 import groq from 'groq';
 import {useMemo} from 'react';
-import HeroCollection from '../../components/heroes/HeroCollection.server';
+import CollectionHero from '../../components/heroes/Collection.server';
 import Layout from '../../components/Layout.server';
 import LoadMoreProducts from '../../components/LoadMoreProducts.client';
 import ModuleGrid from '../../components/ModuleGrid.server';
 import NotFound from '../../components/NotFound.server';
-import SelectSortOrder from '../../components/selects/SelectSortOrder.client';
+import SortOrderSelect from '../../components/selects/SortOrder.client';
 import {COLLECTION_PAGE_SIZE} from '../../constants';
-import {COLLECTION_PAGE} from '../../fragments/collectionPage';
+import {COLLECTION_PAGE} from '../../fragments/pages/collection';
 import useSanityQuery from '../../hooks/useSanityQuery';
 import type {SanityCollectionPage} from '../../types';
 import {combineProductsAndModules} from '../../utils/combineProductsAndModules';
@@ -86,7 +86,7 @@ export default function CollectionRoute({
   return (
     <Layout>
       {/* Hero */}
-      <HeroCollection
+      <CollectionHero
         colorTheme={sanityCollection.colorTheme}
         fallbackTitle={sanityCollection.title}
         hero={sanityCollection.hero}
@@ -105,7 +105,7 @@ export default function CollectionRoute({
               'md:justify-end',
             )}
           >
-            <SelectSortOrder
+            <SortOrderSelect
               key={sanityCollection._id}
               initialSortOrder={sanityCollection.sortOrder}
             />

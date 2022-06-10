@@ -1,11 +1,11 @@
 import {Seo} from '@shopify/hydrogen';
 import clsx from 'clsx';
 import groq from 'groq';
-import HeroHome from '../components/heroes/HeroHome.server';
+import HomeHero from '../components/heroes/Home.server';
 import Layout from '../components/Layout.server';
 import ModuleGrid from '../components/ModuleGrid.server';
 import NotFound from '../components/NotFound.server';
-import {HOME_PAGE} from '../fragments/homePage';
+import {HOME_PAGE} from '../fragments/pages/home';
 import useSanityQuery from '../hooks/useSanityQuery';
 import type {SanityHomePage} from '../types';
 
@@ -23,7 +23,7 @@ export default function IndexRoute() {
   return (
     <Layout>
       {/* Page hero */}
-      {sanityHome?.hero && <HeroHome hero={sanityHome.hero} />}
+      {sanityHome?.hero && <HomeHero hero={sanityHome.hero} />}
 
       {sanityHome?.modules && (
         <div

@@ -14,14 +14,14 @@ import {
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import groq from 'groq';
-import Gallery from '../../components/Gallery.client';
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
-import ProductDetails from '../../components/product/ProductDetails.client';
-import ProductEditorial from '../../components/product/ProductEditorial.server';
-import ProductWidget from '../../components/product/ProductWidget.client';
-import RelatedProducts from '../../components/RelatedProducts.server';
-import {PRODUCT_PAGE} from '../../fragments/productPage';
+import ProductDetails from '../../components/product/Details.client';
+import ProductEditorial from '../../components/product/Editorial.server';
+import ProductGallery from '../../components/product/Gallery.client';
+import RelatedProducts from '../../components/product/RelatedProducts.server';
+import ProductWidget from '../../components/product/Widget.client';
+import {PRODUCT_PAGE} from '../../fragments/pages/product';
 import useSanityQuery from '../../hooks/useSanityQuery';
 import type {SanityProductPage} from '../../types';
 
@@ -77,7 +77,7 @@ export default function ProductRoute() {
         initialVariantId={initialVariant.id}
       >
         <div className="relative w-full">
-          <Gallery />
+          <ProductGallery />
 
           {/* Mobile widget layout */}
           <div className="mb-8 lg:hidden">

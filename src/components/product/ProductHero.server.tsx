@@ -3,7 +3,7 @@ import {
   Product,
   ProductVariant,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
-import ProductHotspot from './ProductHotspot';
+import ProductHotspot from './Hotspot';
 
 type Props = {
   gid: string;

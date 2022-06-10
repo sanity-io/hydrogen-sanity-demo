@@ -1,10 +1,10 @@
 import {SanityColorTheme, SanityModule} from '../../types';
-import ModuleCallout from './ModuleCallout.server';
-import ModuleCallToAction from './ModuleCallToAction.server';
-import ModuleCollection from './ModuleCollection.server';
-import ModuleImage from './ModuleImage.server';
-import ModuleInstagram from './ModuleInstagram.client';
-import ModuleProduct from './ModuleProduct.server';
+import CalloutModule from './Callout.server';
+import CallToActionModule from './CallToAction.server';
+import CollectionModule from './Collection.server';
+import ImageModule from './Image.server';
+import InstagramModule from './Instagram.client';
+import ProductModule from './Product.server';
 
 type Props = {
   colorTheme?: SanityColorTheme;
@@ -19,18 +19,18 @@ export default function Module({
 }: Props) {
   switch (module._type) {
     case 'module.callout':
-      return <ModuleCallout colorTheme={colorTheme} module={module} />;
+      return <CalloutModule colorTheme={colorTheme} module={module} />;
     case 'module.callToAction':
-      return <ModuleCallToAction module={module} />;
+      return <CallToActionModule module={module} />;
     case 'module.collection':
-      return <ModuleCollection module={module} />;
+      return <CollectionModule module={module} />;
     case 'module.image':
-      return <ModuleImage module={module} />;
+      return <ImageModule module={module} />;
     case 'module.instagram':
-      return <ModuleInstagram module={module} />;
+      return <InstagramModule module={module} />;
     case 'module.product':
       return (
-        <ModuleProduct
+        <ProductModule
           imageAspectClassName={imageAspectClassName}
           module={module}
         />

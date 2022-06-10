@@ -2,7 +2,7 @@ import {useProduct} from '@shopify/hydrogen';
 import Tippy from '@tippyjs/react/headless';
 import clsx from 'clsx';
 import {SanityCustomProductOptionColor} from '../../../types';
-import ButtonOption from '../../buttons/ButtonOption';
+import OptionButton from '../../buttons/Option';
 import Tooltip from '../../Tooltip';
 
 /**
@@ -95,7 +95,7 @@ export default function ProductOptionsColor({
                   </div>
                 </Tippy>
               ) : (
-                <ButtonOption checked={checked} label={value} />
+                <OptionButton checked={checked} label={value} />
               )}
             </label>
           );

@@ -15,11 +15,11 @@ import {
 } from '@shopify/hydrogen';
 import {Fragment} from 'react';
 import {useCartUI} from './CartUIProvider.client';
-import IconMinusCircle from '../icons/IconMinusCircle';
-import IconPlusCircle from '../icons/IconPlusCircle';
+import MinusCircleIcon from '../icons/MinusCircle';
+import PlusCircleIcon from '../icons/PlusCircle';
 import clsx from 'clsx';
 import {DEFAULT_BUTTON_STYLES} from '../../constants';
-import IconClose from '../icons/IconClose';
+import CloseIcon from '../icons/Close';
 
 /**
  * A client component that contains the merchandise that a customer intends to purchase, and the estimated cost associated with the cart
@@ -96,7 +96,7 @@ function CartHeader({numLines}: {numLines: number}) {
         Cart {numLines > 0 && `(${numLines})`}
       </div>
       <button type="button" onClick={closeCart}>
-        <IconClose />
+        <CloseIcon />
       </button>
     </header>
   );
@@ -230,7 +230,7 @@ function CartItemQuantity() {
         aria-label="Decrease quantity"
         className="disabled:pointer-events-all disabled:cursor-wait"
       >
-        <IconMinusCircle />
+        <MinusCircleIcon />
       </CartLineQuantityAdjustButton>
       <CartLineQuantity
         as="div"
@@ -241,7 +241,7 @@ function CartItemQuantity() {
         aria-label="Increase quantity"
         className="disabled:pointer-events-all text-black disabled:cursor-wait"
       >
-        <IconPlusCircle />
+        <PlusCircleIcon />
       </CartLineQuantityAdjustButton>
     </div>
   );

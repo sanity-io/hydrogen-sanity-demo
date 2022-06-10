@@ -1,5 +1,5 @@
 import {useCart} from '@shopify/hydrogen';
-import ButtonCircleOutline from '../buttons/ButtonCircleOutline';
+import CircleOutlineButton from '../buttons/CircleOutline';
 import {useCartUI} from './CartUIProvider.client';
 
 type Props = {
@@ -20,7 +20,7 @@ export default function CartToggle({handleClick}: Props) {
   const {isCartOpen, toggleCart} = cartUI;
 
   return (
-    <ButtonCircleOutline
+    <CircleOutlineButton
       aria-expanded={isCartOpen}
       aria-controls="cart"
       onClick={() => {
@@ -30,6 +30,6 @@ export default function CartToggle({handleClick}: Props) {
       }}
     >
       {totalQuantity}
-    </ButtonCircleOutline>
+    </CircleOutlineButton>
   );
 }

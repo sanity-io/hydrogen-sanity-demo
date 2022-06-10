@@ -1,11 +1,11 @@
 import {Seo} from '@shopify/hydrogen';
 import clsx from 'clsx';
 import groq from 'groq';
-import HeroPage from '../../components/heroes/HeroPage.server';
+import PageHero from '../../components/heroes/Page.server';
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
-import PortableText from '../../components/PortableText.server';
-import {PAGE} from '../../fragments/page';
+import PortableText from '../../components/portableText/PortableText.server';
+import {PAGE} from '../../fragments/pages/page';
 import useSanityQuery from '../../hooks/useSanityQuery';
 import {SanityPage} from '../../types';
 
@@ -30,7 +30,7 @@ export default function PageRoute({params}: Props) {
   return (
     <Layout>
       {/* Page hero */}
-      <HeroPage
+      <PageHero
         colorTheme={sanityPage.colorTheme}
         fallbackTitle={sanityPage.title}
         hero={sanityPage.hero}

@@ -1,7 +1,7 @@
 import {Link} from '@shopify/hydrogen';
 import {useCallback} from 'react';
 import type {SanityMenuLink} from '../types';
-import CollectionGroup from './CollectionGroup.server';
+import CollectionGroup from './collectionGroup/CollectionGroup.server';
 
 /**
  * A server component that defines the navigation for a web storefront

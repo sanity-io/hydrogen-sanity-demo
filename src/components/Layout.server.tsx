@@ -4,8 +4,8 @@ import {ReactNode, Suspense} from 'react';
 import {LINKS} from '../fragments/links';
 import {SanityMenuLink} from '../types';
 import Cart from './cart/Cart.client';
-import Footer from './Footer.server';
-import Header from './Header.server';
+import Footer from './footer/Footer.server';
+import Header from './header/Header.server';
 import useSanityQuery from '../hooks/useSanityQuery';
 
 /**
