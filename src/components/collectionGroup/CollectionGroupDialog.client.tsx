@@ -62,7 +62,12 @@ export default function CollectionGroupDialog({
         </button>
       </>
       <Transition show={isOpen}>
-        <Dialog className="relative z-50" onClose={handleClose}>
+        <Dialog
+          open={isOpen}
+          className="relative z-50"
+          onClose={handleClose}
+          static
+        >
           {/* Overlay */}
           <Transition.Child
             as={Fragment}
