@@ -71,11 +71,11 @@ export default function ProductRoute() {
   )[0] as ProductVariant;
 
   return (
-    <ProductProvider
-      data={storefrontProduct}
-      initialVariantId={initialVariant.id}
-    >
-      <Layout>
+    <Layout>
+      <ProductProvider
+        data={storefrontProduct}
+        initialVariantId={initialVariant.id}
+      >
         <div className="relative w-full">
           <Gallery />
 
@@ -135,8 +135,8 @@ export default function ProductRoute() {
           }}
           type="product"
         />
-      </Layout>
-    </ProductProvider>
+      </ProductProvider>
+    </Layout>
   );
 }
 

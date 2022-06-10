@@ -4,6 +4,7 @@ import {
   Product,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
+import {useCallback} from 'react';
 import type {SanityCollectionGroup} from '../types';
 import CardCollection from './cards/CardCollection';
 import IconClose from './icons/IconClose';
@@ -24,26 +25,32 @@ export default function CollectionGroupContent({
     ? (flattenConnection(collection.products) as Product[])
     : null;
 
-  const renderCollections = () =>
-    collectionGroup?.collectionLinks?.map((collectionGroupCollection) => {
-      if (!collectionGroupCollection) {
-        return null;
-      }
-      return (
-        <CardCollection
-          collection={collectionGroupCollection}
-          key={collectionGroupCollection._id}
-          onClick={onClose}
-        />
-      );
-    });
+  const renderCollections = useCallback(
+    () =>
+      collectionGroup?.collectionLinks?.map((collectionGroupCollection) => {
+        if (!collectionGroupCollection) {
+          return null;
+        }
+        return (
+          <CardCollection
+            collection={collectionGroupCollection}
+            key={collectionGroupCollection._id}
+            onClick={onClose}
+          />
+        );
+      }),
+    [collectionGroup?.collectionLinks, onClose],
+  );
 
-  const renderCollectionProducts = () =>
-    products?.map((product) => (
-      <li key={product.id}>
-        <PillProduct onClick={onClose} storefrontProduct={product} />
-      </li>
-    ));
+  const renderCollectionProducts = useCallback(
+    () =>
+      products?.map((product) => (
+        <li key={product.id}>
+          <PillProduct onClick={onClose} storefrontProduct={product} />
+        </li>
+      )),
+    [onClose, products],
+  );
 
   return (
     <div className="pb-10">
