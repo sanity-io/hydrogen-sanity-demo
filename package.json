@@ -1,9 +1,10 @@
 {
-  "name": "hydrogen-app",
+  "name": "sanity-hydrogen-app",
   "description": "This the default template for Hydrogen",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "private": true,
+  "author": "Sanity.io <hello@sanity.io>",
   "scripts": {
     "dev": "cross-env LOCAL_DEV=true shopify hydrogen dev",
     "build": "shopify hydrogen build",
