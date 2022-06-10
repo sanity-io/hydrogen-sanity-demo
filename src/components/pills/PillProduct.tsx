@@ -76,7 +76,7 @@ export default function PillProduct({
                   !availableForSale && 'opacity-50',
                 )}
                 data={image}
-                loaderOptions={{width: 100, height: 100, crop: 'center'}}
+                loaderOptions={{height: 200, crop: 'center'}}
               />
             )}
 

@@ -84,8 +84,8 @@ export default function Gallery() {
                 draggable={false}
                 fetchpriority="high"
                 key={med.id || med.image.id}
-                loaderOptions={{
-                  height: '485',
+                options={{
+                  height: 1800,
                   crop: 'center',
                 }}
                 tabIndex={0}
