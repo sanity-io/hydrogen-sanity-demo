@@ -146,7 +146,7 @@ export default function ModuleImage({module}: Props) {
       )}
       {/* Products */}
       {module.variant === 'products' && (
-        <div className="mt-2 inline-flex gap-1">
+        <div className="mt-2 flex flex-wrap gap-x-1 gap-y-2">
           {module.products.map((product, index) => {
             // Add selected variant
             const storefrontProductVariant = storefrontProductVariants[index];

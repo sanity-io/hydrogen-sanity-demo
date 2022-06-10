@@ -11,7 +11,7 @@ export default function ProductTag() {
       <Link to={`/products/${handle}`}>
         <div
           className={clsx(
-            'place-content-center rounded-xs bg-lightGray px-1.5 py-1 text-sm leading-none text-darkGray duration-200 ease-out',
+            'inline-flex place-content-center whitespace-nowrap rounded-xs bg-lightGray px-1.5 py-1 text-sm leading-none text-darkGray duration-200 ease-out',
             'hover:bg-gray',
           )}
         >
