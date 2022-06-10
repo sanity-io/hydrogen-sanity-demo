@@ -16,7 +16,6 @@ import clsx from 'clsx';
 import groq from 'groq';
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
-import ProductDetails from '../../components/product/Details.client';
 import ProductEditorial from '../../components/product/Editorial.server';
 import ProductGallery from '../../components/product/Gallery.client';
 import RelatedProducts from '../../components/product/RelatedProducts.server';
@@ -90,7 +89,6 @@ export default function ProductRoute() {
               'lg:w-[calc(100%-315px)]',
             )}
           >
-            <ProductDetails />
             <ProductEditorial
               colorTheme={sanityProduct?.colorTheme}
               sanityProduct={sanityProduct}
