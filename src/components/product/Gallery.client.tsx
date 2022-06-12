@@ -89,10 +89,7 @@ export default function ProductGallery({storefrontProduct}: Props) {
                 draggable={false}
                 fetchpriority="high"
                 key={med.id}
-                options={{
-                  height: 1800,
-                  crop: 'center',
-                }}
+                options={{crop: 'center'}}
                 tabIndex={0}
                 {...extraProps}
               />

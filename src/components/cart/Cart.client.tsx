@@ -132,7 +132,7 @@ function LineInCart() {
         <Link to={`/products/${merchandise.product.handle}`}>
           <CartLineImage
             className="rounded"
-            loaderOptions={{width: 98, height: 98, crop: 'center'}}
+            loaderOptions={{width: 100, height: 100, crop: 'center'}}
           />
         </Link>
       </div>

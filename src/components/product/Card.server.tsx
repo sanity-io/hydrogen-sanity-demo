@@ -53,7 +53,7 @@ export default function ProductCard({
             <Image
               className="absolute h-full w-full transform bg-cover bg-center object-cover object-center ease-in-out"
               data={firstVariant.image}
-              loaderOptions={{height: 800, crop: 'center'}}
+              loaderOptions={{crop: 'center'}}
             />
           )}
 
