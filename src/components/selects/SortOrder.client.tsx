@@ -82,11 +82,6 @@ type Props = {
   initialSortOrder: string;
 };
 
-// TODO: convert kebab-case to SNAKE_CASE - remove this when sort order is consistently stored with Sanity Connect direct sync
-function __tempToSnakeCase(str?: string) {
-  return str?.replace(/-/g, '_').toUpperCase();
-}
-
 export default function SortOrderSelect({initialSortOrder}: Props) {
   // Remove 'Default' sort option if current collection is not manual / automated
   const sortOptions = useMemo(() => {
@@ -102,8 +97,7 @@ export default function SortOrderSelect({initialSortOrder}: Props) {
 
   const [selectedSortOption, setSelectedSortOption] = useState(
     sortOptions.find(
-      (option) =>
-        option.collectionSortOrder === __tempToSnakeCase(initialSortOrder),
+      (option) => option.collectionSortOrder === initialSortOrder,
     ),
   );
 

@@ -1,14 +1,13 @@
 import {
   flattenConnection,
   gql,
-  ProductProvider,
   Seo,
   useRouteParams,
   useSession,
   useShop,
   useShopQuery,
 } from '@shopify/hydrogen';
-import {
+import type {
   Product,
   ProductVariant,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
@@ -20,6 +19,7 @@ import ProductEditorial from '../../components/product/Editorial.server';
 import ProductGallery from '../../components/product/Gallery.client';
 import RelatedProducts from '../../components/product/RelatedProducts.server';
 import ProductWidget from '../../components/product/Widget.client';
+import ProductOptionsWrapper from '../../components/ProductOptionsWrapper.client';
 import {PRODUCT_PAGE} from '../../fragments/pages/product';
 import useSanityQuery from '../../hooks/useSanityQuery';
 import type {SanityProductPage} from '../../types';
@@ -27,7 +27,14 @@ import type {SanityProductPage} from '../../types';
 type ShopifyPayload = {
   product: Pick<
     Product,
-    'handle' | 'id' | 'media' | 'seo' | 'title' | 'variants' | 'vendor'
+    | 'handle'
+    | 'id'
+    | 'media'
+    | 'options'
+    | 'seo'
+    | 'title'
+    | 'variants'
+    | 'vendor'
   >;
 };
 
@@ -71,31 +78,23 @@ export default function ProductRoute() {
 
   return (
     <Layout>
-      <ProductProvider
-        data={storefrontProduct}
-        initialVariantId={initialVariant.id}
-      >
-        <div className="relative w-full">
-          <ProductGallery />
+      <div className="relative w-full">
+        <ProductOptionsWrapper
+          data={storefrontProduct}
+          initialVariantId={initialVariant?.id}
+        >
+          {/* Gallery */}
+          <ProductGallery storefrontProduct={storefrontProduct} />
 
-          {/* Mobile widget layout */}
+          {/* Widget (mobile) */}
           <div className="mb-8 lg:hidden">
-            <ProductWidget sanityProduct={sanityProduct} />
-          </div>
-
-          <div
-            className={clsx(
-              'w-full', //
-              'lg:w-[calc(100%-315px)]',
-            )}
-          >
-            <ProductEditorial
-              colorTheme={sanityProduct?.colorTheme}
+            <ProductWidget
               sanityProduct={sanityProduct}
+              storefrontProduct={storefrontProduct}
             />
           </div>
 
-          {/* Desktop */}
+          {/* Widget (desktop) */}
           <div
             className={clsx(
               'pointer-events-none absolute top-0 right-0 z-10 hidden h-full w-[315px]',
@@ -104,36 +103,51 @@ export default function ProductRoute() {
           >
             <div className="sticky top-0 h-screen">
               <div className="absolute bottom-0 w-full p-4">
-                <ProductWidget sanityProduct={sanityProduct} />
+                <ProductWidget
+                  sanityProduct={sanityProduct}
+                  storefrontProduct={storefrontProduct}
+                />
               </div>
             </div>
           </div>
+        </ProductOptionsWrapper>
+
+        <div
+          className={clsx(
+            'w-full', //
+            'lg:w-[calc(100%-315px)]',
+          )}
+        >
+          <ProductEditorial
+            colorTheme={sanityProduct?.colorTheme}
+            sanityProduct={sanityProduct}
+          />
         </div>
+      </div>
 
-        <RelatedProducts
-          colorTheme={sanityProduct?.colorTheme}
-          storefrontProduct={storefrontProduct}
-        />
+      <RelatedProducts
+        colorTheme={sanityProduct?.colorTheme}
+        storefrontProduct={storefrontProduct}
+      />
 
-        <Seo
-          data={{
-            ...(sanitySeo.image
-              ? {
-                  featuredImage: {
-                    height: sanitySeo.image.height,
-                    url: sanitySeo.image.url,
-                    width: sanitySeo.image.width,
-                  },
-                }
-              : {}),
-            seo: {
-              description: sanitySeo.description,
-              title: sanitySeo.title,
-            },
-          }}
-          type="product"
-        />
-      </ProductProvider>
+      <Seo
+        data={{
+          ...(sanitySeo.image
+            ? {
+                featuredImage: {
+                  height: sanitySeo.image.height,
+                  url: sanitySeo.image.url,
+                  width: sanitySeo.image.width,
+                },
+              }
+            : {}),
+          seo: {
+            description: sanitySeo.description,
+            title: sanitySeo.title,
+          },
+        }}
+        type="product"
+      />
     </Layout>
   );
 }
@@ -154,59 +168,8 @@ const QUERY_SHOPIFY = gql`
       handle
       id
       media(first: 20) {
-        edges {
-          node {
-            ... on MediaImage {
-              mediaContentType
-              image {
-                altText
-                height
-                id
-                url
-                width
-              }
-            }
-            ... on Video {
-              mediaContentType
-              id
-              previewImage {
-                url
-              }
-              sources {
-                mimeType
-                url
-              }
-            }
-            ... on ExternalVideo {
-              mediaContentType
-              id
-              embedUrl
-              host
-            }
-            ... on Model3d {
-              mediaContentType
-              id
-              alt
-              mediaContentType
-              previewImage {
-                url
-              }
-              sources {
-                url
-              }
-            }
-          }
-        }
-      }
-      title
-      variants(first: 250) {
-        edges {
-          node {
-            availableForSale
-            compareAtPriceV2 {
-              amount
-              currencyCode
-            }
+        nodes {
+          ... on MediaImage {
             id
             image {
               altText
@@ -215,17 +178,67 @@ const QUERY_SHOPIFY = gql`
               url
               width
             }
-            priceV2 {
-              amount
-              currencyCode
-            }
-            selectedOptions {
-              name
-              value
-            }
-            sku
-            title
+            mediaContentType
           }
+          ... on Video {
+            id
+            mediaContentType
+            previewImage {
+              url
+            }
+            sources {
+              mimeType
+              url
+            }
+          }
+          ... on ExternalVideo {
+            embedUrl
+            host
+            id
+            mediaContentType
+          }
+          ... on Model3d {
+            alt
+            id
+            mediaContentType
+            previewImage {
+              url
+            }
+            sources {
+              url
+            }
+          }
+        }
+      }
+      options {
+        name
+        values
+      }
+      title
+      variants(first: 250) {
+        nodes {
+          availableForSale
+          compareAtPriceV2 {
+            amount
+            currencyCode
+          }
+          id
+          image {
+            altText
+            height
+            id
+            url
+            width
+          }
+          priceV2 {
+            amount
+            currencyCode
+          }
+          selectedOptions {
+            name
+            value
+          }
+          title
         }
       }
       vendor

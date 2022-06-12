@@ -1,10 +1,7 @@
 import {Link} from '@shopify/hydrogen';
-import {
-  Product,
-  ProductVariant,
-} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import {Suspense} from 'react';
+import {ProductWithNodes} from '../../types';
 import {
   getProductOptionString,
   hasMultipleProductOptions,
@@ -13,23 +10,17 @@ import MoneyCompareAtPrice from '../money/CompareAtPrice.client';
 import MoneyPrice from '../money/Price.client';
 
 type Props = {
-  storefrontProduct: Pick<Product, 'handle' | 'options' | 'title' | 'vendor'>;
-  storefrontProductVariant: Pick<
-    ProductVariant,
-    'availableForSale' | 'compareAtPriceV2' | 'priceV2'
-  >;
+  storefrontProduct: ProductWithNodes;
 };
 
-export default function ProductHotspot({
-  storefrontProduct,
-  storefrontProductVariant,
-}: Props) {
-  if (storefrontProductVariant == null) {
+export default function ProductHotspot({storefrontProduct}: Props) {
+  if (!storefrontProduct) {
     return null;
   }
 
-  const {availableForSale, compareAtPriceV2, priceV2} =
-    storefrontProductVariant;
+  const firstVariant = storefrontProduct.variants.nodes[0];
+
+  const {availableForSale, compareAtPriceV2, priceV2} = firstVariant;
 
   const multipleProductOptions = hasMultipleProductOptions(
     storefrontProduct.options,
@@ -45,7 +36,6 @@ export default function ProductHotspot({
         )}
         role="row"
       >
-        {/* TODO: potentially DRY with product card */}
         <div className="overflow-hidden">
           {/* Sold out */}
           {!availableForSale && (
@@ -90,9 +80,11 @@ export default function ProductHotspot({
               </Suspense>
             </span>
           )}
-          <Suspense fallback={null}>
-            <MoneyPrice money={priceV2} />
-          </Suspense>
+          {priceV2 && (
+            <Suspense fallback={null}>
+              <MoneyPrice money={priceV2} />
+            </Suspense>
+          )}
         </div>
       </div>
     </Link>

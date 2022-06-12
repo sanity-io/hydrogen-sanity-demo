@@ -25,7 +25,6 @@ import CloseIcon from '../icons/Close';
  * A client component that contains the merchandise that a customer intends to purchase, and the estimated cost associated with the cart
  */
 export default function Cart() {
-  // @ts-expect-error cartUI shouldnt return null
   const {isCartOpen, closeCart} = useCartUI();
   const {lines, totalQuantity} = useCart();
 
@@ -83,7 +82,6 @@ export default function Cart() {
 }
 
 function CartHeader({numLines}: {numLines: number}) {
-  // @ts-expect-error cartUI shouldnt return null
   const {closeCart} = useCartUI();
   return (
     <header

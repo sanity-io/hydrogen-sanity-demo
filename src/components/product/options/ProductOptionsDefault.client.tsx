@@ -1,4 +1,4 @@
-import {useProduct} from '@shopify/hydrogen';
+import {useProductOptions} from '@shopify/hydrogen';
 import OptionButton from '../../buttons/Option';
 
 /**
@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default function ProductOptionsDefault({name, values}: Props) {
-  const {setSelectedOption, selectedOptions} = useProduct();
+  const {setSelectedOption, selectedOptions} = useProductOptions();
 
   const handleChange = (optionName: string, optionValue: string) => {
     if (setSelectedOption) {

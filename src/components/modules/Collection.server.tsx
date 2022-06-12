@@ -1,15 +1,15 @@
 import {gql, Image, Link, useShopQuery} from '@shopify/hydrogen';
-import {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import type {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import {DEFAULT_BUTTON_STYLES} from '../../constants';
-import {SanityModuleCollection} from '../../types';
+import type {SanityModuleCollection} from '../../types';
 
 type Props = {
   module?: SanityModuleCollection;
 };
 
 type ShopifyPayload = {
-  collection: Pick<Collection, 'image'>;
+  collection: Partial<Collection>;
 };
 
 export default function CollectionModule({module}: Props) {
@@ -19,10 +19,10 @@ export default function CollectionModule({module}: Props) {
   }
 
   // Conditionally fetch Shopify document
-  let storefrontCollection: Pick<Collection, 'image'> | undefined;
+  let storefrontCollection: Partial<Collection> | undefined;
   if (collection.gid) {
     const {data} = useShopQuery<ShopifyPayload>({
-      query: QUERY,
+      query: QUERY_SHOPIFY,
       variables: {
         id: collection.gid,
       },
@@ -48,7 +48,7 @@ export default function CollectionModule({module}: Props) {
               mask: `url(${collection.vector}) center center / contain no-repeat`,
             }}
           >
-            {module.showBackground && storefrontCollection?.image ? (
+            {module?.showBackground && storefrontCollection?.image ? (
               <>
                 <Image
                   className="absolute h-full w-full bg-cover bg-center object-cover object-center"
@@ -96,7 +96,7 @@ export default function CollectionModule({module}: Props) {
   );
 }
 
-const QUERY = gql`
+const QUERY_SHOPIFY = gql`
   query collection($id: ID!) {
     collection: collection(id: $id) {
       image {

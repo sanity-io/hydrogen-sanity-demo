@@ -2,11 +2,11 @@ import {LocalizationProvider} from '@shopify/hydrogen';
 import groq from 'groq';
 import {ReactNode, Suspense} from 'react';
 import {LINKS} from '../fragments/links';
-import {SanityMenuLink} from '../types';
+import useSanityQuery from '../hooks/useSanityQuery';
+import type {SanityMenuLink} from '../types';
 import Cart from './cart/Cart.client';
 import Footer from './footer/Footer.server';
 import Header from './header/Header.server';
-import useSanityQuery from '../hooks/useSanityQuery';
 
 /**
  * A server component that defines a structure and organization of a page that can be used in different parts of the Hydrogen app
@@ -18,7 +18,9 @@ type Props = {
 };
 
 export default function Layout({backgroundColor, children}: Props) {
-  const {data: menuLinks} = useSanityQuery<SanityMenuLink>({query: QUERY});
+  const {data: menuLinks} = useSanityQuery<SanityMenuLink[]>({
+    query: QUERY_SANITY,
+  });
 
   return (
     <LocalizationProvider preload="*">
@@ -53,7 +55,7 @@ export default function Layout({backgroundColor, children}: Props) {
   );
 }
 
-const QUERY = groq`
+const QUERY_SANITY = groq`
   *[_type == 'settings'][0].menu.links[] {
     ${LINKS}
   }

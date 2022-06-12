@@ -2,18 +2,17 @@ import type {
   PortableTextBlock,
   PortableTextMarkDefinition,
 } from '@portabletext/types';
-import {
-  gql,
-  ProductProvider,
-  useSession,
-  useShop,
-  useShopQuery,
-} from '@shopify/hydrogen';
-import {
+import {gql, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
+import type {
   Product,
   ProductVariant,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
-import type {SanityColorTheme, SanityProductWithVariant} from '../../../types';
+import type {
+  ProductWithNodes,
+  SanityColorTheme,
+  SanityProductWithVariant,
+} from '../../../types';
+import ProductOptionsWrapper from '../../ProductOptionsWrapper.client';
 import ProductInlineLink from '../ProductInlineLink.client';
 
 type Props = PortableTextBlock & {
@@ -26,33 +25,21 @@ type Props = PortableTextBlock & {
 };
 
 type ShopifyPayload = {
-  product: Pick<
-    Product,
-    'handle' | 'id' | 'options' | 'title' | 'variants' | 'vendor'
-  >;
-  productVariant: Pick<
-    ProductVariant,
-    | 'availableForSale'
-    | 'compareAtPriceV2'
-    | 'id'
-    | 'image'
-    | 'priceV2'
-    | 'selectedOptions'
-    | 'title'
-  >;
+  product: Partial<Product>;
+  productVariant: Partial<ProductVariant>;
 };
 
 export default function AnnotationProduct({children, colorTheme, mark}: Props) {
   const {productWithVariant} = mark;
 
   // Conditionally fetch Shopify document
-  let storefrontProduct;
-  let storefrontProductVariant;
+  let storefrontProduct: ProductWithNodes | null = null;
+
   if (productWithVariant.gid && productWithVariant.variantGid) {
     const {languageCode} = useShop();
     const {countryCode = 'US'} = useSession();
     const {data} = useShopQuery<ShopifyPayload>({
-      query: QUERY,
+      query: QUERY_SHOPIFY,
       variables: {
         country: countryCode,
         id: productWithVariant.gid,
@@ -60,43 +47,35 @@ export default function AnnotationProduct({children, colorTheme, mark}: Props) {
         variantId: productWithVariant.variantGid,
       },
     });
-    storefrontProduct = data.product;
-    storefrontProductVariant = data.productVariant;
+    // Attach variant nodes
+    storefrontProduct = {
+      ...data.product,
+      variants: {nodes: [data.productVariant as ProductVariant]},
+    };
   }
 
-  if (!storefrontProduct || !storefrontProductVariant) {
+  if (!storefrontProduct) {
     return <>{children}</>;
   }
 
-  // TODO: refactor
-  const storefrontProductWithVariant = {
-    ...storefrontProduct,
-    variants: {
-      edges: [
-        {
-          node: storefrontProductVariant,
-        },
-      ],
-    },
-  };
-
   return (
-    <ProductProvider
-      data={storefrontProductWithVariant}
-      initialVariantId={storefrontProductVariant.id}
+    <ProductOptionsWrapper
+      data={storefrontProduct}
+      initialVariantId={storefrontProduct.variants?.nodes?.[0]?.id}
     >
       <ProductInlineLink
         colorTheme={colorTheme}
         linkAction={mark.linkAction || 'link'}
         quantity={mark.quantity}
+        storefrontProduct={storefrontProduct}
       >
         <>{children}</>
       </ProductInlineLink>
-    </ProductProvider>
+    </ProductOptionsWrapper>
   );
 }
 
-const QUERY = gql`
+const QUERY_SHOPIFY = gql`
   query product(
     $country: CountryCode
     $id: ID!

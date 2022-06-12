@@ -1,7 +1,7 @@
-import {useProduct} from '@shopify/hydrogen';
+import {useProductOptions} from '@shopify/hydrogen';
 import Tippy from '@tippyjs/react/headless';
 import clsx from 'clsx';
-import {SanityCustomProductOptionColor} from '../../../types';
+import type {SanityCustomProductOptionColor} from '../../../types';
 import OptionButton from '../../buttons/Option';
 import Tooltip from '../../Tooltip';
 
@@ -44,7 +44,7 @@ export default function ProductOptionsColor({
   name,
   values,
 }: Props) {
-  const {setSelectedOption, selectedOptions} = useProduct();
+  const {setSelectedOption, selectedOptions} = useProductOptions();
 
   const handleChange = (optionName: string, optionValue: string) => {
     if (setSelectedOption) {
@@ -69,13 +69,13 @@ export default function ProductOptionsColor({
           return (
             <label key={id} htmlFor={id}>
               <input
+                checked={checked}
                 className="sr-only"
-                type="radio"
                 id={id}
                 name={`option[${name}]`}
-                value={value}
-                checked={checked}
                 onChange={() => handleChange(name, value)}
+                type="radio"
+                value={value}
               />
 
               {/* Display a tooltip only if we're displaying color chips */}

@@ -1,6 +1,7 @@
-import {ProductPrice, useProduct} from '@shopify/hydrogen';
+import {ProductPrice, useProductOptions} from '@shopify/hydrogen';
+import type {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
-import {SanityProductPage} from '../../types';
+import type {SanityProductPage} from '../../types';
 import {hasMultipleProductOptions} from '../../utils/productOptions';
 import SelectedVariantAddToCartButton from '../buttons/SelectedVariantAddToCart.client';
 import SelectedVariantBuyNowButton from '../buttons/SelectedVariantBuyNow.client';
@@ -8,12 +9,17 @@ import ProductOptions from './options/ProductOptions.client';
 
 type Props = {
   sanityProduct: SanityProductPage;
+  storefrontProduct: Partial<Product>;
 };
 
-function ProductPrices() {
-  const storefrontProduct = useProduct();
+function ProductPrices({
+  storefrontProduct,
+}: {
+  storefrontProduct: Partial<Product>;
+}) {
+  const {selectedVariant} = useProductOptions();
 
-  if (!storefrontProduct?.selectedVariant) {
+  if (!storefrontProduct || !selectedVariant) {
     return null;
   }
 
@@ -21,22 +27,29 @@ function ProductPrices() {
     <div className="mt-2 flex text-md font-bold">
       <ProductPrice
         className="mr-3 text-darkGray line-through decoration-red"
+        data={storefrontProduct}
         priceType="compareAt"
-        variantId={storefrontProduct.selectedVariant.id}
+        variantId={selectedVariant.id}
       />
-      <ProductPrice variantId={storefrontProduct.selectedVariant.id} />
+      <ProductPrice data={storefrontProduct} variantId={selectedVariant.id} />
     </div>
   );
 }
 
-export default function ProductWidget({sanityProduct}: Props) {
-  const storefrontProduct = useProduct();
-
+export default function ProductWidget({
+  sanityProduct,
+  storefrontProduct,
+}: Props) {
+  const {selectedVariant} = useProductOptions();
   const multipleProductOptions = hasMultipleProductOptions(
     storefrontProduct.options,
   );
 
-  const availableForSale = storefrontProduct.selectedVariant?.availableForSale;
+  const availableForSale = selectedVariant?.availableForSale;
+
+  if (!selectedVariant) {
+    return null;
+  }
 
   return (
     <div
@@ -53,10 +66,9 @@ export default function ProductWidget({sanityProduct}: Props) {
       )}
 
       {/* Sale */}
-      {availableForSale &&
-        storefrontProduct.selectedVariant?.compareAtPriceV2 && (
-          <div className="mb-3 text-xs font-bold uppercase text-red">Sale</div>
-        )}
+      {availableForSale && selectedVariant?.compareAtPriceV2 && (
+        <div className="mb-3 text-xs font-bold uppercase text-red">Sale</div>
+      )}
 
       {/* Title */}
       {storefrontProduct?.title && (
@@ -73,7 +85,7 @@ export default function ProductWidget({sanityProduct}: Props) {
       )}
 
       {/* Prices */}
-      <ProductPrices />
+      <ProductPrices storefrontProduct={storefrontProduct} />
 
       {/* Divider */}
       <div className="my-4 w-full border-b border-gray" />

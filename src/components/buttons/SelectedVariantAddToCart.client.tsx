@@ -1,4 +1,4 @@
-import {AddToCartButton, useProduct} from '@shopify/hydrogen';
+import {AddToCartButton, useProductOptions} from '@shopify/hydrogen';
 import {DEFAULT_BUTTON_STYLES} from '../../constants';
 
 /**
@@ -12,24 +12,21 @@ type Props = {
   showSoldOut?: boolean;
 };
 
-export default function SelectedVariantAddToCartButton(props: Props) {
-  const {label = 'Add to cart', quantity = 1, showSoldOut = true} = props;
-  const {selectedVariant} = useProduct();
+export default function SelectedVariantAddToCartButton({
+  label = 'Add to cart',
+  quantity = 1,
+  showSoldOut = true,
+}: Props) {
+  const {selectedVariant} = useProductOptions();
 
-  if (!selectedVariant) {
-    return null;
-  }
-
-  const {availableForSale} = selectedVariant;
-
-  if (!showSoldOut && !availableForSale) {
+  if (!selectedVariant || (!showSoldOut && !selectedVariant.availableForSale)) {
     return null;
   }
 
   return (
     <AddToCartButton
       className={DEFAULT_BUTTON_STYLES}
-      disabled={!availableForSale}
+      disabled={!selectedVariant.availableForSale}
       quantity={quantity}
       variantId={selectedVariant?.id}
     >

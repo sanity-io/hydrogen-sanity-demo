@@ -2,7 +2,7 @@ import {Dialog, Transition} from '@headlessui/react';
 import {Link} from '@shopify/hydrogen';
 import clsx from 'clsx';
 import {Fragment, useState} from 'react';
-import {SanityMenuLink} from '../types';
+import type {SanityMenuLink} from '../types';
 import CloseIcon from './icons/Close';
 import MenuIcon from './icons/Menu';
 import CountrySelect from './selects/Country.client';

@@ -14,7 +14,7 @@ export default function DefaultSeo() {
     hydrogenQueryOptions: {
       preload: '*',
     },
-    query: SANITY_QUERY,
+    query: QUERY_SANITY,
   });
 
   return (
@@ -29,7 +29,7 @@ export default function DefaultSeo() {
   );
 }
 
-const SANITY_QUERY = groq`
+const QUERY_SANITY = groq`
   *[_type == 'settings'][0].seo {
     ...
   }

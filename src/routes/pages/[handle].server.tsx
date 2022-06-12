@@ -7,7 +7,7 @@ import NotFound from '../../components/NotFound.server';
 import PortableText from '../../components/portableText/PortableText.server';
 import {PAGE} from '../../fragments/pages/page';
 import useSanityQuery from '../../hooks/useSanityQuery';
-import {SanityPage} from '../../types';
+import type {SanityPage} from '../../types';
 
 type Props = {
   params: any;
@@ -35,7 +35,6 @@ export default function PageRoute({params}: Props) {
         fallbackTitle={sanityPage.title}
         hero={sanityPage.hero}
       />
-
       {/* Body */}
       {sanityPage.body && (
         <PortableText
@@ -48,7 +47,6 @@ export default function PageRoute({params}: Props) {
           colorTheme={sanityPage.colorTheme}
         />
       )}
-
       <Seo
         data={{
           seo: {

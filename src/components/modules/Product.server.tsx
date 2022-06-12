@@ -1,10 +1,10 @@
 import {gql, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
-import {
+import type {
   Product,
   ProductVariant,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
-import type {SanityModuleProduct} from '../../types';
-import ProductCard from '../product/Card';
+import type {ProductWithNodes, SanityModuleProduct} from '../../types';
+import ProductCard from '../product/Card.server';
 import ProductPill from '../product/Pill';
 
 type Props = {
@@ -14,20 +14,8 @@ type Props = {
 };
 
 type ShopifyPayload = {
-  product: Pick<
-    Product,
-    'handle' | 'id' | 'options' | 'title' | 'variants' | 'vendor'
-  >;
-  productVariant: Pick<
-    ProductVariant,
-    | 'availableForSale'
-    | 'compareAtPriceV2'
-    | 'id'
-    | 'image'
-    | 'priceV2'
-    | 'selectedOptions'
-    | 'title'
-  >;
+  product: Partial<Product>;
+  productVariant: Partial<ProductVariant>;
 };
 
 export default function ProductModule({
@@ -39,13 +27,12 @@ export default function ProductModule({
   const productVariantGid = module?.productWithVariant.variantGid;
 
   // Conditionally fetch Shopify document
-  let storefrontProduct;
-  let storefrontProductVariant;
+  let storefrontProduct: ProductWithNodes | null = null;
   if (productGid && productVariantGid) {
     const {languageCode} = useShop();
     const {countryCode = 'US'} = useSession();
     const {data} = useShopQuery<ShopifyPayload>({
-      query: QUERY,
+      query: QUERY_SHOPIFY,
       variables: {
         country: countryCode,
         id: productGid,
@@ -53,21 +40,20 @@ export default function ProductModule({
         variantId: productVariantGid,
       },
     });
-    storefrontProduct = data.product;
-    storefrontProductVariant = data.productVariant;
+
+    // Attach variant nodes
+    storefrontProduct = {
+      ...data.product,
+      variants: {nodes: [data.productVariant as ProductVariant]},
+    };
   }
 
-  if (!storefrontProduct || !storefrontProductVariant) {
+  if (!storefrontProduct) {
     return null;
   }
 
   if (layout === 'pill') {
-    return (
-      <ProductPill
-        storefrontProduct={storefrontProduct}
-        storefrontProductVariant={storefrontProductVariant}
-      />
-    );
+    return <ProductPill storefrontProduct={storefrontProduct} />;
   }
 
   if (layout === 'card') {
@@ -75,7 +61,6 @@ export default function ProductModule({
       <ProductCard
         imageAspectClassName={imageAspectClassName}
         storefrontProduct={storefrontProduct}
-        storefrontProductVariant={storefrontProductVariant}
       />
     );
   }
@@ -83,7 +68,7 @@ export default function ProductModule({
   return null;
 }
 
-const QUERY = gql`
+const QUERY_SHOPIFY = gql`
   query product(
     $country: CountryCode
     $id: ID!

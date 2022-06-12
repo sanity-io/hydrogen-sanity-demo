@@ -1,15 +1,5 @@
-import {
-  flattenConnection,
-  gql,
-  Seo,
-  useSession,
-  useShop,
-  useShopQuery,
-} from '@shopify/hydrogen';
-import {
-  Collection,
-  Product,
-} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import {gql, Seo, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
+import type {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import groq from 'groq';
 import {useMemo} from 'react';
@@ -72,7 +62,7 @@ export default function CollectionRoute({
 
   const sanitySeo = sanityCollection.seo;
   const collection = data.collection;
-  const products = flattenConnection(collection.products) as Product[];
+  const products = collection.products.nodes;
   const hasNextPage = data.collection.products.pageInfo.hasNextPage;
 
   const items = useMemo(() => {
@@ -178,45 +168,41 @@ const QUERY_SHOPIFY = gql`
         reverse: $productSortReverse
         sortKey: $productSortKey
       ) {
-        edges {
-          node {
-            handle
-            id
-            options {
-              name
-              values
-            }
-            title
-            variants(first: 1) {
-              edges {
-                node {
-                  availableForSale
-                  compareAtPriceV2 {
-                    currencyCode
-                    amount
-                  }
-                  id
-                  image {
-                    altText
-                    height
-                    id
-                    url
-                    width
-                  }
-                  priceV2 {
-                    currencyCode
-                    amount
-                  }
-                  selectedOptions {
-                    name
-                    value
-                  }
-                  title
-                }
-              }
-            }
-            vendor
+        nodes {
+          handle
+          id
+          options {
+            name
+            values
           }
+          title
+          variants(first: 1) {
+            nodes {
+              availableForSale
+              compareAtPriceV2 {
+                currencyCode
+                amount
+              }
+              id
+              image {
+                altText
+                height
+                id
+                url
+                width
+              }
+              priceV2 {
+                currencyCode
+                amount
+              }
+              selectedOptions {
+                name
+                value
+              }
+              title
+            }
+          }
+          vendor
         }
         pageInfo {
           hasNextPage

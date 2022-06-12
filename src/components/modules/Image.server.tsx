@@ -1,36 +1,19 @@
-import {
-  gql,
-  ProductProvider,
-  useSession,
-  useShop,
-  useShopQuery,
-} from '@shopify/hydrogen';
-import {
+import {gql, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
+import type {
   Product,
   ProductVariant,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import sanityConfig from '../../../sanity.config';
 import {DEFAULT_BUTTON_STYLES} from '../../constants';
-import {SanityModuleImage} from '../../types';
+import type {ProductWithNodes, SanityModuleImage} from '../../types';
 import Link from '../Link';
 import SanityImage from '../SanityImage.client';
 import ProductTag from '../tags/Product.client';
 
-// TODO: refactor picked product + product variants
-
 type ShopifyPayload = {
-  products: Pick<Product, 'handle' | 'id' | 'options' | 'title' | 'vendor'>[];
-  productVariants: Pick<
-    ProductVariant,
-    | 'availableForSale'
-    | 'compareAtPriceV2'
-    | 'id'
-    | 'image'
-    | 'priceV2'
-    | 'selectedOptions'
-    | 'title'
-  >[];
+  products: Partial<Product>[];
+  productVariants: Partial<ProductVariant>[];
 };
 
 type Props = {
@@ -45,33 +28,27 @@ export default function ImageModule({module}: Props) {
   }
 
   // Conditionally fetch Shopify products if this is an image module of variant `products`
-  let storefrontProducts: Pick<
-    Product,
-    'handle' | 'id' | 'options' | 'title' | 'vendor'
-  >[];
-  let storefrontProductVariants: Pick<
-    ProductVariant,
-    | 'availableForSale'
-    | 'compareAtPriceV2'
-    | 'id'
-    | 'image'
-    | 'priceV2'
-    | 'title'
-  >[];
+  let storefrontProducts: ProductWithNodes[];
   if (module.variant === 'products') {
     const {languageCode} = useShop();
     const {countryCode = 'US'} = useSession();
     const {data} = useShopQuery<ShopifyPayload>({
-      query: QUERY,
+      query: QUERY_SHOPIFY,
       variables: {
         country: countryCode,
-        ids: module.products.map((p) => p?.gid),
+        ids: module.products.map((p) => p.gid),
         language: languageCode,
         variantIds: module.products.map((p) => p.variantGid),
       },
     });
-    storefrontProducts = data.products;
-    storefrontProductVariants = data.productVariants;
+    // Attach variant nodes
+    storefrontProducts = data.products.map((product, index) => {
+      const productVariant = data.productVariants[index];
+      return {
+        ...product,
+        variants: {nodes: [productVariant as ProductVariant]},
+      };
+    });
   }
 
   const ImageContent = (
@@ -147,37 +124,19 @@ export default function ImageModule({module}: Props) {
       {/* Products */}
       {module.variant === 'products' && (
         <div className="mt-2 flex flex-wrap gap-x-1 gap-y-2">
-          {module.products.map((product, index) => {
-            // Add selected variant
-            const storefrontProductVariant = storefrontProductVariants[index];
-            const storefrontProductWithVariant = {
-              ...storefrontProducts[index],
-              variants: {
-                edges: [
-                  {
-                    node: storefrontProductVariant,
-                  },
-                ],
-              },
-            };
-
-            return (
-              <ProductProvider
-                data={storefrontProductWithVariant}
-                initialVariantId={storefrontProductVariant.id}
-                key={product._id}
-              >
-                <ProductTag key={product._key} />
-              </ProductProvider>
-            );
-          })}
+          {module.products.map((product, index) => (
+            <ProductTag
+              key={product._key}
+              storefrontProduct={storefrontProducts[index]}
+            />
+          ))}
         </div>
       )}
     </div>
   );
 }
 
-const QUERY = gql`
+const QUERY_SHOPIFY = gql`
   query products(
     $country: CountryCode
     $language: LanguageCode
@@ -194,10 +153,8 @@ const QUERY = gql`
         }
         title
         variants(first: 1) {
-          edges {
-            node {
-              availableForSale
-            }
+          nodes {
+            availableForSale
           }
         }
         vendor

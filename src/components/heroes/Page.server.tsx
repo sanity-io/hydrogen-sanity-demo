@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import {SanityColorTheme, SanityHeroPage} from '../../types';
+import type {SanityColorTheme, SanityHeroPage} from '../../types';
 import HeroContent from './HeroContent.server';
 
 type Props = {

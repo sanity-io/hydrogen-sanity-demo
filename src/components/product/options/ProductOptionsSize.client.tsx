@@ -1,6 +1,6 @@
-import {useProduct} from '@shopify/hydrogen';
+import {useProductOptions} from '@shopify/hydrogen';
 import Tippy from '@tippyjs/react/headless';
-import {SanityCustomProductOptionSize} from '../../../types';
+import type {SanityCustomProductOptionSize} from '../../../types';
 import OptionButton from '../../buttons/Option';
 import Tooltip from '../../Tooltip';
 
@@ -19,7 +19,7 @@ export default function ProductOptionsColor({
   name,
   values,
 }: Props) {
-  const {setSelectedOption, selectedOptions} = useProduct();
+  const {setSelectedOption, selectedOptions} = useProductOptions();
 
   const handleChange = (optionName: string, optionValue: string) => {
     if (setSelectedOption) {

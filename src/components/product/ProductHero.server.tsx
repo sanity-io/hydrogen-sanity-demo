@@ -1,5 +1,5 @@
 import {gql, Image, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
-import {
+import type {
   Product,
   ProductVariant,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
@@ -11,22 +11,18 @@ type Props = {
 };
 
 type ShopifyPayload = {
-  productVariant: Pick<
-    ProductVariant,
-    'availableForSale' | 'compareAtPriceV2' | 'image' | 'priceV2'
-  >;
-  product: Pick<Product, 'handle' | 'id' | 'options' | 'title' | 'vendor'>;
+  productVariant: Partial<ProductVariant>;
+  product: Partial<Product>;
 };
 
 export default function ProductHero({gid, variantGid}: Props) {
   // Conditionally fetch Shopify document
   let storefrontProduct;
-  let storefrontProductVariant;
   if (gid && variantGid) {
     const {countryCode = 'US'} = useSession();
     const {languageCode} = useShop();
     const {data} = useShopQuery<ShopifyPayload>({
-      query: QUERY,
+      query: QUERY_SHOPIFY,
       variables: {
         country: countryCode,
         language: languageCode,
@@ -34,35 +30,37 @@ export default function ProductHero({gid, variantGid}: Props) {
         variantId: variantGid,
       },
     });
-    storefrontProduct = data?.product;
-    storefrontProductVariant = data?.productVariant;
+    // Attach variant nodes
+    storefrontProduct = {
+      ...data.product,
+      variants: {nodes: [data.productVariant as ProductVariant]},
+    };
   }
 
-  if (!storefrontProduct || !storefrontProductVariant) {
+  if (!storefrontProduct) {
     return null;
   }
 
+  const firstVariant = storefrontProduct.variants.nodes[0];
+
   return (
     <>
-      {storefrontProductVariant.image && (
+      {firstVariant.image && (
         <Image
           className="absolute h-full w-full transform bg-cover bg-center object-cover object-center"
-          data={storefrontProductVariant.image}
+          data={firstVariant.image}
           loaderOptions={{width: 2000}}
         />
       )}
 
       <div className="absolute bottom-4 right-4">
-        <ProductHotspot
-          storefrontProduct={storefrontProduct}
-          storefrontProductVariant={storefrontProductVariant}
-        />
+        <ProductHotspot storefrontProduct={storefrontProduct} />
       </div>
     </>
   );
 }
 
-const QUERY = gql`
+const QUERY_SHOPIFY = gql`
   query product(
     $country: CountryCode
     $language: LanguageCode

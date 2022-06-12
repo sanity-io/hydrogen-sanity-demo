@@ -12,7 +12,7 @@ import type {SanityHomePage} from '../types';
 export default function IndexRoute() {
   const {data: sanityHome} = useSanityQuery<SanityHomePage>({
     hydrogenQueryOptions: {preload: true},
-    query: SANITY_QUERY,
+    query: QUERY_SANITY,
   });
 
   if (!sanityHome) {
@@ -47,7 +47,7 @@ export default function IndexRoute() {
   );
 }
 
-const SANITY_QUERY = groq`
+const QUERY_SANITY = groq`
   *[_type == 'home'][0]{
     ${HOME_PAGE}
   }

@@ -2,14 +2,14 @@ import {
   AddToCartButton,
   BuyNowButton,
   Link,
-  useProduct,
+  useProductOptions,
 } from '@shopify/hydrogen';
 import Tippy from '@tippyjs/react/headless';
 import clsx from 'clsx';
-import {ReactNode} from 'react';
-import type {SanityColorTheme} from '../../types';
-import CreditCardIcon from '../icons/CreditCard';
+import type {ReactNode} from 'react';
+import type {ProductWithNodes, SanityColorTheme} from '../../types';
 import CartIcon from '../icons/Cart';
+import CreditCardIcon from '../icons/CreditCard';
 import ProductTooltip from '../product/Tooltip.client';
 import Tooltip from '../Tooltip';
 
@@ -18,6 +18,7 @@ type Props = {
   colorTheme?: SanityColorTheme;
   linkAction: 'addToCart' | 'buyNow' | 'link';
   quantity?: number;
+  storefrontProduct: ProductWithNodes;
 };
 
 export default function ProductInlineLink({
@@ -25,11 +26,13 @@ export default function ProductInlineLink({
   colorTheme,
   linkAction,
   quantity = 1,
+  storefrontProduct,
 }: Props) {
-  const {handle, selectedVariant, title} = useProduct();
+  const {handle, title} = storefrontProduct;
+  const {selectedVariant} = useProductOptions();
 
   // Return text only if variant cannot be found
-  if (!selectedVariant) {
+  if (!selectedVariant?.id) {
     return <>{children}</>;
   }
 
@@ -71,7 +74,7 @@ export default function ProductInlineLink({
           return <Tooltip label={`Buy now: ${title}`} tone="dark" />;
         }
         if (linkAction === 'link') {
-          return <ProductTooltip />;
+          return <ProductTooltip storefrontProduct={storefrontProduct} />;
         }
         return null;
       }}

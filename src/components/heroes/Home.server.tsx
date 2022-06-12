@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import {SanityHeroHome} from '../../types';
+import type {SanityHeroHome} from '../../types';
 import LinkButton from '../buttons/Link';
 import HeroContent from './HeroContent.server';
 

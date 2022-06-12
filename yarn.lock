@@ -736,10 +736,10 @@
     "@shopify/cli-kit" "2.0.10"
     "@shopify/plugin-ngrok" "^0.2.4"
 
-"@shopify/hydrogen@^0.22.1":
-  version "0.22.1"
-  resolved "https://registry.yarnpkg.com/@shopify/hydrogen/-/hydrogen-0.22.1.tgz#9d395fdec652b98f739aefa3af4aed3102e5fb23"
-  integrity sha512-MmUbC4reRX2grCDabXea4DgBsk8p5lGR5Y7nUyzW+CYYzJgm30gHiE6RLMqFjWX1IEllOMTBBfI0sm7Mea80tg==
+"@shopify/hydrogen@^0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@shopify/hydrogen/-/hydrogen-0.24.0.tgz#0e0d8b2beab15c15ca0a6ed525fb1a7cafc40ff4"
+  integrity sha512-pREwnsIILEJFTFtKKqqaBnNQzXGRBn0v0RzpveZCkuFfaYKA234TweuSIP4JCHTRLOpBrl6YPcWbBf33r6Y5JQ==
   dependencies:
     "@vitejs/plugin-react" "^1.3.0"
     abort-controller "^3.0.0"
@@ -756,6 +756,7 @@
     path-to-regexp "^6.2.0"
     react-error-boundary "^3.1.3"
     react-helmet-async "^1.2.3"
+    set-cookie-parser "^2.5.0"
     uuid "^8.3.2"
     vite-plugin-inspect "^0.3.6"
     web-streams-polyfill "^3.2.0"
@@ -4315,7 +4316,7 @@ serve-static@^1.14.1:
     parseurl "~1.3.3"
     send "0.18.0"
 
-set-cookie-parser@^2.4.8:
+set-cookie-parser@^2.4.8, set-cookie-parser@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/set-cookie-parser/-/set-cookie-parser-2.5.0.tgz#96b59525e1362c94335c3c761100bb6e8f2da4b0"
   integrity sha512-cHMAtSXilfyBePduZEBVPTCftTQWz6ehWJD5YNUg4mqvRosrrjKbo4WS8JkB0/RxonMoohHm7cOGH60mDkRQ9w==

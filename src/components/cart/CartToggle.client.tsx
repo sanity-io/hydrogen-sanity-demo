@@ -24,7 +24,6 @@ export default function CartToggle({handleClick}: Props) {
       aria-expanded={isCartOpen}
       aria-controls="cart"
       onClick={() => {
-        // @ts-expect-error cartUI shouldnt return null
         toggleCart();
         handleClick?.();
       }}

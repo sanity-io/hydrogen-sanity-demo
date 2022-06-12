@@ -6,7 +6,7 @@ const client = sanityClient(sanityConfig);
 
 export async function api(request) {
   const baseUrl = new URL(request.url).origin;
-  const sanityData = await client.fetch(SANITY_QUERY, {baseUrl});
+  const sanityData = await client.fetch(QUERY_SANITY, {baseUrl});
 
   return new Response(shopSitemap(sanityData, baseUrl), {
     headers: {
@@ -88,7 +88,7 @@ function renderUrlTag({url, lastMod, changeFreq, image}) {
   `;
 }
 
-const SANITY_QUERY = groq`
+const QUERY_SANITY = groq`
 {
   "collections": *[
     _type == 'collection'

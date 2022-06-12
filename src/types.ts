@@ -1,4 +1,25 @@
-import {Block, Image} from '@sanity/types';
+import type {Block, Image} from '@sanity/types';
+import type {
+  Collection,
+  MediaConnection,
+  Product,
+  ProductVariantConnection,
+} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+
+export type CollectionWithNodes = Partial<Omit<Collection, 'products'>> & {
+  products: {
+    nodes: ProductWithNodes[];
+  };
+};
+
+export type ProductWithNodes = Partial<Omit<Product, 'media' | 'variants'>> & {
+  media?: {
+    nodes: MediaConnection['nodes'];
+  };
+  variants: {
+    nodes: ProductVariantConnection['nodes'];
+  };
+};
 
 export type SanityCollection = {
   _id: string;

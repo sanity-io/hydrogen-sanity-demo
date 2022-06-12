@@ -1,10 +1,7 @@
 import {Image, Link} from '@shopify/hydrogen';
-import {
-  Product,
-  ProductVariant,
-} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import {Suspense} from 'react';
+import type {ProductWithNodes} from '../../types';
 import {
   getProductOptionString,
   hasMultipleProductOptions,
@@ -19,31 +16,13 @@ import MoneyPrice from '../money/Price.client';
 
 type Props = {
   onClick?: () => void;
-  storefrontProduct: Pick<
-    Product,
-    'handle' | 'options' | 'title' | 'variants' | 'vendor'
-  >;
-  storefrontProductVariant?: Pick<
-    ProductVariant,
-    | 'availableForSale'
-    | 'compareAtPriceV2'
-    | 'id'
-    | 'image'
-    | 'priceV2'
-    | 'selectedOptions'
-    | 'title'
-  >;
+  storefrontProduct: ProductWithNodes;
 };
 
-export default function ProductPill({
-  onClick,
-  storefrontProduct,
-  storefrontProductVariant,
-}: Props) {
-  const selectedVariant =
-    storefrontProductVariant || storefrontProduct.variants.edges[0].node;
+export default function ProductPill({onClick, storefrontProduct}: Props) {
+  const firstVariant = storefrontProduct.variants.nodes[0];
 
-  if (selectedVariant == null) {
+  if (firstVariant == null) {
     return null;
   }
 
@@ -51,7 +30,7 @@ export default function ProductPill({
     storefrontProduct.options,
   );
   const productOptions = getProductOptionString(storefrontProduct.options);
-  const {availableForSale, compareAtPriceV2, image, priceV2} = selectedVariant;
+  const {availableForSale, compareAtPriceV2, image, priceV2} = firstVariant;
 
   return (
     <Link onClick={onClick} to={`/products/${storefrontProduct.handle}`}>
@@ -93,7 +72,6 @@ export default function ProductPill({
           </div>
         </div>
 
-        {/* TODO: potentially DRY with product card */}
         <div className="overflow-hidden">
           <div className="mr-3 space-y-1">
             {/* Title */}
@@ -123,9 +101,11 @@ export default function ProductPill({
                 </Suspense>
               </span>
             )}
-            <Suspense fallback={null}>
-              <MoneyPrice money={priceV2} />
-            </Suspense>
+            {priceV2 && (
+              <Suspense fallback={null}>
+                <MoneyPrice money={priceV2} />
+              </Suspense>
+            )}
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import {BuyNowButton, useProduct} from '@shopify/hydrogen';
+import {BuyNowButton, useProductOptions} from '@shopify/hydrogen';
 import {DEFAULT_BUTTON_STYLES} from '../../constants';
 
 /**
@@ -11,13 +11,14 @@ type Props = {
   showSoldOut?: boolean;
 };
 
-export default function SelectedVariantBuyNowButton(props: Props) {
-  const {quantity = 1, showSoldOut = true} = props;
-  const {selectedVariant} = useProduct();
-
+export default function SelectedVariantBuyNowButton({
+  quantity = 1,
+  showSoldOut = true,
+}: Props) {
+  const {selectedVariant} = useProductOptions();
   const availableForSale = selectedVariant?.availableForSale;
 
-  if ((!showSoldOut && !availableForSale) || !selectedVariant) {
+  if ((!showSoldOut && !availableForSale) || !selectedVariant?.id) {
     return null;
   }
 

@@ -1,6 +1,6 @@
 import BlockContent from '@sanity/block-content-to-react';
-import {Block as SanityBlock} from '@sanity/types';
-import {SanityColorTheme} from '../../types';
+import type {Block as SanityBlock} from '@sanity/types';
+import type {SanityColorTheme} from '../../types';
 import AnnotationLinkEmail from './annotations/AnnotationLinkEmail';
 import AnnotationLinkExternal from './annotations/AnnotationLinkExternal';
 import AnnotationLinkInternal from './annotations/AnnotationLinkInternal';

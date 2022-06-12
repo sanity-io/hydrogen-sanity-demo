@@ -17,7 +17,7 @@ export default function Footer() {
   const {data: footer} = useSanityQuery<{
     links: SanityLink[];
     text: Block[];
-  }>({query: QUERY});
+  }>({query: QUERY_SANITY});
 
   const renderLinks = footer?.links.map((link) => {
     if (link._type === 'linkExternal') {
@@ -92,7 +92,7 @@ export default function Footer() {
     </footer>
   );
 }
-const QUERY = groq`
+const QUERY_SANITY = groq`
   *[_type == 'settings'][0].footer {
     links[] {
       ${LINKS}

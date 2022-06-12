@@ -1,8 +1,4 @@
-import {flattenConnection} from '@shopify/hydrogen';
-import {
-  Collection,
-  Product,
-} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import type {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import {useCallback} from 'react';
 import type {SanityCollectionGroup} from '../../types';
@@ -21,9 +17,7 @@ export default function CollectionGroupContent({
   collectionGroup,
   onClose,
 }: Props) {
-  const products = collection?.products
-    ? (flattenConnection(collection.products) as Product[])
-    : null;
+  const products = collection?.products.nodes;
 
   const renderCollections = useCallback(
     () =>

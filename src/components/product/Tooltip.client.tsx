@@ -1,6 +1,10 @@
-import {Image, Link, useProduct} from '@shopify/hydrogen';
+import {Image, Link, useProductOptions} from '@shopify/hydrogen';
+import type {
+  Image as ImageType,
+  MoneyV2,
+} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
-import {Suspense} from 'react';
+import type {ProductWithNodes} from '../../types';
 import {
   getProductOptionString,
   hasMultipleProductOptions,
@@ -13,14 +17,18 @@ import MoneyPrice from '../money/Price.client';
 
 type Props = {
   imageAspectClassName?: string;
+  storefrontProduct: ProductWithNodes;
 };
 
 export default function ProductTooltip({
   imageAspectClassName = 'aspect-square',
+  storefrontProduct,
 }: Props) {
-  const {handle, options, selectedVariant, title, vendor} = useProduct();
+  const {handle, options, title, vendor} = storefrontProduct;
 
-  if (selectedVariant == null) {
+  const {selectedVariant} = useProductOptions();
+
+  if (!selectedVariant) {
     return null;
   }
 
@@ -43,7 +51,7 @@ export default function ProductTooltip({
           {selectedVariant.image && (
             <Image
               className="absolute h-full w-full transform bg-cover bg-center object-cover object-center ease-in-out"
-              data={selectedVariant.image}
+              data={selectedVariant.image as ImageType}
             />
           )}
           {/* Badges */}
@@ -82,21 +90,19 @@ export default function ProductTooltip({
         <div className="mt-3 flex font-bold">
           {selectedVariant.compareAtPriceV2 && (
             <span className="text-darkGray">
-              <Suspense fallback={null}>
-                <MoneyCompareAtPrice money={selectedVariant.compareAtPriceV2} />
-              </Suspense>
+              <MoneyCompareAtPrice
+                money={selectedVariant.compareAtPriceV2 as MoneyV2}
+              />
             </span>
           )}
-          <Suspense fallback={null}>
-            <MoneyPrice money={selectedVariant.priceV2} />
-          </Suspense>
+          <MoneyPrice money={selectedVariant.priceV2 as MoneyV2} />
         </div>
       </div>
 
       {/* Button actions */}
       <div className="mt-3 flex gap-2">
-        <SelectedVariantAddToCartButton quantity={1} />
-        <SelectedVariantBuyNowButton quantity={1} />
+        <SelectedVariantAddToCartButton />
+        <SelectedVariantBuyNowButton />
       </div>
     </div>
   );

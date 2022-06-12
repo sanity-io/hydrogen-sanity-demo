@@ -1,8 +1,7 @@
-import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
-import type {SanityColorTheme, SanityModule} from '../types';
-import ProductCard from './product/Card';
+import type {ProductWithNodes, SanityColorTheme, SanityModule} from '../types';
 import Module from './modules/Module.server';
+import ProductCard from './product/Card.server';
 
 // Sanity modules to render in full width (across all grid columns)
 const FULL_WIDTH_MODULE_TYPES: SanityModule['_type'][] = [
@@ -89,7 +88,7 @@ const PRODUCT_LAYOUT = [
 
 type Props = {
   colorTheme?: SanityColorTheme;
-  items: (SanityModule | Product)[];
+  items: (SanityModule | ProductWithNodes)[];
 };
 
 export default function ModuleGrid({colorTheme, items}: Props) {
@@ -149,6 +148,8 @@ export default function ModuleGrid({colorTheme, items}: Props) {
   );
 }
 
-const isModule = (item: SanityModule | Product): item is SanityModule => {
+const isModule = (
+  item: SanityModule | ProductWithNodes,
+): item is SanityModule => {
   return (item as SanityModule)._type?.startsWith('module');
 };

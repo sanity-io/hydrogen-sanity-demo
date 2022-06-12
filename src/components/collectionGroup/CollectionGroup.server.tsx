@@ -56,41 +56,37 @@ const QUERY_SHOPIFY = gql`
         width
       }
       products(first: $numProducts) {
-        edges {
-          node {
-            handle
-            id
-            options {
-              name
-              values
-            }
-            title
-            variants(first: 1) {
-              edges {
-                node {
-                  id
-                  title
-                  availableForSale
-                  image {
-                    altText
-                    height
-                    id
-                    url
-                    width
-                  }
-                  priceV2 {
-                    currencyCode
-                    amount
-                  }
-                  compareAtPriceV2 {
-                    currencyCode
-                    amount
-                  }
-                }
+        nodes {
+          handle
+          id
+          options {
+            name
+            values
+          }
+          title
+          variants(first: 1) {
+            nodes {
+              id
+              title
+              availableForSale
+              image {
+                altText
+                height
+                id
+                url
+                width
+              }
+              priceV2 {
+                currencyCode
+                amount
+              }
+              compareAtPriceV2 {
+                currencyCode
+                amount
               }
             }
-            vendor
           }
+          vendor
         }
       }
       title

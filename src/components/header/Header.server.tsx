@@ -1,4 +1,4 @@
-import {SanityMenuLink} from '../../types';
+import type {SanityMenuLink} from '../../types';
 import CartToggle from '../cart/CartToggle.client';
 import CountrySelect from '../selects/Country.client';
 import HeaderBackground from './HeaderBackground.client';

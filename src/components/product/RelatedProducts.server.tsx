@@ -1,22 +1,16 @@
 import {gql, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
-import {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import type {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
-import {SanityColorTheme} from '../../types';
-import ProductCard from './Card';
+import type {ProductWithNodes, SanityColorTheme} from '../../types';
+import ProductCard from './Card.server';
 
 type Props = {
   colorTheme?: SanityColorTheme;
-  storefrontProduct: Pick<
-    Product,
-    'handle' | 'id' | 'title' | 'variants' | 'vendor'
-  >;
+  storefrontProduct: Partial<Product>;
 };
 
 type ShopifyPayload = {
-  productRecommendations: Pick<
-    Product,
-    'handle' | 'id' | 'options' | 'title' | 'variants' | 'vendor'
-  >[];
+  productRecommendations: ProductWithNodes[];
 };
 
 export default function RelatedProducts({
@@ -26,7 +20,7 @@ export default function RelatedProducts({
   const {countryCode = 'US'} = useSession();
   const {languageCode} = useShop();
   const {data} = useShopQuery<ShopifyPayload>({
-    query: QUERY,
+    query: QUERY_SHOPIFY,
     variables: {
       country: countryCode,
       language: languageCode,
@@ -66,7 +60,7 @@ export default function RelatedProducts({
   );
 }
 
-const QUERY = gql`
+const QUERY_SHOPIFY = gql`
   query productRecommendations(
     $country: CountryCode
     $language: LanguageCode
@@ -81,31 +75,29 @@ const QUERY = gql`
       }
       title
       variants(first: 1) {
-        edges {
-          node {
-            availableForSale
-            compareAtPriceV2 {
-              currencyCode
-              amount
-            }
-            id
-            image {
-              id
-              url
-              altText
-              width
-              height
-            }
-            priceV2 {
-              currencyCode
-              amount
-            }
-            selectedOptions {
-              name
-              value
-            }
-            title
+        nodes {
+          availableForSale
+          compareAtPriceV2 {
+            currencyCode
+            amount
           }
+          id
+          image {
+            altText
+            height
+            id
+            url
+            width
+          }
+          priceV2 {
+            currencyCode
+            amount
+          }
+          selectedOptions {
+            name
+            value
+          }
+          title
         }
       }
       vendor

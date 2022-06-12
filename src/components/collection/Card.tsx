@@ -1,6 +1,6 @@
 import {Link} from '@shopify/hydrogen';
 import clsx from 'clsx';
-import {SanityCollection} from '../../types';
+import type {SanityCollection} from '../../types';
 
 type Props = {
   collection: SanityCollection;

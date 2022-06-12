@@ -1,5 +1,3 @@
-// TODO: type correctly
-
 import clsx from 'clsx';
 
 const SHARED_LIST_CLASSES = clsx(

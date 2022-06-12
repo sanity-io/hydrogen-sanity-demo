@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import {SanityColorTheme, SanityProductPage} from '../../types';
+import type {SanityColorTheme, SanityProductPage} from '../../types';
 import PortableText from '../portableText/PortableText.server';
 
 type Props = {
