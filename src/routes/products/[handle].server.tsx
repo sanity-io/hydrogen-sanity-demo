@@ -2,7 +2,9 @@ import {
   flattenConnection,
   gql,
   Seo,
+  ShopifyAnalyticsConstants,
   useRouteParams,
+  useServerAnalytics,
   useSession,
   useShop,
   useShopQuery,
@@ -64,6 +66,18 @@ export default function ProductRoute() {
     });
     storefrontProduct = product;
   }
+
+  // Shopify analytics
+  useServerAnalytics(
+    storefrontProduct
+      ? {
+          shopify: {
+            pageType: ShopifyAnalyticsConstants.pageType.product,
+            resourceId: storefrontProduct.id,
+          },
+        }
+      : null,
+  );
 
   if (!sanityProduct || !storefrontProduct) {
     // @ts-expect-error <NotFound> doesn't require response

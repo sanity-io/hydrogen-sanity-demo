@@ -1,4 +1,12 @@
-import {gql, Seo, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
+import {
+  gql,
+  Seo,
+  ShopifyAnalyticsConstants,
+  useServerAnalytics,
+  useSession,
+  useShop,
+  useShopQuery,
+} from '@shopify/hydrogen';
 import type {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import groq from 'groq';
@@ -49,6 +57,18 @@ export default function CollectionRoute({
     },
     preload: true,
   });
+
+  // Shopify analytics
+  useServerAnalytics(
+    data?.collection
+      ? {
+          shopify: {
+            pageType: ShopifyAnalyticsConstants.pageType.collection,
+            resourceId: data.collection.id,
+          },
+        }
+      : null,
+  );
 
   const {data: sanityCollection} = useSanityQuery<SanityCollectionPage>({
     params: {slug: handle},

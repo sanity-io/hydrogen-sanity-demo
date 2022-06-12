@@ -1,4 +1,10 @@
-import {Seo} from '@shopify/hydrogen';
+import {
+  CacheDays,
+  gql,
+  Seo,
+  useServerAnalytics,
+  useShopQuery,
+} from '@shopify/hydrogen';
 import groq from 'groq';
 import useSanityQuery from '../hooks/useSanityQuery';
 
@@ -17,6 +23,27 @@ export default function DefaultSeo() {
     query: QUERY_SANITY,
   });
 
+  const {
+    data: {
+      shop: {
+        id,
+        paymentSettings: {currencyCode},
+      },
+    },
+  } = useShopQuery({
+    query: QUERY_SHOPIFY,
+    cache: CacheDays(),
+    preload: '*',
+  });
+
+  // Shopify analytics
+  useServerAnalytics({
+    shopify: {
+      shopId: id,
+      currency: currencyCode,
+    },
+  });
+
   return (
     // @ts-expect-error <Seo> shouldn't require a value for data that extends the `Shop` type
     <Seo
@@ -32,5 +59,16 @@ export default function DefaultSeo() {
 const QUERY_SANITY = groq`
   *[_type == 'settings'][0].seo {
     ...
+  }
+`;
+
+const QUERY_SHOPIFY = gql`
+  query shopInfo {
+    shop {
+      id
+      paymentSettings {
+        currencyCode
+      }
+    }
   }
 `;

@@ -13,6 +13,8 @@ type Props = {
   params: any;
 };
 
+// This demo doesn't use Shopify Online Store pages.
+// For this reason we don't use Shopify Analytics here.
 export default function PageRoute({params}: Props) {
   const {handle} = params;
   const {data: sanityPage} = useSanityQuery<SanityPage>({

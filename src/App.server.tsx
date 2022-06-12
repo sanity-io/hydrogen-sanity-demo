@@ -4,11 +4,12 @@ import {
   PerformanceMetricsDebug,
   Route,
   Router,
+  ShopifyAnalytics,
   ShopifyProvider,
 } from '@shopify/hydrogen';
 import renderHydrogen from '@shopify/hydrogen/entry-server';
 import {Suspense} from 'react';
-import CartProvider from './components/cart/CartProvider.client';
+import ServerCartProvider from './components/cart/ServerCartProvider.server';
 import DefaultSeo from './components/DefaultSeo.server';
 import LoadingFallback from './components/LoadingFallback';
 import NotFound from './components/NotFound.server';
@@ -17,17 +18,17 @@ function App() {
   return (
     <Suspense fallback={<LoadingFallback />}>
       <ShopifyProvider>
-        {/* @ts-expect-error <CartProvider> doesn't require `numCartLines` */}
-        <CartProvider>
+        <ServerCartProvider>
           <DefaultSeo />
           <Router>
             <FileRoutes />
             {/* @ts-expect-error <NotFound> doesn't require response */}
             <Route path="*" page={<NotFound />} />
           </Router>
-        </CartProvider>
+        </ServerCartProvider>
         <PerformanceMetrics />
-        {process.env.LOCAL_DEV && <PerformanceMetricsDebug />}
+        {import.meta.env.DEV && <PerformanceMetricsDebug />}
+        <ShopifyAnalytics />
       </ShopifyProvider>
     </Suspense>
   );

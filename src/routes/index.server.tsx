@@ -1,4 +1,8 @@
-import {Seo} from '@shopify/hydrogen';
+import {
+  Seo,
+  ShopifyAnalyticsConstants,
+  useServerAnalytics,
+} from '@shopify/hydrogen';
 import clsx from 'clsx';
 import groq from 'groq';
 import HomeHero from '../components/heroes/Home.server';
@@ -13,6 +17,11 @@ export default function IndexRoute() {
   const {data: sanityHome} = useSanityQuery<SanityHomePage>({
     hydrogenQueryOptions: {preload: true},
     query: QUERY_SANITY,
+  });
+
+  // Shopify analytics
+  useServerAnalytics({
+    shopify: {pageType: ShopifyAnalyticsConstants.pageType.home},
   });
 
   if (!sanityHome) {

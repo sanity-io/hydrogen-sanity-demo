@@ -1,4 +1,11 @@
-import {gql, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
+import {
+  gql,
+  ShopifyAnalyticsConstants,
+  useServerAnalytics,
+  useSession,
+  useShop,
+  useShopQuery,
+} from '@shopify/hydrogen';
 import groq from 'groq';
 import {NOT_FOUND_PAGE} from '../fragments/pages/notFound';
 import useSanityQuery from '../hooks/useSanityQuery';
@@ -28,6 +35,11 @@ export default function NotFound({response}: Props) {
     response.status = 404;
     response.statusText = 'Not found';
   }
+
+  // Shopify analytics
+  useServerAnalytics({
+    shopify: {pageType: ShopifyAnalyticsConstants.pageType.notFound},
+  });
 
   const {data: sanityData} = useSanityQuery<SanityNotFoundPage>({
     query: QUERY_SANITY,

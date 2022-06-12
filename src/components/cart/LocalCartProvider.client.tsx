@@ -1,4 +1,5 @@
 import {CartProvider as ShopifyCartProvider} from '@shopify/hydrogen';
+import type {CartBuyerIdentityInput} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import {ReactNode, useCallback} from 'react';
 import CartUIProvider, {useCartUI} from './CartUIProvider.client';
 
@@ -8,18 +9,28 @@ import CartUIProvider, {useCartUI} from './CartUIProvider.client';
 
 type Props = {
   children: ReactNode;
-  numCartLines: number;
+  customerAccessToken?: CartBuyerIdentityInput['customerAccessToken'];
+  numCartLines?: number;
 };
 
-export default function CartProvider({children, numCartLines}: Props) {
+export default function CartProvider({
+  children,
+  customerAccessToken,
+  numCartLines,
+}: Props) {
   return (
     <CartUIProvider>
-      <Provider numCartLines={numCartLines}>{children}</Provider>
+      <Provider
+        customerAccessToken={customerAccessToken}
+        numCartLines={numCartLines}
+      >
+        {children}
+      </Provider>
     </CartUIProvider>
   );
 }
 
-function Provider({children, numCartLines}: Props) {
+function Provider({children, customerAccessToken, numCartLines}: Props) {
   const {openCart} = useCartUI();
 
   const open = useCallback(() => {
@@ -29,6 +40,7 @@ function Provider({children, numCartLines}: Props) {
   return (
     <>
       <ShopifyCartProvider
+        customerAccessToken={customerAccessToken}
         numCartLines={numCartLines}
         onLineAdd={open}
         onCreate={open}
