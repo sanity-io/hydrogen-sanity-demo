@@ -23,8 +23,8 @@ export default function CollectionGroupDialog({
       <>
         <button
           className={clsx(
-            '-mx-3 flex h-[2.4rem] items-center rounded-sm bg-darkGray bg-opacity-0 p-2 text-sm duration-150',
-            'hover:bg-opacity-5',
+            '-mx-3 flex h-[2.4rem] items-center rounded-sm bg-darkGray bg-opacity-0 py-2 pl-2 pr-3 text-sm duration-150',
+            'hover:bg-opacity-10',
           )}
           onClick={handleOpen}
         >
@@ -37,23 +37,35 @@ export default function CollectionGroupDialog({
             fill="none"
           >
             <rect
+              className="stroke-offBlack"
               x="5"
               y="14"
               width="6"
               height="6"
-              stroke="#2C2E2E"
               strokeWidth="1.2"
             />
             <rect
+              className="stroke-offBlack"
               x="14"
               y="5"
               width="6"
               height="6"
-              stroke="#2C2E2E"
               strokeWidth="1.2"
             />
-            <circle cx="8" cy="8" r="3" stroke="#2C2E2E" strokeWidth="1.2" />
-            <circle cx="17" cy="17" r="3" stroke="#2C2E2E" strokeWidth="1.2" />
+            <circle
+              className="stroke-offBlack"
+              cx="8"
+              cy="8"
+              r="3"
+              strokeWidth="1.2"
+            />
+            <circle
+              className="stroke-offBlack"
+              cx="17"
+              cy="17"
+              r="3"
+              strokeWidth="1.2"
+            />
           </svg>
 
           <div className="inline-flex items-center font-bold">

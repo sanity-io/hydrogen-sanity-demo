@@ -45,8 +45,8 @@ export default function CountrySelect({align = 'center'}: Props) {
           <div className="relative inline-flex">
             <Listbox.Button
               className={clsx(
-                'flex h-[2.4rem] items-center rounded-sm bg-darkGray bg-opacity-0 p-2 text-sm font-bold duration-150',
-                'hover:bg-opacity-5',
+                'flex h-[2.4rem] items-center rounded-sm bg-darkGray bg-opacity-0 px-3 py-2 text-sm font-bold duration-150',
+                'hover:bg-opacity-10',
               )}
             >
               <span className="mr-2">{selectedCountry.name}</span>
