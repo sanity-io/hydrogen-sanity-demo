@@ -1,5 +1,7 @@
+# Don't change the line below!
+#! oxygen_storefront_id: 33019
 
-name: Deploy
+name: Storefront 33019
 on: [push]
 
 permissions:
@@ -8,7 +10,8 @@ permissions:
 
 jobs:
   deploy:
-    name: Deploy
+    name: Deploy to Oxygen
+    timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -34,27 +37,12 @@ jobs:
         id: 'install-dependencies'
         run: yarn
 
-      - name: Generate deployment ID
-        id: deployment-id
-        run: |
-          yarn add ulid
-          echo "::set-output name=ID::$(LC_ALL=C </dev/urandom tr -dc "0123456789abcdefghjkmnpqrstvwxyz" | head -c 9)"
-
-      - name: Set asset base URL
-        shell: bash
-        run: echo "::set-output name=URL::https://cdn.shopify.com/oxygen/63932858619/33019/${{ steps.deployment-id.outputs.ID }}/"
-        id: base-url
-
-      - name: Production build
-        id: storefront-build
-        run: HYDROGEN_ASSET_BASE_URL=${{ steps.base-url.outputs.URL }} yarn build
-
-      - name: Publish to Oxygen
+      - name: Build and Publish to Oxygen
         id: deploy
-        uses: shopify/oxygenctl-action@v2
+        uses: shopify/oxygenctl-action@v4
         with:
-          deployment_id: ${{ steps.deployment-id.outputs.ID }}
-          oxygen_deployment_token: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN }}
+          oxygen_deployment_token: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_33019 }}
+          build_command: "HYDROGEN_ASSET_BASE_URL=$OXYGEN_ASSET_BASE_URL yarn build"
 
       # Create GitHub Deployment
       - name: Create GitHub Deployment
