@@ -28,8 +28,13 @@ export default function HeaderBackground() {
       />
 
       {/* Logo */}
-      <div className="absolute bottom-0 top-0 left-1/2 flex w-[50px] -translate-x-1/2 items-center lg:w-auto">
-        <Link className="font-bold" to="/">
+      <Link to="/">
+        <div
+          className={clsx(
+            'absolute bottom-0 top-0 left-1/2 flex w-[50px] -translate-x-1/2 items-center',
+            'lg:w-[65px]',
+          )}
+        >
           <LogoIcon
             className="h-auto w-full"
             classNameMark={clsx([
@@ -43,8 +48,8 @@ export default function HeaderBackground() {
                 : 'opacity-100 translate-y-0',
             ])}
           />
-        </Link>
-      </div>
+        </div>
+      </Link>
     </div>
   );
 }

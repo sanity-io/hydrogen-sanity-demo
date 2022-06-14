@@ -99,6 +99,7 @@ module.exports = {
     },
     lineHeight: {
       none: '1',
+      caption: '1.25',
       paragraph: '1.6',
     },
     extend: {

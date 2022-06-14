@@ -13,7 +13,12 @@ export default function LoadingFallback() {
       )}
       role="banner"
     >
-      <div className="absolute bottom-0 top-0 left-1/2 flex w-[50px] -translate-x-1/2 items-center lg:w-auto">
+      <div
+        className={clsx(
+          'absolute bottom-0 top-0 left-1/2 flex w-[50px] -translate-x-1/2 items-center',
+          'lg:w-[65px]',
+        )}
+      >
         <LogoIcon className="h-auto w-full" />
       </div>
     </header>

@@ -117,7 +117,7 @@ export default function ImageModule({module}: Props) {
 
       {/* Caption */}
       {module.variant === 'caption' && module.caption && (
-        <div className="mt-2 max-w-[35rem] text-sm text-darkGray">
+        <div className="mt-2 max-w-[35rem] text-sm leading-caption text-darkGray">
           {module.caption}
         </div>
       )}

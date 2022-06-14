@@ -5,7 +5,7 @@ export default function SanityFooter() {
     <div className="-my-overlap bg-[#121923] pt-overlap text-white">
       <div
         className={clsx(
-          'mx-auto max-w-[45rem] px-4 py-12 text-center text-xl leading-[1.25]', //
+          'mx-auto max-w-[45rem] px-4 py-12 text-center text-xl leading-caption', //
           'md:px-8',
         )}
       >
@@ -17,7 +17,7 @@ export default function SanityFooter() {
         {/* Links */}
         <div
           className={clsx(
-            'mt-8 grid grid-cols-1 gap-3 text-left text-sm leading-[1.25]',
+            'mt-8 grid grid-cols-1 gap-3 text-left text-sm leading-caption',
             'md:grid-cols-3',
           )}
         >
