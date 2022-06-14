@@ -15,7 +15,7 @@ export default function ProductEditorial({colorTheme, sanityProduct}: Props) {
         <PortableText
           blocks={sanityProduct.body}
           className={clsx(
-            'my-8 max-w-[660px] px-4', //
+            'mb-24 mt-8 max-w-[660px] px-4', //
             'md:px-8',
           )}
           colorTheme={colorTheme}
