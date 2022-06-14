@@ -20,7 +20,9 @@ export default function BlockCallout({centered, colorTheme, node}: Props) {
           : '-ml-6 md:-ml-8',
       )}
     >
-      <CalloutModule colorTheme={colorTheme} module={node} />
+      <div className={clsx('mx-auto w-full max-w-[1400px]')}>
+        <CalloutModule colorTheme={colorTheme} module={node} />
+      </div>
     </div>
   );
 }
