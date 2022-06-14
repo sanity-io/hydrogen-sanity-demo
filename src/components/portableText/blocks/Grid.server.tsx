@@ -9,7 +9,7 @@ type Props = {
   node: PortableTextBlock & SanityModuleGrid;
 };
 
-export default function BlockGrid({node}: Props) {
+export default function GridBlock({node}: Props) {
   return (
     <div
       className={clsx(

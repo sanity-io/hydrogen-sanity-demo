@@ -9,7 +9,7 @@ type Props = {
   node: PortableTextBlock & SanityModuleCallout;
 };
 
-export default function BlockCallout({centered, colorTheme, node}: Props) {
+export default function CalloutBlock({centered, colorTheme, node}: Props) {
   return (
     <div
       className={clsx(

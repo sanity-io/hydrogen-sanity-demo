@@ -8,7 +8,7 @@ type Props = {
   node: PortableTextBlock & SanityModuleImages;
 };
 
-export default function BlockImages({centered, node}: Props) {
+export default function ImagesBlock({centered, node}: Props) {
   const multipleImages = node.modules.length > 1;
   let alignClass;
   switch (node.verticalAlign) {

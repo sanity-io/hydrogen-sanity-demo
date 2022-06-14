@@ -10,7 +10,7 @@ type Props = {
   node: PortableTextBlock & SanityModuleAccordion;
 };
 
-export default function BlockAccordion({node}: Props) {
+export default function AccordionBlock({node}: Props) {
   return (
     <div
       className={clsx(

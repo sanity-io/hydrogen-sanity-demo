@@ -5,7 +5,7 @@ const SHARED_LIST_CLASSES = clsx(
   'my-8 space-y-0.5 leading-paragraph list-inside',
 );
 
-export default function BlockList(props) {
+export default function ListBlock(props) {
   const {children, type} = props;
 
   if (type === 'bullet') {

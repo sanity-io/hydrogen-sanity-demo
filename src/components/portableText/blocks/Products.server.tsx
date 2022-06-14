@@ -7,7 +7,7 @@ type Props = {
   node: PortableTextBlock & SanityModuleProducts;
 };
 
-export default function BlockProducts({node}: Props) {
+export default function ProductsBlock({node}: Props) {
   const multipleProducts = node.modules.length > 1;
 
   return (

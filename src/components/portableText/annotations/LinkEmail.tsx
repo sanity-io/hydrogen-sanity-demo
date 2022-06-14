@@ -6,25 +6,23 @@ import clsx from 'clsx';
 
 type Props = PortableTextBlock & {
   mark: PortableTextMarkDefinition & {
-    newWindow?: boolean;
-    url: string;
+    email: string;
   };
 };
 
-const AnnotationLinkExternal = ({children, mark}: Props) => {
+const LinkEmailAnnotation = (props: Props) => {
+  const {children, mark} = props;
   return (
     <a
       className={clsx(
-        'inline-flex items-center underline transition-opacity duration-200',
+        'underline transition-opacity duration-200', //
         'hover:opacity-60',
       )}
-      href={mark?.url}
-      rel="noopener noreferrer"
-      target={mark?.newWindow ? '_blank' : '_self'}
+      href={`mailto:${mark?.email}`}
     >
       <>{children}</>
     </a>
   );
 };
 
-export default AnnotationLinkExternal;
+export default LinkEmailAnnotation;

@@ -29,7 +29,7 @@ type ShopifyPayload = {
   productVariant: Partial<ProductVariant>;
 };
 
-export default function AnnotationProduct({children, colorTheme, mark}: Props) {
+export default function ProductAnnotation({children, colorTheme, mark}: Props) {
   const {productWithVariant} = mark;
 
   // Conditionally fetch Shopify document

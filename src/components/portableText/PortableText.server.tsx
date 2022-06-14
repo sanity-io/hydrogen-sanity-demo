@@ -1,17 +1,17 @@
 import BlockContent from '@sanity/block-content-to-react';
 import type {Block as SanityBlock} from '@sanity/types';
 import type {SanityColorTheme} from '../../types';
-import AnnotationLinkEmail from './annotations/AnnotationLinkEmail';
-import AnnotationLinkExternal from './annotations/AnnotationLinkExternal';
-import AnnotationLinkInternal from './annotations/AnnotationLinkInternal';
-import AnnotationProduct from './annotations/AnnotationProduct.server';
+import LinkEmailAnnotation from './annotations/LinkEmail';
+import LinkExternalAnnotation from './annotations/LinkExternal';
+import LinkInternalAnnotation from './annotations/LinkInternal';
+import ProductAnnotation from './annotations/Product.server';
 import Block from './blocks/Block';
-import BlockAccordion from './blocks/BlockAccordion.client';
-import BlockCallout from './blocks/BlockCallout.server';
-import BlockGrid from './blocks/BlockGrid.server';
-import BlockImages from './blocks/BlockImages.server';
-import BlockList from './blocks/BlockList';
-import BlockProducts from './blocks/BlockProducts.server';
+import AccordionBlock from './blocks/Accordion.client';
+import CalloutBlock from './blocks/Callout.server';
+import GridBlock from './blocks/Grid.server';
+import ImagesBlock from './blocks/Images.server';
+import ListBlock from './blocks/List';
+import ProductsBlock from './blocks/Products.server';
 
 type Props = {
   blocks: SanityBlock[];
@@ -33,32 +33,32 @@ export default function PortableText({
       renderContainerOnSingleChild
       serializers={{
         // Lists
-        list: BlockList,
+        list: ListBlock,
         // Marks
         marks: {
-          annotationLinkEmail: AnnotationLinkEmail,
-          annotationLinkExternal: AnnotationLinkExternal,
-          annotationLinkInternal: AnnotationLinkInternal,
+          annotationLinkEmail: LinkEmailAnnotation,
+          annotationLinkExternal: LinkExternalAnnotation,
+          annotationLinkInternal: LinkInternalAnnotation,
           annotationProduct: (props) => (
-            <AnnotationProduct colorTheme={colorTheme} {...props} />
+            <ProductAnnotation colorTheme={colorTheme} {...props} />
           ),
         },
         // Block types
         types: {
           block: Block,
-          blockAccordion: BlockAccordion,
+          blockAccordion: AccordionBlock,
           blockCallout: (props) => (
-            <BlockCallout
+            <CalloutBlock
               centered={centered}
               colorTheme={colorTheme}
               {...props}
             />
           ),
-          blockGrid: BlockGrid,
+          blockGrid: GridBlock,
           blockImages: (props) => (
-            <BlockImages centered={centered} {...props} />
+            <ImagesBlock centered={centered} {...props} />
           ),
-          blockProducts: BlockProducts,
+          blockProducts: ProductsBlock,
         },
       }}
     />

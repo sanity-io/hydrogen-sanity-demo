@@ -1,10 +1,10 @@
 import BlockContent from '@sanity/block-content-to-react';
 import type {Block as SanityBlock} from '@sanity/types';
-import AnnotationLinkEmail from './annotations/AnnotationLinkEmail';
-import AnnotationLinkExternal from './annotations/AnnotationLinkExternal';
-import AnnotationLinkInternal from './annotations/AnnotationLinkInternal';
+import LinkEmailAnnotation from './annotations/LinkEmail';
+import LinkExternalAnnotation from './annotations/LinkExternal';
+import LinkInternalAnnotation from './annotations/LinkInternal';
 import Block from './blocks/Block';
-import BlockList from './blocks/BlockList';
+import ListBlock from './blocks/List';
 
 type Props = {
   blocks: SanityBlock[];
@@ -19,12 +19,12 @@ export default function PortableText({blocks, className}: Props) {
       renderContainerOnSingleChild
       serializers={{
         // Lists
-        list: BlockList,
+        list: ListBlock,
         // Marks
         marks: {
-          annotationLinkEmail: AnnotationLinkEmail,
-          annotationLinkExternal: AnnotationLinkExternal,
-          annotationLinkInternal: AnnotationLinkInternal,
+          annotationLinkEmail: LinkEmailAnnotation,
+          annotationLinkExternal: LinkExternalAnnotation,
+          annotationLinkInternal: LinkInternalAnnotation,
         },
         // Block types
         types: {

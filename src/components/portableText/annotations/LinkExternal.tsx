@@ -2,29 +2,29 @@ import type {
   PortableTextBlock,
   PortableTextMarkDefinition,
 } from '@portabletext/types';
-import {Link} from '@shopify/hydrogen';
 import clsx from 'clsx';
 
 type Props = PortableTextBlock & {
   mark: PortableTextMarkDefinition & {
-    slug: string;
+    newWindow?: boolean;
+    url: string;
   };
 };
 
-export default function AnnotationLinkInternal({children, mark}: Props) {
-  if (!mark?.slug) {
-    return null;
-  }
-
+const LinkExternalAnnotation = ({children, mark}: Props) => {
   return (
-    <Link
+    <a
       className={clsx(
         'inline-flex items-center underline transition-opacity duration-200',
         'hover:opacity-60',
       )}
-      to={mark?.slug}
+      href={mark?.url}
+      rel="noopener noreferrer"
+      target={mark?.newWindow ? '_blank' : '_self'}
     >
       <>{children}</>
-    </Link>
+    </a>
   );
-}
+};
+
+export default LinkExternalAnnotation;
