@@ -1,5 +1,4 @@
 import {
-  flattenConnection,
   gql,
   Seo,
   ShopifyAnalyticsConstants,
@@ -9,23 +8,17 @@ import {
   useShop,
   useShopQuery,
 } from '@shopify/hydrogen';
-import type {
-  Product,
-  ProductVariant,
-} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import type {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import groq from 'groq';
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
 import PortableText from '../../components/portableText/PortableText.server';
-import ProductEditorial from '../../components/product/Editorial.server';
-import ProductGallery from '../../components/product/Gallery.client';
+import ProductDetails from '../../components/product/Details.client';
 import RelatedProducts from '../../components/product/RelatedProducts.server';
-import ProductWidget from '../../components/product/Widget.client';
-import ProductOptionsWrapper from '../../components/ProductOptionsWrapper.client';
 import {PRODUCT_PAGE} from '../../fragments/pages/product';
 import useSanityQuery from '../../hooks/useSanityQuery';
-import type {SanityProductPage} from '../../types';
+import type {ProductWithNodes, SanityProductPage} from '../../types';
 
 type ShopifyPayload = {
   product: Pick<
@@ -51,7 +44,7 @@ export default function ProductRoute() {
   });
 
   // Conditionally fetch Shopify document
-  let storefrontProduct;
+  let storefrontProduct: ProductWithNodes | null = null;
   if (sanityProduct?.gid) {
     const {languageCode} = useShop();
     const {countryCode = 'US'} = useSession();
@@ -87,45 +80,16 @@ export default function ProductRoute() {
 
   const sanitySeo = sanityProduct.seo;
 
-  const initialVariant = flattenConnection(
-    storefrontProduct.variants,
-  )[0] as ProductVariant;
+  const initialVariant = storefrontProduct.variants.nodes[0];
 
   return (
     <Layout>
       <div className="relative w-full">
-        <ProductOptionsWrapper
-          data={storefrontProduct}
+        <ProductDetails
           initialVariantId={initialVariant?.id}
-        >
-          {/* Gallery */}
-          <ProductGallery storefrontProduct={storefrontProduct} />
-
-          {/* Widget (mobile) */}
-          <div className="mb-8 lg:hidden">
-            <ProductWidget
-              sanityProduct={sanityProduct}
-              storefrontProduct={storefrontProduct}
-            />
-          </div>
-
-          {/* Widget (desktop) */}
-          <div
-            className={clsx(
-              'pointer-events-none absolute top-0 right-0 z-10 hidden h-full w-[315px]',
-              'lg:block',
-            )}
-          >
-            <div className="sticky top-0 h-screen">
-              <div className="absolute bottom-0 w-full p-4">
-                <ProductWidget
-                  sanityProduct={sanityProduct}
-                  storefrontProduct={storefrontProduct}
-                />
-              </div>
-            </div>
-          </div>
-        </ProductOptionsWrapper>
+          sanityProduct={sanityProduct}
+          storefrontProduct={storefrontProduct}
+        />
 
         <div
           className={clsx(

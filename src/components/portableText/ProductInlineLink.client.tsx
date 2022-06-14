@@ -2,11 +2,13 @@ import {
   AddToCartButton,
   BuyNowButton,
   Link,
+  ProductOptionsProvider,
   useProductOptions,
 } from '@shopify/hydrogen';
+import type {ProductVariant} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import Tippy from '@tippyjs/react/headless';
 import clsx from 'clsx';
-import type {ReactNode} from 'react';
+import {ReactNode, useMemo} from 'react';
 import type {ProductWithNodes, SanityColorTheme} from '../../types';
 import CartIcon from '../icons/Cart';
 import CreditCardIcon from '../icons/CreditCard';
@@ -16,12 +18,38 @@ import Tooltip from '../Tooltip';
 type Props = {
   children?: ReactNode;
   colorTheme?: SanityColorTheme;
+  initialVariantId?: ProductVariant['id'];
   linkAction: 'addToCart' | 'buyNow' | 'link';
   quantity?: number;
   storefrontProduct: ProductWithNodes;
 };
 
 export default function ProductInlineLink({
+  children,
+  colorTheme,
+  initialVariantId,
+  linkAction,
+  quantity = 1,
+  storefrontProduct,
+}: Props) {
+  return (
+    <ProductOptionsProvider
+      data={storefrontProduct}
+      initialVariantId={initialVariantId}
+    >
+      <ProductInlineLinkContent
+        colorTheme={colorTheme}
+        linkAction={linkAction}
+        quantity={quantity}
+        storefrontProduct={storefrontProduct}
+      >
+        {children}
+      </ProductInlineLinkContent>
+    </ProductOptionsProvider>
+  );
+}
+
+function ProductInlineLinkContent({
   children,
   colorTheme,
   linkAction,
@@ -48,18 +76,22 @@ export default function ProductInlineLink({
     );
   }
 
-  const LinkContent = (
-    <span
-      className={clsx(
-        'inline-flex place-content-center items-center rounded-xs bg-peach p-0.5 leading-none duration-200 ease-out',
-        'hover:opacity-80',
-      )}
-      style={{background: colorTheme?.background}}
-    >
-      {children}
-      {linkAction === 'addToCart' && <CartIcon className="ml-[0.25em]" />}
-      {linkAction === 'buyNow' && <CreditCardIcon className="ml-[0.25em]" />}
-    </span>
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const LinkContent = useMemo(
+    () => (
+      <span
+        className={clsx(
+          'inline-flex place-content-center items-center rounded-xs bg-peach p-0.5 leading-none duration-200 ease-out',
+          'hover:opacity-80',
+        )}
+        style={{background: colorTheme?.background}}
+      >
+        {children}
+        {linkAction === 'addToCart' && <CartIcon className="ml-[0.25em]" />}
+        {linkAction === 'buyNow' && <CreditCardIcon className="ml-[0.25em]" />}
+      </span>
+    ),
+    [children, colorTheme?.background, linkAction],
   );
 
   return (

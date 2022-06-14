@@ -12,7 +12,6 @@ import type {
   SanityColorTheme,
   SanityProductWithVariant,
 } from '../../../types';
-import ProductOptionsWrapper from '../../ProductOptionsWrapper.client';
 import ProductInlineLink from '../ProductInlineLink.client';
 
 type Props = PortableTextBlock & {
@@ -59,19 +58,14 @@ export default function ProductAnnotation({children, colorTheme, mark}: Props) {
   }
 
   return (
-    <ProductOptionsWrapper
-      data={storefrontProduct}
-      initialVariantId={storefrontProduct.variants?.nodes?.[0]?.id}
+    <ProductInlineLink
+      colorTheme={colorTheme}
+      linkAction={mark.linkAction || 'link'}
+      quantity={mark.quantity}
+      storefrontProduct={storefrontProduct}
     >
-      <ProductInlineLink
-        colorTheme={colorTheme}
-        linkAction={mark.linkAction || 'link'}
-        quantity={mark.quantity}
-        storefrontProduct={storefrontProduct}
-      >
-        <>{children}</>
-      </ProductInlineLink>
-    </ProductOptionsWrapper>
+      <>{children}</>
+    </ProductInlineLink>
   );
 }
 

@@ -1,12 +1,11 @@
 import {gql, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
-import type {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import type {ProductWithNodes, SanityColorTheme} from '../../types';
 import ProductCard from './Card.server';
 
 type Props = {
   colorTheme?: SanityColorTheme;
-  storefrontProduct: Partial<Product>;
+  storefrontProduct: ProductWithNodes;
 };
 
 type ShopifyPayload = {

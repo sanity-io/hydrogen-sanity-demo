@@ -1,7 +1,6 @@
 import {ProductPrice, useProductOptions} from '@shopify/hydrogen';
-import type {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
-import type {SanityProductPage} from '../../types';
+import type {ProductWithNodes, SanityProductPage} from '../../types';
 import {hasMultipleProductOptions} from '../../utils/productOptions';
 import SelectedVariantAddToCartButton from '../buttons/SelectedVariantAddToCart.client';
 import SelectedVariantBuyNowButton from '../buttons/SelectedVariantBuyNow.client';
@@ -9,13 +8,13 @@ import ProductOptions from './options/ProductOptions.client';
 
 type Props = {
   sanityProduct: SanityProductPage;
-  storefrontProduct: Partial<Product>;
+  storefrontProduct: ProductWithNodes;
 };
 
 function ProductPrices({
   storefrontProduct,
 }: {
-  storefrontProduct: Partial<Product>;
+  storefrontProduct: ProductWithNodes;
 }) {
   const {selectedVariant} = useProductOptions();
 

@@ -12,10 +12,6 @@ import MoneyCompareAtPrice from '../money/CompareAtPrice.client';
 import MoneyPrice from '../money/Price.client';
 import ProductOptionsWrapper from '../ProductOptionsWrapper.client';
 
-/**
- * A shared component that displays a single product to allow buyers to quickly identify a particular item of interest
- */
-
 type Props = {
   imageAspectClassName?: string;
   storefrontProduct: ProductWithNodes;
@@ -77,6 +73,10 @@ export default function ProductCard({
               'group-hover:block group-hover:translate-y-0',
             )}
           >
+            {/* 
+            Use <ProductOptionsWrapper /> as an escape hatch to wrap our add to cart button
+            within a <ProductOptionsProvider /> (required for the button to work correctly).
+            */}
             <ProductOptionsWrapper data={storefrontProduct}>
               <SelectedVariantAddToCartButton label="Quick add" />
             </ProductOptionsWrapper>
