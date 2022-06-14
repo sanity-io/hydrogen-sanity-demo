@@ -177,7 +177,7 @@ See [Hydrogen's documentation on deployment][hydrogen-framework-deployment]
 
 # License
 
-This repository is published under the [MIT](LICENSE) license.
+This repository is published under the [MIT][license] license.
 
 [about]: https://hydrogen-app-c6009341bd2bf136fc40.o2.myshopify.dev/pages/about
 [hydrogen-sanity-demo]: https://hydrogen-app-c6009341bd2bf136fc40.o2.myshopify.dev/
@@ -186,6 +186,7 @@ This repository is published under the [MIT](LICENSE) license.
 [hydrogen-framework-deployment]: https://shopify.dev/custom-storefronts/hydrogen/deployment
 [hydrogen-product-components]: https://shopify.dev/api/hydrogen/components/product-variant
 [hydrogen-use-query]: https://shopify.dev/api/hydrogen/hooks/global/usequery
+[license]: https://github.com/sanity-io/sanity/blob/next/LICENSE
 [sanity-connect]: https://www.sanity.io/docs/sanity-connect-for-shopify
 [sanity-js-client]: https://www.sanity.io/docs/js-client
 [sanity-portable-text]: https://www.sanity.io/guides/introduction-to-portable-text
