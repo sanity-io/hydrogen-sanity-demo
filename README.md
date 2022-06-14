@@ -18,7 +18,7 @@ This starter showcases a few patterns you can adopt when creating your own custo
 
 # Features
 
-**[View the feature gallery][features]**
+**[View the feature gallery][about]**
 
 This demo adopts many of Hydrogen's [framework conventions and third party libraries][hydrogen-framework]. If you've used Hydrogen then you should hopefully feel at home here.
 
@@ -179,7 +179,7 @@ See [Hydrogen's documentation on deployment][hydrogen-framework-deployment]
 
 This repository is published under the [MIT](LICENSE) license.
 
-[features]: ./docs/FEATURES.md
+[about]: https://hydrogen-app-c6009341bd2bf136fc40.o2.myshopify.dev/pages/about
 [hydrogen-sanity-demo]: https://hydrogen-app-c6009341bd2bf136fc40.o2.myshopify.dev/
 [hydrogen-github]: https://github.com/Shopify/hydrogen
 [hydrogen-framework]: https://shopify.dev/api/hydrogen/framework
