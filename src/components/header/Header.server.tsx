@@ -1,10 +1,10 @@
+import clsx from 'clsx';
 import type {SanityMenuLink} from '../../types';
 import CartToggle from '../cart/CartToggle.client';
 import CountrySelect from '../selects/Country.client';
 import HeaderBackground from './HeaderBackground.client';
-import Navigation from '../Navigation.server';
-import clsx from 'clsx';
-import MobileNavigation from '../MobileNavigation.client';
+import MobileNavigation from './MobileNavigation.client';
+import Navigation from './Navigation.server';
 
 type Props = {
   menuLinks: SanityMenuLink[];

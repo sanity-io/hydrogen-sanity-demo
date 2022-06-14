@@ -2,10 +2,10 @@ import {Dialog, Transition} from '@headlessui/react';
 import {Link} from '@shopify/hydrogen';
 import clsx from 'clsx';
 import {Fragment, useState} from 'react';
-import type {SanityMenuLink} from '../types';
-import CloseIcon from './icons/Close';
-import MenuIcon from './icons/Menu';
-import CountrySelect from './selects/Country.client';
+import type {SanityMenuLink} from '../../types';
+import CloseIcon from '../icons/Close';
+import MenuIcon from '../icons/Menu';
+import CountrySelect from '../selects/Country.client';
 
 type Props = {
   menuLinks: SanityMenuLink[];
