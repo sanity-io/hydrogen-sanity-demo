@@ -37,7 +37,7 @@ export default function IndexRoute() {
       {sanityHome?.modules && (
         <div
           className={clsx(
-            'mb-32 mt-24 px-4 pb-overlap', //
+            'mb-32 mt-24 px-4', //
             'md:px-8',
           )}
         >

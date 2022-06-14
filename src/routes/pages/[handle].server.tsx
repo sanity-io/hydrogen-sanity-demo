@@ -43,7 +43,7 @@ export default function PageRoute({params}: Props) {
           blocks={sanityPage.body}
           centered
           className={clsx(
-            'mx-auto mb-24 mt-8 max-w-[660px] px-4 pb-overlap', //
+            'mx-auto max-w-[660px] px-4 pb-24 pt-8', //
             'md:px-8',
           )}
           colorTheme={sanityPage.colorTheme}

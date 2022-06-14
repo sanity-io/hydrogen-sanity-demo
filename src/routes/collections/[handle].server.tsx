@@ -104,7 +104,7 @@ export default function CollectionRoute({
 
       <div
         className={clsx(
-          'mb-32 mt-8 px-4 pb-overlap', //
+          'mb-32 mt-8 px-4', //
           'md:px-8',
         )}
       >

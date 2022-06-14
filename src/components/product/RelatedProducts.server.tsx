@@ -48,7 +48,7 @@ export default function RelatedProducts({
       </h3>
       <div
         className={clsx(
-          'grid grid-cols-2 gap-3 pb-overlap', //
+          'grid grid-cols-2 gap-3 pb-6', //
           'md:grid-cols-4',
         )}
       >

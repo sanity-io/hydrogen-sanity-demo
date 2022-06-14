@@ -17,6 +17,7 @@ import clsx from 'clsx';
 import groq from 'groq';
 import Layout from '../../components/Layout.server';
 import NotFound from '../../components/NotFound.server';
+import PortableText from '../../components/portableText/PortableText.server';
 import ProductEditorial from '../../components/product/Editorial.server';
 import ProductGallery from '../../components/product/Gallery.client';
 import RelatedProducts from '../../components/product/RelatedProducts.server';
@@ -132,10 +133,17 @@ export default function ProductRoute() {
             'lg:w-[calc(100%-315px)]',
           )}
         >
-          <ProductEditorial
-            colorTheme={sanityProduct?.colorTheme}
-            sanityProduct={sanityProduct}
-          />
+          {/* Body */}
+          {sanityProduct?.body && (
+            <PortableText
+              blocks={sanityProduct.body}
+              className={clsx(
+                'max-w-[660px] px-4 pb-24 pt-8', //
+                'md:px-8',
+              )}
+              colorTheme={sanityProduct?.colorTheme}
+            />
+          )}
         </div>
       </div>
 

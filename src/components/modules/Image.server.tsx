@@ -21,9 +21,7 @@ type Props = {
 };
 
 export default function ImageModule({module}: Props) {
-  const image = module.image;
-
-  if (!image) {
+  if (!module.image) {
     return null;
   }
 
@@ -51,7 +49,41 @@ export default function ImageModule({module}: Props) {
     });
   }
 
-  const ImageContent = (
+  return (
+    <div>
+      {module.variant === 'callToAction' && module.callToAction?.link ? (
+        <Link className="group" link={module.callToAction.link}>
+          <ImageContent module={module} />
+        </Link>
+      ) : (
+        <ImageContent module={module} />
+      )}
+
+      {/* Caption */}
+      {module.variant === 'caption' && module.caption && (
+        <div className="mt-2 max-w-[35rem] text-sm leading-caption text-darkGray">
+          {module.caption}
+        </div>
+      )}
+      {/* Products */}
+      {module.variant === 'products' && (
+        <div className="mt-2 flex flex-wrap gap-x-1 gap-y-2">
+          {module.products.map((product, index) => (
+            <ProductTag
+              key={product._key}
+              storefrontProduct={storefrontProducts[index]}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+const ImageContent = ({module}: Props) => {
+  const image = module.image;
+
+  return (
     <div
       className={clsx(
         'relative overflow-hidden rounded duration-500 ease-out',
@@ -104,37 +136,7 @@ export default function ImageModule({module}: Props) {
       )}
     </div>
   );
-
-  return (
-    <div>
-      {module.variant === 'callToAction' && module.callToAction?.link ? (
-        <Link className="group" link={module.callToAction.link}>
-          {ImageContent}
-        </Link>
-      ) : (
-        ImageContent
-      )}
-
-      {/* Caption */}
-      {module.variant === 'caption' && module.caption && (
-        <div className="mt-2 max-w-[35rem] text-sm leading-caption text-darkGray">
-          {module.caption}
-        </div>
-      )}
-      {/* Products */}
-      {module.variant === 'products' && (
-        <div className="mt-2 flex flex-wrap gap-x-1 gap-y-2">
-          {module.products.map((product, index) => (
-            <ProductTag
-              key={product._key}
-              storefrontProduct={storefrontProducts[index]}
-            />
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
+};
 
 const QUERY_SHOPIFY = gql`
   query products(
