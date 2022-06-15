@@ -12,16 +12,7 @@
 
 @layer components {
   .linkTextNavigation {
-    display: inline-block;
-    border-bottom-width: 0.125em;
-    border-bottom-style: solid;
-    border-bottom-color: transparent;
-    border-top-width: 0.125em;
-    border-top-style: solid;
-    border-top-color: transparent;
-  }
-  .linkTextNavigation:hover {
-    border-bottom-color: inherit;
+    @apply decoration-[0.1em] underline-offset-[0.1em] hover:underline;
   }
 
   .select {
@@ -45,31 +36,7 @@
   }
 
   .select:hover:not(:disabled) {
-    /* background-color: theme('colors.gray'); */
     opacity: 0.9;
-  }
-}
-
-@layer utilities {
-  .scroll-snap-x {
-    scroll-snap-type: x mandatory;
-  }
-  .snap-start {
-    scroll-snap-align: start;
-  }
-  .snap-smooth {
-    scroll-behavior: smooth;
-  }
-  .snap-px-4 {
-    scroll-padding-left: 1rem;
-    scroll-padding-right: 1rem;
-  }
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
   }
 }
 

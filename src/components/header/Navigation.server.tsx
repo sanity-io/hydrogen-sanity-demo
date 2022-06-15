@@ -1,4 +1,5 @@
 import {Link} from '@shopify/hydrogen';
+import clsx from 'clsx';
 import {useCallback} from 'react';
 import type {SanityMenuLink} from '../../types';
 import CollectionGroup from '../collectionGroup/CollectionGroup.server';
@@ -21,7 +22,7 @@ export default function Navigation({menuLinks}: Props) {
         return (
           <div className="flex items-center" key={link._key}>
             <a
-              className="linkTextNavigation relative z-20 whitespace-nowrap"
+              className="linkTextNavigation"
               href={link.url}
               rel="noreferrer"
               target={link.newWindow ? '_blank' : '_self'}
@@ -38,10 +39,7 @@ export default function Navigation({menuLinks}: Props) {
 
         return (
           <div className="flex items-center" key={link._key}>
-            <Link
-              className="linkTextNavigation relative z-20 whitespace-nowrap"
-              to={link.slug}
-            >
+            <Link className="linkTextNavigation" to={link.slug}>
               {link.title}
             </Link>
           </div>
@@ -53,7 +51,12 @@ export default function Navigation({menuLinks}: Props) {
   }, [menuLinks]);
 
   return (
-    <nav className="hidden items-stretch justify-start gap-6 text-sm font-bold lg:flex">
+    <nav
+      className={clsx(
+        'relative hidden items-stretch justify-start gap-6 text-sm font-bold',
+        'lg:flex',
+      )}
+    >
       {renderLinks()}
     </nav>
   );

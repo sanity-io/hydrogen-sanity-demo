@@ -33,6 +33,22 @@ export default function MobileNavigation({menuLinks}: Props) {
 
       <Transition show={open}>
         <Dialog onClose={handleClose}>
+          {/* Overlay */}
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-500"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-500"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div
+              aria-hidden="true"
+              className="pointer-events-none fixed inset-0 z-40 bg-black bg-opacity-20"
+            />
+          </Transition.Child>
+
           {/* Panel */}
           <Transition.Child
             as={Fragment}
@@ -57,7 +73,7 @@ export default function MobileNavigation({menuLinks}: Props) {
 
               {/* Links */}
               <div className="mt-6 space-y-4 px-4">
-                <div className="text-2xl font-bold">
+                <div className="space-y-1 text-2xl font-bold">
                   <Link
                     className="linkTextNavigation"
                     onClick={handleClose}
@@ -73,7 +89,7 @@ export default function MobileNavigation({menuLinks}: Props) {
                           <div className="linkTextNavigation hover:border-b-transparent">
                             {link.title} –
                           </div>
-                          <div className="ml-8">
+                          <div className="my-1 ml-8 space-y-1">
                             {link.collectionLinks?.map((collectionLink) => (
                               <div key={collectionLink._id}>
                                 <Link
