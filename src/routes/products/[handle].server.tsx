@@ -11,8 +11,8 @@ import {
 import type {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import groq from 'groq';
-import Layout from '../../components/Layout.server';
-import NotFound from '../../components/NotFound.server';
+import Layout from '../../components/global/Layout.server';
+import NotFound from '../../components/global/NotFound.server';
 import PortableText from '../../components/portableText/PortableText.server';
 import ProductDetails from '../../components/product/Details.client';
 import RelatedProducts from '../../components/product/RelatedProducts.server';

@@ -1,5 +1,5 @@
 import {useCart} from '@shopify/hydrogen';
-import CircleOutlineButton from '../buttons/CircleOutline';
+import CircleOutlineButton from '../elements/CircleOutlineButton';
 import {useCartUI} from './CartUIProvider.client';
 
 type Props = {

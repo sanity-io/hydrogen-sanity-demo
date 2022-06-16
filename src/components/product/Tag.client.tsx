@@ -3,7 +3,7 @@ import type {ProductVariant} from '@shopify/hydrogen/dist/esnext/storefront-api-
 import Tippy from '@tippyjs/react/headless';
 import clsx from 'clsx';
 import type {ProductWithNodes} from '../../types';
-import ProductTooltip from '../product/Tooltip.client';
+import ProductTooltip from './Tooltip.client';
 
 type Props = {
   initialVariantId?: ProductVariant['id'];

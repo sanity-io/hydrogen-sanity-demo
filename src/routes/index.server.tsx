@@ -6,9 +6,9 @@ import {
 import clsx from 'clsx';
 import groq from 'groq';
 import HomeHero from '../components/heroes/Home.server';
-import Layout from '../components/Layout.server';
-import ModuleGrid from '../components/ModuleGrid.server';
-import NotFound from '../components/NotFound.server';
+import Layout from '../components/global/Layout.server';
+import ModuleGrid from '../components/modules/ModuleGrid.server';
+import NotFound from '../components/global/NotFound.server';
 import {HOME_PAGE} from '../fragments/pages/home';
 import useSanityQuery from '../hooks/useSanityQuery';
 import type {SanityHomePage} from '../types';

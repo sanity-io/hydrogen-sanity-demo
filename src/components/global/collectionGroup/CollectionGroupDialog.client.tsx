@@ -2,7 +2,7 @@ import {Dialog, Transition} from '@headlessui/react';
 import type {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import {Fragment, useState} from 'react';
-import type {SanityCollectionGroup} from '../../types';
+import type {SanityCollectionGroup} from '../../../types';
 import CollectionGroupContent from './CollectionGroupContent.client';
 
 export default function CollectionGroupDialog({

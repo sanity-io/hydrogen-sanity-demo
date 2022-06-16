@@ -1,8 +1,8 @@
 import {useProductOptions} from '@shopify/hydrogen';
 import Tippy from '@tippyjs/react/headless';
 import type {SanityCustomProductOptionSize} from '../../../types';
-import OptionButton from '../../buttons/Option';
-import Tooltip from '../../Tooltip';
+import OptionButton from '../../elements/OptionButton';
+import Tooltip from '../../elements/Tooltip';
 
 /**
  * A client component that tracks a selected variant and/or selling plan state, as well as callbacks for modifying the state

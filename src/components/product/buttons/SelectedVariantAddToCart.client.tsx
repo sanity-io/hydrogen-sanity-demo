@@ -1,5 +1,5 @@
 import {AddToCartButton, useProductOptions} from '@shopify/hydrogen';
-import {DEFAULT_BUTTON_STYLES} from '../../constants';
+import {DEFAULT_BUTTON_STYLES} from '../../../constants';
 
 /**
  * Wrapper around Hydrogen's `<AddToCartButton />` which will

@@ -5,9 +5,9 @@ import type {
   SanityModuleCallToAction,
   SanityProductWithVariant,
 } from '../../types';
-import Link from '../Link';
+import Link from '../elements/Link';
 import ProductHero from '../product/ProductHero.server';
-import SanityImage from '../SanityImage.client';
+import SanityImage from '../media/SanityImage.client';
 
 type Props = {
   module: SanityModuleCallToAction;

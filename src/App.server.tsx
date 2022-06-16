@@ -11,8 +11,8 @@ import renderHydrogen from '@shopify/hydrogen/entry-server';
 import {Suspense} from 'react';
 import ServerCartProvider from './components/cart/ServerCartProvider.server';
 import DefaultSeo from './components/DefaultSeo.server';
-import LoadingFallback from './components/LoadingFallback';
-import NotFound from './components/NotFound.server';
+import LoadingFallback from './components/global/LoadingFallback';
+import NotFound from './components/global/NotFound.server';
 
 function App() {
   return (

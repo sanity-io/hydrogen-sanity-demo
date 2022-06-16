@@ -9,11 +9,11 @@ import {
   getProductOptionString,
   hasMultipleProductOptions,
 } from '../../utils/productOptions';
-import Badge from '../Badge';
-import SelectedVariantAddToCartButton from '../buttons/SelectedVariantAddToCart.client';
-import SelectedVariantBuyNowButton from '../buttons/SelectedVariantBuyNow.client';
-import MoneyCompareAtPrice from '../money/CompareAtPrice.client';
-import MoneyPrice from '../money/Price.client';
+import Badge from '../elements/Badge';
+import SelectedVariantAddToCartButton from './buttons/SelectedVariantAddToCart.client';
+import SelectedVariantBuyNowButton from './buttons/SelectedVariantBuyNow.client';
+import MoneyCompareAtPrice from './money/CompareAtPrice.client';
+import MoneyPrice from './money/Price.client';
 
 type Props = {
   imageAspectClassName?: string;

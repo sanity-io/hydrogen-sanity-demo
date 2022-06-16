@@ -2,7 +2,7 @@ import {useMemo} from 'react';
 import sanityConfig from '../../../sanity.config';
 import type {SanityAssetImage, SanityProductWithVariant} from '../../types';
 import ProductHero from '../product/ProductHero.server';
-import SanityImage from '../SanityImage.client';
+import SanityImage from '../media/SanityImage.client';
 
 type Props = {
   content?: SanityAssetImage | SanityProductWithVariant;

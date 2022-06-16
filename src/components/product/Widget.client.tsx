@@ -2,8 +2,8 @@ import {ProductPrice, useProductOptions} from '@shopify/hydrogen';
 import clsx from 'clsx';
 import type {ProductWithNodes, SanityProductPage} from '../../types';
 import {hasMultipleProductOptions} from '../../utils/productOptions';
-import SelectedVariantAddToCartButton from '../buttons/SelectedVariantAddToCart.client';
-import SelectedVariantBuyNowButton from '../buttons/SelectedVariantBuyNow.client';
+import SelectedVariantBuyNowButton from './buttons/SelectedVariantBuyNow.client';
+import SelectedVariantAddToCartButton from './buttons/SelectedVariantAddToCart.client';
 import ProductOptions from './options/ProductOptions.client';
 
 type Props = {

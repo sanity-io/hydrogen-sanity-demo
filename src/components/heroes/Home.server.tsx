@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import type {SanityHeroHome} from '../../types';
-import LinkButton from '../buttons/Link';
+import LinkButton from '../elements/LinkButton';
 import HeroContent from './HeroContent.server';
 
 type Props = {

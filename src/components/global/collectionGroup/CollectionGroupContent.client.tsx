@@ -1,10 +1,10 @@
 import type {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import {useCallback} from 'react';
-import type {SanityCollectionGroup} from '../../types';
-import CollectionCard from '../collection/Card';
-import CloseIcon from '../icons/Close';
-import ProductPill from '../product/Pill';
+import type {SanityCollectionGroup} from '../../../types';
+import CollectionCard from '../../collection/Card';
+import CloseIcon from '../../icons/Close';
+import ProductPill from '../../product/Pill';
 
 type Props = {
   collection: Collection;

@@ -6,7 +6,7 @@ import {
 import useEmblaCarousel from 'embla-carousel-react';
 import {useEffect} from 'react';
 import type {ProductWithNodes} from '../../types';
-import CircleButton from '../buttons/Circle';
+import CircleButton from '../elements/CircleButton';
 import {ArrowRightIcon} from '../icons/ArrowRight';
 
 /**

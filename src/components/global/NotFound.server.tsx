@@ -7,15 +7,15 @@ import {
   useShopQuery,
 } from '@shopify/hydrogen';
 import groq from 'groq';
-import {NOT_FOUND_PAGE} from '../fragments/pages/notFound';
-import useSanityQuery from '../hooks/useSanityQuery';
+import {NOT_FOUND_PAGE} from '../../fragments/pages/notFound';
+import useSanityQuery from '../../hooks/useSanityQuery';
 import type {
   CollectionWithNodes,
   ProductWithNodes,
   SanityNotFoundPage,
-} from '../types';
+} from '../../types';
 import Layout from './Layout.server';
-import ProductPill from './product/Pill';
+import ProductPill from '../product/Pill';
 
 /**
  * A server component that defines the content to display when a page isn't found (404 error)

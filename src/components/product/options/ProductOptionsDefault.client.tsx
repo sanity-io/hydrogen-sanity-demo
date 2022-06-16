@@ -1,5 +1,5 @@
 import {useProductOptions} from '@shopify/hydrogen';
-import OptionButton from '../../buttons/Option';
+import OptionButton from '../../elements/OptionButton';
 
 /**
  * A client component that tracks a selected variant and/or selling plan state, as well as callbacks for modifying the state

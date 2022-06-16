@@ -6,9 +6,9 @@ import {
   getProductOptionString,
   hasMultipleProductOptions,
 } from '../../utils/productOptions';
-import Badge from '../Badge';
-import MoneyCompareAtPrice from '../money/CompareAtPrice.client';
-import MoneyPrice from '../money/Price.client';
+import Badge from '../elements/Badge';
+import MoneyCompareAtPrice from './money/CompareAtPrice.client';
+import MoneyPrice from './money/Price.client';
 
 /**
  * A shared component that displays a (small) single product to allow buyers to quickly identify a particular item of interest

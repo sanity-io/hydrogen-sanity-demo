@@ -5,7 +5,7 @@ import {Fragment, useState} from 'react';
 import type {SanityMenuLink} from '../../types';
 import CloseIcon from '../icons/Close';
 import MenuIcon from '../icons/Menu';
-import CountrySelect from '../selects/Country.client';
+import CountrySelect from './CountrySelect.client';
 
 type Props = {
   menuLinks: SanityMenuLink[];

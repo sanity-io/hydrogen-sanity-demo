@@ -6,8 +6,8 @@ import {
   getProductOptionString,
   hasMultipleProductOptions,
 } from '../../utils/productOptions';
-import MoneyCompareAtPrice from '../money/CompareAtPrice.client';
-import MoneyPrice from '../money/Price.client';
+import MoneyCompareAtPrice from './money/CompareAtPrice.client';
+import MoneyPrice from './money/Price.client';
 
 type Props = {
   storefrontProduct: ProductWithNodes;

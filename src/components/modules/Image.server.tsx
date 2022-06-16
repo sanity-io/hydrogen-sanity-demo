@@ -7,9 +7,9 @@ import clsx from 'clsx';
 import sanityConfig from '../../../sanity.config';
 import {DEFAULT_BUTTON_STYLES} from '../../constants';
 import type {ProductWithNodes, SanityModuleImage} from '../../types';
-import Link from '../Link';
-import SanityImage from '../SanityImage.client';
-import ProductTag from '../tags/Product.client';
+import Link from '../elements/Link';
+import SanityImage from '../media/SanityImage.client';
+import ProductTag from '../product/Tag.client';
 
 type ShopifyPayload = {
   products: Partial<Product>[];

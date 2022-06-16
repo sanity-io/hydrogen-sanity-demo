@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import sanityConfig from '../../../../sanity.config';
 import type {SanityModuleGrid} from '../../../types';
 import PortableText from '../PortableText.server';
-import SanityImage from '../../SanityImage.client';
+import SanityImage from '../../media/SanityImage.client';
 
 type Props = {
   node: PortableTextBlock & SanityModuleGrid;

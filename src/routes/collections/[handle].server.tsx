@@ -11,12 +11,12 @@ import type {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-type
 import clsx from 'clsx';
 import groq from 'groq';
 import {useMemo} from 'react';
+import LoadMoreProducts from '../../components/collection/LoadMoreProducts.client';
+import Layout from '../../components/global/Layout.server';
+import NotFound from '../../components/global/NotFound.server';
 import CollectionHero from '../../components/heroes/Collection.server';
-import Layout from '../../components/Layout.server';
-import LoadMoreProducts from '../../components/LoadMoreProducts.client';
-import ModuleGrid from '../../components/ModuleGrid.server';
-import NotFound from '../../components/NotFound.server';
-import SortOrderSelect from '../../components/selects/SortOrder.client';
+import ModuleGrid from '../../components/modules/ModuleGrid.server';
+import SortOrderSelect from '../../components/collection/SortOrderSelect.client';
 import {COLLECTION_PAGE_SIZE} from '../../constants';
 import {COLLECTION_PAGE} from '../../fragments/pages/collection';
 import useSanityQuery from '../../hooks/useSanityQuery';

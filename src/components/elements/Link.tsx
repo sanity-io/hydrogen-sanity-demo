@@ -1,6 +1,6 @@
 import {Link as HydrogenLink} from '@shopify/hydrogen';
 import type {HTMLAttributes} from 'react';
-import type {SanityLink} from '../types';
+import type {SanityLink} from '../../types';
 
 type Props = {
   link: SanityLink;

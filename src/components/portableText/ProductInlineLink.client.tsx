@@ -10,10 +10,10 @@ import Tippy from '@tippyjs/react/headless';
 import clsx from 'clsx';
 import {ReactNode, useMemo} from 'react';
 import type {ProductWithNodes, SanityColorTheme} from '../../types';
+import Tooltip from '../elements/Tooltip';
 import CartIcon from '../icons/Cart';
 import CreditCardIcon from '../icons/CreditCard';
 import ProductTooltip from '../product/Tooltip.client';
-import Tooltip from '../Tooltip';
 
 type Props = {
   children?: ReactNode;

@@ -6,10 +6,10 @@ import {
   getProductOptionString,
   hasMultipleProductOptions,
 } from '../../utils/productOptions';
-import Badge from '../Badge';
-import SelectedVariantAddToCartButton from '../buttons/SelectedVariantAddToCart.client';
-import MoneyCompareAtPrice from '../money/CompareAtPrice.client';
-import MoneyPrice from '../money/Price.client';
+import Badge from '../elements/Badge';
+import SelectedVariantAddToCartButton from './buttons/SelectedVariantAddToCart.client';
+import MoneyCompareAtPrice from './money/CompareAtPrice.client';
+import MoneyPrice from './money/Price.client';
 import ProductOptionsWrapper from '../ProductOptionsWrapper.client';
 
 type Props = {
