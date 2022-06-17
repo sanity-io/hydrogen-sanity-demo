@@ -1,45 +1,42 @@
 import {useMemo} from 'react';
-import sanityConfig from '../../../sanity.config';
-import type {SanityAssetImage, SanityProductWithVariant} from '../../types';
+import type {
+  SanityImageWithProductHotspots,
+  SanityProductWithVariant,
+} from '../../types';
+import ImageWithProductHotspots from '../media/ImageWithProductHotspots.server';
 import ProductHero from '../product/ProductHero.server';
-import SanityImage from '../media/SanityImage.client';
 
 type Props = {
-  content?: SanityAssetImage | SanityProductWithVariant;
+  content?: SanityImageWithProductHotspots | SanityProductWithVariant;
 };
 
 export default function HeroContent({content}: Props) {
   const heroContent = useMemo(() => {
     switch (content?._type) {
-      case 'image': {
+      case 'imageWithProductHotspots': {
         return (
-          <SanityImage
-            alt={content?.altText}
-            crop={content?.crop}
-            dataset={sanityConfig.dataset}
-            hotspot={content?.hotspot}
-            layout="fill"
-            objectFit="cover"
-            projectId={sanityConfig.projectId}
-            sizes="100vw"
-            src={content?.asset._ref}
-          />
+          <div className="relative w-full">
+            <ImageWithProductHotspots content={content} />
+          </div>
         );
       }
+
       case 'productWithVariant': {
         if (!content?.gid || !content.variantGid) {
           return null;
         }
 
         return (
-          <ProductHero gid={content?.gid} variantGid={content.variantGid} />
+          <div className="aspect-[1300/768] w-full">
+            <ProductHero gid={content?.gid} variantGid={content.variantGid} />
+          </div>
         );
       }
     }
   }, []);
 
   return (
-    <div className="relative flex aspect-[1300/768] w-full place-content-center overflow-hidden rounded-md bg-lightGray">
+    <div className="relative flex w-full place-content-center overflow-hidden rounded-md bg-lightGray">
       {heroContent}
     </div>
   );

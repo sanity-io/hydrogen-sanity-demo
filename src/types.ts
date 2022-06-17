@@ -21,6 +21,15 @@ export type ProductWithNodes = Partial<Omit<Product, 'media' | 'variants'>> & {
   };
 };
 
+export interface SanityAssetImage extends Image {
+  _type: 'image';
+  altText?: string;
+  blurDataURL: string;
+  height: number;
+  url: string;
+  width: number;
+}
+
 export type SanityCollection = {
   _id: string;
   colorTheme: SanityColorTheme;
@@ -85,19 +94,19 @@ export interface SanityCustomProductOptionSize
 export type SanityHero = SanityHeroCollection | SanityHeroHome | SanityHeroPage;
 
 export type SanityHeroCollection = {
-  content?: SanityAssetImage | SanityProductWithVariant;
+  content?: SanityImageWithProductHotspots | SanityProductWithVariant;
   description?: string;
   title?: string;
 };
 
 export type SanityHeroHome = {
-  content?: SanityAssetImage | SanityProductWithVariant;
+  content?: SanityImageWithProductHotspots | SanityProductWithVariant;
   link?: SanityLink;
   title?: string;
 };
 
 export type SanityHeroPage = {
-  content?: SanityAssetImage | SanityProductWithVariant;
+  content?: SanityImageWithProductHotspots | SanityProductWithVariant;
   title?: string;
 };
 
@@ -107,14 +116,12 @@ export type SanityHomePage = {
   seo: SanitySeo;
 };
 
-export interface SanityAssetImage extends Image {
-  _type: 'image';
-  altText?: string;
-  blurDataURL: string;
-  height: number;
-  url: string;
-  width: number;
-}
+export type SanityImageWithProductHotspots = {
+  _key?: string;
+  _type: 'imageWithProductHotspots';
+  image: SanityAssetImage;
+  productHotspots: SanityProductHotspot[];
+};
 
 export type SanityLink = SanityLinkExternal | SanityLinkInternal;
 
@@ -187,7 +194,8 @@ export type SanityModuleCollection = {
 export type SanityModuleImage =
   | SanityModuleImageCallToAction
   | SanityModuleImageCaption
-  | SanityModuleImageProducts;
+  | SanityModuleImageProductHotspots
+  | SanityModuleImageProductTags;
 
 export type SanityModuleGrid = {
   _key?: string;
@@ -221,10 +229,17 @@ export interface SanityModuleImageCaption extends SanityModuleImageBase {
   caption?: string;
   variant: 'caption';
 }
-export interface SanityModuleImageProducts extends SanityModuleImageBase {
+export interface SanityModuleImageProductHotspots
+  extends SanityModuleImageBase {
+  _key?: string;
+  productHotspots: SanityProductHotspot[];
+  variant: 'productHotspots';
+}
+
+export interface SanityModuleImageProductTags extends SanityModuleImageBase {
   _key?: string;
   products: SanityProductWithVariant[];
-  variant: 'products';
+  variant: 'productTags';
 }
 
 export type SanityModuleImages = {
@@ -266,8 +281,14 @@ export type SanityPage = {
   colorTheme?: SanityColorTheme;
   hero?: SanityHeroPage;
   seo: SanitySeo;
-  showHeader?: boolean;
   title: string;
+};
+
+export type SanityProductHotspot = {
+  _key?: string;
+  product: SanityProductWithVariant;
+  x: number;
+  y: number;
 };
 
 export type SanityProductWithVariant = {

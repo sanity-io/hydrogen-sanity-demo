@@ -3,7 +3,7 @@ import type {
   Product,
   ProductVariant,
 } from '@shopify/hydrogen/dist/esnext/storefront-api-types';
-import ProductHotspot from './Hotspot';
+import ProductTile from './Tile';
 
 type Props = {
   gid: string;
@@ -53,7 +53,7 @@ export default function ProductHero({gid, variantGid}: Props) {
       )}
 
       <div className="absolute bottom-4 right-4">
-        <ProductHotspot storefrontProduct={storefrontProduct} />
+        <ProductTile storefrontProduct={storefrontProduct} />
       </div>
     </>
   );

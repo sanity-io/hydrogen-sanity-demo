@@ -6,9 +6,14 @@ import type {
 import clsx from 'clsx';
 import sanityConfig from '../../../sanity.config';
 import {DEFAULT_BUTTON_STYLES} from '../../constants';
-import type {ProductWithNodes, SanityModuleImage} from '../../types';
+import type {
+  ProductWithNodes,
+  SanityModuleImage,
+  SanityProductWithVariant,
+} from '../../types';
 import Link from '../elements/Link';
 import SanityImage from '../media/SanityImage.client';
+import ProductHotspot from '../product/Hotspot.client';
 import ProductTag from '../product/Tag.client';
 
 type ShopifyPayload = {
@@ -25,22 +30,44 @@ export default function ImageModule({module}: Props) {
     return null;
   }
 
-  // Conditionally fetch Shopify products if this is an image module of variant `products`
+  // Conditionally fetch Shopify products if this is an image module that references products
   let storefrontProducts: ProductWithNodes[];
-  if (module.variant === 'products') {
+  if (['products', 'productHotspots'].includes(module.variant)) {
     const {languageCode} = useShop();
     const {countryCode = 'US'} = useSession();
+
+    let products: SanityProductWithVariant[] = [];
+    if (module.variant === 'productHotspots') {
+      products = module.productHotspots?.map((hotspot) => hotspot.product);
+    }
+    if (module.variant === 'productTags') {
+      products = module.products;
+    }
+
+    const [productGids, productVariantGids] = products.reduce<
+      [string[], string[]]
+    >(
+      (acc, val) => {
+        if (val) {
+          acc[0].push(val.gid);
+          acc[1].push(val.variantGid);
+        }
+        return acc;
+      },
+      [[], []],
+    );
+
     const {data} = useShopQuery<ShopifyPayload>({
       query: QUERY_SHOPIFY,
       variables: {
         country: countryCode,
-        ids: module.products.map((p) => p.gid),
+        ids: productGids,
         language: languageCode,
-        variantIds: module.products.map((p) => p.variantGid),
+        variantIds: productVariantGids,
       },
     });
     // Attach variant nodes
-    storefrontProducts = data.products.map((product, index) => {
+    storefrontProducts = data.products?.map((product, index) => {
       const productVariant = data.productVariants[index];
       return {
         ...product,
@@ -50,7 +77,7 @@ export default function ImageModule({module}: Props) {
   }
 
   return (
-    <div>
+    <div className="relative">
       {module.variant === 'callToAction' && module.callToAction?.link ? (
         <Link className="group" link={module.callToAction.link}>
           <ImageContent module={module} />
@@ -65,10 +92,23 @@ export default function ImageModule({module}: Props) {
           {module.caption}
         </div>
       )}
-      {/* Products */}
-      {module.variant === 'products' && (
+      {/* Product hotspots */}
+      {module.variant === 'productHotspots' && (
+        <>
+          {module.productHotspots?.map((hotspot, index) => (
+            <ProductHotspot
+              key={hotspot._key}
+              storefrontProduct={storefrontProducts[index]}
+              x={hotspot.x}
+              y={hotspot.y}
+            />
+          ))}
+        </>
+      )}
+      {/* Product tags */}
+      {module.variant === 'productTags' && (
         <div className="mt-2 flex flex-wrap gap-x-1 gap-y-2">
-          {module.products.map((product, index) => (
+          {module.products?.map((product, index) => (
             <ProductTag
               key={product._key}
               storefrontProduct={storefrontProducts[index]}

@@ -13,7 +13,7 @@ type Props = {
   storefrontProduct: ProductWithNodes;
 };
 
-export default function ProductHotspot({storefrontProduct}: Props) {
+export default function ProductTile({storefrontProduct}: Props) {
   if (!storefrontProduct) {
     return null;
   }
