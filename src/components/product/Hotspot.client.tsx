@@ -1,3 +1,4 @@
+import {Link} from '@shopify/hydrogen';
 import Tippy from '@tippyjs/react/headless';
 import clsx from 'clsx';
 import {ProductWithNodes} from '../../types';
@@ -16,24 +17,24 @@ export default function ProductHotspot({storefrontProduct, x, y}: Props) {
 
   return (
     <Tippy
-      interactive
       placement="top"
       render={() => {
         return <ProductTile storefrontProduct={storefrontProduct} />;
       }}
     >
-      <div
+      <Link
         className={clsx(
-          'absolute left-[50%] top-[50%] flex h-[20px] w-[20px] -translate-x-1/2 -translate-y-1/2 animate-pulse items-center justify-center rounded-full border border-white bg-black bg-opacity-30',
-          'hover:animate-none',
+          'absolute left-[50%] top-[50%] flex h-[26px] w-[26px] -translate-x-1/2 -translate-y-1/2 animate-pulse items-center justify-center rounded-full bg-offBlack duration-300 ease-out',
+          'hover:scale-125 hover:animate-none',
         )}
         style={{
           left: `${x}%`,
           top: `${y}%`,
         }}
+        to={`/products/${storefrontProduct.handle}`}
       >
-        <div className="h-1/3 w-1/3 rounded-full bg-white" />
-      </div>
+        <div className="relative h-[4px] w-[4px] rounded-full bg-white" />
+      </Link>
     </Tippy>
   );
 }
