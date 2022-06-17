@@ -232,13 +232,13 @@ export interface SanityModuleImageCaption extends SanityModuleImageBase {
 export interface SanityModuleImageProductHotspots
   extends SanityModuleImageBase {
   _key?: string;
-  productHotspots: SanityProductHotspot[];
+  productHotspots?: SanityProductHotspot[];
   variant: 'productHotspots';
 }
 
 export interface SanityModuleImageProductTags extends SanityModuleImageBase {
   _key?: string;
-  products: SanityProductWithVariant[];
+  productTags?: SanityProductWithVariant[];
   variant: 'productTags';
 }
 

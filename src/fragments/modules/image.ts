@@ -32,7 +32,7 @@ export const MODULE_IMAGE = groq`
     }
   },
   (variant == 'productTags') => {
-    products[] {
+    productTags[] {
       _key,
       ...${PRODUCT_WITH_VARIANT}
     },

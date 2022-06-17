@@ -32,48 +32,50 @@ export default function ImageModule({module}: Props) {
 
   // Conditionally fetch Shopify products if this is an image module that references products
   let storefrontProducts: ProductWithNodes[];
-  if (['products', 'productHotspots'].includes(module.variant)) {
+  if (['productHotspots', 'productTags'].includes(module.variant)) {
     const {languageCode} = useShop();
     const {countryCode = 'US'} = useSession();
 
-    let products: SanityProductWithVariant[] = [];
+    let products: SanityProductWithVariant[] | undefined = undefined;
     if (module.variant === 'productHotspots') {
       products = module.productHotspots?.map((hotspot) => hotspot.product);
     }
     if (module.variant === 'productTags') {
-      products = module.products;
+      products = module.productTags;
     }
 
-    const [productGids, productVariantGids] = products.reduce<
-      [string[], string[]]
-    >(
-      (acc, val) => {
-        if (val) {
-          acc[0].push(val.gid);
-          acc[1].push(val.variantGid);
-        }
-        return acc;
-      },
-      [[], []],
-    );
+    if (products) {
+      const [productGids, productVariantGids] = products.reduce<
+        [string[], string[]]
+      >(
+        (acc, val) => {
+          if (val) {
+            acc[0].push(val.gid);
+            acc[1].push(val.variantGid);
+          }
+          return acc;
+        },
+        [[], []],
+      );
 
-    const {data} = useShopQuery<ShopifyPayload>({
-      query: QUERY_SHOPIFY,
-      variables: {
-        country: countryCode,
-        ids: productGids,
-        language: languageCode,
-        variantIds: productVariantGids,
-      },
-    });
-    // Attach variant nodes
-    storefrontProducts = data.products?.map((product, index) => {
-      const productVariant = data.productVariants[index];
-      return {
-        ...product,
-        variants: {nodes: [productVariant as ProductVariant]},
-      };
-    });
+      const {data} = useShopQuery<ShopifyPayload>({
+        query: QUERY_SHOPIFY,
+        variables: {
+          country: countryCode,
+          ids: productGids,
+          language: languageCode,
+          variantIds: productVariantGids,
+        },
+      });
+      // Attach variant nodes
+      storefrontProducts = data.products?.map((product, index) => {
+        const productVariant = data.productVariants[index];
+        return {
+          ...product,
+          variants: {nodes: [productVariant as ProductVariant]},
+        };
+      });
+    }
   }
 
   return (
@@ -108,7 +110,7 @@ export default function ImageModule({module}: Props) {
       {/* Product tags */}
       {module.variant === 'productTags' && (
         <div className="mt-2 flex flex-wrap gap-x-1 gap-y-2">
-          {module.products?.map((product, index) => (
+          {module.productTags?.map((product, index) => (
             <ProductTag
               key={product._key}
               storefrontProduct={storefrontProducts[index]}
