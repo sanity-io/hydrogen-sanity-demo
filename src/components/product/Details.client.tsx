@@ -1,5 +1,5 @@
 import {ProductOptionsProvider} from '@shopify/hydrogen';
-import type {ProductVariant} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import type {ProductVariant} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 import type {ProductWithNodes, SanityProductPage} from '../../types';
 import ProductGallery from './Gallery.client';

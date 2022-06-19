@@ -1,8 +1,5 @@
 import {gql, useShopQuery} from '@shopify/hydrogen';
-import {
-  Product,
-  ProductVariant,
-} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import {Product, ProductVariant} from '@shopify/hydrogen/storefront-api-types';
 import sanityConfig from '../../../sanity.config';
 import type {
   ProductWithNodes,

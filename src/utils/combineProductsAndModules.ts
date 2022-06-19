@@ -1,4 +1,4 @@
-import type {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import type {Product} from '@shopify/hydrogen/storefront-api-types';
 import type {SanityModule} from '../types';
 
 const MODULE_INTERVAL = 2;

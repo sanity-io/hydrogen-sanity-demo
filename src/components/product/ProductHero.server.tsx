@@ -2,7 +2,7 @@ import {gql, Image, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
 import type {
   Product,
   ProductVariant,
-} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+} from '@shopify/hydrogen/storefront-api-types';
 import ProductTile from './Tile';
 
 type Props = {

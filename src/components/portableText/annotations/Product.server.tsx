@@ -1,12 +1,11 @@
-import type {
-  PortableTextBlock,
-  PortableTextMarkDefinition,
-} from '@portabletext/types';
+// prettier-ignore
+// @ts-expect-error node16 workaround
+import type { PortableTextBlock, PortableTextMarkDefinition } from '@portabletext/types';
 import {gql, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
 import type {
   Product,
   ProductVariant,
-} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+} from '@shopify/hydrogen/storefront-api-types';
 import type {
   ProductWithNodes,
   SanityColorTheme,

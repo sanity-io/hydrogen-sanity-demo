@@ -1,5 +1,5 @@
 import {gql, Image, Link, useShopQuery} from '@shopify/hydrogen';
-import type {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import type {Collection} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 import {DEFAULT_BUTTON_STYLES} from '../../constants';
 import type {SanityModuleCollection} from '../../types';

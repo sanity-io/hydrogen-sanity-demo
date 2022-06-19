@@ -1,5 +1,5 @@
 import {
-  CacheDays,
+  CacheLong,
   gql,
   Seo,
   useServerAnalytics,
@@ -32,7 +32,7 @@ export default function DefaultSeo() {
     },
   } = useShopQuery({
     query: QUERY_SHOPIFY,
-    cache: CacheDays(),
+    cache: CacheLong(),
     preload: '*',
   });
 

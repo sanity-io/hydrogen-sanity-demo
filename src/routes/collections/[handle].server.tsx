@@ -7,7 +7,7 @@ import {
   useShop,
   useShopQuery,
 } from '@shopify/hydrogen';
-import type {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import type {Collection} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 import groq from 'groq';
 import {useMemo} from 'react';
