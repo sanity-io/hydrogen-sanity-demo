@@ -5,7 +5,7 @@ import PageHero from '../../components/heroes/Page.server';
 import Layout from '../../components/global/Layout.server';
 import NotFound from '../../components/global/NotFound.server';
 import PortableText from '../../components/portableText/PortableText.server';
-import {PAGE} from '../../fragments/pages/page';
+import {PAGE} from '../../fragments/sanity/pages/page';
 import useSanityQuery from '../../hooks/useSanityQuery';
 import type {SanityPage} from '../../types';
 

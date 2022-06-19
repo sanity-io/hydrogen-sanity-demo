@@ -5,6 +5,7 @@ import {
   useServerAnalytics,
   useShopQuery,
 } from '@shopify/hydrogen';
+import {Shop} from '@shopify/hydrogen/storefront-api-types';
 import groq from 'groq';
 import useSanityQuery from '../hooks/useSanityQuery';
 
@@ -12,6 +13,11 @@ import useSanityQuery from '../hooks/useSanityQuery';
  * A server component that fetches global seo settings from your Sanity dataset
  * and sets default values and templates for every page.
  */
+
+type ShopifyPayload = {
+  shop: Partial<Shop>;
+};
+
 export default function DefaultSeo() {
   const {data: seo} = useSanityQuery<{
     description?: string;
@@ -25,12 +31,9 @@ export default function DefaultSeo() {
 
   const {
     data: {
-      shop: {
-        id,
-        paymentSettings: {currencyCode},
-      },
+      shop: {id, paymentSettings},
     },
-  } = useShopQuery({
+  } = useShopQuery<ShopifyPayload>({
     query: QUERY_SHOPIFY,
     cache: CacheLong(),
     preload: '*',
@@ -40,7 +43,7 @@ export default function DefaultSeo() {
   useServerAnalytics({
     shopify: {
       shopId: id,
-      currency: currencyCode,
+      currency: paymentSettings?.currencyCode,
     },
   });
 

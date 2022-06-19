@@ -1,6 +1,6 @@
 import groq from 'groq';
 import {IMAGE} from '../image';
-import {MARK_DEFS} from '../markDefs';
+import {MARK_DEFS} from '../portableText/markDefs';
 
 export const MODULE_GRID = groq`
   items[] {

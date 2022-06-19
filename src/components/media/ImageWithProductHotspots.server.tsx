@@ -1,6 +1,8 @@
 import {gql, useShopQuery} from '@shopify/hydrogen';
 import {Product, ProductVariant} from '@shopify/hydrogen/storefront-api-types';
 import sanityConfig from '../../../sanity.config';
+import {PRODUCT_FIELDS} from '../../fragments/shopify/product';
+import {PRODUCT_VARIANT_FIELDS} from '../../fragments/shopify/productVariant';
 import type {
   ProductWithNodes,
   SanityImageWithProductHotspots,
@@ -78,6 +80,9 @@ export default function ImageWithProductHotspots({content}: Props) {
 }
 
 const QUERY_SHOPIFY = gql`
+  ${PRODUCT_FIELDS}
+  ${PRODUCT_VARIANT_FIELDS}
+
   query products(
     $country: CountryCode
     $language: LanguageCode
@@ -86,38 +91,12 @@ const QUERY_SHOPIFY = gql`
   ) @inContext(country: $country, language: $language) {
     products: nodes(ids: $ids) {
       ... on Product {
-        handle
-        id
-        options {
-          name
-          values
-        }
-        title
-        variants(first: 1) {
-          nodes {
-            availableForSale
-          }
-        }
-        vendor
+        ...ProductFields
       }
     }
     productVariants: nodes(ids: $variantIds) {
       ... on ProductVariant {
-        availableForSale
-        compareAtPriceV2 {
-          amount
-          currencyCode
-        }
-        id
-        priceV2 {
-          amount
-          currencyCode
-        }
-        selectedOptions {
-          name
-          value
-        }
-        title
+        ...ProductVariantFields
       }
     }
   }

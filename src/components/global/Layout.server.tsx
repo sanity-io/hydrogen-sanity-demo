@@ -1,7 +1,7 @@
 import {LocalizationProvider} from '@shopify/hydrogen';
 import groq from 'groq';
 import {ReactNode, Suspense} from 'react';
-import {LINKS} from '../../fragments/links';
+import {LINKS} from '../../fragments/sanity/links';
 import useSanityQuery from '../../hooks/useSanityQuery';
 import type {SanityMenuLink} from '../../types';
 import Cart from '../cart/Cart.client';

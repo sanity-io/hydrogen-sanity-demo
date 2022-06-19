@@ -3,6 +3,8 @@ import type {
   Product,
   ProductVariant,
 } from '@shopify/hydrogen/storefront-api-types';
+import {PRODUCT_FIELDS} from '../../fragments/shopify/product';
+import {PRODUCT_VARIANT_FIELDS} from '../../fragments/shopify/productVariant';
 import ProductTile from './Tile';
 
 type Props = {
@@ -60,6 +62,9 @@ export default function ProductHero({gid, variantGid}: Props) {
 }
 
 const QUERY_SHOPIFY = gql`
+  ${PRODUCT_FIELDS}
+  ${PRODUCT_VARIANT_FIELDS}
+
   query product(
     $country: CountryCode
     $language: LanguageCode
@@ -67,34 +72,11 @@ const QUERY_SHOPIFY = gql`
     $variantId: ID!
   ) @inContext(country: $country, language: $language) {
     product: product(id: $id) {
-      handle
-      id
-      options {
-        name
-        values
-      }
-      title
-      vendor
+      ...ProductFields
     }
     productVariant: node(id: $variantId) {
       ... on ProductVariant {
-        availableForSale
-        compareAtPriceV2 {
-          amount
-          currencyCode
-        }
-        image {
-          altText
-          height
-          id
-          url
-          width
-        }
-        priceV2 {
-          amount
-          currencyCode
-        }
-        title
+        ...ProductVariantFields
       }
     }
   }

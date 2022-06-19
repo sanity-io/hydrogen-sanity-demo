@@ -1,5 +1,7 @@
 import {gql, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
 import type {Collection} from '@shopify/hydrogen/storefront-api-types';
+import {PRODUCT_FIELDS} from '../../../fragments/shopify/product';
+import {PRODUCT_VARIANT_FIELDS} from '../../../fragments/shopify/productVariant';
 import type {SanityCollectionGroup} from '../../../types';
 import CollectionGroupDialog from './CollectionGroupDialog.client';
 
@@ -41,6 +43,9 @@ export default function CollectionGroup({collectionGroup}: Props) {
 }
 
 const QUERY_SHOPIFY = gql`
+  ${PRODUCT_FIELDS}
+  ${PRODUCT_VARIANT_FIELDS}
+
   query CollectionDetails(
     $country: CountryCode
     $id: ID!
@@ -57,36 +62,12 @@ const QUERY_SHOPIFY = gql`
       }
       products(first: $numProducts) {
         nodes {
-          handle
-          id
-          options {
-            name
-            values
-          }
-          title
+          ...ProductFields
           variants(first: 1) {
             nodes {
-              id
-              title
-              availableForSale
-              image {
-                altText
-                height
-                id
-                url
-                width
-              }
-              priceV2 {
-                currencyCode
-                amount
-              }
-              compareAtPriceV2 {
-                currencyCode
-                amount
-              }
+              ...ProductVariantFields
             }
           }
-          vendor
         }
       }
       title

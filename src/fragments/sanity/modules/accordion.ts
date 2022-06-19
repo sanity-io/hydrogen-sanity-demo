@@ -1,5 +1,5 @@
 import groq from 'groq';
-import {MARK_DEFS} from '../markDefs';
+import {MARK_DEFS} from '../portableText/markDefs';
 
 export const MODULE_ACCORDION = groq`
   groups[] {

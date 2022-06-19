@@ -9,7 +9,7 @@ import HomeHero from '../components/heroes/Home.server';
 import Layout from '../components/global/Layout.server';
 import ModuleGrid from '../components/modules/ModuleGrid.server';
 import NotFound from '../components/global/NotFound.server';
-import {HOME_PAGE} from '../fragments/pages/home';
+import {HOME_PAGE} from '../fragments/sanity/pages/home';
 import useSanityQuery from '../hooks/useSanityQuery';
 import type {SanityHomePage} from '../types';
 

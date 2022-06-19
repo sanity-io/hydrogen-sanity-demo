@@ -1,10 +1,10 @@
 import groq from 'groq';
+import {MODULE_ACCORDION} from '../modules/accordion';
+import {MODULE_CALLOUT} from '../modules/callout';
+import {MODULE_GRID} from '../modules/grid';
+import {MODULE_IMAGES} from '../modules/images';
+import {MODULE_PRODUCTS} from '../modules/products';
 import {MARK_DEFS} from './markDefs';
-import {MODULE_ACCORDION} from './modules/accordion';
-import {MODULE_CALLOUT} from './modules/callout';
-import {MODULE_GRID} from './modules/grid';
-import {MODULE_IMAGES} from './modules/images';
-import {MODULE_PRODUCTS} from './modules/products';
 
 export const PORTABLE_TEXT = groq`
   ...,

@@ -12,13 +12,15 @@ import clsx from 'clsx';
 import groq from 'groq';
 import {useMemo} from 'react';
 import LoadMoreProducts from '../../components/collection/LoadMoreProducts.client';
+import SortOrderSelect from '../../components/collection/SortOrderSelect.client';
 import Layout from '../../components/global/Layout.server';
 import NotFound from '../../components/global/NotFound.server';
 import CollectionHero from '../../components/heroes/Collection.server';
 import ModuleGrid from '../../components/modules/ModuleGrid.server';
-import SortOrderSelect from '../../components/collection/SortOrderSelect.client';
 import {COLLECTION_PAGE_SIZE} from '../../constants';
-import {COLLECTION_PAGE} from '../../fragments/pages/collection';
+import {COLLECTION_PAGE} from '../../fragments/sanity/pages/collection';
+import {PRODUCT_FIELDS} from '../../fragments/shopify/product';
+import {PRODUCT_VARIANT_FIELDS} from '../../fragments/shopify/productVariant';
 import useSanityQuery from '../../hooks/useSanityQuery';
 import type {SanityCollectionPage} from '../../types';
 import {combineProductsAndModules} from '../../utils/combineProductsAndModules';
@@ -167,6 +169,9 @@ const QUERY_SANITY = groq`
 `;
 
 const QUERY_SHOPIFY = gql`
+  ${PRODUCT_FIELDS}
+  ${PRODUCT_VARIANT_FIELDS}
+
   query CollectionDetails(
     $handle: String!
     $country: CountryCode
@@ -189,40 +194,12 @@ const QUERY_SHOPIFY = gql`
         sortKey: $productSortKey
       ) {
         nodes {
-          handle
-          id
-          options {
-            name
-            values
-          }
-          title
+          ...ProductFields
           variants(first: 1) {
             nodes {
-              availableForSale
-              compareAtPriceV2 {
-                currencyCode
-                amount
-              }
-              id
-              image {
-                altText
-                height
-                id
-                url
-                width
-              }
-              priceV2 {
-                currencyCode
-                amount
-              }
-              selectedOptions {
-                name
-                value
-              }
-              title
+              ...ProductVariantFields
             }
           }
-          vendor
         }
         pageInfo {
           hasNextPage

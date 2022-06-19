@@ -6,6 +6,8 @@ import type {
   Product,
   ProductVariant,
 } from '@shopify/hydrogen/storefront-api-types';
+import {PRODUCT_FIELDS} from '../../../fragments/shopify/product';
+import {PRODUCT_VARIANT_FIELDS} from '../../../fragments/shopify/productVariant';
 import type {
   ProductWithNodes,
   SanityColorTheme,
@@ -69,6 +71,9 @@ export default function ProductAnnotation({children, colorTheme, mark}: Props) {
 }
 
 const QUERY_SHOPIFY = gql`
+  ${PRODUCT_FIELDS}
+  ${PRODUCT_VARIANT_FIELDS}
+
   query product(
     $country: CountryCode
     $id: ID!
@@ -76,39 +81,11 @@ const QUERY_SHOPIFY = gql`
     $variantId: ID!
   ) @inContext(country: $country, language: $language) {
     product: product(id: $id) {
-      handle
-      id
-      options {
-        name
-        values
-      }
-      title
-      vendor
+      ...ProductFields
     }
     productVariant: node(id: $variantId) {
       ... on ProductVariant {
-        availableForSale
-        compareAtPriceV2 {
-          amount
-          currencyCode
-        }
-        id
-        image {
-          altText
-          height
-          id
-          url
-          width
-        }
-        priceV2 {
-          amount
-          currencyCode
-        }
-        selectedOptions {
-          name
-          value
-        }
-        title
+        ...ProductVariantFields
       }
     }
   }

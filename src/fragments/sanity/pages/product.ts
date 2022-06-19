@@ -1,7 +1,7 @@
 import groq from 'groq';
 import {COLOR_THEME} from '../colorTheme';
 import {CUSTOM_PRODUCT_OPTIONS} from '../customProductOptions';
-import {PORTABLE_TEXT} from '../portableText';
+import {PORTABLE_TEXT} from '../portableText/portableText';
 import {SEO_SHOPIFY} from '../seoShopify';
 
 export const PRODUCT_PAGE = groq`

@@ -16,7 +16,9 @@ import NotFound from '../../components/global/NotFound.server';
 import PortableText from '../../components/portableText/PortableText.server';
 import ProductDetails from '../../components/product/Details.client';
 import RelatedProducts from '../../components/product/RelatedProducts.server';
-import {PRODUCT_PAGE} from '../../fragments/pages/product';
+import {PRODUCT_PAGE} from '../../fragments/sanity/pages/product';
+import {PRODUCT_FIELDS} from '../../fragments/shopify/product';
+import {PRODUCT_VARIANT_FIELDS} from '../../fragments/shopify/productVariant';
 import useSanityQuery from '../../hooks/useSanityQuery';
 import type {ProductWithNodes, SanityProductPage} from '../../types';
 
@@ -148,11 +150,13 @@ const QUERY_SANITY = groq`
 `;
 
 const QUERY_SHOPIFY = gql`
+  ${PRODUCT_FIELDS}
+  ${PRODUCT_VARIANT_FIELDS}
+
   query product($country: CountryCode, $id: ID!, $language: LanguageCode)
   @inContext(country: $country, language: $language) {
     product: product(id: $id) {
-      handle
-      id
+      ...ProductFields
       media(first: 20) {
         nodes {
           ... on MediaImage {
@@ -166,68 +170,13 @@ const QUERY_SHOPIFY = gql`
             }
             mediaContentType
           }
-          ... on Video {
-            id
-            mediaContentType
-            previewImage {
-              url
-            }
-            sources {
-              mimeType
-              url
-            }
-          }
-          ... on ExternalVideo {
-            embedUrl
-            host
-            id
-            mediaContentType
-          }
-          ... on Model3d {
-            alt
-            id
-            mediaContentType
-            previewImage {
-              url
-            }
-            sources {
-              url
-            }
-          }
         }
       }
-      options {
-        name
-        values
-      }
-      title
       variants(first: 250) {
         nodes {
-          availableForSale
-          compareAtPriceV2 {
-            amount
-            currencyCode
-          }
-          id
-          image {
-            altText
-            height
-            id
-            url
-            width
-          }
-          priceV2 {
-            amount
-            currencyCode
-          }
-          selectedOptions {
-            name
-            value
-          }
-          title
+          ...ProductVariantFields
         }
       }
-      vendor
     }
   }
 `;

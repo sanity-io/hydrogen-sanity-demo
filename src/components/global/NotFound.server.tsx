@@ -7,15 +7,17 @@ import {
   useShopQuery,
 } from '@shopify/hydrogen';
 import groq from 'groq';
-import {NOT_FOUND_PAGE} from '../../fragments/pages/notFound';
+import {NOT_FOUND_PAGE} from '../../fragments/sanity/pages/notFound';
+import {PRODUCT_FIELDS} from '../../fragments/shopify/product';
+import {PRODUCT_VARIANT_FIELDS} from '../../fragments/shopify/productVariant';
 import useSanityQuery from '../../hooks/useSanityQuery';
 import type {
   CollectionWithNodes,
   ProductWithNodes,
   SanityNotFoundPage,
 } from '../../types';
-import Layout from './Layout.server';
 import ProductPill from '../product/Pill';
+import Layout from './Layout.server';
 
 /**
  * A server component that defines the content to display when a page isn't found (404 error)
@@ -95,6 +97,9 @@ const QUERY_SANITY = groq`
 `;
 
 const QUERY_SHOPIFY = gql`
+  ${PRODUCT_FIELDS}
+  ${PRODUCT_VARIANT_FIELDS}
+
   query NotFoundCollectionProductDetails(
     $country: CountryCode
     $id: ID!
@@ -103,36 +108,12 @@ const QUERY_SHOPIFY = gql`
     collection(id: $id) {
       products(first: 16) {
         nodes {
-          handle
-          id
-          options {
-            name
-            values
-          }
-          title
+          ...ProductFields
           variants(first: 1) {
             nodes {
-              id
-              title
-              availableForSale
-              image {
-                altText
-                height
-                id
-                url
-                width
-              }
-              priceV2 {
-                currencyCode
-                amount
-              }
-              compareAtPriceV2 {
-                currencyCode
-                amount
-              }
+              ...ProductVariantFields
             }
           }
-          vendor
         }
       }
     }
