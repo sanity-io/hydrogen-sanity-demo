@@ -1,281 +1,197 @@
-# Hydrogen starter with Sanity
+# AKVA - An example storefront powered by Sanity + Hydrogen
 
-:warning: **Hydrogen is in developer preview and undergoing frequent changes. This demo is compatible with `@shopify/hydrogen ~= 0.13.x`.** :warning:
+🚨 Hydrogen is in developer preview and undergoing frequent changes 🚨
 
-[Live demo][hydrogen-sanity-demo]
+This demo is compatible with `@shopify/hydrogen ~= 0.24.x`
 
-<p><img src="https://user-images.githubusercontent.com/209129/141310942-c7ed2c08-599b-431b-896d-ceadac46012a.png" width="800" /></p>
+<img src="https://user-images.githubusercontent.com/209129/173065853-77b26be2-dd15-4b4d-8164-850e70247b88.png" width="1000" />
 
-- [About](#about)
-  - [Approach](#approach)
-- [Features](#features)
-  - [Fetching data with useSanityQuery](#fetching-data-with-usesanityquery)
-- [Getting started](#getting-started)
-  - [Requirements](#requirements)
-  - [Installation](#installation)
-  - [Deployment](#deployment)
-- [Caveats](#caveats)
+[Demo][hydrogen-sanity-demo] | [Sanity Studio][sanity-shopify-studio] | [Sanity Connect for Shopify][sanity-connect]
 
 # About
 
-This is a customised [Hydrogen][hydrogen-github] starter that demonstrates how Sanity and Structured Content can be used to elevate your custom Shopify storefronts.
+AKVA is our customized [Hydrogen][hydrogen-github] starter that presents a real-world example of how Sanity and Structured Content can elevate your custom Shopify storefronts.
 
-It is designed to be used alongside our [pre-configured Studio][sanity-shopify-studio] and [Sanity Connect for Shopify][sanity-connect]
+It's designed to be used alongside our [pre-configured Studio][sanity-shopify-studio] and [Sanity Connect for Shopify][sanity-connect], which syncs products and collections from your Shopify storefront to your Sanity dataset.
 
-In addition to traditional PLP + PDPs, it also showcases pages that make extensive use of [Portable Text][sanity-portable-text], allowing for rich editorial that can easily reference your Shopify products in a multitude of ways.
-
-This demo has been designed to work specifically with the document schema defined in our [pre-configured Studio][sanity-shopify-studio]. There you can find more information about general assumptions we've made around the content models driving this demo.
-
-Hydrogen is currently in developer preview. Please note that this starter is not production ready and will be updated as Hydrogen continues to mature.
-
-## Approach
-
-<p>
-<img width="580" alt="Sanity Hydrogen flow" src="https://user-images.githubusercontent.com/209129/141320691-381776dc-87ff-41ac-ad21-21c817cf8d86.jpg" />
-</p>
-
-Beyond improved performance and modern tooling – the true power of custom storefronts lies in having the flexibility to augment your products with data relevant to you.
-
-For some, this could mean associating a particular product to a list of related ingredients, each with their own dedicated page. For others, it could involve creating custom pages that reference multiple products in a rich editorial layout.
-
-Bringing your product data into your Sanity dataset will allow you to wrangle your product data as you see fit, and Sanity Connect for Shopify can handle this process for you without having to write a single line of code.
-
-This starter comes pre-packaged with a [`useSanityQuery`][sanity-hydrogen-plugin] hook that streamlines the process of fetching any Shopify products you may have referenced in your Sanity queries. With it, you can fetch both Sanity and Shopify product data in one convenient call and ensure that you're always fetching the latest product data from Shopify.
+This starter showcases a few patterns you can adopt when creating your own custom storefronts. Use Sanity and Hydrogen to delight customers with rich, shoppable editorial experiences that best tell your story.
 
 # Features
 
-This is a customised Hydrogen starter which adopts many of their [framework conventions and third party libraries][hydrogen-framework]. If you've used the Hydrogen framework before, then you'll feel fairly at home with this starter.
+**[View the feature gallery][about]**
 
-Beyond Hydrogen-specific features, this starter includes:
+This demo adopts many of Hydrogen's [framework conventions and third party libraries][hydrogen-framework]. If you've used Hydrogen then you should hopefully feel at home here.
 
-- Home page customisable gallery, featured collections and products
-- Collection PLPs
-- Basic PDPs
-- Simple support for variant URLs (A [`<LinkProduct>`](src/components/LinkProduct.client.jsx) component takes care of setting Hydrogen server state and formatting variant query params)
-- Editorial pages that support inline, block and margin-level product listing
+This demo uses TypeScript and is still missing a few key features (Account management, [Shopify Analytics][shopify-analytics]) which will be brought in over time.
 
-## Fetching data with useSanityQuery
+# Fetching Sanity data
 
-Hydrogen provides the [`useShopQuery`][hydrogen-use-shop-query] hook which you can use to fetch any information about your shop or products via the [Storefront API][shopify-storefront-api]
+This demo comes with a custom `useSanityQuery` hook that allows you to query your Sanity dataset directly from server components.
 
-On top of this, you have the flexibility to additionally query your Sanity dataset using our [HTTP API][sanity-http-api] or [JavaScript client library][sanity-js-client].
+```js
+// MyServerComponent.server.jsx
+import useSanityQuery from './hooks/useSanityQuery';
 
-However, if you're using Sanity and Shopify together it's highly likely that you want to surface relationships between data across both platforms. E.g.
+const QUERY = `*[_type == 'page' && slug.current == $slug]`;
+const PARAMS = {slug: 'about'};
 
-- You want to display a promotional page which references any number of Shopify products.
-- You want to display a product detail page which also references a number of custom document types, tags and other rich media you've defined in Sanity.
-
-In these instances, trying to determine what Shopify products your Sanity content may be referring to (especially with deeply nested data structures) and crafting two separate queries to grab data from both platforms can be laborious and error prone.
-
-For this reason, we provide a [`useSanityQuery`][sanity-hydrogen-plugin] hook (for GROQ) and `useSanityGraphQLQuery` to help streamline this process.
-
-### Usage
-
-**In your Hydrogen server component:**
-
-```javascript
-// Import the hook
-import useSanityQuery from '../utils/query/useSanityQuery';
-
-// Point to your Sanity project and dataset
-const clientConfig = {
-  projectId: 'yourSanityProjectId',
-  dataset: 'production',
-  apiVersion: 'v2022-01-01',
-};
-
-// Query your data from Sanity as you would normally, making sure this query returns any
-// referenced Shopify product IDs (keyed to either `_ref` or `_id`).
-const {sanityData, shopifyProducts} = useSanityQuery({
-  query: `
-    *[_id == $homeId][0]{
-      ..., 
-      featuredProducts[] {
-        _id,
-        images
-      },
-      hero,
-    }
-  `,
-  params: {homeId: 'homepage'},
-  clientConfig,
-});
-
-// And if prefer to use GraphQL:
-const {sanityData, shopifyProducts} = useSanityGraphQLQuery({
-  query: gql`
-    query homepage($homeId: String!) {
-      home: Home(id: $homeId) {
-        featuredProducts {
-          _id
-          images[] {
-            asset
-          }
-        },
-        hero {
-          title
-        }
-      }
-    }
-  `,
-  variables: {homeId: 'homepage'},
-  clientConfig,
-});
-```
-
-`useSanityQuery` will then return an object with two values:
-
-- `sanityData` - the payload of your original Sanity query
-- `shopifyProducts` - the payload of all Products fetched from the Storefront API in a normalized object (by ID)
-
-```javascript
-// sanityData
-{
-  _type: "homepage",
-  hero: {
-    title: "Fresh out the oven",
-  },
-  featuredProducts: [
-    {
-      _id: "shopifyProduct-7349334187288",
-      images: ...
+export default function MyServerComponent() {
+  const {data, error} = useSanityQuery({
+    // Required
+    query: QUERY,
+    // Optional
+    params: PARAMS,
+    // Optional: pass through any useQuery options
+    hydrogenQueryOptions: {
+      preload: false,
     },
-    {
-      _id: "shopifyProduct-7342335787245",
-      images: ...
-    },
-  ]
-}
-
-// shopifyProducts
-{
-  'shopifyProduct-7349334187288': {
-    compareAtPriceRange: { maxVariantPrice: [Object], minVariantPrice: [Object] },
-    descriptionHtml: '',
-    handle: 'red-tshirt',
-    id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzY2Mzk2Mjk5MjY0ODc=',
-    media: { edges: [Array] },
-    metafields: { edges: [] },
-    priceRange: { maxVariantPrice: [Object], minVariantPrice: [Object] },
-    title: 'Red T-shirt',
-    variants: { edges: [Array] },
-    sellingPlanGroups: { edges: [] }
-  },
-  'shopifyProduct-7342335787245': {
-    compareAtPriceRange: { maxVariantPrice: [Object], minVariantPrice: [Object] },
-    descriptionHtml: '',
-    handle: 'baseball-cap',
-    id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzY2NDAwNTMyNTYyNzk=',
-    media: { edges: [Array] },
-    metafields: { edges: [] },
-    priceRange: { maxVariantPrice: [Object], minVariantPrice: [Object] },
-    title: 'Baseball cap',
-    variants: { edges: [Array] },
-    sellingPlanGroups: { edges: [] }
-  },
+  });
+  return <div>{JSON.stringify(data)}</div>;
 }
 ```
 
-At this point, you now have both your data from Sanity and fresh product data from Storefront API that you can inject right into your Hydrogen [`<ProductProvider>`][hydrogen-product-provider] components to take advantage of their various [Product helper components][hydrogen-product-components].
+[The hook itself][use-sanity-query-hook] is super lightweight - it uses our official [`@sanity/client`][sanity-js-client] library wrapped in a Hydrogen [`useQuery`][hydrogen-use-query] hook to make it suspense-friendly. That's it!
 
-How you choose to combine these two sources of data in your app is a matter of personal preference.
+<details>
+<summary>What happened to <code>hydrogen-plugin-sanity</code>?</summary>
 
-In this demo, we store the result of all `shopifyProducts` in a page-level [`<ProductsProvider>`](src/contexts/ProductsProvider.client.jsx). A [`useProductsContext`](src/contexts/ProductsContext.client.jsx) hook is then used to easily retrieve these products in deeply nested components, such as within Portable Text blocks and annotations.
+We've deprecated this plugin as it promoted conducting larger fetches (at the page level) and using shared context.
 
-### Customising product queries within `useSanityQuery`
+In practice, this was very difficult to reason about and worked against the benefits of using React Server Components.
 
-By default `useSanityQuery` will assume you want fetch products on the Storefront API with [`ProductProviderFragment`][hydrogen-product-provider-fragment] - this will ensure that you get all the product information you need.
+We recommend that you keep fetching logic scoped to the specific components that need them, even if they are deeply nested in Portable Text.
 
-However, there may be cases where you don't need to fetch this much product data. For instance, you may have a promotional page featuring dozens (or hundreds) of products and simply just need to obtain the product title and first variant of each.
+Whilst this will may mean more queries, you'll have _much better_ control over exactly how much you're fetching from the Storefront API as well being able to define component-specific caching / prefetching logic.
 
-In these cases, you can customise `useSanityQuery` by providing a custom callback for `getProductGraphQLFragment`.
+</details>
 
-`getProductGraphQLFragment` receives an object with:
+# Opinions
 
-- `shopifyId`
-- `sanityId`
-- `occurrences` - where in the data structure this product has been found
+We've taken the following opinions with how we've approached this demo.
 
-And it must return either:
+<details>
+<summary><strong>Shopify is the source of truth for non-editorial content</strong></summary>
 
-- `true` - fetching default product data (using [ProductProviderFragment][hydrogen-product-provider-fragment])
-- `false` - avoiding fetching data for this product
-- A string with the GraphQL fragment for that product
+- For products, this includes titles, handles, variant images and product options.
+- For collections, this includes titles and collection images.
 
-### Using `useSanityQuery` to fetch Sanity data only
+</details>
 
-`useSanityQuery` won't make any requests to the Storefront API for products if it can't find any valid references. However, you can specifically opt-out of this behaviour by providing a custom `getProductGraphQLFragment` function which always returns false.
+<details>
+<summary><strong>Shopify data stored in our Sanity dataset is used to improve the editor experience</strong></summary>
 
-```javascript
-const {sanityData} = useSanityQuery({
-  query: `
-    *[_type == "page.legal"][0] {
-      slug.current == $handle
-    }
-  `,
-  params: {handle},
-  // No need to query Shopify product data
-  getProductGraphQLFragment: () => false,
-});
-```
+- This allows us to display things like product status, prices and even inventory levels right in our Sanity Studio.
+- Our application always fetches from Shopify's Storefront API at runtime to ensure we have the freshest data possible, especially important when dealing with fast-moving inventory.
+
+</details>
+
+<details>
+<summary><strong>Collections are managed entirely by Shopify</strong></summary>
+
+- Shopify is used to handle collection rules and sort orders.
+
+</details>
+
+<details>
+<summary><strong>Product options are customized in Sanity</strong></summary>
+
+- Data added to specific product options (for example, associating a hex value with the color 'Red', or a string value with the Poster size 'A2') is done in Sanity.
+- We treat this quite simply and manage these in a dedicated field within the `Settings` section of our studio. We also make sure to query this field whenever querying products in our Sanity dataset.
+- This could alternatively be managed with Shopify's metatags.
+
+</details>
+
+<details>
+<summary><strong>We don't surface Shopify HTML descriptions and metatags</strong></summary>
+
+- For this demo, Shopify tags are used purely as a non-visual organizational tool (to drive automated collections) and we use Portable Text over Shopify's description HTML field. However, Hydrogen makes it very easy to surface these in your application if needed.
+
+</details>
+
+<details>
+<summary><strong>Non-product (regular) pages are managed entirely by Sanity</strong></summary>
+
+- Shopify pages and blog posts (associated with the Online Store) channel aren't used in this demo. A dedicated `page` document type in Sanity has been created for this purpose.
+
+</details>
+
+<details>
+<summary><strong>We query our Sanity dataset when building sitemap.xml entries</strong></summary>
+
+- We use Sanity as the source of truth when determining whether a product or collection page is _visible_.
+- This gives us the flexibility to add custom logic to control whether certain pages should be visible or not. For example, if you wanted to hide product pages within a specific date range, or hide collections that didn't have any editorial modules assigned to them.
+
+</details>
 
 # Getting started
 
 ## Requirements:
 
-- Node.js 14.0 or higher
+- Node.js version 16.5.0 or higher
+- Yarn
 
 ## Installation
 
-1. Update the following configuration files (optional)
+1.  Update the following configuration files (optional)
 
-   - **`sanity.config.js`**: point to your Sanity project's `dataset` and `projectId`
-   - **`shopify.config.js`**: point to your Shopify storefront's `storeDomain` and `storefrontToken`
+    - **`sanity.config.ts`**: point to your Sanity project's `dataset` and `projectId`
+    - **`hydrogen.config.ts`**: point to your Shopify storefront's `storeDomain` and `storefrontToken`
 
-   You can skip this step if you'd like to run the starter with our test data.
+    You can skip this step if you'd like to run the starter with our test data.
 
-2. Install dependencies and start the development server
+    Remember to update your shop's domain and Storefront API token!
 
-```sh
-yarn install
-yarn dev
+2.  Install dependencies and start the development server
+
+    ```bash
+    yarn
+    yarn dev
+    ```
+
+3.  Visit the development environment running at http://localhost:3000.
+
+## Previewing a production build
+
+To run a local preview of your Hydrogen app in an environment similar to Oxygen, build your Hydrogen app and then run `yarn preview`:
+
+```bash
+yarn build
+yarn preview
 ```
 
-3. Visit the development environment running at http://localhost:3000.
+## Building for production
+
+```bash
+yarn build
+```
+
+Then, you can run a local `server.js` using the production build with:
+
+```bash
+yarn serve
+```
 
 ## Deployment
 
-Please see [Hydrogen's documentation on deployment][hydrogen-framework-deployment]
-
-# Caveats
-
-This starter is a work in progress and is not production ready. We aim to build on this example as Hydrogen continues to mature.
-
-Some points to be mindful of:
-
-- This doesn't provide any [custom caching][hydrogen-framework-cache] rules, and client-side caching is currently disabled on the demo site
-- This doesn't yet come with a [dynamic sitemap][hydrogen-framework-sitemap]
-- Affordances for screen readers are currently absent
+See [Hydrogen's documentation on deployment][hydrogen-framework-deployment]
 
 # License
 
-This repository is published under the [MIT](LICENSE) license.
+This repository is published under the [MIT][license] license.
 
+[about]: https://hydrogen-sanity-demo.com/pages/about
 [hydrogen-sanity-demo]: https://hydrogen-sanity-demo.com
 [hydrogen-github]: https://github.com/Shopify/hydrogen
 [hydrogen-framework]: https://shopify.dev/api/hydrogen/framework
-[hydrogen-framework-cache]: https://shopify.dev/api/hydrogen/framework/cache
 [hydrogen-framework-deployment]: https://shopify.dev/custom-storefronts/hydrogen/deployment
-[hydrogen-framework-sitemap]: https://shopify.dev/api/hydrogen/framework/pages#create-a-custom-sitemap
 [hydrogen-product-components]: https://shopify.dev/api/hydrogen/components/product-variant
-[hydrogen-product-provider]: https://shopify.dev/api/hydrogen/components/product-variant/productprovider
-[hydrogen-product-provider-fragment]: https://shopify.dev/api/hydrogen/components/product-variant/productprovider#graphql-fragment
-[hydrogen-use-shop-query]: https://shopify.dev/api/hydrogen/hooks/global/useshopquery
+[hydrogen-use-query]: https://shopify.dev/api/hydrogen/hooks/global/usequery
+[license]: https://github.com/sanity-io/sanity/blob/next/LICENSE
 [sanity-connect]: https://www.sanity.io/docs/sanity-connect-for-shopify
-[sanity-http-api]: https://www.sanity.io/docs/http-api
-[sanity-hydrogen-plugin]: https://github.com/sanity-io/hydrogen-plugin-sanity
 [sanity-js-client]: https://www.sanity.io/docs/js-client
 [sanity-portable-text]: https://www.sanity.io/guides/introduction-to-portable-text
 [sanity-shopify-studio]: https://github.com/sanity-io/sanity-shopify-studio
 [sanity-structured-content-patterns]: https://www.sanity.io/guides/structured-content-patterns-for-e-commerce
 [shopify-storefront-api]: https://shopify.dev/api/storefront
+[shopify-analytics]: https://shopify.dev/api/hydrogen/components/framework/shopifyanalytics
+[use-sanity-query-hook]: ./src/hooks/useSanityQuery.ts

@@ -2,55 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
-.portableText ol {
-  list-style-position: inside;
-  list-style-type: decimal;
-  margin-bottom: 1rem;
+@layer base {
+  html {
+    @apply font-medium;
+    @apply text-offBlack;
+    @apply text-md;
+  }
 }
 
-.portableText ul {
-  list-style-position: inside;
-  list-style-type: disc;
-  margin-bottom: 1rem;
+@layer components {
+  .linkTextNavigation {
+    @apply decoration-[0.1em] underline-offset-[0.1em] hover:underline;
+  }
+
+  .select {
+    align-items: center;
+    background-color: theme('colors.lightGray');
+    border-radius: theme('borderRadius.full');
+    color: theme('colors.offBlack');
+    display: flex;
+    font-size: theme('fontSize.sm');
+    font-weight: theme('fontWeight.bold');
+    height: 2.5rem;
+    justify-content: center;
+    letter-spacing: theme('letterSpacing.normal');
+    overflow: hidden;
+    padding: theme('padding.4');
+    transition: all 200ms ease-out;
+  }
+
+  .select:disabled {
+    color: theme('colors.darkGray');
+  }
+
+  .select:hover:not(:disabled) {
+    opacity: 0.9;
+  }
 }
 
-strong {
-  font-weight: 500;
+* {
+  font-variant-ligatures: none;
 }
 
-/* Embla-carousel */
+html {
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
 
-.embla {
+.embla__slide {
   position: relative;
-}
-
-.embla-viewport {
-  overflow: hidden;
-  width: 100%;
-}
-
-.embla-viewport.is-draggable {
-  cursor: move;
-  cursor: grab;
-}
-
-.embla-viewport.is-dragging {
-  cursor: grabbing;
-}
-
-.embla-container {
-  display: flex;
-  user-select: none;
-  -webkit-touch-callout: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.embla-slide {
-  position: relative;
-  min-width: 100%;
-}
-
-.embla-slide-inner {
-  position: relative;
-  overflow: hidden;
+  flex: 0 0 100%;
 }

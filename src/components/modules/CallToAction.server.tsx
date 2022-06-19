@@ -1,0 +1,97 @@
+import clsx from 'clsx';
+import sanityConfig from '../../../sanity.config';
+import type {
+  SanityAssetImage,
+  SanityModuleCallToAction,
+  SanityProductWithVariant,
+} from '../../types';
+import Link from '../elements/Link';
+import ProductHero from '../product/ProductHero.server';
+import SanityImage from '../media/SanityImage.client';
+
+type Props = {
+  module: SanityModuleCallToAction;
+};
+
+export default function CallToActionModule({module}: Props) {
+  return (
+    <div
+      className={clsx(
+        'flex gap-5 md:gap-[5vw]', //
+        module.layout === 'left' && 'flex-col md:flex-row',
+        module.layout === 'right' && 'flex-col-reverse md:flex-row-reverse',
+      )}
+    >
+      <div className="relative aspect-[864/485] grow">
+        {module.content && <ModuleContent content={module.content} />}
+      </div>
+
+      <div
+        className={clsx(
+          'mr-auto flex shrink-0 flex-col items-start', //
+          'md:max-w-[20rem]',
+        )}
+      >
+        {/* Title */}
+        <div
+          className={clsx(
+            'text-xl font-bold', //
+            'md:text-2xl',
+          )}
+        >
+          {module.title}
+        </div>
+
+        {/* Body */}
+        {module.body && (
+          <div className="mt-4 leading-paragraph">{module.body}</div>
+        )}
+
+        {/* Link */}
+        {module.link && (
+          <div className="mt-4">
+            <Link
+              className="font-bold underline hover:no-underline"
+              link={module.link}
+            >
+              {module.link.title}
+            </Link>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ModuleContent({
+  content,
+}: {
+  content: SanityAssetImage | SanityProductWithVariant;
+}) {
+  switch (content?._type) {
+    case 'image': {
+      return (
+        <SanityImage
+          alt={content?.altText}
+          crop={content?.crop}
+          dataset={sanityConfig.dataset}
+          hotspot={content?.hotspot}
+          layout="fill"
+          objectFit="cover"
+          projectId={sanityConfig.projectId}
+          sizes="100vw"
+          src={content?.asset._ref}
+        />
+      );
+    }
+    case 'productWithVariant': {
+      if (!content?.gid || !content.variantGid) {
+        return null;
+      }
+
+      return <ProductHero gid={content?.gid} variantGid={content.variantGid} />;
+    }
+    default:
+      return null;
+  }
+}
