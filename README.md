@@ -179,8 +179,8 @@ See [Hydrogen's documentation on deployment][hydrogen-framework-deployment]
 
 This repository is published under the [MIT][license] license.
 
-[about]: https://hydrogen-app-c6009341bd2bf136fc40.o2.myshopify.dev/pages/about
-[hydrogen-sanity-demo]: https://hydrogen-app-c6009341bd2bf136fc40.o2.myshopify.dev/
+[about]: https://hydrogen-sanity-demo.com/pages/about
+[hydrogen-sanity-demo]: https://hydrogen-sanity-demo.com
 [hydrogen-github]: https://github.com/Shopify/hydrogen
 [hydrogen-framework]: https://shopify.dev/api/hydrogen/framework
 [hydrogen-framework-deployment]: https://shopify.dev/custom-storefronts/hydrogen/deployment
