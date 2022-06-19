@@ -4,7 +4,7 @@ import type {
   MediaConnection,
   Product,
   ProductVariantConnection,
-} from '@shopify/hydrogen/storefront-api-types';
+} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 
 export type CollectionWithNodes = Partial<Omit<Collection, 'products'>> & {
   products: {

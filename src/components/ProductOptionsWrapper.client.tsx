@@ -1,5 +1,5 @@
 import {ProductOptionsProvider} from '@shopify/hydrogen';
-import type {ProductVariant} from '@shopify/hydrogen/storefront-api-types';
+import type {ProductVariant} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import {ReactNode} from 'react';
 import type {ProductWithNodes} from '../types';
 

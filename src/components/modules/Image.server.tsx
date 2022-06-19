@@ -2,7 +2,7 @@ import {gql, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
 import type {
   Product,
   ProductVariant,
-} from '@shopify/hydrogen/storefront-api-types';
+} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import sanityConfig from '../../../sanity.config';
 import {DEFAULT_BUTTON_STYLES} from '../../constants';

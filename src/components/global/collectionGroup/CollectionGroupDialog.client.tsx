@@ -1,6 +1,5 @@
-// @ts-expect-error node16 workaround
 import {Dialog, Transition} from '@headlessui/react';
-import type {Collection} from '@shopify/hydrogen/storefront-api-types';
+import type {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import {Fragment, useState} from 'react';
 import type {SanityCollectionGroup} from '../../../types';

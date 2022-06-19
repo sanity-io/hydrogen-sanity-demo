@@ -2,7 +2,7 @@ import {MediaFile, useProductOptions} from '@shopify/hydrogen';
 import {
   MediaContentType,
   MediaImage,
-} from '@shopify/hydrogen/storefront-api-types';
+} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import useEmblaCarousel from 'embla-carousel-react';
 import {useEffect} from 'react';
 import type {ProductWithNodes} from '../../types';

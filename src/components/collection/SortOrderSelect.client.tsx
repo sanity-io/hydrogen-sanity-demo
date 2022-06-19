@@ -1,5 +1,4 @@
 import {useState, Suspense, useMemo} from 'react';
-// @ts-expect-error node16 workaround
 import {Listbox} from '@headlessui/react';
 import SpinnerIcon from '../icons/Spinner';
 import RadioIcon from '../icons/Radio';
@@ -109,7 +108,7 @@ export default function SortOrderSelect({initialSortOrder}: Props) {
 
   return (
     <Listbox onChange={handleChange} value={selectedSortOption}>
-      {({open}: {open: boolean}) => {
+      {({open}) => {
         setTimeout(() => setListboxOpen(open));
         return (
           <div className="relative inline-flex">
@@ -169,7 +168,7 @@ export function SortOptions({
         const isSelected = sortOption === selectedSortOption;
         return (
           <Listbox.Option key={sortOption.name} value={sortOption}>
-            {({active}: {active: boolean}) => (
+            {({active}) => (
               <div className={getClassName(active)}>
                 <span className="mr-8">{sortOption.name}</span>
                 <RadioIcon checked={isSelected} hovered={active} />

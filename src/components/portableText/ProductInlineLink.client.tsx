@@ -5,8 +5,7 @@ import {
   ProductOptionsProvider,
   useProductOptions,
 } from '@shopify/hydrogen';
-import type {ProductVariant} from '@shopify/hydrogen/storefront-api-types';
-// @ts-expect-error node16 workaround
+import type {ProductVariant} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import Tippy from '@tippyjs/react/headless';
 import clsx from 'clsx';
 import {ReactNode, useMemo} from 'react';

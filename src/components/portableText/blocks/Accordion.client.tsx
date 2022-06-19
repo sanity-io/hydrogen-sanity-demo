@@ -1,6 +1,4 @@
-// @ts-expect-error node16 workaround
 import {Disclosure} from '@headlessui/react';
-// @ts-expect-error node16 workaround
 import type {PortableTextBlock} from '@portabletext/types';
 import clsx from 'clsx';
 import type {SanityModuleAccordion} from '../../../types';
@@ -22,7 +20,7 @@ export default function AccordionBlock({node}: Props) {
     >
       {node?.groups?.map((group) => (
         <Disclosure key={group._key}>
-          {({open}: {open: boolean}) => (
+          {({open}) => (
             <div className="flex flex-col border-b border-b-gray">
               <Disclosure.Button
                 className={clsx(

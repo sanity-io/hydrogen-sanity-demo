@@ -1,4 +1,4 @@
-import type {Collection} from '@shopify/hydrogen/storefront-api-types';
+import type {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import {useCallback} from 'react';
 import type {SanityCollectionGroup} from '../../../types';

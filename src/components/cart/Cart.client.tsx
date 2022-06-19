@@ -1,4 +1,3 @@
-// @ts-expect-error node16 workaround
 import {Dialog, Transition} from '@headlessui/react';
 import {
   CartCheckoutButton,

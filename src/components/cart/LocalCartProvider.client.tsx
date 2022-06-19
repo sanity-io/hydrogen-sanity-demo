@@ -1,5 +1,5 @@
 import {CartProvider as ShopifyCartProvider} from '@shopify/hydrogen';
-import type {CartBuyerIdentityInput} from '@shopify/hydrogen/storefront-api-types';
+import type {CartBuyerIdentityInput} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import {ReactNode, useCallback} from 'react';
 import CartUIProvider, {useCartUI} from './CartUIProvider.client';
 

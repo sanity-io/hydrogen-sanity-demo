@@ -39,7 +39,7 @@ export default function PortableText({
           annotationLinkEmail: LinkEmailAnnotation,
           annotationLinkExternal: LinkExternalAnnotation,
           annotationLinkInternal: LinkInternalAnnotation,
-          annotationProduct: (props: any) => (
+          annotationProduct: (props) => (
             <ProductAnnotation colorTheme={colorTheme} {...props} />
           ),
         },
@@ -47,7 +47,7 @@ export default function PortableText({
         types: {
           block: Block,
           blockAccordion: AccordionBlock,
-          blockCallout: (props: any) => (
+          blockCallout: (props) => (
             <CalloutBlock
               centered={centered}
               colorTheme={colorTheme}
@@ -55,7 +55,7 @@ export default function PortableText({
             />
           ),
           blockGrid: GridBlock,
-          blockImages: (props: any) => (
+          blockImages: (props) => (
             <ImagesBlock centered={centered} {...props} />
           ),
           blockProducts: ProductsBlock,

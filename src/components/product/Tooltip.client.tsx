@@ -2,7 +2,7 @@ import {Image, Link, useProductOptions} from '@shopify/hydrogen';
 import type {
   Image as ImageType,
   MoneyV2,
-} from '@shopify/hydrogen/storefront-api-types';
+} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import type {ProductWithNodes} from '../../types';
 import {

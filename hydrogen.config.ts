@@ -1,9 +1,9 @@
+import {defineConfig} from '@shopify/hydrogen/config';
 import {
   CookieSessionStorage,
-  defineConfig,
   PerformanceMetricsServerAnalyticsConnector,
   ShopifyServerAnalyticsConnector,
-} from '@shopify/hydrogen/config';
+} from '@shopify/hydrogen';
 
 export default defineConfig({
   routes: '/src/routes',

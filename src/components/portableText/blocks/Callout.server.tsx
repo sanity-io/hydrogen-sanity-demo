@@ -1,4 +1,3 @@
-// @ts-expect-error node16 workaround
 import type {PortableTextBlock} from '@portabletext/types';
 import clsx from 'clsx';
 import type {SanityColorTheme, SanityModuleCallout} from '../../../types';

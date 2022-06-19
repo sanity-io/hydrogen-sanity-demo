@@ -8,7 +8,7 @@ import {
   useShop,
   useShopQuery,
 } from '@shopify/hydrogen';
-import type {Product} from '@shopify/hydrogen/storefront-api-types';
+import type {Product} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
 import clsx from 'clsx';
 import groq from 'groq';
 import Layout from '../../components/global/Layout.server';
