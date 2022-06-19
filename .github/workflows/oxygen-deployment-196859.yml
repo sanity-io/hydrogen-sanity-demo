@@ -1,7 +1,7 @@
 # Don't change the line below!
-#! oxygen_storefront_id: 33019
+#! oxygen_storefront_id: 196859
 
-name: Storefront 33019
+name: Storefront 196859
 on: [push]
 
 permissions:
@@ -32,7 +32,6 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-
       - name: Install dependencies
         id: 'install-dependencies'
         run: yarn
@@ -41,8 +40,8 @@ jobs:
         id: deploy
         uses: shopify/oxygenctl-action@v4
         with:
-          oxygen_deployment_token: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_33019 }}
-          build_command: "HYDROGEN_ASSET_BASE_URL=$OXYGEN_ASSET_BASE_URL yarn build"
+          oxygen_deployment_token: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_196859 }}
+          build_command: 'HYDROGEN_ASSET_BASE_URL=$OXYGEN_ASSET_BASE_URL yarn build'
 
       # Create GitHub Deployment
       - name: Create GitHub Deployment
