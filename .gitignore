@@ -78,3 +78,6 @@ jspm_packages/
 
 # Vite output
 dist
+
+# Mac OS finder cache files
+.DS_Store
