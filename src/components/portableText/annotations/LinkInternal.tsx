@@ -1,7 +1,6 @@
-import type {
-  PortableTextBlock,
-  PortableTextMarkDefinition,
-} from '@portabletext/types';
+// prettier-ignore
+// @ts-expect-error node16 workaround
+import type { PortableTextBlock, PortableTextMarkDefinition } from '@portabletext/types';
 import {Link} from '@shopify/hydrogen';
 import clsx from 'clsx';
 

@@ -1,3 +1,4 @@
+// @ts-expect-error node16 workaround
 import {Listbox} from '@headlessui/react';
 import {fetchSync, useCountry} from '@shopify/hydrogen';
 import clsx from 'clsx';
@@ -39,7 +40,7 @@ export default function CountrySelect({align = 'center'}: Props) {
 
   return (
     <Listbox onChange={setCountry} value={selectedCountry}>
-      {({open}) => {
+      {({open}: {open: boolean}) => {
         setTimeout(() => setListboxOpen(open));
         return (
           <div className="relative inline-flex">
@@ -111,7 +112,7 @@ export function Countries({
         const isSelected = country.isoCode === selectedCountry?.isoCode;
         return (
           <Listbox.Option key={country.isoCode} value={country}>
-            {({active}) => (
+            {({active}: {active: boolean}) => (
               <div className={getClassName(active)}>
                 <span className="mr-8">{country.name}</span>
                 <RadioIcon checked={isSelected} hovered={active} />

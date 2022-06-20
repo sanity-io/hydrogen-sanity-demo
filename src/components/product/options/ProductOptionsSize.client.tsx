@@ -1,4 +1,5 @@
 import {useProductOptions} from '@shopify/hydrogen';
+// @ts-expect-error node16 workaround
 import Tippy from '@tippyjs/react/headless';
 import type {SanityCustomProductOptionSize} from '../../../types';
 import OptionButton from '../../elements/OptionButton';

@@ -1,5 +1,5 @@
 import {gql, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
-import type {Collection} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import type {Collection} from '@shopify/hydrogen/storefront-api-types';
 import {PRODUCT_FIELDS} from '../../../fragments/shopify/product';
 import {PRODUCT_VARIANT_FIELDS} from '../../../fragments/shopify/productVariant';
 import type {SanityCollectionGroup} from '../../../types';

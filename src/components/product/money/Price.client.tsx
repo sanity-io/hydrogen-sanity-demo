@@ -1,5 +1,5 @@
 import {useMoney} from '@shopify/hydrogen';
-import type {MoneyV2} from '@shopify/hydrogen/dist/esnext/storefront-api-types';
+import type {MoneyV2} from '@shopify/hydrogen/storefront-api-types';
 
 /**
  * A client component that defines the localized value of a product

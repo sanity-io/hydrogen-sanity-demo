@@ -1,3 +1,4 @@
+// @ts-expect-error node16 workaround
 import type {PortableTextBlock} from '@portabletext/types';
 import clsx from 'clsx';
 import {ReactNode} from 'react';
