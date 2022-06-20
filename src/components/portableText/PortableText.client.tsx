@@ -1,5 +1,6 @@
 import BlockContent from '@sanity/block-content-to-react';
 import type {Block as SanityBlock} from '@sanity/types';
+import clsx from 'clsx';
 import LinkEmailAnnotation from './annotations/LinkEmail';
 import LinkExternalAnnotation from './annotations/LinkExternal';
 import LinkInternalAnnotation from './annotations/LinkInternal';
@@ -15,7 +16,7 @@ export default function PortableText({blocks, className}: Props) {
   return (
     <BlockContent
       blocks={blocks}
-      className={className}
+      className={clsx('portableText', className)}
       renderContainerOnSingleChild
       serializers={{
         // Lists
