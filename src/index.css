@@ -53,3 +53,23 @@ html {
   position: relative;
   flex: 0 0 100%;
 }
+
+ol {
+  list-style-type: decimal;
+}
+ol ol {
+  list-style-type: lower-alpha;
+}
+ol ol ol {
+  list-style-type: lower-roman;
+}
+
+ul {
+  list-style: disc outside;
+}
+ul ul {
+  list-style: circle outside;
+}
+ul ul ul {
+  list-style: square outside;
+}
