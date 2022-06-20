@@ -9,7 +9,7 @@ export default defineConfig({
   routes: '/src/routes',
   shopify: {
     storeDomain: 'oxygenator.myshopify.com',
-    storefrontToken: '87f9f62622ee57ee7fe8beaf50ecedb9',
+    storefrontToken: '70faab4b482211c4167f94181a4ba4ed',
     storefrontApiVersion: '2022-07',
   },
   session: CookieSessionStorage('__session', {
