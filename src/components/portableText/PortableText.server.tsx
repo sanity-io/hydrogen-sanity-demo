@@ -5,11 +5,12 @@ import LinkEmailAnnotation from './annotations/LinkEmail';
 import LinkExternalAnnotation from './annotations/LinkExternal';
 import LinkInternalAnnotation from './annotations/LinkInternal';
 import ProductAnnotation from './annotations/Product.server';
-import Block from './blocks/Block';
 import AccordionBlock from './blocks/Accordion.client';
+import Block from './blocks/Block';
 import CalloutBlock from './blocks/Callout.server';
 import GridBlock from './blocks/Grid.server';
 import ImagesBlock from './blocks/Images.server';
+import InstagramBlock from './blocks/Instagram.server';
 import ListBlock from './blocks/List';
 import ProductsBlock from './blocks/Products.server';
 
@@ -58,6 +59,7 @@ export default function PortableText({
           blockImages: (props: any) => (
             <ImagesBlock centered={centered} {...props} />
           ),
+          blockInstagram: InstagramBlock,
           blockProducts: ProductsBlock,
         },
       }}
