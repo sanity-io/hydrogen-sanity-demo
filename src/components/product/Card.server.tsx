@@ -37,7 +37,7 @@ export default function ProductCard({
       <div
         className={clsx([
           imageAspectClassName,
-          'relative flex items-center justify-center overflow-hidden rounded bg-lightGray object-cover duration-500 ease-out',
+          'relative flex items-center justify-center overflow-hidden rounded bg-lightGray object-cover transition-[border-radius] duration-500 ease-out',
           'hover:rounded-xl',
         ])}
       >

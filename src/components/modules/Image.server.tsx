@@ -132,7 +132,7 @@ const ImageContent = ({module}: Props) => {
   return (
     <div
       className={clsx(
-        'relative overflow-hidden rounded duration-500 ease-out',
+        'relative overflow-hidden rounded transition-[border-radius] duration-500 ease-out',
         'group-hover:rounded-xl',
       )}
     >
