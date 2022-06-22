@@ -18,9 +18,9 @@ This starter showcases a few patterns you can adopt when creating your own custo
 
 **[View the feature gallery][about]**
 
-This demo adopts many of Hydrogen's [framework conventions and third-party libraries][hydrogen-framework]. If you've used Hydrogen then you should hopefully feel at home here.
+This TypeScript demo adopts many of Hydrogen's [framework conventions and third-party libraries][hydrogen-framework]. If you've used Hydrogen then you should hopefully feel at home here.
 
-This demo uses TypeScript and is still missing a few key features (Account management, [Shopify Analytics][shopify-analytics]) which will be brought in over time.
+Account management is currently absent from this demo but will be introduced at a later date.
 
 # Fetching Sanity data
 
