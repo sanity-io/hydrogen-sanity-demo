@@ -1,4 +1,4 @@
-import {gql, Image, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
+import {gql, Image, useLocalization, useShopQuery} from '@shopify/hydrogen';
 import type {
   Product,
   ProductVariant,
@@ -21,8 +21,10 @@ export default function ProductHero({gid, variantGid}: Props) {
   // Conditionally fetch Shopify document
   let storefrontProduct;
   if (gid && variantGid) {
-    const {countryCode = 'US'} = useSession();
-    const {languageCode} = useShop();
+    const {
+      language: {isoCode: languageCode},
+      country: {isoCode: countryCode},
+    } = useLocalization();
     const {data} = useShopQuery<ShopifyPayload>({
       query: QUERY_SHOPIFY,
       variables: {

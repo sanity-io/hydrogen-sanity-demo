@@ -1,13 +1,15 @@
-// @ts-expect-error node16 workaround
+// @ts-expect-error incompatibility with node16 resolution
 import {Listbox} from '@headlessui/react';
-import {fetchSync, useCountry} from '@shopify/hydrogen';
+import {fetchSync, useLocalization} from '@shopify/hydrogen';
+import type {
+  Country,
+  CountryCode,
+} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
-import {Suspense, useCallback, useState} from 'react';
+import {Suspense, useCallback, useMemo, useState} from 'react';
 import {ChevronDownIcon} from '../icons/ChevronDown';
 import RadioIcon from '../icons/Radio';
 import SpinnerIcon from '../icons/Spinner';
-
-type Country = ReturnType<typeof useCountry>[number];
 
 /**
  * A client component that selects the appropriate country to display for products on a website
@@ -19,27 +21,39 @@ type Props = {
 
 export default function CountrySelect({align = 'center'}: Props) {
   const [listboxOpen, setListboxOpen] = useState(false);
-  const [selectedCountry] = useCountry();
+  const {
+    country: {isoCode},
+  } = useLocalization();
+
+  const currentCountry = useMemo<{name: string; isoCode: CountryCode}>(() => {
+    const regionNamesInEnglish = new Intl.DisplayNames(['en'], {
+      type: 'region',
+    });
+
+    return {
+      name: regionNamesInEnglish.of(isoCode)!,
+      isoCode: isoCode as CountryCode,
+    };
+  }, [isoCode]);
 
   const setCountry = useCallback((country: Country) => {
     if (!country) {
       return;
     }
-    const {isoCode, name} = country;
     fetch(`/api/countries`, {
-      body: JSON.stringify({isoCode, name}),
+      body: JSON.stringify({isoCode: country.isoCode, name: country.name}),
       method: 'POST',
     }).then(() => {
       window.location.reload();
     });
   }, []);
 
-  if (!selectedCountry) {
+  if (!currentCountry) {
     return null;
   }
 
   return (
-    <Listbox onChange={setCountry} value={selectedCountry}>
+    <Listbox onChange={setCountry} value={currentCountry}>
       {({open}: {open: boolean}) => {
         setTimeout(() => setListboxOpen(open));
         return (
@@ -50,7 +64,7 @@ export default function CountrySelect({align = 'center'}: Props) {
                 'hover:bg-opacity-10',
               )}
             >
-              <span className="mr-2">{selectedCountry.name}</span>
+              <span className="mr-2">{currentCountry.name}</span>
               <ChevronDownIcon className={clsx(open && 'rotate-180')} />
             </Listbox.Button>
 
@@ -72,7 +86,7 @@ export default function CountrySelect({align = 'center'}: Props) {
                     }
                   >
                     <Countries
-                      selectedCountry={selectedCountry}
+                      selectedCountry={currentCountry}
                       getClassName={(active: boolean) => {
                         return clsx([
                           'p-3 flex justify-between items-center text-left font-bold text-sm cursor-pointer whitespace-nowrap',
@@ -96,15 +110,9 @@ export function Countries({
   selectedCountry,
 }: {
   getClassName: (active: boolean) => string;
-  selectedCountry: Country;
+  selectedCountry: Pick<Country, 'isoCode' | 'name'>;
 }) {
-  const countries: {
-    currency: {
-      isoCode: string;
-    };
-    isoCode: string;
-    name: string;
-  }[] = fetchSync('/api/countries').json();
+  const countries: Country[] = fetchSync('/api/countries').json();
 
   return (
     <>

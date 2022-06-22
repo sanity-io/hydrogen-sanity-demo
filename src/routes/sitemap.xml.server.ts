@@ -1,12 +1,26 @@
 import sanityClient from '@sanity/client';
+import type {HydrogenRequest} from '@shopify/hydrogen';
 import groq from 'groq';
 import sanityConfig from '../../sanity.config';
 
+type SitemapPage = {
+  _updatedAt: string;
+  imageUrl: string;
+  url: string;
+};
+
+type SanityPayload = {
+  collections: SitemapPage[];
+  home: SitemapPage;
+  pages: SitemapPage[];
+  products: SitemapPage[];
+};
+
 const client = sanityClient(sanityConfig);
 
-export async function api(request) {
+export async function api(request: HydrogenRequest) {
   const baseUrl = new URL(request.url).origin;
-  const sanityData = await client.fetch(QUERY_SANITY, {baseUrl});
+  const sanityData = await client.fetch<SanityPayload>(QUERY_SANITY, {baseUrl});
 
   return new Response(shopSitemap(sanityData, baseUrl), {
     headers: {
@@ -17,7 +31,7 @@ export async function api(request) {
   });
 }
 
-function shopSitemap(data, baseUrl) {
+function shopSitemap(data: SanityPayload, baseUrl: string) {
   const {collections, home, pages, products} = data;
 
   const homePage = {
@@ -66,11 +80,25 @@ function shopSitemap(data, baseUrl) {
       xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
       xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
     >
-      ${allPages.map((url) => renderUrlTag(url)).join('')}
+      ${allPages.map((page) => renderUrlTag(page)).join('')}
     </urlset>`;
 }
 
-function renderUrlTag({url, lastMod, changeFreq, image}) {
+function renderUrlTag({
+  url,
+  lastMod,
+  changeFreq,
+  image,
+}: {
+  url: string;
+  lastMod?: string;
+  changeFreq?: string;
+  image?: {
+    url: string;
+    title?: string;
+    caption?: string;
+  };
+}) {
   return `
     <url>
       <loc>${url}</loc>

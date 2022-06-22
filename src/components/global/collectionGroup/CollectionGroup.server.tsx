@@ -1,4 +1,4 @@
-import {gql, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
+import {gql, useLocalization, useShopQuery} from '@shopify/hydrogen';
 import type {Collection} from '@shopify/hydrogen/storefront-api-types';
 import {PRODUCT_FIELDS} from '../../../fragments/shopify/product';
 import {PRODUCT_VARIANT_FIELDS} from '../../../fragments/shopify/productVariant';
@@ -15,8 +15,10 @@ type ShopifyPayload = {
 
 export default function CollectionGroup({collectionGroup}: Props) {
   const collectionGid = collectionGroup?.collectionProducts?.gid;
-  const {countryCode = 'US'} = useSession();
-  const {languageCode} = useShop();
+  const {
+    language: {isoCode: languageCode},
+    country: {isoCode: countryCode},
+  } = useLocalization();
 
   if (!collectionGid) {
     return null;

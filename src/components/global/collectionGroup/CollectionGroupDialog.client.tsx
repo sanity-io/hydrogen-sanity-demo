@@ -1,4 +1,4 @@
-// @ts-expect-error node16 workaround
+// @ts-expect-error incompatibility with node16 resolution
 import {Dialog, Transition} from '@headlessui/react';
 import type {Collection} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';

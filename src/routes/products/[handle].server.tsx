@@ -2,10 +2,9 @@ import {
   gql,
   Seo,
   ShopifyAnalyticsConstants,
+  useLocalization,
   useRouteParams,
   useServerAnalytics,
-  useSession,
-  useShop,
   useShopQuery,
 } from '@shopify/hydrogen';
 import type {Product} from '@shopify/hydrogen/storefront-api-types';
@@ -48,8 +47,11 @@ export default function ProductRoute() {
   // Conditionally fetch Shopify document
   let storefrontProduct: ProductWithNodes | null = null;
   if (sanityProduct?.gid) {
-    const {languageCode} = useShop();
-    const {countryCode = 'US'} = useSession();
+    const {
+      language: {isoCode: languageCode},
+      country: {isoCode: countryCode},
+    } = useLocalization();
+
     const {
       data: {product},
     } = useShopQuery<ShopifyPayload>({

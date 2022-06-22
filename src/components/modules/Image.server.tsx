@@ -1,4 +1,4 @@
-import {gql, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
+import {gql, useLocalization, useShopQuery} from '@shopify/hydrogen';
 import type {
   Product,
   ProductVariant,
@@ -35,8 +35,10 @@ export default function ImageModule({module}: Props) {
   // Conditionally fetch Shopify products if this is an image module that references products
   let storefrontProducts: ProductWithNodes[];
   if (['productHotspots', 'productTags'].includes(module.variant)) {
-    const {languageCode} = useShop();
-    const {countryCode = 'US'} = useSession();
+    const {
+      language: {isoCode: languageCode},
+      country: {isoCode: countryCode},
+    } = useLocalization();
 
     let products: SanityProductWithVariant[] | undefined = undefined;
     if (module.variant === 'productHotspots') {

@@ -1,7 +1,13 @@
 // prettier-ignore
-// @ts-expect-error node16 workaround
+// @ts-expect-error incompatibility with node16 resolution
 import type { PortableTextBlock, PortableTextMarkDefinition } from '@portabletext/types';
-import {gql, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
+import {
+  gql,
+  useLocalization,
+  useSession,
+  useShop,
+  useShopQuery,
+} from '@shopify/hydrogen';
 import type {
   Product,
   ProductVariant,
@@ -36,8 +42,10 @@ export default function ProductAnnotation({children, colorTheme, mark}: Props) {
   let storefrontProduct: ProductWithNodes | null = null;
 
   if (productWithVariant.gid && productWithVariant.variantGid) {
-    const {languageCode} = useShop();
-    const {countryCode = 'US'} = useSession();
+    const {
+      language: {isoCode: languageCode},
+      country: {isoCode: countryCode},
+    } = useLocalization();
     const {data} = useShopQuery<ShopifyPayload>({
       query: QUERY_SHOPIFY,
       variables: {

@@ -1,4 +1,4 @@
-import {gql, useSession, useShop, useShopQuery} from '@shopify/hydrogen';
+import {gql, useLocalization, useShopQuery} from '@shopify/hydrogen';
 import clsx from 'clsx';
 import {PRODUCT_FIELDS} from '../../fragments/shopify/product';
 import {PRODUCT_VARIANT_FIELDS} from '../../fragments/shopify/productVariant';
@@ -18,8 +18,10 @@ export default function RelatedProducts({
   colorTheme,
   storefrontProduct,
 }: Props) {
-  const {countryCode = 'US'} = useSession();
-  const {languageCode} = useShop();
+  const {
+    language: {isoCode: languageCode},
+    country: {isoCode: countryCode},
+  } = useLocalization();
   const {data} = useShopQuery<ShopifyPayload>({
     query: QUERY_SHOPIFY,
     variables: {

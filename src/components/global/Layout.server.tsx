@@ -1,4 +1,3 @@
-import {LocalizationProvider} from '@shopify/hydrogen';
 import groq from 'groq';
 import {ReactNode, Suspense} from 'react';
 import {LINKS} from '../../fragments/sanity/links';
@@ -23,7 +22,7 @@ export default function Layout({backgroundColor, children}: Props) {
   });
 
   return (
-    <LocalizationProvider preload="*">
+    <>
       <div className="absolute top-0 left-0">
         <a
           href="#mainContent"
@@ -51,7 +50,7 @@ export default function Layout({backgroundColor, children}: Props) {
       </div>
 
       <Footer />
-    </LocalizationProvider>
+    </>
   );
 }
 

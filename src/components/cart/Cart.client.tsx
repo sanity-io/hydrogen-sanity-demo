@@ -1,8 +1,8 @@
-// @ts-expect-error node16 workaround
+// @ts-expect-error incompatibility with node16 resolution
 import {Dialog, Transition} from '@headlessui/react';
 import {
   CartCheckoutButton,
-  CartEstimatedCost,
+  CartCost,
   CartLineImage,
   CartLinePrice,
   CartLineProductTitle,
@@ -258,7 +258,7 @@ function CartFooter() {
             <span className="text-darkGray" role="rowheader">
               Subtotal
             </span>
-            <CartEstimatedCost
+            <CartCost
               amountType="subtotal"
               className="text-right font-bold"
               role="cell"

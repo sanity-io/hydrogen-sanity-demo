@@ -1,10 +1,10 @@
 import {
   gql,
   ShopifyAnalyticsConstants,
+  useLocalization,
   useServerAnalytics,
-  useSession,
-  useShop,
   useShopQuery,
+  type HydrogenResponse,
 } from '@shopify/hydrogen';
 import groq from 'groq';
 import {NOT_FOUND_PAGE} from '../../fragments/sanity/pages/notFound';
@@ -24,7 +24,7 @@ import Layout from './Layout.server';
  */
 
 type Props = {
-  response: any;
+  response: HydrogenResponse;
 };
 
 type ShopifyPayload = {
@@ -50,8 +50,10 @@ export default function NotFound({response}: Props) {
   // Conditionally fetch collection products
   let products: ProductWithNodes[] = [];
   if (sanityData?.collectionGid) {
-    const {countryCode = 'US'} = useSession();
-    const {languageCode} = useShop();
+    const {
+      language: {isoCode: languageCode},
+      country: {isoCode: countryCode},
+    } = useLocalization();
     const {data} = useShopQuery<ShopifyPayload>({
       query: QUERY_SHOPIFY,
       variables: {
@@ -60,6 +62,7 @@ export default function NotFound({response}: Props) {
         language: languageCode,
       },
     });
+
     products = data.collection.products.nodes;
   }
 

@@ -1,5 +1,5 @@
 import {useState, Suspense, useMemo} from 'react';
-// @ts-expect-error node16 workaround
+// @ts-expect-error incompatibility with node16 resolution
 import {Listbox} from '@headlessui/react';
 import SpinnerIcon from '../icons/Spinner';
 import RadioIcon from '../icons/Radio';

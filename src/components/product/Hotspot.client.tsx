@@ -1,5 +1,5 @@
 import {Link} from '@shopify/hydrogen';
-// @ts-expect-error node16 workaround
+// @ts-expect-error incompatibility with node16 resolution
 import Tippy from '@tippyjs/react/headless';
 import clsx from 'clsx';
 import {ProductWithNodes} from '../../types';

@@ -1,4 +1,4 @@
-import {Seo} from '@shopify/hydrogen';
+import {type HydrogenRouteProps, Seo} from '@shopify/hydrogen';
 import clsx from 'clsx';
 import groq from 'groq';
 import PageHero from '../../components/heroes/Page.server';
@@ -9,13 +9,9 @@ import {PAGE} from '../../fragments/sanity/pages/page';
 import useSanityQuery from '../../hooks/useSanityQuery';
 import type {SanityPage} from '../../types';
 
-type Props = {
-  params: any;
-};
-
 // This demo doesn't use Shopify Online Store pages.
 // For this reason we don't use Shopify Analytics here.
-export default function PageRoute({params}: Props) {
+export default function PageRoute({params}: HydrogenRouteProps) {
   const {handle} = params;
   const {data: sanityPage} = useSanityQuery<SanityPage>({
     query: QUERY_SANITY,

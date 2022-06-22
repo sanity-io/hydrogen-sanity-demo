@@ -2,10 +2,10 @@ import {
   gql,
   Seo,
   ShopifyAnalyticsConstants,
+  useLocalization,
   useServerAnalytics,
-  useSession,
-  useShop,
   useShopQuery,
+  type HydrogenRouteProps,
 } from '@shopify/hydrogen';
 import type {Collection} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
@@ -27,7 +27,7 @@ import {combineProductsAndModules} from '../../utils/combineProductsAndModules';
 
 type Props = {
   collectionProductCount: number;
-  params: any;
+  params: HydrogenRouteProps;
   productSort?: {
     key?: string;
     reverse?: boolean;
@@ -43,8 +43,10 @@ export default function CollectionRoute({
   params,
   productSort,
 }: Props) {
-  const {languageCode} = useShop();
-  const {countryCode = 'US'} = useSession();
+  const {
+    language: {isoCode: languageCode},
+    country: {isoCode: countryCode},
+  } = useLocalization();
 
   const {handle} = params;
   const {data} = useShopQuery<ShopifyPayload>({
