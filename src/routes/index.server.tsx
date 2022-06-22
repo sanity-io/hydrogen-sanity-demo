@@ -47,10 +47,12 @@ export default function IndexRoute() {
 
       <Seo
         data={{
-          description: sanityHome.seo.description,
-          title: sanityHome.seo.title,
+          seo: {
+            description: sanityHome.seo.description,
+            title: sanityHome.seo.title,
+          },
         }}
-        type="homepage"
+        type="page" // Note the usage of `page` instead of `homepage` to ensure the default title template comes through
       />
     </Layout>
   );

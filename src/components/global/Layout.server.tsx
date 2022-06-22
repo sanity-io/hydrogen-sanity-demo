@@ -1,5 +1,5 @@
 import groq from 'groq';
-import {ReactNode, Suspense} from 'react';
+import {ReactNode} from 'react';
 import {LINKS} from '../../fragments/sanity/links';
 import useSanityQuery from '../../hooks/useSanityQuery';
 import type {SanityMenuLink} from '../../types';
@@ -36,16 +36,11 @@ export default function Layout({backgroundColor, children}: Props) {
         className="max-w-screen flex min-h-screen flex-col"
         style={{background: backgroundColor}}
       >
-        {/* TODO: Find out why Suspense needs to be here to prevent hydration errors. */}
-        <Suspense fallback={null}>
-          {menuLinks && <Header menuLinks={menuLinks} />}
-          <Cart />
-        </Suspense>
+        {menuLinks && <Header menuLinks={menuLinks} />}
+        <Cart />
 
         <main className="relative grow" id="mainContent" role="main">
-          <div className="mx-auto">
-            <Suspense fallback={null}>{children}</Suspense>
-          </div>
+          <div className="mx-auto">{children}</div>
         </main>
       </div>
 

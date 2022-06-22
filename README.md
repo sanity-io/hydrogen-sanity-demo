@@ -1,8 +1,6 @@
 # AKVA - An example storefront powered by Sanity + Hydrogen
 
-🚨 Hydrogen is in developer preview and undergoing frequent changes 🚨
-
-This demo is compatible with `@shopify/hydrogen ~= 0.26.0`
+This demo is compatible with `@shopify/hydrogen ~= 1.0.0`
 
 <img src="https://user-images.githubusercontent.com/209129/173065853-77b26be2-dd15-4b4d-8164-850e70247b88.png" width="1000" />
 
@@ -20,7 +18,7 @@ This starter showcases a few patterns you can adopt when creating your own custo
 
 **[View the feature gallery][about]**
 
-This demo adopts many of Hydrogen's [framework conventions and third party libraries][hydrogen-framework]. If you've used Hydrogen then you should hopefully feel at home here.
+This demo adopts many of Hydrogen's [framework conventions and third-party libraries][hydrogen-framework]. If you've used Hydrogen then you should hopefully feel at home here.
 
 This demo uses TypeScript and is still missing a few key features (Account management, [Shopify Analytics][shopify-analytics]) which will be brought in over time.
 
@@ -61,13 +59,13 @@ In practice, this was very difficult to reason about and worked against the bene
 
 We recommend that you keep fetching logic scoped to the specific components that need them, even if they are deeply nested in Portable Text.
 
-Whilst this will may mean more queries, you'll have _much better_ control over exactly how much you're fetching from the Storefront API as well being able to define component-specific caching / prefetching logic.
+Whilst this will may mean more queries, you'll have _much better_ control over exactly how much you're fetching from the Storefront API as well as being able to define component-specific caching / prefetching logic.
 
 </details>
 
 # Opinions
 
-We've taken the following opinions with how we've approached this demo.
+We've taken the following opinions on how we've approached this demo.
 
 <details>
 <summary><strong>Shopify is the source of truth for non-editorial content</strong></summary>
