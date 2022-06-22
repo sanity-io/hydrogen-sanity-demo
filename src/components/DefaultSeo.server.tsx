@@ -1,4 +1,4 @@
-import {gql, Seo} from '@shopify/hydrogen';
+import {Seo} from '@shopify/hydrogen';
 import groq from 'groq';
 import useSanityQuery from '../hooks/useSanityQuery';
 
