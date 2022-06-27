@@ -36,7 +36,7 @@ export default function Layout({backgroundColor, children}: Props) {
         className="max-w-screen flex min-h-screen flex-col"
         style={{background: backgroundColor}}
       >
-        {menuLinks && <Header menuLinks={menuLinks} />}
+        <Header menuLinks={menuLinks} />
         <Cart />
 
         <main className="relative grow" id="mainContent" role="main">

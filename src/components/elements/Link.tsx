@@ -20,7 +20,7 @@ export default function Link({children, link, ...rest}: Props) {
     );
   }
 
-  if (link._type === 'linkInternal') {
+  if (link._type === 'linkInternal' && link.slug) {
     return (
       <HydrogenLink to={link.slug} {...rest}>
         {children}

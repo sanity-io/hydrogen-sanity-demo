@@ -8,6 +8,10 @@ type Props = {
 };
 
 export default function CollectionCard({collection, onClick}: Props) {
+  if (!collection.slug) {
+    return null;
+  }
+
   return (
     <Link onClick={onClick} to={collection.slug}>
       <div

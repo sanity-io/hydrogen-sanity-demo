@@ -28,7 +28,7 @@ export default function CallToActionModule({module}: Props) {
 
       <div
         className={clsx(
-          'mr-auto flex shrink-0 flex-col items-start', //
+          'mr-auto flex w-full shrink-0 flex-col items-start', //
           'md:max-w-[20rem]',
         )}
       >

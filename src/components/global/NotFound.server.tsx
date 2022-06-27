@@ -69,15 +69,13 @@ export default function NotFound({response}: Props) {
   return (
     <Layout backgroundColor={sanityData?.colorTheme?.background}>
       <div className="pt-34">
-        {sanityData?.title && (
-          <h1 className="mx-auto px-12 text-center text-4xl sm:max-w-2xl">
-            {sanityData.title}
-          </h1>
-        )}
+        <h1 className="mx-auto px-12 text-center text-4xl sm:max-w-2xl">
+          {sanityData?.title || 'Page not found'}
+        </h1>
 
-        {sanityData?.body && (
-          <p className="my-8 text-center">{sanityData.body}</p>
-        )}
+        <p className="my-8 text-center">
+          {sanityData?.body || "We could't find the page you're looking for."}
+        </p>
 
         <div className="mx-4 mb-18 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {products?.map((product) => (

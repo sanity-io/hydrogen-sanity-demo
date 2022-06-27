@@ -35,7 +35,7 @@ export type SanityCollection = {
   colorTheme: SanityColorTheme;
   gid: string;
   hero?: SanityHeroPage;
-  slug: string;
+  slug?: string;
   title: string;
   vector?: string;
 };
@@ -46,7 +46,7 @@ export type SanityCollectionPage = {
   hero?: SanityHeroCollection;
   modules: (SanityModuleImage | SanityModuleInstagram)[];
   seo: SanitySeo;
-  slug: string;
+  slug?: string;
   sortOrder: string;
   title: string;
 };
@@ -137,7 +137,7 @@ export type SanityLinkInternal = {
   _key: string;
   _type: 'linkInternal';
   documentType: string;
-  slug: string;
+  slug?: string;
   title: string;
 };
 
@@ -297,7 +297,7 @@ export type SanityProductWithVariant = {
   _type: 'productWithVariant';
   available: boolean;
   gid: string;
-  slug: string;
+  slug?: string;
   variantGid: string;
 };
 
@@ -308,7 +308,7 @@ export type SanityProductPage = {
   colorTheme?: SanityColorTheme;
   customProductOptions?: SanityCustomProductOption[];
   gid: string;
-  slug: string;
+  slug?: string;
   seo: SanitySeo;
 };
 

@@ -91,17 +91,22 @@ export default function MobileNavigation({menuLinks}: Props) {
                             {link.title} –
                           </div>
                           <div className="my-1 ml-8 space-y-1">
-                            {link.collectionLinks?.map((collectionLink) => (
-                              <div key={collectionLink._id}>
-                                <Link
-                                  className="linkTextNavigation relative inline-flex whitespace-nowrap"
-                                  onClick={handleClose}
-                                  to={collectionLink.slug}
-                                >
-                                  {collectionLink.title}
-                                </Link>
-                              </div>
-                            ))}
+                            {link.collectionLinks?.map((collectionLink) => {
+                              if (!collectionLink.slug) {
+                                return null;
+                              }
+                              return (
+                                <div key={collectionLink._id}>
+                                  <Link
+                                    className="linkTextNavigation relative inline-flex whitespace-nowrap"
+                                    onClick={handleClose}
+                                    to={collectionLink.slug}
+                                  >
+                                    {collectionLink.title}
+                                  </Link>
+                                </div>
+                              );
+                            })}
                           </div>
                         </div>
                       );

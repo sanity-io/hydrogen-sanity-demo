@@ -7,7 +7,7 @@ import MobileNavigation from './MobileNavigation.client';
 import Navigation from './Navigation.server';
 
 type Props = {
-  menuLinks: SanityMenuLink[];
+  menuLinks?: SanityMenuLink[];
 };
 
 /**
@@ -25,9 +25,9 @@ export default function Header({menuLinks}: Props) {
     >
       <HeaderBackground />
 
-      <MobileNavigation menuLinks={menuLinks} />
+      {menuLinks && <MobileNavigation menuLinks={menuLinks} />}
 
-      <Navigation menuLinks={menuLinks} />
+      {menuLinks && <Navigation menuLinks={menuLinks} />}
 
       {/* Country selector + Cart toggle */}
       <div

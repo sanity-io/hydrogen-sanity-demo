@@ -14,7 +14,7 @@ type ShopifyPayload = {
 
 export default function CollectionModule({module}: Props) {
   const collection = module?.collection;
-  if (!collection?.gid) {
+  if (!collection?.gid || !collection?.slug) {
     return null;
   }
 

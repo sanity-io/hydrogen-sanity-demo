@@ -95,7 +95,7 @@ export default function CollectionRoute({
       modules: sanityCollection.modules,
       products,
     });
-  }, []);
+  }, [products, sanityCollection.modules]);
 
   return (
     <Layout>

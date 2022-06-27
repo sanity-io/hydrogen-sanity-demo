@@ -6,7 +6,7 @@ import clsx from 'clsx';
 
 type Props = PortableTextBlock & {
   mark: PortableTextMarkDefinition & {
-    slug: string;
+    slug?: string;
   };
 };
 
