@@ -33,7 +33,6 @@ type ShopifyPayload = {
 
 export default function NotFound({response}: Props) {
   if (response) {
-    response.doNotStream();
     response.status = 404;
     response.statusText = 'Not found';
   }

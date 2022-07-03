@@ -15,11 +15,11 @@ import SanityFooter from './SanityFooter.server';
  */
 export default function Footer() {
   const {data: footer} = useSanityQuery<{
-    links: SanityLink[];
-    text: Block[];
+    links?: SanityLink[];
+    text?: Block[];
   }>({query: QUERY_SANITY});
 
-  const renderLinks = footer?.links.map((link) => {
+  const renderLinks = footer?.links?.map((link) => {
     if (link._type === 'linkExternal') {
       return (
         <div className="mb-6" key={link._key}>
@@ -65,7 +65,9 @@ export default function Footer() {
             'md:flex-row',
           )}
         >
-          <LogoIcon />
+          <div className="pb-4">
+            <LogoIcon />
+          </div>
 
           <div
             className={clsx(
