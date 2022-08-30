@@ -3,7 +3,6 @@ import {ReactNode} from 'react';
 import {LINKS} from '../../fragments/sanity/links';
 import useSanityQuery from '../../hooks/useSanityQuery';
 import type {SanityMenuLink} from '../../types';
-import Cart from '../cart/Cart.client';
 import Footer from './Footer.server';
 import Header from './Header.server';
 
@@ -37,10 +36,9 @@ export default function Layout({backgroundColor, children}: Props) {
         style={{background: backgroundColor}}
       >
         <Header menuLinks={menuLinks} />
-        <Cart />
 
         <main className="relative grow" id="mainContent" role="main">
-          <div className="mx-auto">{children}</div>
+          <div className="mx-auto pb-overlap">{children}</div>
         </main>
       </div>
 

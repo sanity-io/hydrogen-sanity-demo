@@ -1,9 +1,9 @@
-import {type HydrogenRouteProps, Seo} from '@shopify/hydrogen';
+import {Seo, type HydrogenRouteProps} from '@shopify/hydrogen';
 import clsx from 'clsx';
 import groq from 'groq';
-import PageHero from '../../components/heroes/Page.server';
 import Layout from '../../components/global/Layout.server';
 import NotFound from '../../components/global/NotFound.server';
+import PageHero from '../../components/heroes/Page.server';
 import PortableText from '../../components/portableText/PortableText.server';
 import {PAGE} from '../../fragments/sanity/pages/page';
 import useSanityQuery from '../../hooks/useSanityQuery';

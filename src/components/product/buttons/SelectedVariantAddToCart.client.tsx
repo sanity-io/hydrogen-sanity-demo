@@ -1,5 +1,5 @@
 import {AddToCartButton, useProductOptions} from '@shopify/hydrogen';
-import {DEFAULT_BUTTON_STYLES} from '../../../constants';
+import {defaultButtonStyles} from '../../elements/Button';
 
 /**
  * Wrapper around Hydrogen's `<AddToCartButton />` which will
@@ -25,7 +25,7 @@ export default function SelectedVariantAddToCartButton({
 
   return (
     <AddToCartButton
-      className={DEFAULT_BUTTON_STYLES}
+      className={defaultButtonStyles()}
       disabled={!selectedVariant.availableForSale}
       quantity={quantity}
       variantId={selectedVariant?.id}

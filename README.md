@@ -20,8 +20,6 @@ This starter showcases a few patterns you can adopt when creating your own custo
 
 This TypeScript demo adopts many of Hydrogen's [framework conventions and third-party libraries][hydrogen-framework]. If you've used Hydrogen then you should hopefully feel at home here.
 
-Account management is currently absent from this demo but will be introduced at a later date.
-
 # Fetching Sanity data
 
 This demo comes with a custom `useSanityQuery` hook that allows you to query your Sanity dataset directly from server components.

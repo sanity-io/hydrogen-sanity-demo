@@ -5,7 +5,6 @@ import type {
 } from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 import sanityConfig from '../../../sanity.config';
-import {DEFAULT_BUTTON_STYLES} from '../../constants';
 import {PRODUCT_FIELDS} from '../../fragments/shopify/product';
 import {PRODUCT_VARIANT_FIELDS} from '../../fragments/shopify/productVariant';
 import type {
@@ -13,6 +12,7 @@ import type {
   SanityModuleImage,
   SanityProductWithVariant,
 } from '../../types';
+import Button from '../elements/Button';
 import Link from '../elements/Link';
 import SanityImage from '../media/SanityImage.client';
 import ProductHotspot from '../product/Hotspot.client';
@@ -168,14 +168,11 @@ const ImageContent = ({module}: Props) => {
 
             {/* Button */}
             {module.callToAction?.link && (
-              <div
-                className={clsx(
-                  DEFAULT_BUTTON_STYLES,
-                  'pointer-events-none bg-white text-offBlack',
-                )}
+              <Button
+                className={clsx('pointer-events-none bg-white text-offBlack')}
               >
                 {module.callToAction.title}
-              </div>
+              </Button>
             )}
           </div>
         </div>

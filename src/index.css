@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer base {
+  button {
+    letter-spacing: inherit;
+  }
   html {
     @apply font-medium;
     @apply text-offBlack;

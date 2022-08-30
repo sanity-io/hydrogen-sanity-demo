@@ -99,6 +99,7 @@ module.exports = {
     },
     lineHeight: {
       none: '1',
+      field: '1.25',
       caption: '1.25',
       paragraph: '1.6',
     },
@@ -113,6 +114,7 @@ module.exports = {
         offBlack: '#2B2E2E',
         peach: '#FFE1D1',
         red: '#EC5039',
+        shopPay: '#5A31F4',
       },
       height: {
         'header-sm': '4.375rem',
@@ -171,24 +173,6 @@ module.exports = {
         40: '160px',
         overlap: '20px',
       },
-      typography: (theme) => ({
-        DEFAULT: {
-          css: {
-            hr: {
-              borderColor: theme('colors.gray.200'),
-              borderTopWidth: '1px',
-              marginTop: '2rem',
-              marginBottom: '2rem',
-            },
-            'ol > li::before': {
-              color: theme('colors.gray.900'),
-            },
-            'ul > li::before': {
-              backgroundColor: theme('colors.gray.900'),
-            },
-          },
-        },
-      }),
     },
   },
   plugins: [],

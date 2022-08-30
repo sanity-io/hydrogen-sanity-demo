@@ -15,70 +15,69 @@ import {
   useCartLine,
 } from '@shopify/hydrogen';
 import {Fragment} from 'react';
-import {useCartUI} from './CartUIProvider.client';
 import MinusCircleIcon from '../icons/MinusCircle';
 import PlusCircleIcon from '../icons/PlusCircle';
 import clsx from 'clsx';
-import {DEFAULT_BUTTON_STYLES} from '../../constants';
 import CloseIcon from '../icons/Close';
+import Button, {defaultButtonStyles} from '../elements/Button';
+import {useCartUI} from './CartUIProvider.client';
 
 /**
  * A client component that contains the merchandise that a customer intends to purchase, and the estimated cost associated with the cart
  */
+
 export default function Cart() {
   const {isCartOpen, closeCart} = useCartUI();
   const {lines, totalQuantity} = useCart();
 
   return (
-    <>
-      <Transition show={isCartOpen}>
-        <Dialog onClose={closeCart}>
-          {/* Overlay */}
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-500"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-500"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div
-              aria-hidden="true"
-              className="pointer-events-none fixed inset-0 z-40 bg-black bg-opacity-20"
-            />
-          </Transition.Child>
+    <Transition show={isCartOpen}>
+      <Dialog onClose={closeCart}>
+        {/* Overlay */}
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-500"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-500"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div
+            aria-hidden="true"
+            className="pointer-events-none fixed inset-0 z-40 bg-black bg-opacity-20"
+          />
+        </Transition.Child>
 
-          {/* Panel */}
-          <Transition.Child
-            as={Fragment}
-            enter="ease-in-out duration-500"
-            enterFrom="translate-x-full"
-            enterTo="translate-x-0"
-            leave="ease-in-out duration-500"
-            leaveFrom="translate-x-0"
-            leaveTo="translate-x-full"
+        {/* Panel */}
+        <Transition.Child
+          as={Fragment}
+          enter="ease-in-out duration-500"
+          enterFrom="translate-x-full"
+          enterTo="translate-x-0"
+          leave="ease-in-out duration-500"
+          leaveFrom="translate-x-0"
+          leaveTo="translate-x-full"
+        >
+          <Dialog.Panel
+            className={clsx(
+              'rounded-l-none fixed top-0 left-0 right-0 bottom-0 z-40 flex h-full w-full flex-col overflow-y-auto bg-white md:left-auto md:bottom-auto md:w-[470px]',
+              'md:rounded-l-xl',
+            )}
           >
-            <Dialog.Panel
-              className={clsx(
-                'rounded-l-none fixed top-0 left-0 right-0 bottom-0 z-40 flex h-full w-full flex-col overflow-y-auto bg-white md:left-auto md:bottom-auto md:w-[470px]',
-                'md:rounded-l-xl',
-              )}
-            >
-              <CartHeader numLines={lines.length} />
-              {totalQuantity === 0 ? (
-                <CartEmpty />
-              ) : (
-                <>
-                  <CartItems />
-                  <CartFooter />
-                </>
-              )}
-            </Dialog.Panel>
-          </Transition.Child>
-        </Dialog>
-      </Transition>
-    </>
+            <CartHeader numLines={lines.length} />
+            {totalQuantity === 0 ? (
+              <CartEmpty />
+            ) : (
+              <>
+                <CartItems />
+                <CartFooter />
+              </>
+            )}
+          </Dialog.Panel>
+        </Transition.Child>
+      </Dialog>
+    </Transition>
   );
 }
 
@@ -280,9 +279,12 @@ function CartFooter() {
 
         <div className="flex w-full gap-3 border-t border-gray p-4">
           <CartShopPayButton
-            className={clsx([DEFAULT_BUTTON_STYLES, 'w-1/2 bg-[#5a31f4]'])}
+            className={clsx([defaultButtonStyles({tone: 'shopPay'}), 'w-1/2'])}
+            width="100%"
           />
-          <CartCheckoutButton className={clsx(DEFAULT_BUTTON_STYLES, 'w-1/2')}>
+          <CartCheckoutButton
+            className={clsx([defaultButtonStyles(), 'w-1/2'])}
+          >
             Checkout
           </CartCheckoutButton>
         </div>
@@ -292,16 +294,15 @@ function CartFooter() {
 }
 
 function CartEmpty() {
-  // @ts-expect-error cartUI shouldnt return null
   const {closeCart} = useCartUI();
   return (
     <div className="flex flex-col px-8 pt-6">
-      <p className="mb-4 text-lg font-bold">There's nothing in here...yet.</p>
-      {/*
-      <button type="button" onClick={closeCart}>
+      <p className="mb-4 text-lg font-bold">
+        There&rsquo;s nothing in here...yet.
+      </p>
+      <Button onClick={closeCart} type="button">
         Continue Shopping
-      </button>
-      */}
+      </Button>
     </div>
   );
 }

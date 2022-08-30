@@ -1,5 +1,5 @@
 import {BuyNowButton, useProductOptions} from '@shopify/hydrogen';
-import {DEFAULT_BUTTON_STYLES} from '../../../constants';
+import {defaultButtonStyles} from '../../elements/Button';
 
 /**
  * Wrapper around Hydrogen's `<BuyNowButton />` which will
@@ -24,7 +24,7 @@ export default function SelectedVariantBuyNowButton({
 
   return (
     <BuyNowButton
-      className={DEFAULT_BUTTON_STYLES}
+      className={defaultButtonStyles()}
       disabled={!availableForSale}
       quantity={quantity}
       variantId={selectedVariant.id}

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import {DEFAULT_BUTTON_STYLES} from '../../constants';
 import type {SanityLink} from '../../types';
+import {defaultButtonStyles} from './Button';
 import Link from './Link';
 
 type Props = {
@@ -18,7 +18,7 @@ export default function LinkButton({
 }: Props) {
   return (
     <Link
-      className={clsx(DEFAULT_BUTTON_STYLES, className)}
+      className={clsx(defaultButtonStyles(), className)}
       link={link}
       style={{background: backgroundColor, color: textColor}}
     >

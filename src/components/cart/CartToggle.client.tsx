@@ -3,21 +3,15 @@ import CircleOutlineButton from '../elements/CircleOutlineButton';
 import {useCartUI} from './CartUIProvider.client';
 
 type Props = {
-  handleClick?: () => void;
+  onClick?: () => void;
 };
 
 /**
  * A client component that defines the behavior when a user toggles a cart
  */
-export default function CartToggle({handleClick}: Props) {
+export default function CartToggle({onClick}: Props) {
   const {totalQuantity} = useCart();
-  const cartUI = useCartUI();
-
-  if (cartUI == null) {
-    throw new Error('CartToggle must be a descendent of a CartUIProvider');
-  }
-
-  const {isCartOpen, toggleCart} = cartUI;
+  const {isCartOpen, toggleCart} = useCartUI();
 
   return (
     <CircleOutlineButton
@@ -25,7 +19,7 @@ export default function CartToggle({handleClick}: Props) {
       aria-controls="cart"
       onClick={() => {
         toggleCart();
-        handleClick?.();
+        onClick?.();
       }}
     >
       {totalQuantity}

@@ -149,8 +149,21 @@ export default function MobileNavigation({menuLinks}: Props) {
                   })}
                 </div>
 
-                <div className="-ml-2">
-                  <CountrySelect align="left" />
+                <div className="space-y-1">
+                  {/* Account */}
+                  <Link
+                    className={clsx(
+                      '-ml-2 inline-flex h-[2.4rem] items-center rounded-sm bg-darkGray bg-opacity-0 px-3 py-2 text-sm font-bold duration-150',
+                      'hover:bg-opacity-10',
+                    )}
+                    onClick={handleClose}
+                    to="/account"
+                  >
+                    <span className="mr-2">Account</span>
+                  </Link>
+                  <div className="-ml-2">
+                    <CountrySelect align="left" />
+                  </div>
                 </div>
               </div>
             </Dialog.Panel>

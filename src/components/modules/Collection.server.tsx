@@ -1,8 +1,8 @@
 import {gql, Image, Link, useShopQuery} from '@shopify/hydrogen';
 import type {Collection} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
-import {DEFAULT_BUTTON_STYLES} from '../../constants';
 import type {SanityModuleCollection} from '../../types';
+import Button from '../elements/Button';
 
 type Props = {
   module?: SanityModuleCollection;
@@ -70,7 +70,6 @@ export default function CollectionModule({module}: Props) {
             )}
           </div>
         )}
-
         {/* Title */}
         <div
           className={clsx(
@@ -82,15 +81,9 @@ export default function CollectionModule({module}: Props) {
         >
           {collection.title}
         </div>
-
-        <div
-          className={clsx(
-            DEFAULT_BUTTON_STYLES,
-            'pointer-events-none relative mt-6 bg-white text-offBlack',
-          )}
-        >
+        <Button className="pointer-events-none relative mt-6 bg-white text-offBlack hover:opacity-50">
           Shop collection
-        </div>
+        </Button>
       </div>
     </Link>
   );
