@@ -1,6 +1,6 @@
 import {Image, Link} from '@shopify/hydrogen';
 import {OrderWithNodes} from '../../types';
-import {getOrderStatusMessage} from '../../utils/getorderStatusMessage';
+import {getOrderStatusMessage} from '../../utils/getOrderStatusMessage';
 import Badge from '../elements/Badge';
 
 type Props = {

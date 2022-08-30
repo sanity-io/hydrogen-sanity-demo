@@ -15,7 +15,7 @@ import clsx from 'clsx';
 import {Suspense} from 'react';
 import Layout from '../../../components/global/Layout.server';
 import {CustomerWithNodes} from '../../../types';
-import {getOrderStatusMessage} from '../../../utils/getorderStatusMessage';
+import {getOrderStatusMessage} from '../../../utils/getOrderStatusMessage';
 
 export default function OrderDetails({response}: HydrogenRouteProps) {
   const {id} = useRouteParams();
