@@ -12,7 +12,7 @@ import {
   type HydrogenRouteProps,
 } from '@shopify/hydrogen';
 import clsx from 'clsx';
-import {Suspense} from 'react';
+import {ReactNode, Suspense} from 'react';
 import Layout from '../../../components/global/Layout.server';
 import {CustomerWithNodes} from '../../../types';
 import {getOrderStatusMessage} from '../../../utils/getOrderStatusMessage';
@@ -64,40 +64,26 @@ export default function OrderDetails({response}: HydrogenRouteProps) {
         <Seo type="noindex" data={{title: `Order ${order.name}`}} />
       </Suspense>
 
-      <div className="pb-24 pt-28">
-        <div
-          className={clsx([
-            'border-b border-gray px-4 py-8', //
-            'md:px-8',
-          ])}
-        >
-          <div className="mx-auto w-full max-w-[1400px]">
-            <div className="mb-4 text-sm">
-              <Link className="linkTextNavigation text-darkGray" to="/account">
-                Account
-              </Link>{' '}
-              /{' '}
-              <span className="font-bold text-offBlack">
-                Order {order.name}
-              </span>
-            </div>
-            <h1
-              className={clsx([
-                'mb-4 text-2xl', //
-                'md:text-3xl',
-              ])}
-            >
-              Order {order.name}
-            </h1>
+      <div className="divide-y divide-gray pb-24 pt-28">
+        <OrderSection>
+          <div className="mb-4 text-sm">
+            <Link className="linkTextNavigation text-darkGray" to="/account">
+              Account
+            </Link>{' '}
+            /{' '}
+            <span className="font-bold text-offBlack">Order {order.name}</span>
           </div>
-        </div>
+          <h1
+            className={clsx([
+              'mb-4 text-2xl', //
+              'md:text-3xl',
+            ])}
+          >
+            Order {order.name}
+          </h1>
+        </OrderSection>
 
-        <div
-          className={clsx([
-            'w-full px-4 py-8 sm:grid-cols-1', //
-            'md:px-8',
-          ])}
-        >
+        <OrderSection>
           <div className="mx-auto w-full max-w-[1400px]">
             <p className="mt-2 text-darkGray">
               Placed on {new Date(order.processedAt!).toDateString()}
@@ -302,11 +288,23 @@ export default function OrderDetails({response}: HydrogenRouteProps) {
               </div>
             </div>
           </div>
-        </div>
+        </OrderSection>
       </div>
     </Layout>
   );
 }
+
+const OrderSection = ({children}: {children: ReactNode}) => {
+  return (
+    <div>
+      <div
+        className={clsx(['mx-auto w-full max-w-[1400px] px-4 py-8', 'md:px-8'])}
+      >
+        {children}
+      </div>
+    </div>
+  );
+};
 
 // @see: https://shopify.dev/api/storefront/2022-07/objects/Order#fields
 const QUERY_SHOPIFY_ORDER = gql`
