@@ -40,7 +40,7 @@
     "@tippyjs/react": "^4.2.6",
     "body-parser": "^1.20.0",
     "clsx": "^1.1.1",
-    "embla-carousel-react": "^6.2.0",
+    "embla-carousel-react": "^7.0.1",
     "groq": "^2.29.3",
     "pluralize": "^8.0.0",
     "react": "^18.2.0",
