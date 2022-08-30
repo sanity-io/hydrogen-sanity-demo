@@ -781,10 +781,10 @@
     web-streams-polyfill "^3.2.0"
     worktop "^0.7.3"
 
-"@shopify/hydrogen@~1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@shopify/hydrogen/-/hydrogen-1.0.2.tgz#1564ad896049a668a8f9274ad3bb9cf001c4c74f"
-  integrity sha512-dT+RJyfp7vca4Gv10noRnWTkmHMOYwcGI57QxJ3ReN1D2XbbkSadrgAYlu0EFpJdjCvVrEr6e4Qzbtx5pJOY/g==
+"@shopify/hydrogen@~1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@shopify/hydrogen/-/hydrogen-1.3.0.tgz#6c295d8a50b4cc2f7a95a55d4fea92b43cb4d639"
+  integrity sha512-iGTtJxb9X2M6WqeYbuTibNpPs/Ul0WHlwp83T23wQXP+4TVR2HJNq6jVdtsR1noz14KVwexb6AeFWpUFu9BfEA==
   dependencies:
     "@vitejs/plugin-react" "^1.3.0"
     abort-controller "^3.0.0"

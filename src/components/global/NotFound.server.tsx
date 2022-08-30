@@ -73,7 +73,7 @@ export default function NotFound({response}: Props) {
         </h1>
 
         <p className="my-8 text-center">
-          {sanityData?.body || "We could't find the page you're looking for."}
+          {sanityData?.body || "We couldn't find the page you're looking for."}
         </p>
 
         <div className="mx-4 mb-18 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
