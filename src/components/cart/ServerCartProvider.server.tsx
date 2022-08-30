@@ -1,4 +1,5 @@
 import {useSession} from '@shopify/hydrogen';
+import type {CountryCode} from '@shopify/hydrogen/storefront-api-types';
 import {ReactNode} from 'react';
 import LocalCartProvider from './LocalCartProvider.client';
 
@@ -7,10 +8,10 @@ type Props = {
 };
 
 export default function ServerCartProvider({children}: Props) {
-  const {customerAccessToken} = useSession();
+  const {countryCode} = useSession();
 
   return (
-    <LocalCartProvider customerAccessToken={customerAccessToken}>
+    <LocalCartProvider countryCode={countryCode as CountryCode}>
       {children}
     </LocalCartProvider>
   );
