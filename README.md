@@ -1,6 +1,6 @@
 # AKVA - An example storefront powered by Sanity + Hydrogen
 
-This demo is compatible with `@shopify/hydrogen ~= 1.3.0`
+This demo is compatible with `@shopify/hydrogen ~= 1.4.1`
 
 <img src="https://user-images.githubusercontent.com/209129/173065853-77b26be2-dd15-4b4d-8164-850e70247b88.png" width="1000" />
 
