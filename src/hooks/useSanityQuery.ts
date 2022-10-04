@@ -19,7 +19,7 @@ export default function useSanityQuery<T>({
   params = {},
 }: Props) {
   return useQuery<T>(
-    JSON.stringify([query, params]),
+    [query, params],
     async () => await client.fetch(query, params),
     hydrogenQueryOptions,
   );
