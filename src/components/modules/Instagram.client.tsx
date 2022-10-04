@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {InstagramEmbed} from 'react-social-media-embed';
+import {InstagramEmbed} from 'react-social-media-embed/dist/components/embeds/InstagramEmbed';
 import type {SanityModuleInstagram} from '../../types';
 
 export default function InstagramModule({
