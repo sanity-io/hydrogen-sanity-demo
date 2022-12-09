@@ -271,8 +271,8 @@ function CartFooter() {
             <span className="text-darkGray" role="rowheader">
               Shipping
             </span>
-            <span role="cell" className="font-bold uppercase">
-              Free
+            <span role="cell" className="font-bold">
+              Calculated at checkout
             </span>
           </div>
         </div>
