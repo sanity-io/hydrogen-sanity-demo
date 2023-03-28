@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  button {
+    letter-spacing: inherit;
+  }
+  html {
+    @apply font-medium;
+    @apply text-offBlack;
+    @apply text-md;
+  }
+}
+
+@layer components {
+  .linkTextNavigation {
+    @apply decoration-[0.1em] underline-offset-[0.1em] hover:underline;
+  }
+
+  .portableText {
+    ol {
+      list-style-type: decimal;
+    }
+    ol ol {
+      list-style-type: lower-alpha;
+    }
+    ol ol ol {
+      list-style-type: lower-roman;
+    }
+
+    ul {
+      list-style: disc outside;
+    }
+    ul ul {
+      list-style: circle outside;
+    }
+    ul ul ul {
+      list-style: square outside;
+    }
+  }
+
+  .select {
+    align-items: center;
+    background-color: theme('colors.lightGray');
+    border-radius: theme('borderRadius.full');
+    color: theme('colors.offBlack');
+    display: flex;
+    font-size: theme('fontSize.sm');
+    font-weight: theme('fontWeight.bold');
+    height: 2.5rem;
+    justify-content: center;
+    letter-spacing: theme('letterSpacing.normal');
+    overflow: hidden;
+    padding: theme('padding.4');
+    transition: all 200ms ease-out;
+  }
+
+  .select:disabled {
+    color: theme('colors.darkGray');
+  }
+
+  .select:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+}
+
+* {
+  font-variant-ligatures: none;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.embla__slide {
+  position: relative;
+  flex: 0 0 100%;
+}

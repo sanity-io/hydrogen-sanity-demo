@@ -1,0 +1,11 @@
+node_modules
+
+/.cache
+/build
+/dist
+/public/build
+/.mf
+.env
+
+# Mac OS finder cache files
+.DS_Store
