@@ -2,6 +2,7 @@ import {useLoaderData} from '@remix-run/react';
 import {AnalyticsPageType, type SeoHandleFunction} from '@shopify/hydrogen';
 import type {Collection as CollectionType} from '@shopify/hydrogen/storefront-api-types';
 import {json, type LoaderArgs} from '@shopify/remix-oxygen';
+import clsx from 'clsx';
 
 import ProductGrid from '~/components/ProductGrid';
 import {validateLocale} from '~/lib/utils';
@@ -50,7 +51,12 @@ export async function loader({params, context, request}: LoaderArgs) {
 export default function Collection() {
   const {collection} = useLoaderData();
   return (
-    <>
+    <section
+      className={clsx(
+        'rounded-b-xl px-4 pb-4 pt-24', //
+        'md:px-8 md:pb-8 md:pt-34',
+      )}
+    >
       <header className="grid w-full justify-items-start gap-8 py-8">
         <h1 className="inline-block whitespace-pre-wrap text-4xl font-bold">
           {collection.title}
@@ -70,7 +76,7 @@ export default function Collection() {
         collection={collection}
         url={`/collections/${collection.handle}`}
       />
-    </>
+    </section>
   );
 }
 

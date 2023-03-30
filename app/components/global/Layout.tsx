@@ -1,59 +1,40 @@
-import {Await, useMatches} from '@remix-run/react';
+import {Await} from '@remix-run/react';
 import {Cart} from '@shopify/hydrogen/storefront-api-types';
-import {Suspense, useEffect} from 'react';
+import {Suspense} from 'react';
 
-import {CartActions, CartLineItems, CartSummary} from '~/components/Cart';
-import {Drawer, useDrawer} from '~/components/Drawer';
-import {useCartFetchers} from '~/hooks/useCartFetchers';
+import {CartActions, CartLineItems, CartSummary} from '~/components/cart/Cart';
 
-import {CountrySelector} from './CountrySelector';
-import {Link} from './Link';
+import Header from './Header';
 
 type LayoutProps = {
   children: React.ReactNode;
-  title: string;
 };
 
-export function Layout({children, title}: LayoutProps) {
-  const {isOpen, openDrawer, closeDrawer} = useDrawer();
-  const [root] = useMatches();
-  const cart = root.data?.cart;
-
-  // Grab all the fetchers that are adding to cart
-  const addToCartFetchers = useCartFetchers('ADD_TO_CART');
-
-  // When the fetchers array changes, open the drawer if there is an add to cart action
-  useEffect(() => {
-    if (isOpen || addToCartFetchers.length === 0) return;
-    openDrawer();
-  }, [addToCartFetchers, isOpen, openDrawer]);
-
+export function Layout({children}: LayoutProps) {
   return (
-    <div className="flex min-h-screen flex-col bg-neutral-50 antialiased">
-      <header
-        role="banner"
-        className={`shadow-sm sticky top-0 z-40 flex h-32 w-full items-center justify-between gap-4 bg-white p-6 leading-none antialiased transition md:p-8 lg:p-12`}
-      >
-        <div className="flex w-full items-center gap-12">
-          <Link to="/" className="flex-grow font-bold">
-            {title}
-          </Link>
-          <CountrySelector />
-          <CartHeader cart={cart} openDrawer={openDrawer} />
-        </div>
-      </header>
+    <>
+      <div className="absolute top-0 left-0">
+        <a
+          href="#mainContent"
+          className="sr-only p-4 focus:not-sr-only focus:block"
+        >
+          Skip to content
+        </a>
+      </div>
 
-      <main
-        role="main"
-        id="mainContent"
-        className="flex-grow p-6 md:p-8 lg:p-12"
+      <div
+        className="max-w-screen flex min-h-screen flex-col"
+        // style={{background: backgroundColor}}
       >
-        {children}
-        <Drawer open={isOpen} onClose={closeDrawer}>
-          <CartDrawer cart={cart} close={closeDrawer} />
-        </Drawer>
-      </main>
-    </div>
+        <Header />
+
+        <main className="relative grow" id="mainContent" role="main">
+          <div className="mx-auto pb-overlap">{children}</div>
+        </main>
+      </div>
+
+      {/* <Footer /> */}
+    </>
   );
 }
 
@@ -105,7 +86,7 @@ function CartDrawer({cart, close}: {cart: Cart; close: () => void}) {
                 </div>
                 <div className="w-full space-y-6 px-4 py-6 md:px-12">
                   <CartSummary cost={data.cost} />
-                  <CartActions checkoutUrl={data.checkoutUrl} />
+                  <CartActions cart={data} />
                 </div>
               </>
             ) : (

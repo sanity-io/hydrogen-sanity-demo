@@ -2,6 +2,7 @@ import {Await, useLoaderData} from '@remix-run/react';
 import {AnalyticsPageType, type SeoHandleFunction} from '@shopify/hydrogen';
 import {CollectionConnection} from '@shopify/hydrogen/storefront-api-types';
 import {defer, LoaderArgs} from '@shopify/remix-oxygen';
+import clsx from 'clsx';
 import {Suspense} from 'react';
 
 import {Link} from '~/components/Link';
@@ -35,7 +36,12 @@ export default function Index() {
   const {featuredCollections} = useLoaderData<typeof loader>();
 
   return (
-    <section className="w-full gap-4">
+    <section
+      className={clsx(
+        'rounded-b-xl px-4 pb-4 pt-24', //
+        'md:px-8 md:pb-8 md:pt-34',
+      )}
+    >
       <h2 className="mb-5 max-w-prose whitespace-pre-wrap text-2xl font-bold">
         Collections
       </h2>
