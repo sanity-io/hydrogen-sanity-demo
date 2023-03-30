@@ -6,7 +6,14 @@ import type {Storefront} from '~/types/shopify';
 import type {SanityClient} from '@sanity/client';
 import type {HydrogenSession} from '../server';
 
-type Sanity = {client: SanityClient; isPreview: boolean};
+type Sanity = {
+  client: SanityClient, 
+  preview?: {
+    projectId: string;
+    dataset: string;
+    token: string;
+  }
+};
 
 declare global {
   /**
