@@ -52,8 +52,9 @@ export default {
 
       /**
        * @todo Check if running in preview mode
+       * @todo naming
        */
-      const isPreviewMode = true;
+      const isPreview = true;
 
       /**
        * Base Sanity client configuration
@@ -68,15 +69,15 @@ export default {
        * Sanity API token to view draft documents
        */
       const token = env.SANITY_API_TOKEN;
-      if (isPreviewMode && !token) {
+      if (isPreview && !token) {
         throw new Error('A Sanity API token must be provided in preview mode');
       }
 
       /**
        * Create Sanity's API client.
        */
-      const sanity = createSanityClient(
-        isPreviewMode
+      const sanityClient = createSanityClient(
+        isPreview
           ? {
               ...sanityConfig,
               useCdn: false,
@@ -95,7 +96,12 @@ export default {
       const handleRequest = createRequestHandler({
         build: remixBuild,
         mode: process.env.NODE_ENV,
-        getLoadContext: () => ({session, storefront, env, sanity}),
+        getLoadContext: () => ({
+          session,
+          storefront,
+          env,
+          sanity: {client: sanityClient, isPreview},
+        }),
       });
 
       const response = await handleRequest(request);

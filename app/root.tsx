@@ -6,6 +6,7 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from '@remix-run/react';
+import {PreviewSuspense} from '@sanity/preview-kit';
 import {
   Seo,
   type SeoHandleFunction,
@@ -86,17 +87,23 @@ export async function loader({context}: LoaderArgs) {
       shopifySalesChannel: ShopifySalesChannel.hydrogen,
       shopId: layout.shop.id,
     },
+    isPreview: context.sanity.isPreview,
   });
 }
 
 export default function App() {
-  const data = useLoaderData<typeof loader>();
+  const {isPreview, ...data} = useLoaderData<typeof loader>();
   const locale = data.selectedLocale ?? DEFAULT_LOCALE;
   const hasUserConsent = true;
 
   useAnalytics(hasUserConsent, locale);
 
   const {name} = data.layout.shop;
+  const layout = (
+    <Layout title={name} key={`${locale.language}-${locale.country}`}>
+      <Outlet />
+    </Layout>
+  );
 
   return (
     <html lang={locale.language}>
@@ -106,9 +113,13 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Layout title={name} key={`${locale.language}-${locale.country}`}>
-          <Outlet />
-        </Layout>
+        {isPreview ? (
+          <PreviewSuspense fallback={<div>Loading preview...</div>}>
+            {layout}
+          </PreviewSuspense>
+        ) : (
+          layout
+        )}
         <ScrollRestoration />
         <Scripts />
       </body>

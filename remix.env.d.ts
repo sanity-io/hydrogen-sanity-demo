@@ -6,6 +6,8 @@ import type {Storefront} from '@shopify/hydrogen';
 import type {SanityClient} from '@sanity/client'
 import type {HydrogenSession} from '../server';
 
+type Sanity = {client: SanityClient, isPreview: boolean};
+
 declare global {
   /**
    * A global `process` object is only available during build to access NODE_ENV.
@@ -37,6 +39,6 @@ declare module '@shopify/remix-oxygen' {
     session: HydrogenSession;
     storefront: Storefront;
     env: Env;
-    sanity: SanityClient;
+    sanity: Sanity;
   }
 }
