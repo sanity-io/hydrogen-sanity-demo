@@ -19,11 +19,13 @@ import {
   type LoaderArgs,
   type MetaFunction,
 } from '@shopify/remix-oxygen';
+import {useContext} from 'react';
 
 import {CART_QUERY} from '~/queries/shopify/cart';
 
 import favicon from '../public/favicon.svg';
 import {Layout} from './components/Layout';
+import {NonceContext} from './components/NonceContext';
 import {useAnalytics} from './hooks/useAnalytics';
 import {DEFAULT_LOCALE} from './lib/utils';
 import stylesheet from './styles/tailwind.css';
@@ -93,6 +95,7 @@ export default function App() {
   const data = useLoaderData<typeof loader>();
   const locale = data.selectedLocale ?? DEFAULT_LOCALE;
   const hasUserConsent = true;
+  const nonce = useContext(NonceContext);
 
   useAnalytics(hasUserConsent, locale);
 
@@ -109,8 +112,8 @@ export default function App() {
         <Layout title={name} key={`${locale.language}-${locale.country}`}>
           <Outlet />
         </Layout>
-        <ScrollRestoration />
-        <Scripts />
+        <ScrollRestoration nonce={nonce} />
+        <Scripts nonce={nonce} />
       </body>
     </html>
   );

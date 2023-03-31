@@ -3,15 +3,30 @@ import type {EntryContext} from '@shopify/remix-oxygen';
 import isbot from 'isbot';
 import {renderToReadableStream} from 'react-dom/server';
 
+import {NonceContext} from '~/components/NonceContext';
+
 export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
   remixContext: EntryContext,
 ) {
+  /**
+   * Crytographic nonce to strengthen Content Security Policy
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce
+   */
+  const nonce = createNonce();
+  responseHeaders.set(
+    'Content-Security-Policy',
+    `script-src 'nonce-${nonce}' 'strict-dynamic'; object-src 'none'; base-uri 'none';`,
+  );
+
   const body = await renderToReadableStream(
-    <RemixServer context={remixContext} url={request.url} />,
+    <NonceContext.Provider value={nonce}>
+      <RemixServer context={remixContext} url={request.url} />
+    </NonceContext.Provider>,
     {
+      nonce,
       signal: request.signal,
       onError(error) {
         // eslint-disable-next-line no-console
@@ -30,4 +45,14 @@ export default async function handleRequest(
     headers: responseHeaders,
     status: responseStatusCode,
   });
+}
+
+/**
+ * Generates a random base64-encoded string of 128 bits of data
+ * from a cryptographically secure random number generator
+ * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce#generating_values
+ */
+function createNonce() {
+  const nonce = crypto.getRandomValues(new Uint8Array(16));
+  return btoa(String.fromCodePoint(...nonce));
 }
