@@ -6,6 +6,7 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from '@remix-run/react';
+import {PreviewSuspense} from '@sanity/preview-kit';
 import {
   Seo,
   type SeoHandleFunction,
@@ -14,12 +15,13 @@ import {
 import type {Cart, Shop} from '@shopify/hydrogen/storefront-api-types';
 import {ShopifyProvider} from '@shopify/hydrogen-react';
 import {
-  AppLoadContext,
+  type AppLoadContext,
   defer,
   type LinksFunction,
   type LoaderArgs,
   type MetaFunction,
 } from '@shopify/remix-oxygen';
+import type {ReactNode} from 'react';
 
 import {CART_QUERY} from '~/queries/shopify/cart';
 
@@ -27,7 +29,7 @@ import {Layout} from './components/global/Layout';
 import {useAnalytics} from './hooks/useAnalytics';
 import {DEFAULT_LOCALE} from './lib/utils';
 import stylesheet from './styles/tailwind.css';
-import {I18nLocale} from './types/shopify';
+import type {I18nLocale} from './types/shopify';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: data?.layout?.seo?.title,
@@ -97,11 +99,12 @@ export async function loader({context}: LoaderArgs) {
       shopifySalesChannel: ShopifySalesChannel.hydrogen,
       shopId: shop.shop.id,
     },
+    isPreview: context.sanity.isPreview,
   });
 }
 
 export default function App() {
-  const data = useLoaderData<typeof loader>();
+  const {isPreview, ...data} = useLoaderData<typeof loader>();
   const {shopifyConfig} = data;
   const locale = data.selectedLocale ?? DEFAULT_LOCALE;
   const hasUserConsent = true;
@@ -117,9 +120,11 @@ export default function App() {
           <Links />
         </head>
         <body>
-          <Layout key={`${locale.language}-${locale.country}`}>
-            <Outlet />
-          </Layout>
+          <Preview enabled={isPreview}>
+            <Layout key={`${locale.language}-${locale.country}`}>
+              <Outlet />
+            </Layout>
+          </Preview>
           <ScrollRestoration />
           <Scripts />
         </body>
@@ -257,3 +262,19 @@ const testSanityLayout = {
     title: 'AKVA',
   },
 };
+/**
+ * @todo move elsewhere
+ */
+type PreviewProps = {children: ReactNode; enabled: boolean};
+
+function Preview(props: PreviewProps) {
+  const {children, enabled} = props;
+
+  return enabled ? (
+    <PreviewSuspense fallback={<div>Loading preview...</div>}>
+      {children}
+    </PreviewSuspense>
+  ) : (
+    <>{children}</>
+  );
+}

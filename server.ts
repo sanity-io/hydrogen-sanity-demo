@@ -1,5 +1,6 @@
 // Virtual entry point for the app
 import * as remixBuild from '@remix-run/dev/server-build';
+import {createClient as createSanityClient} from '@sanity/client';
 import {createStorefrontClient, storefrontRedirect} from '@shopify/hydrogen';
 import {
   createCookieSessionStorage,
@@ -50,13 +51,52 @@ export default {
       });
 
       /**
+       * Create Sanity's API client.
+       */
+      let sanityClient = createSanityClient({
+        projectId: env.SANITY_PROJECT_ID,
+        dataset: env.SANITY_DATASET,
+        apiVersion: env.SANITY_API_VERSION ?? '2023-03-30',
+        useCdn: process.env.NODE_ENV === 'production',
+      });
+
+      /**
+       * Sanity API token to view draft documents
+       */
+      const token = env.SANITY_API_TOKEN;
+
+      /**
+       * @todo Check if running in preview mode
+       * @todo naming
+       * @todo test token?
+       */
+      const isPreview = true;
+      if (isPreview) {
+        if (token == null) {
+          throw new Error(
+            'A Sanity API token must be provided in preview mode',
+          );
+        }
+
+        sanityClient = sanityClient.withConfig({
+          useCdn: false,
+          token,
+        });
+      }
+
+      /**
        * Create a Remix request handler and pass
        * Hydrogen's Storefront client to the loader context.
        */
       const handleRequest = createRequestHandler({
         build: remixBuild,
         mode: process.env.NODE_ENV,
-        getLoadContext: () => ({session, storefront, env}),
+        getLoadContext: () => ({
+          session,
+          storefront,
+          env,
+          sanity: {client: sanityClient, isPreview},
+        }),
       });
 
       const response = await handleRequest(request);
