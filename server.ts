@@ -51,43 +51,38 @@ export default {
       });
 
       /**
-       * @todo Check if running in preview mode
-       * @todo naming
+       * Create Sanity's API client.
        */
-      const isPreview = true;
-
-      /**
-       * Base Sanity client configuration
-       */
-      const sanityConfig = {
+      let sanityClient = createSanityClient({
         projectId: env.SANITY_PROJECT_ID,
         dataset: env.SANITY_DATASET,
         apiVersion: env.SANITY_API_VERSION ?? '2023-03-30',
-      };
+        useCdn: process.env.NODE_ENV === 'production',
+      });
 
       /**
        * Sanity API token to view draft documents
        */
       const token = env.SANITY_API_TOKEN;
-      if (isPreview && !token) {
-        throw new Error('A Sanity API token must be provided in preview mode');
-      }
 
       /**
-       * Create Sanity's API client.
+       * @todo Check if running in preview mode
+       * @todo naming
+       * @todo test token?
        */
-      const sanityClient = createSanityClient(
-        isPreview
-          ? {
-              ...sanityConfig,
-              useCdn: false,
-              token,
-            }
-          : {
-              ...sanityConfig,
-              useCdn: process.env.NODE_ENV === 'production',
-            },
-      );
+      const isPreview = true;
+      if (isPreview) {
+        if (token == null) {
+          throw new Error(
+            'A Sanity API token must be provided in preview mode',
+          );
+        }
+
+        sanityClient = sanityClient.withConfig({
+          useCdn: false,
+          token,
+        });
+      }
 
       /**
        * Create a Remix request handler and pass
