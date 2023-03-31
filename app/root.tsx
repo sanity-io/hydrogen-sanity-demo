@@ -14,12 +14,13 @@ import {
 } from '@shopify/hydrogen';
 import type {Cart, Shop} from '@shopify/hydrogen/storefront-api-types';
 import {
-  AppLoadContext,
+  type AppLoadContext,
   defer,
   type LinksFunction,
   type LoaderArgs,
   type MetaFunction,
 } from '@shopify/remix-oxygen';
+import type {ReactNode} from 'react';
 
 import {CART_QUERY} from '~/queries/shopify/cart';
 
@@ -28,7 +29,7 @@ import {Layout} from './components/Layout';
 import {useAnalytics} from './hooks/useAnalytics';
 import {DEFAULT_LOCALE} from './lib/utils';
 import stylesheet from './styles/tailwind.css';
-import {I18nLocale} from './types/shopify';
+import type {I18nLocale} from './types/shopify';
 
 const seo: SeoHandleFunction<typeof loader> = ({data, pathname}) => ({
   title: data?.layout?.shop?.name,
@@ -99,11 +100,6 @@ export default function App() {
   useAnalytics(hasUserConsent, locale);
 
   const {name} = data.layout.shop;
-  const layout = (
-    <Layout title={name} key={`${locale.language}-${locale.country}`}>
-      <Outlet />
-    </Layout>
-  );
 
   return (
     <html lang={locale.language}>
@@ -113,13 +109,11 @@ export default function App() {
         <Links />
       </head>
       <body>
-        {isPreview ? (
-          <PreviewSuspense fallback={<div>Loading preview...</div>}>
-            {layout}
-          </PreviewSuspense>
-        ) : (
-          layout
-        )}
+        <Preview enabled={isPreview}>
+          <Layout title={name} key={`${locale.language}-${locale.country}`}>
+            <Outlet />
+          </Layout>
+        </Preview>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -152,4 +146,21 @@ async function getCart({storefront}: AppLoadContext, cartId: string) {
   });
 
   return cart;
+}
+
+/**
+ * @todo move elsewhere
+ */
+type PreviewProps = {children: ReactNode; enabled: boolean};
+
+function Preview(props: PreviewProps) {
+  const {children, enabled} = props;
+
+  return enabled ? (
+    <PreviewSuspense fallback={<div>Loading preview...</div>}>
+      {children}
+    </PreviewSuspense>
+  ) : (
+    <>{children}</>
+  );
 }
