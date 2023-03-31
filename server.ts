@@ -70,9 +70,9 @@ export default {
        * @todo naming
        * @todo test token?
        */
-      const isPreview = true;
+      const isPreview = false;
       if (isPreview) {
-        if (token == null) {
+        if (!token) {
           throw new Error(
             'A Sanity API token must be provided in preview mode',
           );

@@ -4,7 +4,9 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useCatch,
   useLoaderData,
+  useMatches,
 } from '@remix-run/react';
 import {PreviewSuspense} from '@sanity/preview-kit';
 import {
@@ -23,13 +25,15 @@ import {
 } from '@shopify/remix-oxygen';
 import type {ReactNode} from 'react';
 
+import {GenericError} from '~/components/global/GenericError';
+import {Layout} from '~/components/global/Layout';
+import {NotFound} from '~/components/global/NotFound';
+import {useAnalytics} from '~/hooks/useAnalytics';
+import {DEFAULT_LOCALE} from '~/lib/utils';
+import {LAYOUT_QUERY} from '~/queries/sanity/layout';
 import {CART_QUERY} from '~/queries/shopify/cart';
-
-import {Layout} from './components/global/Layout';
-import {useAnalytics} from './hooks/useAnalytics';
-import {DEFAULT_LOCALE} from './lib/utils';
-import stylesheet from './styles/tailwind.css';
-import type {I18nLocale} from './types/shopify';
+import stylesheet from '~/styles/tailwind.css';
+import type {I18nLocale} from '~/types/shopify';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: data?.layout?.seo?.title,
@@ -74,9 +78,10 @@ export const meta: MetaFunction = () => ({
 });
 
 export async function loader({context}: LoaderArgs) {
-  const [cartId, shop] = await Promise.all([
+  const [cartId, shop, layout] = await Promise.all([
     context.session.get('cartId'),
     context.storefront.query<{shop: Shop}>(SHOP_QUERY),
+    context.sanity.client.fetch(LAYOUT_QUERY),
   ]);
 
   const selectedLocale = context.storefront.i18n as I18nLocale;
@@ -90,8 +95,7 @@ export async function loader({context}: LoaderArgs) {
   };
 
   return defer({
-    shop,
-    layout: testSanityLayout,
+    layout,
     cart: cartId ? getCart(context, cartId) : undefined,
     selectedLocale,
     shopifyConfig,
@@ -133,6 +137,69 @@ export default function App() {
   );
 }
 
+export function CatchBoundary() {
+  const [root] = useMatches();
+  const caught = useCatch();
+  const isNotFound = caught.status === 404;
+
+  const {selectedLocale, shopifyConfig, layout} = root.data;
+  const locale = selectedLocale ?? DEFAULT_LOCALE;
+  const {notFoundPage} = layout;
+
+  return (
+    <ShopifyProvider {...shopifyConfig}>
+      <html lang={locale.language}>
+        <head>
+          <title>{isNotFound ? 'Not found' : 'Error'}</title>
+          <Meta />
+          <Links />
+        </head>
+        <body>
+          <Layout
+            key={`${locale.language}-${locale.country}`}
+            backgroundColor={notFoundPage?.colorTheme?.background}
+          >
+            {isNotFound ? (
+              <NotFound sanityData={notFoundPage} />
+            ) : (
+              <GenericError
+                error={{message: `${caught.status} ${caught.data}`}}
+              />
+            )}
+          </Layout>
+          <Scripts />
+        </body>
+      </html>
+    </ShopifyProvider>
+  );
+}
+
+export function ErrorBoundary({error}: {error: Error}) {
+  const [root] = useMatches();
+
+  const {selectedLocale, shopifyConfig, layout} = root.data;
+  const locale = selectedLocale ?? DEFAULT_LOCALE;
+  const {notFoundPage} = layout;
+
+  return (
+    <ShopifyProvider {...shopifyConfig}>
+      <html lang={locale.language}>
+        <head>
+          <title>Error</title>
+          <Meta />
+          <Links />
+        </head>
+        <body>
+          <Layout key={`${locale.language}-${locale.country}`}>
+            <GenericError error={error} />
+          </Layout>
+          <Scripts />
+        </body>
+      </html>
+    </ShopifyProvider>
+  );
+}
+
 const SHOP_QUERY = `#graphql
   query layout {
     shop {
@@ -160,108 +227,6 @@ async function getCart({storefront}: AppLoadContext, cartId: string) {
   return cart;
 }
 
-// TODO: remove this when we have a real query strategy
-const testSanityLayout = {
-  menuLinks: [
-    {
-      _key: '578e4f61ee38',
-      _type: 'collectionGroup',
-      collectionLinks: [
-        {
-          _id: 'shopifyCollection-395301290235',
-          _key: null,
-          colorTheme: {
-            background: '#ffeed3',
-            text: '#ffa81b',
-          },
-          gid: 'gid://shopify/Collection/395301290235',
-          slug: '/collections/everything',
-          title: 'All Products',
-          vector:
-            'https://cdn.sanity.io/images/g2b4qblu/production/1a629777129eaef7d363b5af85e98ae69037baf8-133x146.svg',
-        },
-        {
-          _id: 'shopifyCollection-395301519611',
-          _key: null,
-          colorTheme: {
-            background: '#cfe8e5',
-            text: '#3d7544',
-          },
-          gid: 'gid://shopify/Collection/395301519611',
-          slug: '/collections/bathroom',
-          title: 'Bathroom',
-          vector:
-            'https://cdn.sanity.io/images/g2b4qblu/production/a7d7aeecd12bb7fb9162fa5f0410385dafac51a1-131x146.svg',
-        },
-        {
-          _id: 'shopifyCollection-395607081211',
-          _key: null,
-          colorTheme: {
-            background: '#e3d8ff',
-            text: '#724ad2',
-          },
-          gid: 'gid://shopify/Collection/395607081211',
-          slug: '/collections/living',
-          title: 'Living',
-          vector:
-            'https://cdn.sanity.io/images/g2b4qblu/production/9cb69b79bb98176739fe714aa72c8b1644c97999-132x146.svg',
-        },
-        {
-          _id: 'shopifyCollection-396461834491',
-          _key: null,
-          colorTheme: {
-            background: '#ffe5f0',
-            text: '#ec5039',
-          },
-          gid: 'gid://shopify/Collection/396461834491',
-          slug: '/collections/prints',
-          title: 'Prints',
-          vector:
-            'https://cdn.sanity.io/images/g2b4qblu/production/60b7987913afc73fca2a516ae609680bfd156ed7-133x146.svg',
-        },
-      ],
-      collectionProducts: {
-        _id: 'shopifyCollection-395607245051',
-        _key: null,
-        colorTheme: {
-          background: '#e3d8ff',
-          text: '#724ad2',
-        },
-        gid: 'gid://shopify/Collection/395607245051',
-        slug: '/collections/best-sellers-in-stock',
-        title: 'New Arrivals',
-        vector: null,
-      },
-      title: 'Products',
-    },
-    {
-      _key: '0ad9402b2bca',
-      _type: 'linkInternal',
-      documentType: 'page',
-      slug: '/pages/story',
-      title: 'Story',
-    },
-    {
-      _key: 'd7742bb3474e',
-      _type: 'linkInternal',
-      documentType: 'page',
-      slug: '/pages/process',
-      title: 'Process',
-    },
-    {
-      _key: 'f82d06a43e24',
-      _type: 'linkInternal',
-      documentType: 'page',
-      slug: '/pages/about',
-      title: 'About this demo',
-    },
-  ],
-  seo: {
-    description:
-      "Sanity.io can power remarkable storefronts on Shopify's Hydrogen framework.",
-    title: 'AKVA',
-  },
-};
 /**
  * @todo move elsewhere
  */

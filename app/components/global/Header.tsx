@@ -1,8 +1,6 @@
 import {useMatches} from '@remix-run/react';
 import clsx from 'clsx';
 
-import type {SanityMenuLink} from '~/types/sanity';
-
 import HeaderActions from './HeaderActions';
 import HeaderBackground from './HeaderBackground';
 import MobileNavigation from './MobileNavigation';
