@@ -11,15 +11,18 @@ export default async function handleRequest(
   responseHeaders: Headers,
   remixContext: EntryContext,
 ) {
-  /**
-   * Crytographic nonce to strengthen Content Security Policy
-   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce
-   */
-  const nonce = createNonce();
-  responseHeaders.set(
-    'Content-Security-Policy',
-    `script-src 'nonce-${nonce}' 'strict-dynamic'; object-src 'none'; base-uri 'none';`,
-  );
+  let nonce: string | undefined;
+  if (process.env.NODE_ENV === 'production') {
+    /**
+     * Crytographic nonce to strengthen Content Security Policy
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce
+     */
+    nonce = createNonce();
+    responseHeaders.set(
+      'Content-Security-Policy',
+      `script-src 'nonce-${nonce}' 'strict-dynamic'; object-src 'none'; base-uri 'none';`,
+    );
+  }
 
   const body = await renderToReadableStream(
     <NonceContext.Provider value={nonce}>
