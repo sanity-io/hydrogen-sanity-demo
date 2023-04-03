@@ -29,6 +29,7 @@ import {GenericError} from '~/components/global/GenericError';
 import {Layout} from '~/components/global/Layout';
 import {NotFound} from '~/components/global/NotFound';
 import {useAnalytics} from '~/hooks/useAnalytics';
+import {useNonce} from '~/lib/nonce';
 import {DEFAULT_LOCALE} from '~/lib/utils';
 import {LAYOUT_QUERY} from '~/queries/sanity/layout';
 import {CART_QUERY} from '~/queries/shopify/cart';
@@ -112,6 +113,7 @@ export default function App() {
   const {shopifyConfig} = data;
   const locale = data.selectedLocale ?? DEFAULT_LOCALE;
   const hasUserConsent = true;
+  const nonce = useNonce();
 
   useAnalytics(hasUserConsent, locale);
 
@@ -129,8 +131,8 @@ export default function App() {
               <Outlet />
             </Layout>
           </Preview>
-          <ScrollRestoration />
-          <Scripts />
+          <ScrollRestoration nonce={nonce} />
+          <Scripts nonce={nonce} />
         </body>
       </html>
     </ShopifyProvider>
@@ -179,7 +181,6 @@ export function ErrorBoundary({error}: {error: Error}) {
 
   const {selectedLocale, shopifyConfig, layout} = root.data;
   const locale = selectedLocale ?? DEFAULT_LOCALE;
-  const {notFoundPage} = layout;
 
   return (
     <ShopifyProvider {...shopifyConfig}>
