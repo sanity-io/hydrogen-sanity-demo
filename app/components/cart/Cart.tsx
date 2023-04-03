@@ -42,7 +42,7 @@ export function CartLineItems({
 }
 
 function LineItem({lineItem}: {lineItem: CartLine}) {
-  const {merchandise, quantity} = lineItem;
+  const {merchandise} = lineItem;
 
   const firstVariant = merchandise.selectedOptions[0];
   const hasDefaultVariantOnly =

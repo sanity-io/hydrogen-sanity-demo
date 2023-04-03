@@ -6,6 +6,7 @@ import clsx from 'clsx';
 
 import ProductGrid from '~/components/ProductGrid';
 import {validateLocale} from '~/lib/utils';
+import {COLLECTION_QUERY} from '~/queries/shopify/collection';
 
 const seo: SeoHandleFunction = ({data}) => ({
   title: data?.collection?.title,
@@ -16,18 +17,22 @@ export const handle = {
   seo,
 };
 
+const PAGINATION_SIZE = 12;
+
 export async function loader({params, context, request}: LoaderArgs) {
   validateLocale({context, params});
 
   const {handle} = params;
   const searchParams = new URL(request.url).searchParams;
   const cursor = searchParams.get('cursor');
+  const count = searchParams.get('count');
 
   const {collection}: {collection: CollectionType} =
     await context.storefront.query(COLLECTION_QUERY, {
       variables: {
         handle,
         cursor,
+        count: count ? parseInt(count) : PAGINATION_SIZE,
       },
     });
 
@@ -36,8 +41,6 @@ export async function loader({params, context, request}: LoaderArgs) {
     throw new Response(null, {status: 404});
   }
 
-  // json is a Remix utility for creating application/json responses
-  // https://remix.run/docs/en/v1/utils/json
   return json({
     collection,
     analytics: {
@@ -50,6 +53,7 @@ export async function loader({params, context, request}: LoaderArgs) {
 
 export default function Collection() {
   const {collection} = useLoaderData();
+
   return (
     <section
       className={clsx(
@@ -79,46 +83,3 @@ export default function Collection() {
     </section>
   );
 }
-
-const COLLECTION_QUERY = `#graphql
-  	query CollectionDetails($country: CountryCode, $language: LanguageCode, $handle: String!, $cursor: String)
-    @inContext(country: $country, language: $language) {
-    collection(handle: $handle) {
-      id
-      title
-      description
-      handle
-      products(first: 4, after: $cursor) {
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-        nodes {
-          id
-          title
-          publishedAt
-          handle
-          variants(first: 1) {
-            nodes {
-              id
-              image {
-                url
-                altText
-                width
-                height
-              }
-              price {
-                amount
-                currencyCode
-              }
-              compareAtPrice {
-                amount
-                currencyCode
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;

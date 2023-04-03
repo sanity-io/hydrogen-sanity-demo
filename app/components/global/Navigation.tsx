@@ -1,10 +1,9 @@
 import clsx from 'clsx';
 import {useCallback} from 'react';
 
+import CollectionGroup from '~/components/global/collectionGroup/CollectionGroup';
 import {Link} from '~/components/Link';
 import type {SanityMenuLink} from '~/types/sanity';
-
-// import CollectionGroup from './collectionGroup/CollectionGroup.server';
 
 /**
  * A server component that defines the navigation for a web storefront
@@ -17,9 +16,9 @@ type Props = {
 export default function Navigation({menuLinks}: Props) {
   const renderLinks = useCallback(() => {
     return menuLinks?.map((link) => {
-      // if (link._type === 'collectionGroup') {
-      //   return <CollectionGroup collectionGroup={link} key={link._key} />;
-      // }
+      if (link._type === 'collectionGroup') {
+        return <CollectionGroup collectionGroup={link} key={link._key} />;
+      }
       if (link._type === 'linkExternal') {
         return (
           <div className="flex items-center" key={link._key}>
