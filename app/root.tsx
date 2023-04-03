@@ -13,21 +13,22 @@ import {
 } from '@shopify/hydrogen';
 import type {Cart, Shop} from '@shopify/hydrogen/storefront-api-types';
 import {
-  AppLoadContext,
+  type AppLoadContext,
   defer,
   type LinksFunction,
   type LoaderArgs,
   type MetaFunction,
 } from '@shopify/remix-oxygen';
 
+import {Layout} from '~/components/Layout';
+import {useAnalytics} from '~/hooks/useAnalytics';
+import {useNonce} from '~/lib/nonce';
+import {DEFAULT_LOCALE} from '~/lib/utils';
 import {CART_QUERY} from '~/queries/shopify/cart';
+import stylesheet from '~/styles/tailwind.css';
+import type {I18nLocale} from '~/types/shopify';
 
 import favicon from '../public/favicon.svg';
-import {Layout} from './components/Layout';
-import {useAnalytics} from './hooks/useAnalytics';
-import {DEFAULT_LOCALE} from './lib/utils';
-import stylesheet from './styles/tailwind.css';
-import {I18nLocale} from './types/shopify';
 
 const seo: SeoHandleFunction<typeof loader> = ({data, pathname}) => ({
   title: data?.layout?.shop?.name,
@@ -93,6 +94,7 @@ export default function App() {
   const data = useLoaderData<typeof loader>();
   const locale = data.selectedLocale ?? DEFAULT_LOCALE;
   const hasUserConsent = true;
+  const nonce = useNonce();
 
   useAnalytics(hasUserConsent, locale);
 
@@ -109,8 +111,8 @@ export default function App() {
         <Layout title={name} key={`${locale.language}-${locale.country}`}>
           <Outlet />
         </Layout>
-        <ScrollRestoration />
-        <Scripts />
+        <ScrollRestoration nonce={nonce} />
+        <Scripts nonce={nonce} />
       </body>
     </html>
   );

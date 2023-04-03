@@ -3,15 +3,33 @@ import type {EntryContext} from '@shopify/remix-oxygen';
 import isbot from 'isbot';
 import {renderToReadableStream} from 'react-dom/server';
 
+import {generateNonce, NonceProvider} from '~/lib/nonce';
+
 export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
   remixContext: EntryContext,
 ) {
+  let nonce: string | undefined;
+  if (process.env.NODE_ENV === 'production') {
+    /**
+     * Crytographic nonce to strengthen Content Security Policy
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce
+     */
+    nonce = generateNonce();
+    responseHeaders.set(
+      'Content-Security-Policy',
+      `script-src 'nonce-${nonce}' 'strict-dynamic'; object-src 'none'; base-uri 'none';`,
+    );
+  }
+
   const body = await renderToReadableStream(
-    <RemixServer context={remixContext} url={request.url} />,
+    <NonceProvider value={nonce}>
+      <RemixServer context={remixContext} url={request.url} />
+    </NonceProvider>,
     {
+      nonce,
       signal: request.signal,
       onError(error) {
         // eslint-disable-next-line no-console
