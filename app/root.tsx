@@ -15,7 +15,6 @@ import {
   ShopifySalesChannel,
 } from '@shopify/hydrogen';
 import type {Cart, Shop} from '@shopify/hydrogen/storefront-api-types';
-import {ShopifyProvider} from '@shopify/hydrogen-react';
 import {
   type AppLoadContext,
   defer,
@@ -87,19 +86,11 @@ export async function loader({context}: LoaderArgs) {
 
   const selectedLocale = context.storefront.i18n as I18nLocale;
 
-  const shopifyConfig = {
-    storefrontToken: context.env.PUBLIC_STOREFRONT_API_TOKEN,
-    storeDomain: `https://${context.env.PUBLIC_STORE_DOMAIN}`,
-    storefrontApiVersion: context.env.PUBLIC_STOREFRONT_API_VERSION,
-    countryIsoCode: selectedLocale.country,
-    languageIsoCode: selectedLocale.language,
-  };
-
   return defer({
     layout,
     cart: cartId ? getCart(context, cartId) : undefined,
     selectedLocale,
-    shopifyConfig,
+    storeDomain: context.storefront.getShopifyDomain(),
     analytics: {
       shopifySalesChannel: ShopifySalesChannel.hydrogen,
       shopId: shop.shop.id,
@@ -110,7 +101,6 @@ export async function loader({context}: LoaderArgs) {
 
 export default function App() {
   const {isPreview, ...data} = useLoaderData<typeof loader>();
-  const {shopifyConfig} = data;
   const locale = data.selectedLocale ?? DEFAULT_LOCALE;
   const hasUserConsent = true;
   const nonce = useNonce();
@@ -118,24 +108,22 @@ export default function App() {
   useAnalytics(hasUserConsent, locale);
 
   return (
-    <ShopifyProvider {...shopifyConfig}>
-      <html lang={locale.language}>
-        <head>
-          <Seo />
-          <Meta />
-          <Links />
-        </head>
-        <body>
-          <Preview enabled={isPreview}>
-            <Layout key={`${locale.language}-${locale.country}`}>
-              <Outlet />
-            </Layout>
-          </Preview>
-          <ScrollRestoration nonce={nonce} />
-          <Scripts nonce={nonce} />
-        </body>
-      </html>
-    </ShopifyProvider>
+    <html lang={locale.language}>
+      <head>
+        <Seo />
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <Preview enabled={isPreview}>
+          <Layout key={`${locale.language}-${locale.country}`}>
+            <Outlet />
+          </Layout>
+        </Preview>
+        <ScrollRestoration nonce={nonce} />
+        <Scripts nonce={nonce} />
+      </body>
+    </html>
   );
 }
 
@@ -144,60 +132,56 @@ export function CatchBoundary() {
   const caught = useCatch();
   const isNotFound = caught.status === 404;
 
-  const {selectedLocale, shopifyConfig, layout} = root.data;
+  const {selectedLocale, layout} = root.data;
   const locale = selectedLocale ?? DEFAULT_LOCALE;
   const {notFoundPage} = layout;
 
   return (
-    <ShopifyProvider {...shopifyConfig}>
-      <html lang={locale.language}>
-        <head>
-          <title>{isNotFound ? 'Not found' : 'Error'}</title>
-          <Meta />
-          <Links />
-        </head>
-        <body>
-          <Layout
-            key={`${locale.language}-${locale.country}`}
-            backgroundColor={notFoundPage?.colorTheme?.background}
-          >
-            {isNotFound ? (
-              <NotFound sanityData={notFoundPage} />
-            ) : (
-              <GenericError
-                error={{message: `${caught.status} ${caught.data}`}}
-              />
-            )}
-          </Layout>
-          <Scripts />
-        </body>
-      </html>
-    </ShopifyProvider>
+    <html lang={locale.language}>
+      <head>
+        <title>{isNotFound ? 'Not found' : 'Error'}</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <Layout
+          key={`${locale.language}-${locale.country}`}
+          backgroundColor={notFoundPage?.colorTheme?.background}
+        >
+          {isNotFound ? (
+            <NotFound sanityData={notFoundPage} />
+          ) : (
+            <GenericError
+              error={{message: `${caught.status} ${caught.data}`}}
+            />
+          )}
+        </Layout>
+        <Scripts />
+      </body>
+    </html>
   );
 }
 
 export function ErrorBoundary({error}: {error: Error}) {
   const [root] = useMatches();
 
-  const {selectedLocale, shopifyConfig, layout} = root.data;
+  const {selectedLocale} = root.data;
   const locale = selectedLocale ?? DEFAULT_LOCALE;
 
   return (
-    <ShopifyProvider {...shopifyConfig}>
-      <html lang={locale.language}>
-        <head>
-          <title>Error</title>
-          <Meta />
-          <Links />
-        </head>
-        <body>
-          <Layout key={`${locale.language}-${locale.country}`}>
-            <GenericError error={error} />
-          </Layout>
-          <Scripts />
-        </body>
-      </html>
-    </ShopifyProvider>
+    <html lang={locale.language}>
+      <head>
+        <title>Error</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <Layout key={`${locale.language}-${locale.country}`}>
+          <GenericError error={error} />
+        </Layout>
+        <Scripts />
+      </body>
+    </html>
   );
 }
 

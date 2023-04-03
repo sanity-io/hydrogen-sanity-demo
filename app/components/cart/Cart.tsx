@@ -1,4 +1,4 @@
-import {useFetcher, useTransition} from '@remix-run/react';
+import {useFetcher, useMatches} from '@remix-run/react';
 import type {
   Cart,
   CartCost,
@@ -229,7 +229,11 @@ export function CartSummary({cost}: {cost: CartCost}) {
 }
 
 export function CartActions({cart}: {cart: Cart}) {
+  const [root] = useMatches();
+
   if (!cart || !cart.checkoutUrl) return null;
+
+  const storeDomain = root?.data?.storeDomain;
 
   const shopPayLineItems = flattenConnection(cart.lines).map((line) => ({
     id: line.merchandise.id,
@@ -241,6 +245,7 @@ export function CartActions({cart}: {cart: Cart}) {
       <ShopPayButton
         className={clsx([defaultButtonStyles({tone: 'shopPay'}), 'w-1/2'])}
         variantIdsAndQuantities={shopPayLineItems}
+        storeDomain={storeDomain}
       />
       <Button
         to={cart.checkoutUrl}
