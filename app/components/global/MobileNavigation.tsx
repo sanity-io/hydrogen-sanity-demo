@@ -3,11 +3,11 @@ import clsx from 'clsx';
 import {Fragment, useState} from 'react';
 
 import {Link} from '~/components/Link';
+import type {SanityMenuLink} from '~/types/sanity';
 
-import type {SanityMenuLink} from '../../types';
 import CloseIcon from '../icons/Close';
 import MenuIcon from '../icons/Menu';
-// import CountrySelect from './CountrySelect.client';
+import {CountrySelector} from './CountrySelector';
 
 type Props = {
   menuLinks: SanityMenuLink[];
@@ -85,34 +85,33 @@ export default function MobileNavigation({menuLinks}: Props) {
                   </Link>
 
                   {menuLinks?.map((link) => {
-                    // TODO - collection queries
-                    // if (link._type === 'collectionGroup') {
-                    //   return (
-                    //     <div key={link._key}>
-                    //       <div className="linkTextNavigation hover:border-b-transparent">
-                    //         {link.title} –
-                    //       </div>
-                    //       <div className="my-1 ml-8 space-y-1">
-                    //         {link.collectionLinks?.map((collectionLink) => {
-                    //           if (!collectionLink.slug) {
-                    //             return null;
-                    //           }
-                    //           return (
-                    //             <div key={collectionLink._id}>
-                    //               <Link
-                    //                 className="linkTextNavigation relative inline-flex whitespace-nowrap"
-                    //                 onClick={handleClose}
-                    //                 to={collectionLink.slug}
-                    //               >
-                    //                 {collectionLink.title}
-                    //               </Link>
-                    //             </div>
-                    //           );
-                    //         })}
-                    //       </div>
-                    //     </div>
-                    //   );
-                    // }
+                    if (link._type === 'collectionGroup') {
+                      return (
+                        <div key={link._key}>
+                          <div className="linkTextNavigation hover:border-b-transparent">
+                            {link.title} –
+                          </div>
+                          <div className="my-1 ml-8 space-y-1">
+                            {link.collectionLinks?.map((collectionLink) => {
+                              if (!collectionLink.slug) {
+                                return null;
+                              }
+                              return (
+                                <div key={collectionLink._id}>
+                                  <Link
+                                    className="linkTextNavigation relative inline-flex whitespace-nowrap"
+                                    onClick={handleClose}
+                                    to={collectionLink.slug}
+                                  >
+                                    {collectionLink.title}
+                                  </Link>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      );
+                    }
 
                     if (link._type === 'linkExternal') {
                       return (
@@ -164,8 +163,7 @@ export default function MobileNavigation({menuLinks}: Props) {
                     <span className="mr-2">Account</span>
                   </Link>
                   <div className="-ml-2">
-                    {/* TODO: Country select */}
-                    {/* <CountrySelect align="left" /> */}
+                    <CountrySelector align="left" />
                   </div>
                 </div>
               </div>
