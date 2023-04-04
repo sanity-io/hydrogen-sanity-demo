@@ -103,11 +103,14 @@ export default function CollectionGroupContent({
             <>
               <div className="mb-2 h-4 w-48 rounded-full bg-gray"></div>
               <ul className="mt-3 grid grid-cols-1 gap-2">
-                {Array(4).fill(
-                  <li>
-                    <PillSkeleton />
-                  </li>,
-                )}
+                {Array(4)
+                  .fill(true)
+                  .map((_, i) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <li key={i}>
+                      <PillSkeleton />
+                    </li>
+                  ))}
               </ul>
             </>
           )}

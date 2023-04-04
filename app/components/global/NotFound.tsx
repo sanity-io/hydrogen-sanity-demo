@@ -28,7 +28,18 @@ export function NotFound({
       </p>
 
       <div className="mx-4 mb-18 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        <Suspense fallback={<>{Array(16).fill(<PillSkeleton />)}</>}>
+        <Suspense
+          fallback={
+            <>
+              {Array(16)
+                .fill(true)
+                .map((_, i) => (
+                  // eslint-disable-next-line react/no-array-index-key
+                  <PillSkeleton key={i} />
+                ))}
+            </>
+          }
+        >
           <Await
             resolve={notFoundCollection}
             errorElement={<p>Error loading products!</p>}
