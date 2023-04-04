@@ -27,6 +27,7 @@
     "@shopify/cli-hydrogen": "^4.0.9",
     "@shopify/hydrogen": "^2023.1.6",
     "@shopify/remix-oxygen": "^1.0.4",
+    "@tippyjs/react": "^4.2.6",
     "clsx": "^1.2.1",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",

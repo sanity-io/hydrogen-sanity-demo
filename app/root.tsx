@@ -42,6 +42,7 @@ import type {I18nLocale} from '~/types/shopify';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: data?.layout?.seo?.title,
+  titleTemplate: `%s · ${data?.layout?.seo?.title}`,
   description: data?.layout?.seo?.description,
 });
 
@@ -92,8 +93,13 @@ export async function loader({context}: LoaderArgs) {
   const selectedLocale = context.storefront.i18n as I18nLocale;
 
   return defer({
-    layout,
+    analytics: {
+      shopifySalesChannel: ShopifySalesChannel.hydrogen,
+      shopId: shop.shop.id,
+    },
     cart: cartId ? getCart(context, cartId) : undefined,
+    isPreview: context.sanity.isPreview,
+    layout,
     notFoundCollection: layout.notFoundPage?.collectionGid
       ? context.storefront.query<{collection: Collection}>(
           COLLECTION_QUERY_ID,
@@ -105,13 +111,10 @@ export async function loader({context}: LoaderArgs) {
           },
         )
       : undefined,
+    sanityProjectID: context.env.SANITY_PROJECT_ID,
+    sanityDataset: context.env.SANITY_DATASET,
     selectedLocale,
     storeDomain: context.storefront.getShopifyDomain(),
-    analytics: {
-      shopifySalesChannel: ShopifySalesChannel.hydrogen,
-      shopId: shop.shop.id,
-    },
-    isPreview: context.sanity.isPreview,
   });
 }
 

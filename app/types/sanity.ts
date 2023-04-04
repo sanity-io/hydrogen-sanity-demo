@@ -1,5 +1,7 @@
 import type {Block, Image} from '@sanity/types';
 
+import {ProductWithNodes} from './shopify';
+
 export interface SanityAssetImage extends Image {
   _type: 'image';
   altText?: string;
@@ -76,17 +78,20 @@ export type SanityHeroCollection = {
   content?: SanityImageWithProductHotspots | SanityProductWithVariant;
   description?: string;
   title?: string;
+  data?: ProductWithNodes[] | ProductWithNodes;
 };
 
 export type SanityHeroHome = {
   content?: SanityImageWithProductHotspots | SanityProductWithVariant;
   link?: SanityLink;
   title?: string;
+  data?: ProductWithNodes[] | ProductWithNodes;
 };
 
 export type SanityHeroPage = {
   content?: SanityImageWithProductHotspots | SanityProductWithVariant;
   title?: string;
+  data?: ProductWithNodes[] | ProductWithNodes;
 };
 
 export type SanityHomePage = {

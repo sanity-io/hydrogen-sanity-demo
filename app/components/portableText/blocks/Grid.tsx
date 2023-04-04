@@ -1,11 +1,10 @@
 import type {PortableTextBlock} from '@portabletext/types';
+import {useMatches} from '@remix-run/react';
 import clsx from 'clsx';
 
 import SanityImage from '~/components/media/SanityImage';
 import type {SanityModuleGrid} from '~/types/sanity';
 
-// TODO: get this config from Remix context...
-// import sanityConfig from '../../../../sanity.config';
 import PortableText from '../PortableText';
 
 type Props = {
@@ -13,6 +12,9 @@ type Props = {
 };
 
 export default function GridBlock({value}: Props) {
+  const [root] = useMatches();
+  const {sanityDataset, sanityProjectID} = root.data;
+
   return (
     <div
       className={clsx(
@@ -31,11 +33,11 @@ export default function GridBlock({value}: Props) {
               <SanityImage
                 alt={item.image?.altText}
                 crop={item.image?.crop}
-                dataset={sanityConfig.dataset}
+                dataset={sanityDataset}
                 hotspot={item.image?.hotspot}
                 layout="fill"
                 objectFit="cover"
-                projectId={sanityConfig.projectId}
+                projectId={sanityProjectID}
                 sizes="25vw"
                 src={item.image?.asset?._ref}
               />

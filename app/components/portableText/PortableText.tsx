@@ -43,8 +43,8 @@ export default function PortableText({
       //   <ProductAnnotation colorTheme={colorTheme} {...props} />
       // ),
     },
+    block: Block,
     types: {
-      block: Block,
       blockAccordion: AccordionBlock,
       blockCallout: (props: any) => (
         <CalloutBlock centered={centered} colorTheme={colorTheme} {...props} />

@@ -1,5 +1,7 @@
-import {PRODUCT_FIELDS} from '~/queries/shopify/product';
-import {PRODUCT_VARIANT_FIELDS} from '~/queries/shopify/productVariant';
+import {
+  PRODUCT_FIELDS,
+  PRODUCT_VARIANT_FIELDS,
+} from '~/queries/shopify/product';
 
 export const COLLECTION_FIELDS = `
   fragment CollectionFields on Collection {

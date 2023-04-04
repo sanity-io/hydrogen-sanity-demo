@@ -1,3 +1,5 @@
+// TODO: TS this file
+
 import imageUrlBuilder from '@sanity/image-url';
 
 const BREAKPOINTS = [640, 768, 1024, 1280, 1536]; // px
