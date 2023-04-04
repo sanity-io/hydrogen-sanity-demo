@@ -1,5 +1,5 @@
 import {useFetcher} from '@remix-run/react';
-import type {Collection} from '@shopify/hydrogen/storefront-api-types';
+import type {Collection, Product} from '@shopify/hydrogen/storefront-api-types';
 import {useEffect, useState} from 'react';
 
 import ProductCard from './ProductCard';
@@ -11,31 +11,39 @@ export default function ProductGrid({
   collection: Collection;
   url: string;
 }) {
+  const [initialProducts, setInitialProducts] = useState(
+    collection?.products?.nodes || [],
+  );
+
   const [nextPage, setNextPage] = useState(
-    collection.products.pageInfo.hasNextPage,
+    collection?.products?.pageInfo?.hasNextPage,
   );
 
   const [endCursor, setEndCursor] = useState(
-    collection.products.pageInfo.endCursor,
+    collection?.products?.pageInfo?.endCursor,
   );
 
-  const [products, setProducts] = useState(collection.products.nodes || []);
+  const [products, setProducts] = useState(initialProducts);
 
-  // For making client-side requests
-  // https://remix.run/docs/en/v1/hooks/use-fetcher
+  // props have changes, reset component state
+  const productProps = collection?.products?.nodes || [];
+  if (initialProducts !== productProps) {
+    setInitialProducts(productProps);
+    setProducts(productProps);
+  }
+
   const fetcher = useFetcher();
 
   function fetchMoreProducts() {
-    // ?index differentiates index routes from their parent layout routes
-    // https://remix.run/docs/en/v1/guides/routing#what-is-the-index-query-param
     fetcher.load(`${url}?index&cursor=${endCursor}`);
   }
 
   useEffect(() => {
     if (!fetcher.data) return;
+
     const {collection} = fetcher.data;
 
-    setProducts((prev) => [...prev, ...collection.products.nodes]);
+    setProducts((prev: Product[]) => [...prev, ...collection.products.nodes]);
     setNextPage(collection.products.pageInfo.hasNextPage);
     setEndCursor(collection.products.pageInfo.endCursor);
   }, [fetcher.data]);

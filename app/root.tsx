@@ -14,7 +14,11 @@ import {
   type SeoHandleFunction,
   ShopifySalesChannel,
 } from '@shopify/hydrogen';
-import type {Cart, Shop} from '@shopify/hydrogen/storefront-api-types';
+import type {
+  Cart,
+  Collection,
+  Shop,
+} from '@shopify/hydrogen/storefront-api-types';
 import {
   type AppLoadContext,
   defer,
@@ -32,6 +36,7 @@ import {useNonce} from '~/lib/nonce';
 import {DEFAULT_LOCALE} from '~/lib/utils';
 import {LAYOUT_QUERY} from '~/queries/sanity/layout';
 import {CART_QUERY} from '~/queries/shopify/cart';
+import {COLLECTION_QUERY_ID} from '~/queries/shopify/collection';
 import stylesheet from '~/styles/tailwind.css';
 import type {I18nLocale} from '~/types/shopify';
 
@@ -89,6 +94,17 @@ export async function loader({context}: LoaderArgs) {
   return defer({
     layout,
     cart: cartId ? getCart(context, cartId) : undefined,
+    notFoundCollection: layout.notFoundPage?.collectionGid
+      ? context.storefront.query<{collection: Collection}>(
+          COLLECTION_QUERY_ID,
+          {
+            variables: {
+              id: layout.notFoundPage.collectionGid,
+              count: 16,
+            },
+          },
+        )
+      : undefined,
     selectedLocale,
     storeDomain: context.storefront.getShopifyDomain(),
     analytics: {
@@ -132,9 +148,9 @@ export function CatchBoundary() {
   const caught = useCatch();
   const isNotFound = caught.status === 404;
 
-  const {selectedLocale, layout} = root.data;
-  const locale = selectedLocale ?? DEFAULT_LOCALE;
+  const {selectedLocale, layout, notFoundCollection} = root.data;
   const {notFoundPage} = layout;
+  const locale = selectedLocale ?? DEFAULT_LOCALE;
 
   return (
     <html lang={locale.language}>
@@ -149,7 +165,10 @@ export function CatchBoundary() {
           backgroundColor={notFoundPage?.colorTheme?.background}
         >
           {isNotFound ? (
-            <NotFound sanityData={notFoundPage} />
+            <NotFound
+              notFoundPage={notFoundPage}
+              notFoundCollection={notFoundCollection}
+            />
           ) : (
             <GenericError
               error={{message: `${caught.status} ${caught.data}`}}

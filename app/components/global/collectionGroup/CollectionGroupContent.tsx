@@ -1,12 +1,12 @@
 import {useFetcher} from '@remix-run/react';
 import type {Collection} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
-import {useCallback, useEffect, useRef} from 'react';
+import {useCallback, useEffect} from 'react';
 import {useInView} from 'react-intersection-observer';
 
 import CollectionCard from '~/components/collection/Card';
 import CloseIcon from '~/components/icons/Close';
-import ProductPill from '~/components/product/Pill';
+import ProductPill, {PillSkeleton} from '~/components/product/Pill';
 import type {SanityCollection, SanityCollectionGroup} from '~/types/sanity';
 
 type Props = {
@@ -92,11 +92,22 @@ export default function CollectionGroupContent({
       {/* Collection products */}
       {collection && (
         <div className="mt-8 px-8" ref={ref}>
-          {products && (
+          {products ? (
             <>
               <div className="text-lg font-bold">{collection.title}</div>
               <ul className="mt-3 grid grid-cols-1 gap-2">
                 {renderCollectionProducts()}
+              </ul>
+            </>
+          ) : (
+            <>
+              <div className="mb-2 h-4 w-48 rounded-full bg-gray"></div>
+              <ul className="mt-3 grid grid-cols-1 gap-2">
+                {Array(4).fill(
+                  <li>
+                    <PillSkeleton />
+                  </li>,
+                )}
               </ul>
             </>
           )}

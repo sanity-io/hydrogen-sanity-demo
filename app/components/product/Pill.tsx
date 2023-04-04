@@ -2,6 +2,7 @@ import {Image, Money} from '@shopify/hydrogen';
 import clsx from 'clsx';
 
 import Badge from '~/components/elements/Badge';
+import {Skeleton} from '~/components/global/Skeleton';
 import {Link} from '~/components/Link';
 import type {ProductWithNodes} from '~/types/shopify';
 import {
@@ -106,5 +107,41 @@ export default function ProductPill({onClick, storefrontProduct}: Props) {
         </div>
       </div>
     </Link>
+  );
+}
+
+export function PillSkeleton() {
+  return (
+    <Skeleton
+      className={clsx(
+        'group flex h-[108px] gap-4 rounded-md border border-lightGray bg-white p-3 text-sm duration-500 ease-out',
+      )}
+      role="row"
+    >
+      <div role="cell" className="relative flex-shrink-0">
+        <div
+          className={clsx(
+            'relative h-full w-[110px] overflow-hidden rounded-sm bg-gray duration-500 ease-out',
+            'group-hover:rounded-md',
+          )}
+        ></div>
+      </div>
+
+      <div className="overflow-hidden">
+        <div className="mr-3 space-y-1">
+          {/* Title */}
+          <div className="mb-2 h-4 w-48 rounded-full bg-gray"></div>
+
+          {/* Product options */}
+          <div className="mb-2 h-3 w-30 rounded-full bg-gray"></div>
+          <div className="mb-2 h-3 w-18 rounded-full bg-gray"></div>
+        </div>
+
+        {/* Price */}
+        <div className="mt-4 flex">
+          <div className="h-3 w-24 rounded-full bg-gray"></div>
+        </div>
+      </div>
+    </Skeleton>
   );
 }
