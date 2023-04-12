@@ -43,9 +43,7 @@ export default function ImagesBlock({centered, value}: Props) {
         )}
       >
         {value?.modules?.map((module) => (
-          <p key={module._key}>image here...</p>
-          // TODO: sort image module with API calls
-          // <ImageModule key={module._key} module={module} />
+          <ImageModule key={module._key} module={module} />
         ))}
       </div>
     </div>

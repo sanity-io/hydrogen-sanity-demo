@@ -19,6 +19,11 @@ import InstagramBlock from './blocks/Instagram';
 import ListBlock from './blocks/List';
 import ProductsBlock from './blocks/Products';
 
+const SHARED_LIST_CLASSES = clsx(
+  'first:mt-0 last:mb-0', //
+  'my-8 space-y-0.5 leading-paragraph list-outside ml-8',
+);
+
 type Props = {
   blocks: PortableTextBlock[];
   className?: string;
@@ -33,7 +38,14 @@ export default function PortableText({
   colorTheme,
 }: Props) {
   const components: PortableTextComponents = {
-    list: ListBlock,
+    list: {
+      bullet: ({children}) => (
+        <ul className={SHARED_LIST_CLASSES}>{children}</ul>
+      ),
+      number: ({children}) => (
+        <ol className={SHARED_LIST_CLASSES}>{children}</ol>
+      ),
+    },
     marks: {
       annotationLinkExternal: LinkExternalAnnotation,
       annotationLinkInternal: LinkInternalAnnotation,
