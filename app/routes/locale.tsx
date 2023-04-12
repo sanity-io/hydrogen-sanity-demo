@@ -11,8 +11,6 @@ import {
 } from '@shopify/remix-oxygen';
 import invariant from 'tiny-invariant';
 
-import {countries} from '~/data/countries';
-
 export const action: ActionFunction = async ({request, context}) => {
   const {session} = context;
   const formData = await request.formData();

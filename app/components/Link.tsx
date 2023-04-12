@@ -5,6 +5,7 @@ import {
   type NavLinkProps as RemixNavLinkProps,
   useMatches,
 } from '@remix-run/react';
+import {forwardRef} from 'react';
 
 type LinkProps = Omit<RemixLinkProps, 'className'> & {
   className?: RemixNavLinkProps['className'] | RemixLinkProps['className'];
@@ -25,7 +26,7 @@ type LinkProps = Omit<RemixLinkProps, 'className'> & {
  *
  * Ultimately, it is up to you to decide how to implement this behavior.
  */
-export function Link(props: LinkProps) {
+export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
   const {to, className, ...resOfProps} = props;
   const [root] = useMatches();
   const selectedLocale = root.data?.selectedLocale;
@@ -38,9 +39,21 @@ export function Link(props: LinkProps) {
 
   if (typeof className === 'function') {
     return (
-      <RemixNavLink to={toWithLocale} className={className} {...resOfProps} />
+      <RemixNavLink
+        to={toWithLocale}
+        className={className}
+        {...resOfProps}
+        ref={ref}
+      />
     );
   }
 
-  return <RemixLink to={toWithLocale} className={className} {...resOfProps} />;
-}
+  return (
+    <RemixLink
+      to={toWithLocale}
+      className={className}
+      {...resOfProps}
+      ref={ref}
+    />
+  );
+});

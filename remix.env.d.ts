@@ -3,7 +3,10 @@
 /// <reference types="@shopify/oxygen-workers-types" />
 
 import type {Storefront} from '@shopify/hydrogen';
+import type {SanityClient} from '@sanity/client'
 import type {HydrogenSession} from '../server';
+
+type Sanity = {client: SanityClient, isPreview: boolean};
 
 declare global {
   /**
@@ -21,6 +24,10 @@ declare global {
     PUBLIC_STOREFRONT_API_VERSION: string;
     PUBLIC_STORE_DOMAIN: string;
     PUBLIC_STOREFRONT_ID: string;
+    SANITY_PROJECT_ID: string;
+    SANITY_DATASET: string;
+    SANITY_API_VERSION: string;
+    SANITY_API_TOKEN: string;
   }
 }
 
@@ -32,5 +39,6 @@ declare module '@shopify/remix-oxygen' {
     session: HydrogenSession;
     storefront: Storefront;
     env: Env;
+    sanity: Sanity;
   }
 }
