@@ -149,6 +149,7 @@ export default function App() {
 export function CatchBoundary() {
   const [root] = useMatches();
   const caught = useCatch();
+  const nonce = useNonce();
   const isNotFound = caught.status === 404;
 
   const {selectedLocale, layout, notFoundCollection} = root.data;
@@ -178,7 +179,7 @@ export function CatchBoundary() {
             />
           )}
         </Layout>
-        <Scripts />
+        <Scripts nonce={nonce} />
       </body>
     </html>
   );
@@ -186,6 +187,7 @@ export function CatchBoundary() {
 
 export function ErrorBoundary({error}: {error: Error}) {
   const [root] = useMatches();
+  const nonce = useNonce();
 
   const {selectedLocale} = root.data;
   const locale = selectedLocale ?? DEFAULT_LOCALE;
@@ -201,7 +203,7 @@ export function ErrorBoundary({error}: {error: Error}) {
         <Layout key={`${locale.language}-${locale.country}`}>
           <GenericError error={error} />
         </Layout>
-        <Scripts />
+        <Scripts nonce={nonce} />
       </body>
     </html>
   );
