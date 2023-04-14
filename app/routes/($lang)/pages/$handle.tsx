@@ -7,9 +7,9 @@ import invariant from 'tiny-invariant';
 
 import PageHero from '~/components/heroes/Page';
 import PortableText from '~/components/portableText/PortableText';
+import {getPageData} from '~/lib/pageData';
 import {PAGE} from '~/queries/sanity/fragments/pages/page';
 import {SanityPage} from '~/types/sanity';
-import {getHeroData} from '~/utils/heroData';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: data?.page?.seo?.title,
@@ -27,15 +27,14 @@ export async function loader({params, context}: LoaderArgs) {
     slug: params.handle,
   });
 
-  if (page.hero?.content) {
-    page.hero.data = await getHeroData({content: page.hero?.content, context});
-  }
+  // Resolve any references to products on the Storefront API
+  const storefrontData = await getPageData({page, context});
 
   if (!page) {
     throw new Response(null, {status: 404});
   }
 
-  return json({page});
+  return json({page, storefrontData});
 }
 
 export default function Page() {

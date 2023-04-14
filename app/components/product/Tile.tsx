@@ -7,18 +7,22 @@ import {ProductWithNodes} from '~/types/shopify';
 import {
   getProductOptionString,
   hasMultipleProductOptions,
-} from '../../utils/productOptions';
+} from '../../lib/productOptions';
 
 type Props = {
   storefrontProduct: ProductWithNodes;
+  variantGid?: string;
 };
 
-export default function ProductTile({storefrontProduct}: Props) {
+export default function ProductTile({storefrontProduct, variantGid}: Props) {
   if (!storefrontProduct) {
     return null;
   }
 
-  const firstVariant = storefrontProduct.variants.nodes[0];
+  const firstVariant =
+    storefrontProduct.variants.nodes.find(
+      (variant) => variant.id == variantGid,
+    ) ?? storefrontProduct.variants.nodes[0];
 
   const {availableForSale, compareAtPrice, price} = firstVariant;
 

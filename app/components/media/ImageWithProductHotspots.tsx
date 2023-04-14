@@ -1,4 +1,5 @@
 import {useMatches} from '@remix-run/react';
+import {Product} from '@shopify/hydrogen/storefront-api-types';
 
 import ProductHotspot from '~/components/product/Hotspot';
 import type {SanityImageWithProductHotspots} from '~/types/sanity';
@@ -8,26 +9,33 @@ import SanityImage from './SanityImage';
 
 type Props = {
   content: SanityImageWithProductHotspots;
-  data: ProductWithNodes[];
 };
 
-export default function ImageWithProductHotspots({content, data}: Props) {
+export default function ImageWithProductHotspots({content}: Props) {
   const [root] = useMatches();
   const {sanityDataset, sanityProjectID} = root.data;
 
-  // Shopify Products
-  const storefrontProducts = data;
+  const storefrontData =
+    useMatches().find((match) => match.data?.storefrontData)?.data
+      ?.storefrontData || {};
 
   return (
     <>
-      {content.productHotspots?.map((hotspot, index) => (
-        <ProductHotspot
-          key={hotspot._key}
-          storefrontProduct={storefrontProducts[index]}
-          x={hotspot.x}
-          y={hotspot.y}
-        />
-      ))}
+      {content.productHotspots?.map((hotspot, index) => {
+        const storefrontProduct = storefrontData.products.find(
+          (product: Product) => product.id === hotspot?.product?.gid,
+        );
+
+        return (
+          <ProductHotspot
+            key={hotspot._key}
+            storefrontProduct={storefrontProduct}
+            variantGid={hotspot?.product?.variantGid}
+            x={hotspot.x}
+            y={hotspot.y}
+          />
+        );
+      })}
 
       <SanityImage
         alt={content?.image?.altText}

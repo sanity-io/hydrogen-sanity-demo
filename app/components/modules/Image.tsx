@@ -6,16 +6,9 @@ import type {
 } from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 
-import type {
-  ProductWithNodes,
-  SanityModuleImage,
-  SanityProductWithVariant,
-} from '~/types/sanity';
+import type {SanityModuleImage} from '~/types/sanity';
 import type {ProductWithNodes} from '~/types/shopify';
 
-import sanityConfig from '../../../sanity.config';
-import {PRODUCT_FIELDS} from '../../fragments/shopify/product';
-import {PRODUCT_VARIANT_FIELDS} from '../../fragments/shopify/productVariant';
 import Button from '../elements/Button';
 import Link from '../elements/Link';
 import SanityImage from '../media/SanityImage';
@@ -32,70 +25,13 @@ type Props = {
 };
 
 export default function ImageModule({module}: Props) {
+  const storefrontData =
+    useMatches().find((match) => match.data?.storefrontData)?.data
+      ?.storefrontData || {};
+
   if (!module.image) {
     return null;
   }
-
-  // Conditionally fetch Shopify products if this is an image module that references products
-  // let storefrontProducts: ProductWithNodes[];
-  // if (['productHotspots', 'productTags'].includes(module.variant)) {
-  //   let products: SanityProductWithVariant[] | undefined = undefined;
-  //   if (module.variant === 'productHotspots') {
-  //     products = module.productHotspots?.map((hotspot) => hotspot.product);
-  //   }
-  //   if (module.variant === 'productTags') {
-  //     products = module.productTags;
-  //   }
-
-  //   if (products) {
-  //     const [productGids, productVariantGids] = products.reduce<
-  //       [string[], string[]]
-  //     >(
-  //       (acc, val) => {
-  //         if (val) {
-  //           acc[0].push(val.gid);
-  //           acc[1].push(val.variantGid);
-  //         }
-  //         return acc;
-  //       },
-  //       [[], []],
-  //     );
-  //   }
-  // }
-
-  //   if (products) {
-  //     const [productGids, productVariantGids] = products.reduce<
-  //       [string[], string[]]
-  //     >(
-  //       (acc, val) => {
-  //         if (val) {
-  //           acc[0].push(val.gid);
-  //           acc[1].push(val.variantGid);
-  //         }
-  //         return acc;
-  //       },
-  //       [[], []],
-  //     );
-
-  //     const {data} = useShopQuery<ShopifyPayload>({
-  //       query: QUERY_SHOPIFY,
-  //       variables: {
-  //         country: countryCode,
-  //         ids: productGids,
-  //         language: languageCode,
-  //         variantIds: productVariantGids,
-  //       },
-  //     });
-  //     // Attach variant nodes
-  //     storefrontProducts = data.products?.map((product, index) => {
-  //       const productVariant = data.productVariants[index];
-  //       return {
-  //         ...product,
-  //         variants: {nodes: [productVariant as ProductVariant]},
-  //       };
-  //     });
-  //   }
-  // }
 
   return (
     <div className="relative">
@@ -114,29 +50,43 @@ export default function ImageModule({module}: Props) {
         </div>
       )}
       {/* Product hotspots */}
-      {/* {module.variant === 'productHotspots' && (
+      {module.variant === 'productHotspots' && (
         <>
-          {module.productHotspots?.map((hotspot, index) => (
-            <ProductHotspot
-              key={hotspot._key}
-              storefrontProduct={storefrontProducts[index]}
-              x={hotspot.x}
-              y={hotspot.y}
-            />
-          ))}
+          {module.productHotspots?.map((hotspot, index) => {
+            const storefrontProduct = storefrontData.products.find(
+              (product: Product) => product.id === hotspot?.product?.gid,
+            );
+
+            return (
+              <ProductHotspot
+                key={hotspot._key}
+                storefrontProduct={storefrontProduct}
+                variantGid={hotspot?.product?.variantGid}
+                x={hotspot.x}
+                y={hotspot.y}
+              />
+            );
+          })}
         </>
-      )} */}
+      )}
       {/* Product tags */}
-      {/* {module.variant === 'productTags' && (
+      {module.variant === 'productTags' && (
         <div className="mt-2 flex flex-wrap gap-x-1 gap-y-2">
-          {module.productTags?.map((product, index) => (
-            <ProductTag
-              key={product._key}
-              storefrontProduct={storefrontProducts[index]}
-            />
-          ))}
+          {module.productTags?.map((tag, index) => {
+            const storefrontProduct = storefrontData.products.find(
+              (product: Product) => product.id === tag?.gid,
+            );
+
+            return (
+              <ProductTag
+                key={tag._key}
+                storefrontProduct={storefrontProduct}
+                variantGid={tag?.variantGid}
+              />
+            );
+          })}
         </div>
-      )} */}
+      )}
     </div>
   );
 }
@@ -197,26 +147,3 @@ const ImageContent = ({module}: Props) => {
     </div>
   );
 };
-
-// const QUERY_SHOPIFY = gql`
-//   ${PRODUCT_FIELDS}
-//   ${PRODUCT_VARIANT_FIELDS}
-
-//   query products(
-//     $country: CountryCode
-//     $language: LanguageCode
-//     $ids: [ID!]!
-//     $variantIds: [ID!]!
-//   ) @inContext(country: $country, language: $language) {
-//     products: nodes(ids: $ids) {
-//       ... on Product {
-//         ...ProductFields
-//       }
-//     }
-//     productVariants: nodes(ids: $variantIds) {
-//       ... on ProductVariant {
-//         ...ProductVariantFields
-//       }
-//     }
-//   }
-// `;

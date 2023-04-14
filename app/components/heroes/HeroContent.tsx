@@ -10,19 +10,15 @@ import type {ProductWithNodes} from '~/types/shopify';
 
 type Props = {
   content?: SanityImageWithProductHotspots | SanityProductWithVariant;
-  data: ProductWithNodes[] | ProductWithNodes;
 };
 
-export default function HeroContent({content, data}: Props) {
+export default function HeroContent({content}: Props) {
   const heroContent = useMemo(() => {
     switch (content?._type) {
       case 'imageWithProductHotspots': {
         return (
           <div className="relative w-full">
-            <ImageWithProductHotspots
-              content={content}
-              data={data as ProductWithNodes[]}
-            />
+            <ImageWithProductHotspots content={content} />
           </div>
         );
       }

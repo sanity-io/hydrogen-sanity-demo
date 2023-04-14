@@ -8,7 +8,7 @@ import type {ProductWithNodes} from '~/types/shopify';
 import {
   getProductOptionString,
   hasMultipleProductOptions,
-} from '~/utils/productOptions';
+} from '~/lib/productOptions';
 
 /**
  * A component that displays a (small) single product to allow buyers to quickly identify a particular item of interest
