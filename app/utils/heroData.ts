@@ -11,9 +11,14 @@ import {
 } from '~/types/sanity';
 import {ProductWithNodes} from '~/types/shopify';
 
-type ShopifyPayload = {
+type ShopifyHotspotPayload = {
   products: Partial<Product>[];
   productVariants: Partial<ProductVariant>[];
+};
+
+type ShopifyProductPayload = {
+  product: Partial<Product>;
+  productVariant: Partial<ProductVariant>;
 };
 
 export const getHeroData = async ({
@@ -40,7 +45,7 @@ export const getHeroData = async ({
               [[], []],
             );
 
-          const {products, productVariants}: ShopifyPayload =
+          const {products, productVariants}: ShopifyHotspotPayload =
             await context.storefront.query(PRODUCTS_AND_VARIANTS, {
               variables: {
                 ids: productGids,
@@ -62,6 +67,26 @@ export const getHeroData = async ({
       }
       break;
     case 'productWithVariant': {
+      let storefrontProduct;
+      const {gid, variantGid} = content;
+
+      if (gid && variantGid) {
+        const {product, productVariant}: ShopifyProductPayload =
+          await context.storefront.query(PRODUCT_AND_VARIANT, {
+            variables: {
+              id: gid,
+              variantId: variantGid,
+            },
+          });
+
+        // Attach variant nodes
+        storefrontProduct = {
+          ...product,
+          variants: {nodes: [productVariant as ProductVariant]},
+        };
+      }
+
+      return storefrontProduct;
     }
   }
 };

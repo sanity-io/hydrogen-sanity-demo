@@ -6,7 +6,8 @@ import type {
   SanityProductWithVariant,
 } from '~/types/sanity';
 import type {ProductWithNodes} from '~/types/shopify';
-// import ProductHero from '../product/ProductHero.server';
+
+import ProductHero from '../product/ProductHero';
 
 type Props = {
   content?: SanityImageWithProductHotspots | SanityProductWithVariant;
@@ -33,10 +34,9 @@ export default function HeroContent({content, data}: Props) {
         }
 
         return (
-          <p>productWithVariant coming soon</p>
-          // <div className="aspect-[1300/768] w-full">
-          //   <ProductHero gid={content?.gid} variantGid={content.variantGid} />
-          // </div>
+          <div className="aspect-[1300/768] w-full">
+            <ProductHero data={data as ProductWithNodes} />
+          </div>
         );
       }
     }
