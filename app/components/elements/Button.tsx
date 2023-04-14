@@ -1,3 +1,4 @@
+import {RemixLinkProps} from '@remix-run/react/dist/components';
 import clsx from 'clsx';
 import type {ButtonHTMLAttributes, ElementType} from 'react';
 import {twMerge} from 'tailwind-merge';
@@ -7,6 +8,10 @@ import {Link} from '~/components/Link';
 type ButtonMode = 'default' | 'outline';
 type ButtonTone = 'critical' | 'default' | 'shopPay';
 
+type RemixLinkPropsOptional = Omit<RemixLinkProps, 'to'> & {
+  to?: RemixLinkProps['to'];
+};
+
 type Props = {
   as?: ElementType;
   className?: string;
@@ -14,7 +19,8 @@ type Props = {
   onClick?: () => void;
   to?: string;
   tone?: ButtonTone;
-} & ButtonHTMLAttributes<HTMLButtonElement>;
+} & ButtonHTMLAttributes<HTMLButtonElement> &
+  RemixLinkPropsOptional;
 
 type ButtonStyleOptions = {
   mode?: ButtonMode;
