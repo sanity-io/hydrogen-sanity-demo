@@ -24,7 +24,7 @@ export const getPageData = async ({
   const [productGids, collectionGids] = reduceDeep(
     page,
     (acc, value) => {
-      if (value?._type == 'product') {
+      if (value?._type == 'productWithVariant') {
         acc[0].push(value.gid);
       }
       if (value?._type == 'collection') {
