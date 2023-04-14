@@ -11,6 +11,8 @@ type LinkProps = Omit<RemixLinkProps, 'className'> & {
   className?: RemixNavLinkProps['className'] | RemixLinkProps['className'];
 };
 
+const ABSOLUTE_URL_REGEX = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
+
 /**
  * In our app, we've chosen to wrap Remix's `Link` component to add
  * helper functionality. If the `to` value is a string (not object syntax),
@@ -33,7 +35,8 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
 
   let toWithLocale = to;
 
-  if (typeof to === 'string') {
+  // If we have a string and not an absolute URL, add the locale prefix
+  if (typeof to === 'string' && !ABSOLUTE_URL_REGEX.test(to) && to != '..') {
     toWithLocale = selectedLocale ? `${selectedLocale.pathPrefix}${to}` : to;
   }
 
