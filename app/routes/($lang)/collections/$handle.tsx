@@ -35,29 +35,26 @@ export async function loader({params, context, request}: LoaderArgs) {
 
   invariant(params.handle, 'Missing collection handle');
 
-  const page = await context.sanity.client.fetch<SanityCollectionPage>(
-    QUERY_SANITY,
-    {
+  const [page, {collection}] = await Promise.all([
+    context.sanity.client.fetch<SanityCollectionPage>(QUERY_SANITY, {
       slug: params.handle,
-    },
-  );
-
-  // Resolve any references to products on the Storefront API
-  const storefrontData = await getPageData({page, context});
-
-  const {collection}: {collection: CollectionType} =
-    await context.storefront.query(COLLECTION_QUERY, {
+    }),
+    context.storefront.query<{collection: any}>(COLLECTION_QUERY, {
       variables: {
         handle,
         cursor,
         count: count ? parseInt(count) : PAGINATION_SIZE,
       },
-    });
+    }),
+  ]);
 
   // Handle 404s
   if (!page || !collection) {
     throw new Response(null, {status: 404});
   }
+
+  // Resolve any references to products on the Storefront API
+  const storefrontData = await getPageData({page, context});
 
   return json({
     page,
