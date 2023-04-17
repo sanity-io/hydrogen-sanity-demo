@@ -51,7 +51,6 @@ export default function ProductGrid({
           },
         ]}
         disabled={isOutOfStock}
-        data-test="add-to-cart"
         analytics={{
           products: [productAnalytics],
           totalValue: parseFloat(productAnalytics.price),

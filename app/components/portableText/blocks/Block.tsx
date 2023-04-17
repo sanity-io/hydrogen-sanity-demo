@@ -23,13 +23,13 @@ export default function Block({children, value}: Props) {
 
   // Pragraphs
   return (
-    <p
+    <div
       className={clsx(
         'first:mt-0 last:mb-0', //
         'relative my-4 leading-paragraph',
       )}
     >
       {children}
-    </p>
+    </div>
   );
 }

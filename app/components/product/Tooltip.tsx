@@ -1,14 +1,17 @@
 import {Image, Money, type ShopifyAnalyticsProduct} from '@shopify/hydrogen';
+import type {Image as ImageType} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 
-import Badge from '~/components/elements/Badge';
 import {Link} from '~/components/Link';
 import AddToCartButton from '~/components/product/buttons/AddToCartButton';
+import BuyNowButton from '~/components/product/buttons/BuyNowButton';
 import {
   getProductOptionString,
   hasMultipleProductOptions,
 } from '~/lib/productOptions';
 import type {ProductWithNodes} from '~/types/shopify';
+
+import Badge from '../elements/Badge';
 
 type Props = {
   imageAspectClassName?: string;
@@ -16,37 +19,37 @@ type Props = {
   variantGid?: string;
 };
 
-export default function ProductCard({
+export default function ProductTooltip({
   imageAspectClassName = 'aspect-square',
   storefrontProduct,
   variantGid,
 }: Props) {
-  const firstVariant =
+  const {handle, options, title, vendor} = storefrontProduct;
+
+  const selectedVariant =
     storefrontProduct.variants.nodes.find(
       (variant) => variant.id == variantGid,
     ) ?? storefrontProduct.variants.nodes[0];
 
-  if (firstVariant == null) {
+  if (!selectedVariant) {
     return null;
   }
 
-  const multipleProductOptions = hasMultipleProductOptions(
-    storefrontProduct.options,
-  );
-  const productOptions = getProductOptionString(storefrontProduct.options);
+  const multipleProductOptions = hasMultipleProductOptions(options);
+  const productOptions = getProductOptionString(options);
 
   const productAnalytics: ShopifyAnalyticsProduct = {
     productGid: storefrontProduct.id ? storefrontProduct.id : '',
-    variantGid: firstVariant.id,
+    variantGid: selectedVariant.id,
     name: storefrontProduct.title ? storefrontProduct.title : '',
-    variantName: firstVariant.title,
+    variantName: selectedVariant.title,
     brand: storefrontProduct.vendor ? storefrontProduct.vendor : '',
-    price: firstVariant.price.amount,
+    price: selectedVariant.price.amount,
     quantity: 1,
   };
 
   return (
-    <div className="group relative">
+    <div className="border-1 relative w-[14rem] rounded border border-gray bg-white p-3">
       <div
         className={clsx([
           imageAspectClassName,
@@ -56,71 +59,39 @@ export default function ProductCard({
       >
         <Link
           className="absolute top-0 left-0 h-full w-full"
-          to={`/products/${storefrontProduct.handle}`}
+          to={`/products/${handle}`}
         >
-          {firstVariant.image && (
+          {selectedVariant.image && (
             <Image
               className="absolute h-full w-full transform bg-cover bg-center object-cover object-center ease-in-out"
-              data={firstVariant.image}
-              loaderOptions={{crop: 'center'}}
+              data={selectedVariant.image as ImageType}
             />
           )}
-
           {/* Badges */}
           <div className="absolute top-4 left-4">
             {/* Sale */}
-            {firstVariant?.availableForSale && firstVariant?.compareAtPrice && (
-              <Badge label="Sale" tone="critical" />
-            )}
+            {selectedVariant?.availableForSale &&
+              selectedVariant?.compareAtPriceV2 && (
+                <Badge label="Sale" tone="critical" />
+              )}
             {/* Sold out */}
-            {!firstVariant?.availableForSale && <Badge label="Sold out" />}
+            {!selectedVariant?.availableForSale && <Badge label="Sold out" />}
           </div>
         </Link>
-
-        {/* Quick add to cart */}
-        {firstVariant.availableForSale && (
-          <div
-            className={clsx(
-              'absolute bottom-0 right-4 translate-y-full pb-4 duration-200 ease-in-out',
-              'group-hover:block group-hover:translate-y-0',
-            )}
-          >
-            <AddToCartButton
-              lines={[
-                {
-                  merchandiseId: firstVariant.id,
-                  quantity: 1,
-                },
-              ]}
-              disabled={!firstVariant.availableForSale}
-              analytics={{
-                products: [productAnalytics],
-                totalValue: parseFloat(productAnalytics.price),
-              }}
-            >
-              Quick add
-            </AddToCartButton>
-          </div>
-        )}
       </div>
 
       <div className="mt-3 text-md">
         <div className="space-y-1">
           {/* Title */}
           <Link
-            className={clsx(
-              'font-bold', //
-              'hover:underline',
-            )}
-            to={`/products/${storefrontProduct.handle}`}
+            className="font-bold hover:underline"
+            to={`/products/${handle}`}
           >
-            {storefrontProduct.title}
+            {title}
           </Link>
 
           {/* Vendor */}
-          {storefrontProduct.vendor && (
-            <div className="text-darkGray">{storefrontProduct.vendor}</div>
-          )}
+          {vendor && <div className="text-darkGray">{vendor}</div>}
 
           {/* Product options */}
           {multipleProductOptions && (
@@ -128,18 +99,44 @@ export default function ProductCard({
           )}
         </div>
 
-        {/* Price / compare at price */}
-        <div className="mt-3 flex font-bold">
-          {firstVariant.compareAtPrice && (
+        {/* Price */}
+        <div className="mt-3 flex font-bold ">
+          {selectedVariant.compareAtPrice && (
             <span className="text-darkGray">
               <Money
-                data={firstVariant.compareAtPrice}
+                data={selectedVariant.compareAtPrice}
                 className="mr-2.5 line-through decoration-red"
               />
             </span>
           )}
-          {firstVariant.price && <Money data={firstVariant.price} />}
+          {selectedVariant.price && <Money data={selectedVariant.price} />}
         </div>
+      </div>
+
+      {/* Button actions */}
+      <div className="mt-3 flex gap-2">
+        <AddToCartButton
+          lines={[
+            {
+              merchandiseId: selectedVariant.id,
+              quantity: 1,
+            },
+          ]}
+          disabled={!selectedVariant.availableForSale}
+          analytics={{
+            products: [productAnalytics],
+            totalValue: parseFloat(productAnalytics.price),
+          }}
+        />
+        <BuyNowButton
+          lines={[
+            {
+              merchandiseId: selectedVariant.id,
+              quantity: 1,
+            },
+          ]}
+          disabled={!selectedVariant.availableForSale}
+        />
       </div>
     </div>
   );
