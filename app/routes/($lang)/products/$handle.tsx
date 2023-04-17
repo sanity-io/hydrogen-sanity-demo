@@ -1,4 +1,4 @@
-import {useLoaderData} from '@remix-run/react';
+import {Await, useLoaderData} from '@remix-run/react';
 import {
   flattenConnection,
   type SeoConfig,
@@ -14,18 +14,23 @@ import type {
 } from '@shopify/hydrogen/storefront-api-types';
 import {AnalyticsPageType} from '@shopify/hydrogen-react';
 import {LoaderArgs} from '@shopify/remix-oxygen';
+import {defer} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 import groq from 'groq';
-import {json} from 'react-router';
+import {Suspense} from 'react';
 import invariant from 'tiny-invariant';
 
+import {Skeleton} from '~/components/global/Skeleton';
 import PortableText from '~/components/portableText/PortableText';
 import ProductDetails from '~/components/product/Details';
-import ProductForm from '~/components/product/Form';
-import ProductGallery from '~/components/ProductGallery';
+import RelatedProducts from '~/components/product/RelatedProducts';
 import {getStorefrontData} from '~/lib/storefrontData';
 import {validateLocale} from '~/lib/utils';
 import {PRODUCT_PAGE} from '~/queries/sanity/fragments/pages/product';
+import {
+  PRODUCT_FIELDS,
+  PRODUCT_VARIANT_FIELDS,
+} from '~/queries/shopify/product';
 import {SanityProductPage} from '~/types/sanity';
 
 const seo: SeoHandleFunction = ({data}) => {
@@ -91,6 +96,15 @@ export async function loader({params, context, request}: LoaderArgs) {
   // Resolve any references to products on the Storefront API
   const storefrontData = await getStorefrontData({page, context});
 
+  // Get recommended products from Shopify
+  const recommended = context.storefront.query<{
+    product: Product & {selectedVariant?: ProductVariant};
+  }>(RECOMMENDED_PRODUCTS_QUERY, {
+    variables: {
+      productId: product.id,
+    },
+  });
+
   const selectedVariant =
     product.selectedVariant ?? product?.variants?.nodes[0];
 
@@ -103,10 +117,12 @@ export async function loader({params, context, request}: LoaderArgs) {
     price: selectedVariant.price.amount,
   };
 
-  return json({
+  return defer({
     page,
     product,
+    storefrontData,
     selectedVariant,
+    recommended,
     analytics: {
       pageType: AnalyticsPageType.product,
       resourceId: product.id,
@@ -117,64 +133,53 @@ export async function loader({params, context, request}: LoaderArgs) {
 }
 
 export default function ProductHandle() {
-  const {page, product, selectedVariant, analytics} = useLoaderData();
+  const {page, product, selectedVariant, analytics, recommended} =
+    useLoaderData();
 
   return (
-    <div className="relative w-full">
-      <ProductDetails
-        selectedVariant={selectedVariant}
-        sanityProduct={page}
-        storefrontProduct={product}
-        analytics={analytics}
-      />
+    <>
+      <div className="relative w-full">
+        <ProductDetails
+          selectedVariant={selectedVariant}
+          sanityProduct={page}
+          storefrontProduct={product}
+          analytics={analytics}
+        />
 
-      <div
-        className={clsx(
-          'w-full', //
-          'lg:w-[calc(100%-315px)]',
-        )}
-      >
-        {/* Body */}
-        {page?.body && (
-          <PortableText
-            blocks={page.body}
-            className={clsx(
-              'max-w-[660px] px-4 pb-24 pt-8', //
-              'md:px-8',
-            )}
-            colorTheme={page?.colorTheme}
-          />
-        )}
+        <div
+          className={clsx(
+            'w-full', //
+            'lg:w-[calc(100%-315px)]',
+          )}
+        >
+          {/* Body */}
+          {page?.body && (
+            <PortableText
+              blocks={page.body}
+              className={clsx(
+                'max-w-[660px] px-4 pb-24 pt-8', //
+                'md:px-8',
+              )}
+              colorTheme={page?.colorTheme}
+            />
+          )}
+        </div>
       </div>
-    </div>
-    // <section className="grid w-full gap-4 px-6 md:gap-8 md:px-8 lg:px-12">
-    //   <div className="grid items-start gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-20">
-    //     <div className="grid md:w-full  md:grid-flow-row md:grid-cols-2 md:overflow-x-hidden md:p-0 lg:col-span-2">
-    //       <div className="card-image aspect-square w-[80vw] snap-center rounded shadow md:col-span-2 md:w-full">
-    //         <ProductGallery media={product.media.nodes} />
-    //       </div>
-    //     </div>
-    //     <div className="top-[6rem] grid max-w-xl gap-8 p-0 md:sticky md:mx-auto md:max-w-[24rem] md:p-6 md:px-0 lg:top-[8rem] xl:top-[10rem]">
-    //       <div className="grid gap-2">
-    //         <h1 className="leading-10 whitespace-normal text-4xl font-bold">
-    //           {product.title}
-    //         </h1>
-    //         <span className="inherit text-copy max-w-prose whitespace-pre-wrap font-medium opacity-50">
-    //           {product.vendor}
-    //         </span>
-    //       </div>
-    //       <ProductForm
-    //         product={product}
-    //         selectedVariant={selectedVariant}
-    //         analytics={analytics}
-    //       />
-    //       <div
-    //         className="prose border-gray-200 border-t pt-6 text-md text-black"
-    //         dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
-    //       />
-    //     </div>
-    //   </div>
-    // </section>
+
+      <Suspense>
+        <Await
+          errorElement="There was a problem loading related products"
+          resolve={recommended}
+        >
+          {(products) => (
+            <RelatedProducts
+              relatedProducts={products.productRecommendations}
+              colorTheme={page?.colorTheme}
+            />
+          )}
+        </Await>
+      </Suspense>
+    </>
   );
 }
 
@@ -188,15 +193,14 @@ const QUERY_SANITY = groq`
 `;
 
 const PRODUCT_QUERY = `#graphql
+  ${PRODUCT_FIELDS}
+  ${PRODUCT_VARIANT_FIELDS}
+
   query product($country: CountryCode, $language: LanguageCode, $handle: String!, $selectedOptions: [SelectedOptionInput!]!)
   @inContext(country: $country, language: $language) {
     product(handle: $handle) {
-      id
-      title
-      handle
-      vendor
-      descriptionHtml
-      media(first: 10) {
+      ...ProductFields
+      media(first: 20) {
         nodes {
           ... on MediaImage {
             id
@@ -219,60 +223,32 @@ const PRODUCT_QUERY = `#graphql
           }
         }
       }
-      options {
-        name,
-        values
-      }
       selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions) {
-        id
-        availableForSale
-        selectedOptions {
-          name
-          value
-        }
-        image {
-          id
-          url
-          altText
-          width
-          height
-        }
-        price {
-          amount
-          currencyCode
-        }
-        compareAtPrice {
-          amount
-          currencyCode
-        }
-        sku
-        title
-        unitPrice {
-          amount
-          currencyCode
-        }
-        product {
-          title
-          handle
-        }
+        ...ProductVariantFields
       }
       variants(first: 1) {
         nodes {
-          id
-          title
-          availableForSale
-          price {
-            currencyCode
-            amount
-          }
-          compareAtPrice {
-            currencyCode
-            amount
-          }
-          selectedOptions {
-            name
-            value
-          }
+          ...ProductVariantFields
+        }
+      }
+    }
+  }
+`;
+
+const RECOMMENDED_PRODUCTS_QUERY = `#graphql
+  ${PRODUCT_FIELDS}
+  ${PRODUCT_VARIANT_FIELDS}
+
+  query productRecommendations(
+    $country: CountryCode
+    $language: LanguageCode
+    $productId: ID!
+  ) @inContext(country: $country, language: $language) {
+    productRecommendations(productId: $productId) {
+      ...ProductFields
+      variants(first: 1) {
+        nodes {
+          ...ProductVariantFields
         }
       }
     }

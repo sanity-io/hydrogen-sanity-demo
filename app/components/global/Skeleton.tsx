@@ -11,7 +11,7 @@ export function Skeleton({
   className,
   ...props
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   as?: React.ElementType;
   width?: string;
   height?: string;
