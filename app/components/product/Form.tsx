@@ -23,7 +23,7 @@ export default function ProductForm({
   product: Product;
   selectedVariant: ProductVariant;
   analytics: ShopifyAnalyticsPayload;
-  customProductOptions: SanityCustomProductOption[];
+  customProductOptions?: SanityCustomProductOption[];
 }) {
   const isOutOfStock = !selectedVariant?.availableForSale;
 
@@ -64,7 +64,6 @@ export default function ProductForm({
           lines={[{merchandiseId: selectedVariant.id, quantity: 1}]}
           disabled={isOutOfStock}
         />
-        {/* TODO: Shop Pay button */}
       </div>
     </>
   );

@@ -22,7 +22,7 @@ export default function ProductOptions({
 }: {
   options: ProductOption[];
   selectedVariant: ProductVariant;
-  customProductOptions: SanityCustomProductOption[];
+  customProductOptions?: SanityCustomProductOption[];
 }) {
   const {pathname, search} = useLocation();
   const [currentSearchParams] = useSearchParams();
