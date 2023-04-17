@@ -1,3 +1,4 @@
+import type {ShopifyAnalyticsProduct} from '@shopify/hydrogen';
 import type {ProductVariant} from '@shopify/hydrogen/storefront-api-types';
 import Tippy from '@tippyjs/react/headless';
 import clsx from 'clsx';
@@ -63,6 +64,16 @@ function ProductInlineLinkContent({
     return <>{children}</>;
   }
 
+  const productAnalytics: ShopifyAnalyticsProduct = {
+    productGid: storefrontProduct.id ? storefrontProduct.id : '',
+    variantGid: selectedVariant.id,
+    name: storefrontProduct.title ? storefrontProduct.title : '',
+    variantName: selectedVariant.title,
+    brand: storefrontProduct.vendor ? storefrontProduct.vendor : '',
+    price: selectedVariant.price.amount,
+    quantity: 1,
+  };
+
   // Return strikethrough text and sold out label if variant is not for sale AND we're using a 'buyNow' or 'addToCart' action
   if (!selectedVariant.availableForSale && linkAction !== 'link') {
     return (
@@ -127,10 +138,10 @@ function ProductInlineLinkContent({
             ]}
             mode="inline"
             disabled={!selectedVariant.availableForSale}
-            // analytics={{
-            //   products: [productAnalytics],
-            //   totalValue: parseFloat(productAnalytics.price),
-            // }}
+            analytics={{
+              products: [productAnalytics],
+              totalValue: parseFloat(productAnalytics.price),
+            }}
           >
             {LinkContent}
           </AddToCartButton>
@@ -148,14 +159,6 @@ function ProductInlineLinkContent({
           >
             {LinkContent}
           </BuyNowButton>
-          // <Link
-          //   to={`/cart/${selectedVariant.id.replace(
-          //     'gid://shopify/ProductVariant/',
-          //     '',
-          //   )}:${quantity}`}
-          // >
-          //   {LinkContent}
-          // </Link>
         )}
         {linkAction === 'link' && (
           <Link to={`/products/${handle}`}>{LinkContent}</Link>
