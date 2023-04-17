@@ -30,6 +30,8 @@ export default function ProductGrid({
   if (initialProducts !== productProps) {
     setInitialProducts(productProps);
     setProducts(productProps);
+    setNextPage(collection?.products?.pageInfo?.hasNextPage);
+    setEndCursor(collection?.products?.pageInfo?.endCursor);
   }
 
   const fetcher = useFetcher();
