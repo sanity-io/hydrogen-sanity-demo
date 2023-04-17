@@ -30,6 +30,7 @@
     "@tippyjs/react": "^4.2.6",
     "clsx": "^1.2.1",
     "deepdash-es": "^5.3.9",
+    "embla-carousel-react": "^7.1.0",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
     "isbot": "^3.6.6",

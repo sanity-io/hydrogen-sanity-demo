@@ -15,8 +15,9 @@ import {COLLECTION_QUERY} from '~/queries/shopify/collection';
 import {SanityCollectionPage} from '~/types/sanity';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
-  title: data?.page?.seo?.title,
-  description: data?.page?.seo?.description,
+  title: data?.page?.seo?.title ?? data?.collection?.title,
+  description: data?.page?.seo?.description ?? data?.collection?.description,
+  media: data?.page?.seo?.image ?? data?.collection?.image,
 });
 
 export const handle = {

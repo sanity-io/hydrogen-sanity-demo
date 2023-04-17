@@ -1,22 +1,25 @@
 import {useFetcher, useMatches} from '@remix-run/react';
 import type {CartLineInput} from '@shopify/hydrogen/storefront-api-types';
+import {twMerge} from 'tailwind-merge';
 
 import {defaultButtonStyles} from '~/components/elements/Button';
 import {CartAction} from '~/types/shopify';
 
-type ButtonMode = 'default' | 'inline';
+type FormMode = 'default' | 'inline';
 
 export default function AddToCartButton({
   children = 'Add to cart',
   lines,
   analytics,
-  mode = 'default',
+  formMode = 'default',
+  buttonClassName,
   ...props
 }: {
   children?: React.ReactNode;
   lines: CartLineInput[];
   analytics?: unknown;
-  mode?: ButtonMode;
+  formMode?: FormMode;
+  buttonClassName?: string;
   [key: string]: any;
 }) {
   const [root] = useMatches();
@@ -27,7 +30,7 @@ export default function AddToCartButton({
     <fetcher.Form
       action={`/cart`}
       method="post"
-      className={mode == 'inline' ? 'inline' : ''}
+      className={formMode == 'inline' ? 'inline' : ''}
     >
       <input type="hidden" name="cartAction" value={CartAction.ADD_TO_CART} />
       {selectedLocale && (
@@ -40,7 +43,11 @@ export default function AddToCartButton({
       <input type="hidden" name="lines" value={JSON.stringify(lines)} />
       <input type="hidden" name="analytics" value={JSON.stringify(analytics)} />
       <button
-        className={mode == 'default' ? defaultButtonStyles() : ''}
+        className={
+          formMode == 'default'
+            ? twMerge(defaultButtonStyles(), buttonClassName)
+            : buttonClassName
+        }
         {...props}
       >
         {children}
