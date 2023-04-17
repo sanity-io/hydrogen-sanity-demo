@@ -1,6 +1,7 @@
 import {useFetcher, useMatches} from '@remix-run/react';
 import type {CartLineInput} from '@shopify/hydrogen/storefront-api-types';
 
+import {defaultButtonStyles} from '~/components/elements/Button';
 import {CartAction} from '~/types/shopify';
 
 export default function AddToCartButton({
@@ -30,10 +31,7 @@ export default function AddToCartButton({
       )}
       <input type="hidden" name="lines" value={JSON.stringify(lines)} />
       <input type="hidden" name="analytics" value={JSON.stringify(analytics)} />
-      <button
-        className="w-full max-w-[400px] rounded-md bg-black px-6 py-3 text-center font-medium text-white"
-        {...props}
-      >
+      <button className={defaultButtonStyles()} {...props}>
         {children}
       </button>
     </fetcher.Form>

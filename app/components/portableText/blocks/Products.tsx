@@ -1,9 +1,8 @@
 import type {PortableTextBlock} from '@portabletext/types';
 import clsx from 'clsx';
 
+import ProductModule from '~/components/modules/Product';
 import type {SanityModuleProducts} from '~/types/sanity';
-
-// import ProductModule from '../../modules/Product';
 
 type Props = {
   value: PortableTextBlock & SanityModuleProducts;
@@ -21,14 +20,12 @@ export default function ProductsBlock({value}: Props) {
       )}
     >
       {value?.modules?.map((module) => (
-        // TODO: sort product module with API calls
-        <p key={module._key}>product here</p>
-        // <ProductModule
-        //   imageAspectClassName="aspect-[320/220]"
-        //   key={module._key}
-        //   layout={value.layout}
-        //   module={module}
-        // />
+        <ProductModule
+          imageAspectClassName="aspect-[320/220]"
+          key={module._key}
+          layout={value.layout}
+          module={module}
+        />
       ))}
     </div>
   );

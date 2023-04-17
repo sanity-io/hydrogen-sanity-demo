@@ -8,7 +8,7 @@ import invariant from 'tiny-invariant';
 
 import CollectionHero from '~/components/heroes/Collection';
 import ProductGrid from '~/components/ProductGrid';
-import {getPageData} from '~/lib/pageData';
+import {getStorefrontData} from '~/lib/storefrontData';
 import {validateLocale} from '~/lib/utils';
 import {COLLECTION_PAGE} from '~/queries/sanity/fragments/pages/collection';
 import {COLLECTION_QUERY} from '~/queries/shopify/collection';
@@ -54,7 +54,7 @@ export async function loader({params, context, request}: LoaderArgs) {
   }
 
   // Resolve any references to products on the Storefront API
-  const storefrontData = await getPageData({page, context});
+  const storefrontData = await getStorefrontData({page, context});
 
   return json({
     page,

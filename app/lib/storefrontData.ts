@@ -14,7 +14,7 @@ type ShopifyPayload = {
   collections: Collection[];
 };
 
-export const getPageData = async ({
+export const getStorefrontData = async ({
   page,
   context,
 }: {

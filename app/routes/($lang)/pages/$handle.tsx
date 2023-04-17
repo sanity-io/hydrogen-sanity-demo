@@ -7,7 +7,7 @@ import invariant from 'tiny-invariant';
 
 import PageHero from '~/components/heroes/Page';
 import PortableText from '~/components/portableText/PortableText';
-import {getPageData} from '~/lib/pageData';
+import {getStorefrontData} from '~/lib/storefrontData';
 import {PAGE} from '~/queries/sanity/fragments/pages/page';
 import {SanityPage} from '~/types/sanity';
 
@@ -28,7 +28,7 @@ export async function loader({params, context}: LoaderArgs) {
   });
 
   // Resolve any references to products on the Storefront API
-  const storefrontData = await getPageData({page, context});
+  const storefrontData = await getStorefrontData({page, context});
 
   if (!page) {
     throw new Response(null, {status: 404});

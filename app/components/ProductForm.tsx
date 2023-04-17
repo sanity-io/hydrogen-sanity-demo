@@ -1,6 +1,5 @@
 import {
   Money,
-  type ShopifyAnalytics,
   type ShopifyAnalyticsPayload,
   type ShopifyAnalyticsProduct,
 } from '@shopify/hydrogen';
@@ -10,7 +9,7 @@ import type {
 } from '@shopify/hydrogen/storefront-api-types';
 import invariant from 'tiny-invariant';
 
-import AddToCartButton from '~/components/AddToCartButton';
+import AddToCartButton from '~/components/product/buttons/AddToCartButton';
 import ProductOptions from '~/components/ProductOptions';
 
 export default function ProductGrid({
