@@ -5,8 +5,17 @@
 import type {Storefront} from '~/types/shopify';
 import type {SanityClient} from '@sanity/client';
 import type {HydrogenSession} from '../server';
+import type { PreviewSession } from '~/lib/preview';
 
-type Sanity = {client: SanityClient; isPreview: boolean};
+type Sanity = {
+  client: SanityClient, 
+  preview?: {
+    projectId: string;
+    dataset: string;
+    token: string;
+  },
+  previewSession: PreviewSession,
+};
 
 declare global {
   /**
@@ -28,6 +37,7 @@ declare global {
     SANITY_DATASET: string;
     SANITY_API_VERSION: string;
     SANITY_API_TOKEN: string;
+    SANITY_PREVIEW_SECRET: string;
   }
 }
 

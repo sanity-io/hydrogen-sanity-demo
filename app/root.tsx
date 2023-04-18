@@ -33,6 +33,7 @@ import {Layout} from '~/components/global/Layout';
 import {NotFound} from '~/components/global/NotFound';
 import {useAnalytics} from '~/hooks/useAnalytics';
 import {useNonce} from '~/lib/nonce';
+import {Preview} from '~/lib/preview';
 import {DEFAULT_LOCALE} from '~/lib/utils';
 import {LAYOUT_QUERY} from '~/queries/sanity/layout';
 import {CART_QUERY} from '~/queries/shopify/cart';
@@ -98,7 +99,7 @@ export async function loader({context}: LoaderArgs) {
       shopId: shop.shop.id,
     },
     cart: cartId ? getCart(context, cartId) : undefined,
-    isPreview: context.sanity.isPreview,
+    preview: context.sanity.preview,
     layout,
     notFoundCollection: layout.notFoundPage?.collectionGid
       ? context.storefront.query<{collection: Collection}>(
@@ -119,7 +120,7 @@ export async function loader({context}: LoaderArgs) {
 }
 
 export default function App() {
-  const {isPreview, ...data} = useLoaderData<typeof loader>();
+  const {preview, ...data} = useLoaderData<typeof loader>();
   const locale = data.selectedLocale ?? DEFAULT_LOCALE;
   const hasUserConsent = true;
   const nonce = useNonce();
@@ -134,7 +135,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Preview enabled={isPreview}>
+        <Preview preview={preview}>
           <Layout key={`${locale.language}-${locale.country}`}>
             <Outlet />
           </Layout>
@@ -234,21 +235,4 @@ async function getCart({storefront}: AppLoadContext, cartId: string) {
   });
 
   return cart;
-}
-
-/**
- * @todo move elsewhere
- */
-type PreviewProps = {children: ReactNode; enabled: boolean};
-
-function Preview(props: PreviewProps) {
-  const {children, enabled} = props;
-
-  return enabled ? (
-    <PreviewSuspense fallback={<div>Loading preview...</div>}>
-      {children}
-    </PreviewSuspense>
-  ) : (
-    <>{children}</>
-  );
 }
