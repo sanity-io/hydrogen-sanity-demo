@@ -1,10 +1,9 @@
 import clsx from 'clsx';
 
+import Module from '~/components/modules/Module';
+import ProductCard from '~/components/product/Card';
 import type {SanityColorTheme, SanityModule} from '~/types/sanity';
 import type {ProductWithNodes} from '~/types/shopify';
-
-import ProductCard from '../ProductCard';
-import Module from './Module';
 
 // Sanity modules to render in full width (across all grid columns)
 const FULL_WIDTH_MODULE_TYPES: SanityModule['_type'][] = [

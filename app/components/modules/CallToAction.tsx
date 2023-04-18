@@ -1,15 +1,14 @@
 import {useMatches} from '@remix-run/react';
 import clsx from 'clsx';
 
+import Link from '~/components/elements/Link';
+import SanityImage from '~/components/media/SanityImage';
+import ProductHero from '~/components/product/ProductHero';
 import type {
   SanityAssetImage,
   SanityModuleCallToAction,
   SanityProductWithVariant,
 } from '~/types/sanity';
-
-import {Link} from '../Link';
-import SanityImage from '../media/SanityImage';
-import ProductHero from '../product/ProductHero';
 
 type Props = {
   module: SanityModuleCallToAction;
