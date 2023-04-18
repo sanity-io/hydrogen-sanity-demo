@@ -66,6 +66,7 @@ export default function ProductGrid({
 
   return (
     <>
+      {/* TODO: add color scheme to ModuleGrid */}
       <ModuleGrid items={items} />
       {nextPage && (
         <div className="flex h-30 items-center justify-center">

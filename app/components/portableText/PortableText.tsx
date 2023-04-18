@@ -4,6 +4,7 @@ import {
 } from '@portabletext/react';
 import {PortableTextBlock} from '@sanity/types';
 import clsx from 'clsx';
+import {useMemo} from 'react';
 
 import type {SanityColorTheme} from '~/types/sanity';
 
@@ -50,7 +51,9 @@ export default function PortableText({
       annotationLinkExternal: LinkExternalAnnotation,
       annotationLinkInternal: LinkInternalAnnotation,
       annotationLinkEmail: LinkEmailAnnotation,
-      annotationProduct: ProductAnnotation,
+      annotationProduct: (props: any) => (
+        <ProductAnnotation colorTheme={colorTheme} {...props} />
+      ),
     },
     block: Block,
     types: {
@@ -67,9 +70,13 @@ export default function PortableText({
     },
   };
 
-  return (
-    <div className={clsx('portableText', className)}>
-      <PortableTextReact value={blocks} components={components} />
-    </div>
-  );
+  const portableText = useMemo(() => {
+    return (
+      <div className={clsx('portableText', className)}>
+        <PortableTextReact value={blocks} components={components} />
+      </div>
+    );
+  }, [blocks]);
+
+  return portableText;
 }

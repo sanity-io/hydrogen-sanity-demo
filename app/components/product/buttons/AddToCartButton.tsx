@@ -11,14 +11,14 @@ export default function AddToCartButton({
   children = 'Add to cart',
   lines,
   analytics,
-  formMode = 'default',
+  mode = 'default',
   buttonClassName,
   ...props
 }: {
   children?: React.ReactNode;
   lines: CartLineInput[];
   analytics?: unknown;
-  formMode?: FormMode;
+  mode?: FormMode;
   buttonClassName?: string;
   [key: string]: any;
 }) {
@@ -30,7 +30,7 @@ export default function AddToCartButton({
     <fetcher.Form
       action={`/cart`}
       method="post"
-      className={formMode == 'inline' ? 'inline' : ''}
+      className={mode == 'inline' ? 'inline' : ''}
     >
       <input type="hidden" name="cartAction" value={CartAction.ADD_TO_CART} />
       {selectedLocale && (
@@ -44,7 +44,7 @@ export default function AddToCartButton({
       <input type="hidden" name="analytics" value={JSON.stringify(analytics)} />
       <button
         className={
-          formMode == 'default'
+          mode == 'default'
             ? twMerge(defaultButtonStyles(), buttonClassName)
             : buttonClassName
         }

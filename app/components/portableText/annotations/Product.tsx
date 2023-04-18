@@ -2,11 +2,12 @@ import type {PortableTextMarkComponentProps} from '@portabletext/react';
 import {useMatches} from '@remix-run/react';
 import type {Product} from '@shopify/hydrogen/storefront-api-types';
 
-import type {SanityProductWithVariant} from '~/types/sanity';
+import type {SanityColorTheme, SanityProductWithVariant} from '~/types/sanity';
 
 import ProductInlineLink from './ProductInlineLink';
 
 type Props = PortableTextMarkComponentProps & {
+  colorTheme?: SanityColorTheme;
   value: PortableTextMarkComponentProps['value'] & {
     linkAction: 'addToCart' | 'buyNow' | 'link';
     productWithVariant: SanityProductWithVariant;
@@ -14,7 +15,7 @@ type Props = PortableTextMarkComponentProps & {
   };
 };
 
-const ProductAnnotation = ({children, value}: Props) => {
+const ProductAnnotation = ({children, colorTheme, value}: Props) => {
   const {productWithVariant} = value;
 
   const storefrontData =
@@ -34,7 +35,7 @@ const ProductAnnotation = ({children, value}: Props) => {
 
   return (
     <ProductInlineLink
-      // TODO: colortheme context colorTheme={colorTheme}
+      colorTheme={colorTheme}
       linkAction={value.linkAction || 'link'}
       quantity={value.quantity}
       storefrontProduct={storefrontProduct}
