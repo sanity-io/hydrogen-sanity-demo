@@ -1,4 +1,5 @@
 import groq from 'groq';
+
 import {IMAGE} from '../image';
 import {LINK_EXTERNAL} from '../linkExternal';
 import {LINK_INTERNAL} from '../linkInternal';
@@ -23,6 +24,6 @@ export const MODULE_CALL_TO_ACTION = groq`
     (_type == 'linkInternal') => {
       ${LINK_INTERNAL}
     },
-  },      
+  },
   title,
 `;

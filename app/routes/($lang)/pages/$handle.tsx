@@ -2,18 +2,18 @@ import {useLoaderData} from '@remix-run/react';
 import type {SeoHandleFunction} from '@shopify/hydrogen';
 import {json, type LoaderArgs} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
-import groq from 'groq';
 import invariant from 'tiny-invariant';
 
 import PageHero from '~/components/heroes/Page';
 import PortableText from '~/components/portableText/PortableText';
-import {PAGE} from '~/queries/sanity/fragments/pages/page';
+import {getStorefrontData, validateLocale} from '~/lib/utils';
+import {PAGE_QUERY} from '~/queries/sanity/page';
 import {SanityPage} from '~/types/sanity';
-import {getHeroData} from '~/utils/heroData';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: data?.page?.seo?.title,
   description: data?.page?.seo?.description,
+  media: data?.page?.seo?.image,
 });
 
 export const handle = {
@@ -21,21 +21,23 @@ export const handle = {
 };
 
 export async function loader({params, context}: LoaderArgs) {
-  invariant(params.handle, 'Missing page handle');
+  validateLocale({context, params});
 
-  const page = await context.sanity.client.fetch<SanityPage>(QUERY_SANITY, {
-    slug: params.handle,
+  const {handle} = params;
+  invariant(handle, 'Missing page handle');
+
+  const page = await context.sanity.client.fetch<SanityPage>(PAGE_QUERY, {
+    slug: handle,
   });
 
-  if (page.hero?.content) {
-    page.hero.data = await getHeroData({content: page.hero?.content, context});
-  }
+  // Resolve any references to products on the Storefront API
+  const storefrontData = await getStorefrontData({page, context});
 
   if (!page) {
     throw new Response(null, {status: 404});
   }
 
-  return json({page});
+  return json({page, storefrontData});
 }
 
 export default function Page() {
@@ -64,12 +66,3 @@ export default function Page() {
     </>
   );
 }
-
-const QUERY_SANITY = groq`
-  *[
-    _type == 'page'
-    && slug.current == $slug
-  ][0]{
-    ${PAGE}
-  }
-`;

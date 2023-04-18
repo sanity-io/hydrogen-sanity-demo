@@ -1,4 +1,5 @@
 import groq from 'groq';
+
 import {IMAGE_WITH_PRODUCT_HOTSPOTS} from '../imageWithProductHotspots';
 import {LINK_EXTERNAL} from '../linkExternal';
 import {LINK_INTERNAL} from '../linkInternal';
@@ -21,6 +22,6 @@ export const HERO_HOME = groq`
     (_type == 'linkInternal') => {
       ${LINK_INTERNAL}
     },
-  },      
+  },
   title
 `;

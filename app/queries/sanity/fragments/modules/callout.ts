@@ -1,4 +1,5 @@
 import groq from 'groq';
+
 import {LINK_EXTERNAL} from '../linkExternal';
 import {LINK_INTERNAL} from '../linkInternal';
 
@@ -10,6 +11,6 @@ export const MODULE_CALLOUT = groq`
     (_type == 'linkInternal') => {
       ${LINK_INTERNAL}
     },
-  },      
+  },
 	text
 `;

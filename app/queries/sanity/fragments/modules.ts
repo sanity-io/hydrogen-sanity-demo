@@ -1,4 +1,5 @@
 import groq from 'groq';
+
 import {MODULE_ACCORDION} from './modules/accordion';
 import {MODULE_CALLOUT} from './modules/callout';
 import {MODULE_CALL_TO_ACTION} from './modules/callToAction';
@@ -21,14 +22,14 @@ export const MODULES = groq`
   },
   (_type == "module.collection") => {
     ${MODULE_COLLECTION}
-  },      
+  },
   (_type == "module.image") => {
     ${MODULE_IMAGE}
   },
   (_type == "module.instagram") => {
     ${MODULE_INSTAGRAM}
-  },      
+  },
   (_type == "module.product") => {
     ${MODULE_PRODUCT}
-  },      
+  },
 `;

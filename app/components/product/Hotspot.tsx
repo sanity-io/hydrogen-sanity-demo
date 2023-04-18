@@ -8,11 +8,17 @@ import ProductTile from './Tile';
 
 type Props = {
   storefrontProduct: ProductWithNodes;
+  variantGid?: string;
   x: number;
   y: number;
 };
 
-export default function ProductHotspot({storefrontProduct, x, y}: Props) {
+export default function ProductHotspot({
+  storefrontProduct,
+  variantGid,
+  x,
+  y,
+}: Props) {
   if (!storefrontProduct) {
     return null;
   }
@@ -21,7 +27,12 @@ export default function ProductHotspot({storefrontProduct, x, y}: Props) {
     <Tippy
       placement="top"
       render={() => {
-        return <ProductTile storefrontProduct={storefrontProduct} />;
+        return (
+          <ProductTile
+            storefrontProduct={storefrontProduct}
+            variantGid={variantGid}
+          />
+        );
       }}
     >
       <Link

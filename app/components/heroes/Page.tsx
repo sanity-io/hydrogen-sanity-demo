@@ -46,9 +46,9 @@ export default function PageHero({colorTheme, fallbackTitle, hero}: Props) {
       )}
 
       {/* Hero content */}
-      {hero.content && hero.data && (
+      {hero.content && (
         <div className="mt-8">
-          <HeroContent content={hero.content} data={hero.data} />
+          <HeroContent content={hero.content} />
         </div>
       )}
     </div>

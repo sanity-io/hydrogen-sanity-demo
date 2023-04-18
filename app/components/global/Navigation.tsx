@@ -6,7 +6,7 @@ import {Link} from '~/components/Link';
 import type {SanityMenuLink} from '~/types/sanity';
 
 /**
- * A server component that defines the navigation for a web storefront
+ * A component that defines the navigation for a web storefront
  */
 
 type Props = {

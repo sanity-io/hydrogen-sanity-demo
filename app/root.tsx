@@ -8,7 +8,6 @@ import {
   useLoaderData,
   useMatches,
 } from '@remix-run/react';
-import {PreviewSuspense} from '@sanity/preview-kit';
 import {
   Seo,
   type SeoHandleFunction,
@@ -26,7 +25,6 @@ import {
   type LoaderArgs,
   type MetaFunction,
 } from '@shopify/remix-oxygen';
-import type {ReactNode} from 'react';
 
 import {GenericError} from '~/components/global/GenericError';
 import {Layout} from '~/components/global/Layout';

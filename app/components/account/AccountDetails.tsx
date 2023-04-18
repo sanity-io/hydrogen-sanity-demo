@@ -3,8 +3,6 @@ import clsx from 'clsx';
 
 import {Link} from '~/components/Link';
 
-import LinkButton from '../elements/LinkButton';
-
 export function AccountDetails({customer}: {customer: Customer}) {
   const {firstName, lastName, email, phone} = customer;
 

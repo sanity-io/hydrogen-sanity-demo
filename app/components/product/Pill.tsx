@@ -4,11 +4,8 @@ import clsx from 'clsx';
 import Badge from '~/components/elements/Badge';
 import {Skeleton} from '~/components/global/Skeleton';
 import {Link} from '~/components/Link';
+import {getProductOptionString, hasMultipleProductOptions} from '~/lib/utils';
 import type {ProductWithNodes} from '~/types/shopify';
-import {
-  getProductOptionString,
-  hasMultipleProductOptions,
-} from '~/utils/productOptions';
 
 /**
  * A component that displays a (small) single product to allow buyers to quickly identify a particular item of interest
@@ -17,10 +14,18 @@ import {
 type Props = {
   onClick?: () => void;
   storefrontProduct: ProductWithNodes;
+  variantGid?: string;
 };
 
-export default function ProductPill({onClick, storefrontProduct}: Props) {
-  const firstVariant = storefrontProduct.variants.nodes[0];
+export default function ProductPill({
+  onClick,
+  storefrontProduct,
+  variantGid,
+}: Props) {
+  const firstVariant =
+    storefrontProduct.variants.nodes.find(
+      (variant) => variant.id == variantGid,
+    ) ?? storefrontProduct.variants.nodes[0];
 
   if (firstVariant == null) {
     return null;

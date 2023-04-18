@@ -4,19 +4,20 @@ import {
 } from '@portabletext/react';
 import {PortableTextBlock} from '@sanity/types';
 import clsx from 'clsx';
+import {useMemo} from 'react';
 
 import type {SanityColorTheme} from '~/types/sanity';
 
 import LinkEmailAnnotation from './annotations/LinkEmail';
 import LinkExternalAnnotation from './annotations/LinkExternal';
 import LinkInternalAnnotation from './annotations/LinkInternal';
+import ProductAnnotation from './annotations/Product';
 import AccordionBlock from './blocks/Accordion';
 import Block from './blocks/Block';
 import CalloutBlock from './blocks/Callout';
 import GridBlock from './blocks/Grid';
 import ImagesBlock from './blocks/Images';
 import InstagramBlock from './blocks/Instagram';
-import ListBlock from './blocks/List';
 import ProductsBlock from './blocks/Products';
 
 const SHARED_LIST_CLASSES = clsx(
@@ -50,10 +51,9 @@ export default function PortableText({
       annotationLinkExternal: LinkExternalAnnotation,
       annotationLinkInternal: LinkInternalAnnotation,
       annotationLinkEmail: LinkEmailAnnotation,
-      // TODO - add product annotation (replace server component)
-      // annotationProduct: (props: any) => (
-      //   <ProductAnnotation colorTheme={colorTheme} {...props} />
-      // ),
+      annotationProduct: (props: any) => (
+        <ProductAnnotation colorTheme={colorTheme} {...props} />
+      ),
     },
     block: Block,
     types: {
@@ -70,9 +70,14 @@ export default function PortableText({
     },
   };
 
-  return (
-    <div className={clsx('portableText', className)}>
-      <PortableTextReact value={blocks} components={components} />
-    </div>
-  );
+  const portableText = useMemo(() => {
+    return (
+      <div className={clsx('portableText', className)}>
+        <PortableTextReact value={blocks} components={components} />
+      </div>
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [blocks]);
+
+  return portableText;
 }

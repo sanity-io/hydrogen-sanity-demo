@@ -1,4 +1,5 @@
 import groq from 'groq';
+
 import {IMAGE} from './image';
 import {PRODUCT_HOTSPOT} from './productHotspot';
 

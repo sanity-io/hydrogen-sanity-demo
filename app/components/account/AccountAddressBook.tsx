@@ -5,9 +5,7 @@ import type {
 } from '@shopify/hydrogen/storefront-api-types';
 
 import Badge from '../elements/Badge';
-// import {Button, Link, Text} from '~/components';
 import Button from '../elements/Button';
-import LinkButton from '../elements/LinkButton';
 import {Link} from '../Link';
 
 export function AccountAddressBook({
