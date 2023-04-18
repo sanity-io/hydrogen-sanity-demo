@@ -20,12 +20,10 @@ import groq from 'groq';
 import {Suspense} from 'react';
 import invariant from 'tiny-invariant';
 
-import {Skeleton} from '~/components/global/Skeleton';
 import PortableText from '~/components/portableText/PortableText';
 import ProductDetails from '~/components/product/Details';
 import RelatedProducts from '~/components/product/RelatedProducts';
-import {getStorefrontData} from '~/lib/storefrontData';
-import {validateLocale} from '~/lib/utils';
+import {getStorefrontData, validateLocale} from '~/lib/utils';
 import {PRODUCT_PAGE} from '~/queries/sanity/fragments/pages/product';
 import {
   PRODUCT_FIELDS,

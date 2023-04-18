@@ -2,7 +2,7 @@ import {Money, ShopifyAnalyticsPayload} from '@shopify/hydrogen';
 import {Product, ProductVariant} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 
-import {hasMultipleProductOptions} from '~/lib/productOptions';
+import {hasMultipleProductOptions} from '~/lib/utils';
 import type {SanityProductPage} from '~/types/sanity';
 
 import ProductForm from './Form';

@@ -6,8 +6,7 @@ import groq from 'groq';
 
 import HomeHero from '~/components/heroes/Home';
 import ModuleGrid from '~/components/modules/ModuleGrid';
-import {getStorefrontData} from '~/lib/storefrontData';
-import {validateLocale} from '~/lib/utils';
+import {getStorefrontData, validateLocale} from '~/lib/utils';
 import {HOME_PAGE} from '~/queries/sanity/fragments/pages/home';
 import {SanityHomePage} from '~/types/sanity';
 

@@ -1,12 +1,12 @@
 import {useFetcher, useSearchParams} from '@remix-run/react';
-import type {Collection, Product} from '@shopify/hydrogen/storefront-api-types';
+import type {Collection} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 import {useEffect, useState} from 'react';
 
 import Button from '~/components/elements/Button';
 import SpinnerIcon from '~/components/icons/Spinner';
 import ModuleGrid from '~/components/modules/ModuleGrid';
-import {combineProductsAndModules} from '~/lib/combineProductsAndModules';
+import {combineProductsAndModules} from '~/lib/utils';
 import {SanityColorTheme, SanityModule} from '~/types/sanity';
 
 export default function ProductGrid({

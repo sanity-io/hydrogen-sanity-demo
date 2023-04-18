@@ -5,10 +5,7 @@ import clsx from 'clsx';
 import {Link} from '~/components/Link';
 import AddToCartButton from '~/components/product/buttons/AddToCartButton';
 import BuyNowButton from '~/components/product/buttons/BuyNowButton';
-import {
-  getProductOptionString,
-  hasMultipleProductOptions,
-} from '~/lib/productOptions';
+import {getProductOptionString, hasMultipleProductOptions} from '~/lib/utils';
 import type {ProductWithNodes} from '~/types/shopify';
 
 import Badge from '../elements/Badge';

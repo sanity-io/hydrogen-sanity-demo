@@ -4,10 +4,7 @@ import clsx from 'clsx';
 import Badge from '~/components/elements/Badge';
 import {Skeleton} from '~/components/global/Skeleton';
 import {Link} from '~/components/Link';
-import {
-  getProductOptionString,
-  hasMultipleProductOptions,
-} from '~/lib/productOptions';
+import {getProductOptionString, hasMultipleProductOptions} from '~/lib/utils';
 import type {ProductWithNodes} from '~/types/shopify';
 
 /**

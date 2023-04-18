@@ -7,7 +7,7 @@ import invariant from 'tiny-invariant';
 
 import PageHero from '~/components/heroes/Page';
 import PortableText from '~/components/portableText/PortableText';
-import {getStorefrontData} from '~/lib/storefrontData';
+import {getStorefrontData, validateLocale} from '~/lib/utils';
 import {PAGE} from '~/queries/sanity/fragments/pages/page';
 import {SanityPage} from '~/types/sanity';
 
@@ -21,10 +21,13 @@ export const handle = {
 };
 
 export async function loader({params, context}: LoaderArgs) {
-  invariant(params.handle, 'Missing page handle');
+  validateLocale({context, params});
+
+  const {handle} = params;
+  invariant(handle, 'Missing page handle');
 
   const page = await context.sanity.client.fetch<SanityPage>(QUERY_SANITY, {
-    slug: params.handle,
+    slug: handle,
   });
 
   // Resolve any references to products on the Storefront API
