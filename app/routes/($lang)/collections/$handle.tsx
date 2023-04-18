@@ -1,10 +1,7 @@
 import {useLoaderData, useSearchParams} from '@remix-run/react';
 import {AnalyticsPageType, type SeoHandleFunction} from '@shopify/hydrogen';
-import type {Collection as CollectionType} from '@shopify/hydrogen/storefront-api-types';
 import {json, type LoaderArgs} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
-import groq from 'groq';
-import {useMemo} from 'react';
 import invariant from 'tiny-invariant';
 
 import ProductGrid from '~/components/collection/ProductGrid';
@@ -12,7 +9,7 @@ import SortOrder from '~/components/collection/SortOrder';
 import {SORT_OPTIONS} from '~/components/collection/SortOrder';
 import CollectionHero from '~/components/heroes/Collection';
 import {getStorefrontData, validateLocale} from '~/lib/utils';
-import {COLLECTION_PAGE} from '~/queries/sanity/fragments/pages/collection';
+import {COLLECTION_PAGE_QUERY} from '~/queries/sanity/collection';
 import {COLLECTION_QUERY} from '~/queries/shopify/collection';
 import {SanityCollectionPage} from '~/types/sanity';
 
@@ -51,7 +48,7 @@ export async function loader({params, context, request}: LoaderArgs) {
   invariant(params.handle, 'Missing collection handle');
 
   const [page, {collection}] = await Promise.all([
-    context.sanity.client.fetch<SanityCollectionPage>(QUERY_SANITY, {
+    context.sanity.client.fetch<SanityCollectionPage>(COLLECTION_PAGE_QUERY, {
       slug: params.handle,
     }),
     context.storefront.query<{collection: any}>(COLLECTION_QUERY, {
@@ -148,12 +145,3 @@ function getSortValuesFromParam(sortParam: SortParam | null) {
     }
   );
 }
-
-const QUERY_SANITY = groq`
-  *[
-    _type == 'collection'
-    && store.slug.current == $slug
-  ][0]{
-    ${COLLECTION_PAGE}
-  }
-`;

@@ -16,7 +16,6 @@ import {AnalyticsPageType} from '@shopify/hydrogen-react';
 import {LoaderArgs} from '@shopify/remix-oxygen';
 import {defer} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
-import groq from 'groq';
 import {Suspense} from 'react';
 import invariant from 'tiny-invariant';
 
@@ -24,10 +23,10 @@ import PortableText from '~/components/portableText/PortableText';
 import ProductDetails from '~/components/product/Details';
 import RelatedProducts from '~/components/product/RelatedProducts';
 import {getStorefrontData, validateLocale} from '~/lib/utils';
-import {PRODUCT_PAGE} from '~/queries/sanity/fragments/pages/product';
+import {PRODUCT_PAGE_QUERY} from '~/queries/sanity/product';
 import {
-  PRODUCT_FIELDS,
-  PRODUCT_VARIANT_FIELDS,
+  PRODUCT_QUERY,
+  RECOMMENDED_PRODUCTS_QUERY,
 } from '~/queries/shopify/product';
 import {SanityProductPage} from '~/types/sanity';
 
@@ -74,7 +73,7 @@ export async function loader({params, context, request}: LoaderArgs) {
   });
 
   const [page, {product}] = await Promise.all([
-    context.sanity.client.fetch<SanityProductPage>(QUERY_SANITY, {
+    context.sanity.client.fetch<SanityProductPage>(PRODUCT_PAGE_QUERY, {
       slug: params.handle,
     }),
     context.storefront.query<{
@@ -180,75 +179,3 @@ export default function ProductHandle() {
     </>
   );
 }
-
-const QUERY_SANITY = groq`
-  *[
-    _type == 'product'
-    && store.slug.current == $slug
-  ][0]{
-    ${PRODUCT_PAGE}
-  }
-`;
-
-const PRODUCT_QUERY = `#graphql
-  ${PRODUCT_FIELDS}
-  ${PRODUCT_VARIANT_FIELDS}
-
-  query product($country: CountryCode, $language: LanguageCode, $handle: String!, $selectedOptions: [SelectedOptionInput!]!)
-  @inContext(country: $country, language: $language) {
-    product(handle: $handle) {
-      ...ProductFields
-      media(first: 20) {
-        nodes {
-          ... on MediaImage {
-            id
-            mediaContentType
-            image {
-              id
-              url
-              altText
-              width
-              height
-            }
-          }
-          ... on Model3d {
-            id
-            mediaContentType
-            sources {
-              mimeType
-              url
-            }
-          }
-        }
-      }
-      selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions) {
-        ...ProductVariantFields
-      }
-      variants(first: 1) {
-        nodes {
-          ...ProductVariantFields
-        }
-      }
-    }
-  }
-`;
-
-const RECOMMENDED_PRODUCTS_QUERY = `#graphql
-  ${PRODUCT_FIELDS}
-  ${PRODUCT_VARIANT_FIELDS}
-
-  query productRecommendations(
-    $country: CountryCode
-    $language: LanguageCode
-    $productId: ID!
-  ) @inContext(country: $country, language: $language) {
-    productRecommendations(productId: $productId) {
-      ...ProductFields
-      variants(first: 1) {
-        nodes {
-          ...ProductVariantFields
-        }
-      }
-    }
-  }
-`;

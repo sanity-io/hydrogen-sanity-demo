@@ -2,18 +2,18 @@ import {useLoaderData} from '@remix-run/react';
 import type {SeoHandleFunction} from '@shopify/hydrogen';
 import {json, type LoaderArgs} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
-import groq from 'groq';
 import invariant from 'tiny-invariant';
 
 import PageHero from '~/components/heroes/Page';
 import PortableText from '~/components/portableText/PortableText';
 import {getStorefrontData, validateLocale} from '~/lib/utils';
-import {PAGE} from '~/queries/sanity/fragments/pages/page';
+import {PAGE_QUERY} from '~/queries/sanity/page';
 import {SanityPage} from '~/types/sanity';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: data?.page?.seo?.title,
   description: data?.page?.seo?.description,
+  media: data?.page?.seo?.image,
 });
 
 export const handle = {
@@ -26,7 +26,7 @@ export async function loader({params, context}: LoaderArgs) {
   const {handle} = params;
   invariant(handle, 'Missing page handle');
 
-  const page = await context.sanity.client.fetch<SanityPage>(QUERY_SANITY, {
+  const page = await context.sanity.client.fetch<SanityPage>(PAGE_QUERY, {
     slug: handle,
   });
 
@@ -66,12 +66,3 @@ export default function Page() {
     </>
   );
 }
-
-const QUERY_SANITY = groq`
-  *[
-    _type == 'page'
-    && slug.current == $slug
-  ][0]{
-    ${PAGE}
-  }
-`;

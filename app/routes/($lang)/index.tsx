@@ -2,12 +2,11 @@ import {useLoaderData} from '@remix-run/react';
 import {AnalyticsPageType, type SeoHandleFunction} from '@shopify/hydrogen';
 import {defer, LoaderArgs} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
-import groq from 'groq';
 
 import HomeHero from '~/components/heroes/Home';
 import ModuleGrid from '~/components/modules/ModuleGrid';
 import {getStorefrontData, validateLocale} from '~/lib/utils';
-import {HOME_PAGE} from '~/queries/sanity/fragments/pages/home';
+import {HOME_PAGE_QUERY} from '~/queries/sanity/home';
 import {SanityHomePage} from '~/types/sanity';
 
 const seo: SeoHandleFunction = ({data}) => ({
@@ -24,7 +23,9 @@ export const handle = {
 export async function loader({context, params}: LoaderArgs) {
   validateLocale({context, params});
 
-  const page = await context.sanity.client.fetch<SanityHomePage>(QUERY_SANITY);
+  const page = await context.sanity.client.fetch<SanityHomePage>(
+    HOME_PAGE_QUERY,
+  );
 
   // Resolve any references to products on the Storefront API
   const storefrontData = await getStorefrontData({page, context});
@@ -59,9 +60,3 @@ export default function Index() {
     </>
   );
 }
-
-const QUERY_SANITY = groq`
-  *[_type == 'home'][0]{
-    ${HOME_PAGE}
-  }
-`;

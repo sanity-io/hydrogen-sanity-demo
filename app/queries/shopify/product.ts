@@ -38,6 +38,49 @@ export const PRODUCT_FIELDS = `
   }
 `;
 
+export const PRODUCT_QUERY = `#graphql
+  ${PRODUCT_FIELDS}
+  ${PRODUCT_VARIANT_FIELDS}
+
+  query product($country: CountryCode, $language: LanguageCode, $handle: String!, $selectedOptions: [SelectedOptionInput!]!)
+  @inContext(country: $country, language: $language) {
+    product(handle: $handle) {
+      ...ProductFields
+      media(first: 20) {
+        nodes {
+          ... on MediaImage {
+            id
+            mediaContentType
+            image {
+              id
+              url
+              altText
+              width
+              height
+            }
+          }
+          ... on Model3d {
+            id
+            mediaContentType
+            sources {
+              mimeType
+              url
+            }
+          }
+        }
+      }
+      selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions) {
+        ...ProductVariantFields
+      }
+      variants(first: 1) {
+        nodes {
+          ...ProductVariantFields
+        }
+      }
+    }
+  }
+`;
+
 export const PRODUCTS_AND_VARIANTS = `#graphql
   ${PRODUCT_FIELDS}
   ${PRODUCT_VARIANT_FIELDS}
@@ -108,6 +151,26 @@ export const PRODUCTS_AND_COLLECTIONS = `#graphql
         title
         description
         handle
+      }
+    }
+  }
+`;
+
+export const RECOMMENDED_PRODUCTS_QUERY = `#graphql
+  ${PRODUCT_FIELDS}
+  ${PRODUCT_VARIANT_FIELDS}
+
+  query productRecommendations(
+    $country: CountryCode
+    $language: LanguageCode
+    $productId: ID!
+  ) @inContext(country: $country, language: $language) {
+    productRecommendations(productId: $productId) {
+      ...ProductFields
+      variants(first: 1) {
+        nodes {
+          ...ProductVariantFields
+        }
       }
     }
   }
