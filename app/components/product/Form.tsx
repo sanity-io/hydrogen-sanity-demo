@@ -1,5 +1,4 @@
 import {
-  Money,
   type ShopifyAnalyticsPayload,
   type ShopifyAnalyticsProduct,
 } from '@shopify/hydrogen';

@@ -6,9 +6,6 @@ import {hasMultipleProductOptions} from '~/lib/productOptions';
 import type {SanityProductPage} from '~/types/sanity';
 
 import ProductForm from './Form';
-// import SelectedVariantAddToCartButton from './buttons/SelectedVariantAddToCart.client';
-// import SelectedVariantBuyNowButton from './buttons/SelectedVariantBuyNow.client';
-// import ProductOptions from './options/ProductOptions.client';
 
 type Props = {
   sanityProduct: SanityProductPage;

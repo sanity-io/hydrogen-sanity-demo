@@ -1,4 +1,4 @@
-import {Await, useMatches} from '@remix-run/react';
+import {Await} from '@remix-run/react';
 import {Cart} from '@shopify/hydrogen/storefront-api-types';
 import {Suspense} from 'react';
 

@@ -1,24 +1,14 @@
 import {useMatches} from '@remix-run/react';
-import {gql, useLocalization, useShopQuery} from '@shopify/hydrogen';
-import type {
-  Product,
-  ProductVariant,
-} from '@shopify/hydrogen/storefront-api-types';
+import type {Product} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 
 import type {SanityModuleImage} from '~/types/sanity';
-import type {ProductWithNodes} from '~/types/shopify';
 
 import Button from '../elements/Button';
 import Link from '../elements/Link';
 import SanityImage from '../media/SanityImage';
 import ProductHotspot from '../product/Hotspot';
 import ProductTag from '../product/Tag';
-
-type ShopifyPayload = {
-  products: Partial<Product>[];
-  productVariants: Partial<ProductVariant>[];
-};
 
 type Props = {
   module: SanityModuleImage;

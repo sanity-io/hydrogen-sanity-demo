@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
 /**
- * A shared component and Suspense call that's used in `App.server.jsx` to let your app wait for code to load while declaring a loading state
+ * A component and Suspense call that's used to let your app wait for code to load while declaring a loading state
  */
 export function Skeleton({
   children,

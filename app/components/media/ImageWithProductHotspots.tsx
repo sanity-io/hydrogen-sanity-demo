@@ -3,7 +3,6 @@ import {Product} from '@shopify/hydrogen/storefront-api-types';
 
 import ProductHotspot from '~/components/product/Hotspot';
 import type {SanityImageWithProductHotspots} from '~/types/sanity';
-import type {ProductWithNodes} from '~/types/shopify';
 
 import SanityImage from './SanityImage';
 

@@ -1,8 +1,5 @@
 import {useMatches} from '@remix-run/react';
-import type {
-  Product,
-  ProductVariant,
-} from '@shopify/hydrogen/storefront-api-types';
+import type {Product} from '@shopify/hydrogen/storefront-api-types';
 
 import type {SanityModuleProduct} from '~/types/sanity';
 

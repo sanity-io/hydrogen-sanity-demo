@@ -1,4 +1,4 @@
-import type {Block, Image} from '@sanity/types';
+import type {Image, PortableTextBlock} from '@sanity/types';
 
 import {ProductWithNodes} from './shopify';
 
@@ -146,7 +146,7 @@ export type SanityModuleAccordion = {
   groups: {
     _key: string;
     _type: 'group';
-    body: Block[];
+    body: PortableTextBlock[];
     title: string;
   }[];
 };
@@ -187,7 +187,7 @@ export type SanityModuleGrid = {
   items: {
     _key: string;
     _type: 'items';
-    body: Block[];
+    body: PortableTextBlock[];
     image: SanityAssetImage;
     title: string;
   }[];
@@ -261,7 +261,7 @@ export type SanityNotFoundPage = {
 };
 
 export type SanityPage = {
-  body: Block[];
+  body: PortableTextBlock[];
   colorTheme?: SanityColorTheme;
   hero?: SanityHeroPage;
   seo: SanitySeo;
@@ -288,7 +288,7 @@ export type SanityProductWithVariant = {
 export type SanityProductPage = {
   _id: string;
   available: boolean;
-  body: Block[];
+  body: PortableTextBlock[];
   colorTheme?: SanityColorTheme;
   customProductOptions?: SanityCustomProductOption[];
   gid: string;

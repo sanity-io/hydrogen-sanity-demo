@@ -133,12 +133,6 @@ export default function Collection() {
           url={`/collections/${collection.handle}`}
           key={`${collection.handle}-${sort}`}
         />
-
-        {/* <ModuleGrid colorTheme={sanityCollection.colorTheme} items={items} /> */}
-
-        {/* {hasNextPage && (
-          <LoadMoreProducts startingCount={collectionProductCount} />
-        )} */}
       </div>
     </>
   );

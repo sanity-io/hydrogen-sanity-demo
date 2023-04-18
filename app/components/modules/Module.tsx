@@ -1,4 +1,5 @@
-import type {SanityColorTheme, SanityModule} from '../../types';
+import type {SanityColorTheme, SanityModule} from '~/types/sanity';
+
 import CalloutModule from './Callout';
 import CallToActionModule from './CallToAction';
 import CollectionModule from './Collection';
