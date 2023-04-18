@@ -7,14 +7,16 @@ import Button from '~/components/elements/Button';
 import SpinnerIcon from '~/components/icons/Spinner';
 import ModuleGrid from '~/components/modules/ModuleGrid';
 import {combineProductsAndModules} from '~/lib/combineProductsAndModules';
-import {SanityModule} from '~/types/sanity';
+import {SanityColorTheme, SanityModule} from '~/types/sanity';
 
 export default function ProductGrid({
   collection,
+  colorTheme,
   modules,
   url,
 }: {
   collection: Collection;
+  colorTheme?: SanityColorTheme;
   modules: SanityModule[];
   url: string;
 }) {
@@ -66,8 +68,7 @@ export default function ProductGrid({
 
   return (
     <>
-      {/* TODO: add color scheme to ModuleGrid */}
-      <ModuleGrid items={items} />
+      <ModuleGrid items={items} colorTheme={colorTheme} />
       {nextPage && (
         <div className="flex h-30 items-center justify-center">
           {fetcher.state !== 'idle' ? (

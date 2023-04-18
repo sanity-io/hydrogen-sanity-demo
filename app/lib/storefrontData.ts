@@ -5,6 +5,7 @@ import {reduceDeep} from 'deepdash-es/standalone';
 import {PRODUCTS_AND_COLLECTIONS} from '~/queries/shopify/product';
 import {
   SanityCollectionPage,
+  SanityHomePage,
   SanityPage,
   SanityProductPage,
 } from '~/types/sanity';
@@ -18,7 +19,7 @@ export const getStorefrontData = async ({
   page,
   context,
 }: {
-  page: SanityPage | SanityCollectionPage | SanityProductPage;
+  page: SanityHomePage | SanityPage | SanityCollectionPage | SanityProductPage;
   context: AppLoadContext;
 }) => {
   const [productGids, collectionGids] = reduceDeep(

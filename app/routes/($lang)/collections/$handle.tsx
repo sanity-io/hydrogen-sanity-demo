@@ -128,6 +128,7 @@ export default function Collection() {
         )}
 
         <ProductGrid
+          colorTheme={page.colorTheme}
           collection={collection}
           modules={page.modules}
           url={`/collections/${collection.handle}`}

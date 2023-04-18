@@ -104,13 +104,10 @@ export const PRODUCTS_AND_COLLECTIONS = `#graphql
     }
     collections: nodes(ids: $collectionIds) {
       ... on Collection {
-        image {
-          altText
-          height
-          id
-          url
-          width
-        }
+        id
+        title
+        description
+        handle
       }
     }
   }

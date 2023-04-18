@@ -76,6 +76,7 @@ export default function PortableText({
         <PortableTextReact value={blocks} components={components} />
       </div>
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blocks]);
 
   return portableText;
