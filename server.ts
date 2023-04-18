@@ -11,6 +11,7 @@ import {
   type SessionStorage,
 } from '@shopify/remix-oxygen';
 
+import {PreviewSession} from '~/lib/preview';
 import {getLocaleFromRequest} from '~/lib/utils';
 
 /**
@@ -31,9 +32,10 @@ export default {
       }
 
       const waitUntil = (p: Promise<any>) => executionContext.waitUntil(p);
-      const [cache, session] = await Promise.all([
+      const [cache, session, previewSession] = await Promise.all([
         caches.open('hydrogen'),
         HydrogenSession.init(request, [env.SESSION_SECRET]),
+        PreviewSession.init(request, [env.SESSION_SECRET]),
       ]);
 
       /**
@@ -61,14 +63,14 @@ export default {
           apiVersion: env.SANITY_API_VERSION ?? '2023-03-30',
           useCdn: process.env.NODE_ENV === 'production',
         }),
+        previewSession,
       };
 
       /**
-       * @todo Check if running in preview mode
        * @todo naming
        * @todo test token?
        */
-      const isPreview = true;
+      const isPreview = previewSession.has('projectId');
       if (isPreview) {
         /**
          * Sanity API token to view draft documents

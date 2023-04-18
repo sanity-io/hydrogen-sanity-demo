@@ -1,5 +1,57 @@
 import {definePreview, type Params, PreviewSuspense} from '@sanity/preview-kit';
+import {
+  createCookieSessionStorage,
+  type Session,
+  type SessionStorage,
+} from '@shopify/remix-oxygen';
 import {createContext, type ReactNode, useContext} from 'react';
+
+export class PreviewSession {
+  constructor(
+    private sessionStorage: SessionStorage,
+    private session: Session,
+  ) {}
+
+  static async init(request: Request, secrets: string[]) {
+    const storage = createCookieSessionStorage({
+      cookie: {
+        name: '__preview',
+        httpOnly: true,
+        sameSite: true,
+        secure: process.env.NODE_ENV === 'production',
+        secrets,
+      },
+    });
+
+    const session = await storage.getSession(request.headers.get('Cookie'));
+
+    return new this(storage, session);
+  }
+
+  has(key: string) {
+    return this.session.has(key);
+  }
+
+  get(key: string) {
+    return this.session.get(key);
+  }
+
+  destroy() {
+    return this.sessionStorage.destroySession(this.session);
+  }
+
+  unset(key: string) {
+    this.session.unset(key);
+  }
+
+  set(key: string, value: any) {
+    this.session.set(key, value);
+  }
+
+  commit() {
+    return this.sessionStorage.commitSession(this.session);
+  }
+}
 
 const PreviewContext = createContext<PreviewContext | undefined>(undefined);
 
