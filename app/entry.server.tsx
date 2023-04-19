@@ -12,7 +12,7 @@ export default async function handleRequest(
   remixContext: EntryContext,
 ) {
   let nonce: string | undefined;
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'development') {
     /**
      * Crytographic nonce to strengthen Content Security Policy
      * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce
