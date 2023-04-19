@@ -16,7 +16,7 @@ export default function Tooltip({label, tone = 'light'}: Props) {
       )}
     >
       <svg
-        className="absolute top-full left-1/2 -translate-x-1/2"
+        className="absolute left-1/2 top-full -translate-x-1/2"
         width="10"
         height="4"
         viewBox="0 0 10 5"

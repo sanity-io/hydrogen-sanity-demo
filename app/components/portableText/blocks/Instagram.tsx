@@ -1,8 +1,7 @@
 import clsx from 'clsx';
 
+import InstagramModule from '~/components/modules/Instagram';
 import type {SanityModuleInstagram} from '~/types/sanity';
-
-import InstagramModule from '../../modules/Instagram';
 
 type Props = {
   value: SanityModuleInstagram;

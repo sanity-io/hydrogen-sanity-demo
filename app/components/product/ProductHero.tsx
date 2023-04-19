@@ -5,7 +5,7 @@ import type {
   ProductVariant,
 } from '@shopify/hydrogen/storefront-api-types';
 
-import ProductTile from './Tile';
+import ProductTile from '~/components/product/Tile';
 
 type Props = {
   gid: string;

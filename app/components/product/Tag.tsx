@@ -2,10 +2,9 @@ import type {ProductVariant} from '@shopify/hydrogen/storefront-api-types';
 import Tippy from '@tippyjs/react/headless';
 import clsx from 'clsx';
 
+import {Link} from '~/components/Link';
 import ProductTooltip from '~/components/product/Tooltip';
 import type {ProductWithNodes} from '~/types/shopify';
-
-import {Link} from '../Link';
 
 type Props = {
   storefrontProduct: ProductWithNodes;

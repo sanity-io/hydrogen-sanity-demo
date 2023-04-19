@@ -1,11 +1,10 @@
+import CalloutModule from '~/components/modules/Callout';
+import CallToActionModule from '~/components/modules/CallToAction';
+import CollectionModule from '~/components/modules/Collection';
+import ImageModule from '~/components/modules/Image';
+import InstagramModule from '~/components/modules/Instagram';
+import ProductModule from '~/components/modules/Product';
 import type {SanityColorTheme, SanityModule} from '~/types/sanity';
-
-import CalloutModule from './Callout';
-import CallToActionModule from './CallToAction';
-import CollectionModule from './Collection';
-import ImageModule from './Image';
-import InstagramModule from './Instagram';
-import ProductModule from './Product';
 
 type Props = {
   colorTheme?: SanityColorTheme;

@@ -2,13 +2,12 @@ import {useMatches} from '@remix-run/react';
 import type {Product} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 
+import Button from '~/components/elements/Button';
+import Link from '~/components/elements/Link';
+import SanityImage from '~/components/media/SanityImage';
+import ProductHotspot from '~/components/product/Hotspot';
+import ProductTag from '~/components/product/Tag';
 import type {SanityModuleImage} from '~/types/sanity';
-
-import Button from '../elements/Button';
-import Link from '../elements/Link';
-import SanityImage from '../media/SanityImage';
-import ProductHotspot from '../product/Hotspot';
-import ProductTag from '../product/Tag';
 
 type Props = {
   module: SanityModuleImage;
@@ -107,7 +106,7 @@ const ImageContent = ({module}: Props) => {
       {module.variant === 'callToAction' && (
         <div
           className={clsx(
-            'absolute top-0 left-0 flex h-full w-full items-center justify-center bg-black bg-opacity-20 duration-500 ease-out',
+            'absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-20 duration-500 ease-out',
             'group-hover:bg-opacity-30',
           )}
         >

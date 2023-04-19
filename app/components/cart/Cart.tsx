@@ -14,12 +14,11 @@ import {
 import clsx from 'clsx';
 
 import Button, {defaultButtonStyles} from '~/components/elements/Button';
+import MinusCircleIcon from '~/components/icons/MinusCircle';
+import PlusCircleIcon from '~/components/icons/PlusCircle';
+import RemoveIcon from '~/components/icons/Remove';
+import {Link} from '~/components/Link';
 import {CartAction} from '~/types/shopify';
-
-import MinusCircleIcon from '../icons/MinusCircle';
-import PlusCircleIcon from '../icons/PlusCircle';
-import RemoveIcon from '../icons/Remove';
-import {Link} from '../Link';
 
 export function CartLineItems({
   linesObj,

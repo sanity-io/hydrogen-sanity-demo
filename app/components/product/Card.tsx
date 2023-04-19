@@ -52,7 +52,7 @@ export default function ProductCard({
         ])}
       >
         <Link
-          className="absolute top-0 left-0 h-full w-full"
+          className="absolute left-0 top-0 h-full w-full"
           to={`/products/${storefrontProduct.handle}`}
         >
           {firstVariant.image && (
@@ -64,7 +64,7 @@ export default function ProductCard({
           )}
 
           {/* Badges */}
-          <div className="absolute top-4 left-4">
+          <div className="absolute left-4 top-4">
             {/* Sale */}
             {firstVariant?.availableForSale && firstVariant?.compareAtPrice && (
               <Badge label="Sale" tone="critical" />

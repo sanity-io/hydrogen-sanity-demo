@@ -2,12 +2,11 @@ import {Dialog, Transition} from '@headlessui/react';
 import clsx from 'clsx';
 import {Fragment, useState} from 'react';
 
+import {CountrySelector} from '~/components/global/CountrySelector';
+import CloseIcon from '~/components/icons/Close';
+import MenuIcon from '~/components/icons/Menu';
 import {Link} from '~/components/Link';
 import type {SanityMenuLink} from '~/types/sanity';
-
-import CloseIcon from '../icons/Close';
-import MenuIcon from '../icons/Menu';
-import {CountrySelector} from './CountrySelector';
 
 type Props = {
   menuLinks: SanityMenuLink[];
@@ -61,7 +60,7 @@ export default function MobileNavigation({menuLinks}: Props) {
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-full"
           >
-            <Dialog.Panel className="fixed top-0 left-0 right-0 bottom-0 z-50 h-full w-full overflow-y-auto bg-white pb-40">
+            <Dialog.Panel className="fixed bottom-0 left-0 right-0 top-0 z-50 h-full w-full overflow-y-auto bg-white pb-40">
               {/* Header */}
               <header className="flex h-header-sm items-center justify-start px-4">
                 <button

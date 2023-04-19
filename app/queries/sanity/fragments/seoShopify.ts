@@ -1,4 +1,5 @@
 import groq from 'groq';
+
 import {IMAGE} from './image';
 
 export const SEO_SHOPIFY = groq`

@@ -13,7 +13,7 @@ import type {
   SelectedOptionInput,
 } from '@shopify/hydrogen/storefront-api-types';
 import {AnalyticsPageType} from '@shopify/hydrogen-react';
-import {LoaderArgs} from '@shopify/remix-oxygen';
+import {type LoaderArgs} from '@shopify/remix-oxygen';
 import {defer} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 import {Suspense} from 'react';

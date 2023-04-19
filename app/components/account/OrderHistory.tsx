@@ -1,6 +1,5 @@
+import {OrderCard} from '~/components/account/OrderCard';
 import type {OrderWithNodes} from '~/types/shopify';
-
-import {OrderCard} from './OrderCard';
 
 type Props = {
   orders?: OrderWithNodes[];

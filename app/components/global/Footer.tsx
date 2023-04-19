@@ -1,12 +1,11 @@
 import {useMatches} from '@remix-run/react';
 import clsx from 'clsx';
 
+import SanityFooter from '~/components/global/SanityFooter';
+import LogoIcon from '~/components/icons/Logo';
 import {Link} from '~/components/Link';
+import PortableText from '~/components/portableText/PortableText';
 import type {SanityLink} from '~/types/sanity';
-
-import LogoIcon from '../icons/Logo';
-import PortableText from '../portableText/PortableText';
-import SanityFooter from './SanityFooter';
 
 /**
  * A component that specifies the content of the footer on the website
@@ -53,7 +52,7 @@ export default function Footer() {
       {/* AVKA Footer */}
       <div
         className={clsx(
-          'align-start relative overflow-hidden rounded-xl bg-peach py-8 px-4', //
+          'align-start relative overflow-hidden rounded-xl bg-peach px-4 py-8', //
           'md:px-8 md:py-10',
         )}
       >

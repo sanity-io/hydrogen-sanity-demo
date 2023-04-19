@@ -55,7 +55,7 @@ You can also use the [`defer` and `Await` utilities](https://remix.run/docs/en/1
 
 ```tsx
 // <root>/app/routes/($lang).products.$handle.tsx
-import {Suspense} from 'react'
+import {Suspense} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
 import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
 import type {SanityProductPage, LessImportant} from '~/types/sanity';

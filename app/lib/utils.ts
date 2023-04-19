@@ -4,7 +4,7 @@ import type {
   Product,
   ProductOption,
 } from '@shopify/hydrogen/storefront-api-types';
-import {LoaderArgs} from '@shopify/remix-oxygen';
+import type {LoaderArgs} from '@shopify/remix-oxygen';
 import {AppLoadContext} from '@shopify/remix-oxygen';
 import {reduceDeep} from 'deepdash-es/standalone';
 import pluralize from 'pluralize-esm';

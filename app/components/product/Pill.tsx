@@ -65,7 +65,7 @@ export default function ProductPill({
             )}
 
             {/* Badges */}
-            <div className="absolute top-2 left-2">
+            <div className="absolute left-2 top-2">
               {/* Sale */}
               {availableForSale && compareAtPrice && (
                 <Badge label="Sale" small tone="critical" />

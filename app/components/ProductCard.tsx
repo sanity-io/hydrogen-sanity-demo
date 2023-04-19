@@ -1,7 +1,7 @@
 import {Image, Money} from '@shopify/hydrogen';
 import type {Product} from '@shopify/hydrogen/storefront-api-types';
 
-import {Link} from './Link';
+import {Link} from '~/components/Link';
 
 export default function ProductCard({product}: {product: Product}) {
   const {price, compareAtPrice} = product.variants?.nodes[0] || {};
@@ -12,7 +12,7 @@ export default function ProductCard({product}: {product: Product}) {
       <div className="grid gap-6">
         <div className="shadow-sm relative rounded">
           {isDiscounted && (
-            <span className="text-notice text-red-600 absolute top-0 right-0 m-4 text-right text-xs subpixel-antialiased">
+            <span className="text-notice text-red-600 absolute right-0 top-0 m-4 text-right text-xs subpixel-antialiased">
               Sale
             </span>
           )}

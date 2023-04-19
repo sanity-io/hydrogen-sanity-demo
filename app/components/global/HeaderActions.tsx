@@ -3,13 +3,11 @@ import clsx from 'clsx';
 import {useEffect} from 'react';
 
 import {CartDrawer, useDrawer} from '~/components/cart/CartDrawer';
+import CartToggle from '~/components/cart/CartToggle';
 import {CountrySelector} from '~/components/global/CountrySelector';
+import {UserIcon} from '~/components/icons/User';
 import {Link} from '~/components/Link';
 import {useCartFetchers} from '~/hooks/useCartFetchers';
-
-// import Cart from '../cart/Cart.client';
-import CartToggle from '../cart/CartToggle';
-import {UserIcon} from '../icons/User';
 
 export default function HeaderActions() {
   const {isOpen, openDrawer, closeDrawer} = useDrawer();

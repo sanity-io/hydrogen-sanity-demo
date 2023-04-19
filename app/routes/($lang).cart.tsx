@@ -154,7 +154,7 @@ export default function Cart() {
                 <div className="flex-grow md:translate-y-4">
                   <CartLineItems linesObj={cart.lines} />
                 </div>
-                <div className="fixed left-0 right-0 bottom-0 grid w-full gap-6 p-4 md:sticky md:top-[65px] md:translate-y-4 md:px-6">
+                <div className="fixed bottom-0 left-0 right-0 grid w-full gap-6 p-4 md:sticky md:top-[65px] md:translate-y-4 md:px-6">
                   <CartSummary cost={cart.cost} />
                   <CartActions cart={cart} />
                 </div>

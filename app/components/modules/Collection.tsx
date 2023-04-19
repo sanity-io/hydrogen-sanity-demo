@@ -38,7 +38,7 @@ export default function CollectionModule({module}: Props) {
         {collection.vector && (
           <div
             className={clsx(
-              'absolute top-2 left-2 bottom-2 right-1 duration-1000 ease-out',
+              'absolute bottom-2 left-2 right-1 top-2 duration-1000 ease-out',
               'group-hover:scale-[1.01]',
             )}
             style={{
@@ -55,7 +55,7 @@ export default function CollectionModule({module}: Props) {
                 {/* Overlay */}
                 <div
                   className={clsx(
-                    'absolute top-0 left-0 h-full w-full bg-black bg-opacity-20 duration-500 ease-out',
+                    'absolute left-0 top-0 h-full w-full bg-black bg-opacity-20 duration-500 ease-out',
                     'group-hover:bg-opacity-30',
                   )}
                 />

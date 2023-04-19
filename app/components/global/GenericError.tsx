@@ -42,6 +42,7 @@ export function GenericError({
 
 function addLinksToStackTrace(stackTrace: string) {
   return stackTrace?.replace(
+    // eslint-disable-next-line no-useless-escape
     /^\s*at\s?.*?[(\s]((\/|\w\:).+)\)\n/gim,
     (all, m1) =>
       all.replace(

@@ -1,10 +1,9 @@
 import {useMatches} from '@remix-run/react';
 import type {Product} from '@shopify/hydrogen/storefront-api-types';
 
+import ProductCard from '~/components/product/Card';
+import ProductPill from '~/components/product/Pill';
 import type {SanityModuleProduct} from '~/types/sanity';
-
-import ProductCard from '../product/Card';
-import ProductPill from '../product/Pill';
 
 type Props = {
   imageAspectClassName?: string;

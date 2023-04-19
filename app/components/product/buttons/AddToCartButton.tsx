@@ -55,3 +55,48 @@ export default function AddToCartButton({
     </fetcher.Form>
   );
 }
+
+export function AddToCartLink({
+  children = 'Add to cart',
+  lines,
+  analytics,
+  mode = 'default',
+  buttonClassName,
+  ...props
+}: {
+  children?: React.ReactNode;
+  lines: CartLineInput[];
+  analytics?: unknown;
+  mode?: FormMode;
+  buttonClassName?: string;
+  [key: string]: any;
+}) {
+  const [root] = useMatches();
+  const selectedLocale = root?.data?.selectedLocale;
+  const fetcher = useFetcher();
+
+  const onClick = () =>
+    fetcher.submit(
+      {
+        cartAction: CartAction.ADD_TO_CART,
+        countryCode: selectedLocale?.country,
+        lines: JSON.stringify(lines),
+        analytics: JSON.stringify(analytics),
+      },
+      {method: 'post', action: '/cart?index'},
+    );
+
+  return (
+    <button
+      className={
+        mode == 'default'
+          ? twMerge(defaultButtonStyles(), buttonClassName)
+          : buttonClassName
+      }
+      onClick={onClick}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}

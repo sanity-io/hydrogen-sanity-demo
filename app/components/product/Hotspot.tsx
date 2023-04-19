@@ -2,9 +2,8 @@ import Tippy from '@tippyjs/react/headless';
 import clsx from 'clsx';
 
 import {Link} from '~/components/Link';
+import ProductTile from '~/components/product/Tile';
 import {ProductWithNodes} from '~/types/shopify';
-
-import ProductTile from './Tile';
 
 type Props = {
   storefrontProduct: ProductWithNodes;
