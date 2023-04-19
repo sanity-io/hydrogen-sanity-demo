@@ -1,6 +1,6 @@
 import {type LoaderArgs, redirect} from '@shopify/remix-oxygen';
 
-import {cartCreate} from './cart';
+import {cartCreate} from './($lang).cart';
 
 /**
  * Automatically creates a new cart based on the URL and redirects straight to checkout.

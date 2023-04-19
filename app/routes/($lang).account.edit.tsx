@@ -17,7 +17,7 @@ import FormFieldText from '~/components/account/FormFieldText';
 import Button from '~/components/elements/Button';
 import {assertApiErrors} from '~/lib/utils';
 
-import {getCustomer} from '../../account';
+import {getCustomer} from './($lang).account';
 
 export interface AccountOutletContext {
   customer: Customer;

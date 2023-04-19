@@ -5,7 +5,7 @@ export function useCartFetchers(actionName: string) {
   const cartFetchers = [];
 
   for (const fetcher of fetchers) {
-    const formData = fetcher.submission?.formData;
+    const formData = fetcher?.formData;
     if (formData && formData.get('cartAction') === actionName) {
       cartFetchers.push(fetcher);
     }

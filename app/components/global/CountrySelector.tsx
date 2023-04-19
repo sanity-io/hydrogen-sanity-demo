@@ -20,7 +20,7 @@ export function CountrySelector({align = 'center'}: Props) {
 
   const [listboxOpen, setListboxOpen] = useState(false);
 
-  const fetcherLocaleLabel = fetcher.submission?.formData.get('label');
+  const fetcherLocaleLabel = fetcher?.formData?.get('label');
 
   const [root] = useMatches();
   const selectedLocale = root.data?.selectedLocale ?? DEFAULT_LOCALE;

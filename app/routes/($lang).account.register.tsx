@@ -5,7 +5,6 @@ import {
   type ActionFunction,
   json,
   type LoaderArgs,
-  type MetaFunction,
   redirect,
 } from '@shopify/remix-oxygen';
 import clsx from 'clsx';
@@ -16,7 +15,7 @@ import FormFieldText from '~/components/account/FormFieldText';
 import Button from '~/components/elements/Button';
 import {Link} from '~/components/Link';
 
-import {doLogin} from './login';
+import {doLogin} from './($lang).account.login';
 
 const seo: SeoHandleFunction<typeof loader> = () => ({
   title: 'Register',
@@ -100,12 +99,6 @@ export const action: ActionFunction = async ({request, context, params}) => {
         'Sorry. We could not create an account with this email. User might already exist, try to login instead.',
     });
   }
-};
-
-export const meta: MetaFunction = () => {
-  return {
-    title: 'Register',
-  };
 };
 
 export default function Register() {
