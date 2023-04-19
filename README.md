@@ -1,6 +1,6 @@
 # AKVA - An example storefront powered by Sanity + Hydrogen
 
-This demo is compatible with `@shopify/hydrogen > 2023.1.0` built on Remix.
+This demo is compatible with `@shopify/hydrogen >= 2023.1.0` built on Remix.
 
 <img src="https://user-images.githubusercontent.com/209129/173065853-77b26be2-dd15-4b4d-8164-850e70247b88.png" width="1000" />
 
