@@ -5,7 +5,6 @@ import {
   type ActionFunction,
   json,
   type LoaderArgs,
-  type MetaFunction,
   redirect,
 } from '@shopify/remix-oxygen';
 import clsx from 'clsx';
@@ -102,12 +101,6 @@ export const action: ActionFunction = async ({request, context, params}) => {
   }
 };
 
-export const meta: MetaFunction = () => {
-  return {
-    title: 'Register',
-  };
-};
-
 export default function Register() {
   const actionData = useActionData<ActionData>();
   const [nativeEmailError, setNativeEmailError] = useState<null | string>(null);
@@ -192,7 +185,7 @@ export default function Register() {
               <div className="flex justify-between">
                 <p className="text-sm">
                   Already have an account? &nbsp;
-                  <Link className="inline underline" to="/account/login">
+                  <Link className="inline underline" to="/account">
                     Sign in
                   </Link>
                 </p>
