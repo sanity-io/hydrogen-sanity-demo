@@ -42,10 +42,6 @@ export default function ProductWidget({
   selectedVariant,
   analytics,
 }: Props) {
-  const multipleProductOptions = hasMultipleProductOptions(
-    storefrontProduct.options,
-  );
-
   const availableForSale = selectedVariant?.availableForSale;
 
   if (!selectedVariant) {
@@ -95,14 +91,12 @@ export default function ProductWidget({
       <div className="my-4 w-full border-b border-gray" />
 
       {/* Product options */}
-      {multipleProductOptions && (
-        <ProductForm
-          product={storefrontProduct}
-          selectedVariant={selectedVariant}
-          analytics={analytics}
-          customProductOptions={sanityProduct.customProductOptions}
-        />
-      )}
+      <ProductForm
+        product={storefrontProduct}
+        selectedVariant={selectedVariant}
+        analytics={analytics}
+        customProductOptions={sanityProduct.customProductOptions}
+      />
     </div>
   );
 }

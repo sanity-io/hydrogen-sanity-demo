@@ -11,6 +11,7 @@ import invariant from 'tiny-invariant';
 import AddToCartButton from '~/components/product/buttons/AddToCartButton';
 import BuyNowButton from '~/components/product/buttons/BuyNowButton';
 import ProductOptions from '~/components/product/Options';
+import {hasMultipleProductOptions} from '~/lib/utils';
 import {SanityCustomProductOption} from '~/types/sanity';
 
 export default function ProductForm({
@@ -26,6 +27,8 @@ export default function ProductForm({
 }) {
   const isOutOfStock = !selectedVariant?.availableForSale;
 
+  const multipleProductOptions = hasMultipleProductOptions(product.options);
+
   invariant(
     analytics?.products?.[0],
     'Missing product analytics data for product page',
@@ -38,12 +41,17 @@ export default function ProductForm({
 
   return (
     <>
-      <ProductOptions
-        options={product.options}
-        selectedVariant={selectedVariant}
-        customProductOptions={customProductOptions}
-      />
-      <div className="my-4 w-full border-b border-gray" />
+      {multipleProductOptions && (
+        <>
+          <ProductOptions
+            options={product.options}
+            selectedVariant={selectedVariant}
+            customProductOptions={customProductOptions}
+          />
+          <div className="my-4 w-full border-b border-gray" />
+        </>
+      )}
+
       <div className="flex flex-col space-y-2">
         <AddToCartButton
           lines={[
