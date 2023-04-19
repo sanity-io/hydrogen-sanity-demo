@@ -115,7 +115,7 @@ function CartItemQuantity({line}: {line: CartLine}) {
   const {id: lineId, quantity} = line;
 
   // The below handles optimistic updates for the quantity
-  const submissionQuantity = fetcher.submission?.formData.get('quantity');
+  const submissionQuantity = fetcher?.formData?.get('quantity');
   const lineQuantity = submissionQuantity
     ? Number(submissionQuantity)
     : quantity;

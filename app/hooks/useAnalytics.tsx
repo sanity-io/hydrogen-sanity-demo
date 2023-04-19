@@ -177,7 +177,7 @@ function useDataFromFetchers({
   const data: Record<string, unknown> = {};
 
   for (const fetcher of fetchers) {
-    const formData = fetcher.submission?.formData;
+    const formData = fetcher?.formData;
     const fetcherData = fetcher.data;
 
     if (
