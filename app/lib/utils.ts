@@ -64,7 +64,7 @@ export function validateLocale({
   ) {
     // If the lang URL param is defined, and it didn't match a valid localization,
     // then the lang param must be invalid, send to the 404 page
-    throw new Response('Not found', {status: 404});
+    throw notFound();
   }
 }
 
@@ -211,3 +211,12 @@ export const getStorefrontData = async ({
     collections,
   };
 };
+
+/**
+ * A not found response. Sets the status code.
+ */
+export const notFound = (message = 'Not Found'): Response =>
+  new Response(message, {
+    status: 404,
+    statusText: 'Not Found',
+  });
