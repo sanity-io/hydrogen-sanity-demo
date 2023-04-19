@@ -26,7 +26,7 @@ const FormFieldText = (props: Props) => {
       <input
         aria-label={label}
         className={clsx([
-          'w-full appearance-none rounded-xs border py-2 px-3 text-sm leading-field',
+          'w-full appearance-none rounded-xs border px-3 py-2 text-sm leading-field',
           'disabled:bg-gray/50 disabled:opacity-50',
           'focus:outline-1',
           error ? 'border-red' : 'border-darkGray/50',

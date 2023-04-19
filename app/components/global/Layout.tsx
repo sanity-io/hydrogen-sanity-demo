@@ -9,7 +9,7 @@ type LayoutProps = {
 export function Layout({backgroundColor, children}: LayoutProps) {
   return (
     <>
-      <div className="absolute top-0 left-0">
+      <div className="absolute left-0 top-0">
         <a
           href="#mainContent"
           className="sr-only p-4 focus:not-sr-only focus:block"

@@ -31,7 +31,7 @@ export default function ImagesBlock({centered, value}: Props) {
         'my-16',
         value.fullWidth &&
           centered &&
-          'relative left-1/2 right-1/2 mr-[-50vw] ml-[-50vw] w-screen px-6 md:px-8',
+          'relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] w-screen px-6 md:px-8',
         value.fullWidth && !centered && '-ml-8 w-screen px-6 md:px-8',
       )}
     >

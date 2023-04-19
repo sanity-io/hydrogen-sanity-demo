@@ -1,13 +1,13 @@
 import {useLoaderData} from '@remix-run/react';
 import {AnalyticsPageType, type SeoHandleFunction} from '@shopify/hydrogen';
-import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
+import {json, type LoaderArgs} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 
 import HomeHero from '~/components/heroes/Home';
 import ModuleGrid from '~/components/modules/ModuleGrid';
 import {getStorefrontData, validateLocale} from '~/lib/utils';
 import {HOME_PAGE_QUERY} from '~/queries/sanity/home';
-import {SanityHomePage} from '~/types/sanity';
+import {SanityHeroHome, SanityHomePage} from '~/types/sanity';
 
 const seo: SeoHandleFunction = ({data}) => ({
   title: data?.page?.seo?.title || 'Sanity x Hydrogen',
@@ -30,7 +30,7 @@ export async function loader({context, params}: LoaderArgs) {
   // Resolve any references to products on the Storefront API
   const storefrontData = await getStorefrontData({page, context});
 
-  return defer({
+  return json({
     page,
     storefrontData,
     analytics: {
@@ -45,7 +45,7 @@ export default function Index() {
   return (
     <>
       {/* Page hero */}
-      {page?.hero && <HomeHero hero={page.hero} />}
+      {page?.hero && <HomeHero hero={page.hero as SanityHeroHome} />}
 
       {page?.modules && (
         <div

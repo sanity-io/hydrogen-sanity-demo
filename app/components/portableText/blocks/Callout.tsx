@@ -18,7 +18,7 @@ export default function CalloutBlock({centered, colorTheme, value}: Props) {
         'relative my-12 w-screen px-6',
         'md:px-8',
         centered
-          ? 'left-1/2 right-1/2 mr-[-50vw] ml-[-50vw]'
+          ? 'left-1/2 right-1/2 ml-[-50vw] mr-[-50vw]'
           : '-ml-6 md:-ml-8',
       )}
     >

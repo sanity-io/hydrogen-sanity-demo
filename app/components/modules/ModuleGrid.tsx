@@ -95,7 +95,7 @@ type Props = {
 
 export default function ModuleGrid({colorTheme, items}: Props) {
   return (
-    <ul className="grid grid-cols-1 gap-y-[7.5vw] gap-x-[7.5vw] md:grid-cols-2">
+    <ul className="grid grid-cols-1 gap-x-[7.5vw] gap-y-[7.5vw] md:grid-cols-2">
       {items.map((item, index) => {
         const productLayout = PRODUCT_LAYOUT[index % PRODUCT_LAYOUT.length];
         const productImageAspect = CLASSES.imageAspect[productLayout.aspect];

@@ -102,7 +102,7 @@ export default function SortOrder({initialSortOrder}: Props) {
               </Menu.Button>
               <Menu.Items
                 className={clsx(
-                  'absolute top-full left-0 right-auto z-10 mt-3 min-w-[150px] overflow-hidden rounded shadow',
+                  'absolute left-0 right-auto top-full z-10 mt-3 min-w-[150px] overflow-hidden rounded shadow',
                   'md:left-auto md:right-0',
                 )}
               >

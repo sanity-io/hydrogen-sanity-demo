@@ -8,7 +8,7 @@ import Tooltip from '~/components/elements/Tooltip';
 import CartIcon from '~/components/icons/Cart';
 import CreditCardIcon from '~/components/icons/CreditCard';
 import {Link} from '~/components/Link';
-import AddToCartButton from '~/components/product/buttons/AddToCartButton';
+import {AddToCartLink} from '~/components/product/buttons/AddToCartButton';
 import BuyNowButton from '~/components/product/buttons/BuyNowButton';
 import ProductTooltip from '~/components/product/Tooltip';
 import type {SanityColorTheme} from '~/types/sanity';
@@ -129,7 +129,7 @@ function ProductInlineLinkContent({
     >
       <span>
         {linkAction === 'addToCart' && (
-          <AddToCartButton
+          <AddToCartLink
             lines={[
               {
                 merchandiseId: selectedVariant.id,
@@ -144,7 +144,7 @@ function ProductInlineLinkContent({
             }}
           >
             {LinkContent}
-          </AddToCartButton>
+          </AddToCartLink>
         )}
         {linkAction === 'buyNow' && (
           <BuyNowButton

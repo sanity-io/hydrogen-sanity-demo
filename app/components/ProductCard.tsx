@@ -12,7 +12,7 @@ export default function ProductCard({product}: {product: Product}) {
       <div className="grid gap-6">
         <div className="shadow-sm relative rounded">
           {isDiscounted && (
-            <span className="text-notice text-red-600 absolute top-0 right-0 m-4 text-right text-xs subpixel-antialiased">
+            <span className="text-notice text-red-600 absolute right-0 top-0 m-4 text-right text-xs subpixel-antialiased">
               Sale
             </span>
           )}

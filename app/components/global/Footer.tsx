@@ -52,7 +52,7 @@ export default function Footer() {
       {/* AVKA Footer */}
       <div
         className={clsx(
-          'align-start relative overflow-hidden rounded-xl bg-peach py-8 px-4', //
+          'align-start relative overflow-hidden rounded-xl bg-peach px-4 py-8', //
           'md:px-8 md:py-10',
         )}
       >

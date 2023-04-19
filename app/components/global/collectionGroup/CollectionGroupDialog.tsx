@@ -109,7 +109,7 @@ export default function CollectionGroupDialog({
             unmount={false}
           >
             <Dialog.Panel
-              className={`fixed top-0 left-0 right-0 bottom-0 flex h-full w-full flex-col overflow-y-auto rounded-r-lg bg-white md:right-auto md:bottom-auto md:block md:w-[490px]`}
+              className={`fixed bottom-0 left-0 right-0 top-0 flex h-full w-full flex-col overflow-y-auto rounded-r-lg bg-white md:bottom-auto md:right-auto md:block md:w-[490px]`}
             >
               <CollectionGroupContent
                 collection={collection}

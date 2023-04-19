@@ -27,7 +27,7 @@ export default function CollectionCard({collection, onClick}: Props) {
         {/* Vector artwork */}
         {collection.vector && (
           <div
-            className="absolute top-2 left-2 bottom-2 right-1 duration-1000 ease-out group-hover:scale-[1.03]"
+            className="absolute bottom-2 left-2 right-1 top-2 duration-1000 ease-out group-hover:scale-[1.03]"
             style={{
               background: collection?.colorTheme?.text,
               WebkitMask: `url(${collection.vector}) center center / contain no-repeat`,

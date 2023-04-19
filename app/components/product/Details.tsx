@@ -43,7 +43,7 @@ export default function ProductDetails({
       {/* Widget (desktop) */}
       <div
         className={clsx(
-          'pointer-events-none absolute top-0 right-0 z-10 hidden h-full w-[315px]',
+          'pointer-events-none absolute right-0 top-0 z-10 hidden h-full w-[315px]',
           'lg:block',
         )}
       >

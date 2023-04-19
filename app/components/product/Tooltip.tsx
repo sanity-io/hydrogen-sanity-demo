@@ -54,7 +54,7 @@ export default function ProductTooltip({
         ])}
       >
         <Link
-          className="absolute top-0 left-0 h-full w-full"
+          className="absolute left-0 top-0 h-full w-full"
           to={`/products/${handle}`}
         >
           {selectedVariant.image && (
@@ -64,7 +64,7 @@ export default function ProductTooltip({
             />
           )}
           {/* Badges */}
-          <div className="absolute top-4 left-4">
+          <div className="absolute left-4 top-4">
             {/* Sale */}
             {selectedVariant?.availableForSale &&
               selectedVariant?.compareAtPriceV2 && (

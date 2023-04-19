@@ -5,16 +5,16 @@
 import type {Storefront} from '~/types/shopify';
 import type {SanityClient} from '@sanity/client';
 import type {HydrogenSession} from '../server';
-import type { PreviewSession } from '~/lib/preview';
+import type {PreviewSession} from '~/lib/preview';
 
 type Sanity = {
-  client: SanityClient, 
+  client: SanityClient;
   preview?: {
     projectId: string;
     dataset: string;
     token: string;
-  },
-  previewSession: PreviewSession,
+  };
+  previewSession: PreviewSession;
 };
 
 declare global {
