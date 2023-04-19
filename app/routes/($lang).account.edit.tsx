@@ -10,12 +10,12 @@ import type {
   CustomerUpdateInput,
   CustomerUpdatePayload,
 } from '@shopify/hydrogen/storefront-api-types';
-import {type ActionFunction, json, redirect} from '@shopify/remix-oxygen';
+import {type ActionFunction, redirect} from '@shopify/remix-oxygen';
 import invariant from 'tiny-invariant';
 
 import FormFieldText from '~/components/account/FormFieldText';
 import Button from '~/components/elements/Button';
-import {assertApiErrors} from '~/lib/utils';
+import {assertApiErrors, badRequest} from '~/lib/utils';
 
 import {getCustomer} from './($lang).account';
 
@@ -36,8 +36,6 @@ export interface ActionData {
     newPassword2?: string;
   };
 }
-
-const badRequest = (data: ActionData) => json(data, {status: 400});
 
 const formDataHas = (formData: FormData, key: string) => {
   if (!formData.has(key)) return false;
@@ -73,7 +71,7 @@ export const action: ActionFunction = async ({request, context, params}) => {
     formDataHas(formData, 'newPassword') &&
     !formDataHas(formData, 'currentPassword')
   ) {
-    return badRequest({
+    return badRequest<ActionData>({
       fieldErrors: {
         currentPassword:
           'Please enter your current password before entering a new password.',
@@ -85,7 +83,7 @@ export const action: ActionFunction = async ({request, context, params}) => {
     formData.has('newPassword') &&
     formData.get('newPassword') !== formData.get('newPassword2')
   ) {
-    return badRequest({
+    return badRequest<ActionData>({
       fieldErrors: {
         newPassword2: 'New passwords must match.',
       },

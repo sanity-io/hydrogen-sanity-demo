@@ -1,13 +1,14 @@
 import {Form, useActionData} from '@remix-run/react';
 import type {SeoHandleFunction} from '@shopify/hydrogen';
 import type {CustomerResetPayload} from '@shopify/hydrogen/storefront-api-types';
-import {type ActionFunction, json, redirect} from '@shopify/remix-oxygen';
+import {type ActionFunction, redirect} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 import {useRef, useState} from 'react';
 
 import FormCardWrapper from '~/components/account/FormCardWrapper';
 import FormFieldText from '~/components/account/FormFieldText';
 import Button from '~/components/elements/Button';
+import {badRequest} from '~/lib/utils';
 
 type ActionData = {
   formError?: string;
@@ -21,8 +22,6 @@ export const handle = {
   seo,
 };
 
-const badRequest = (data: ActionData) => json(data, {status: 400});
-
 export const action: ActionFunction = async ({
   request,
   context,
@@ -34,7 +33,7 @@ export const action: ActionFunction = async ({
     typeof id !== 'string' ||
     typeof resetToken !== 'string'
   ) {
-    return badRequest({
+    return badRequest<ActionData>({
       formError: 'Wrong token. Please try to reset your password again.',
     });
   }
@@ -51,7 +50,7 @@ export const action: ActionFunction = async ({
     typeof passwordConfirm !== 'string' ||
     password !== passwordConfirm
   ) {
-    return badRequest({
+    return badRequest<ActionData>({
       formError: 'Please provide matching passwords',
     });
   }

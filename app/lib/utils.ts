@@ -4,15 +4,15 @@ import type {
   Product,
   ProductOption,
 } from '@shopify/hydrogen/storefront-api-types';
-import type {LoaderArgs} from '@shopify/remix-oxygen';
-import {AppLoadContext} from '@shopify/remix-oxygen';
+import type {AppLoadContext} from '@shopify/remix-oxygen';
+import {json, type LoaderArgs} from '@shopify/remix-oxygen';
 import {reduceDeep} from 'deepdash-es/standalone';
 import pluralize from 'pluralize-esm';
 
 import {countries} from '~/data/countries';
 import {PRODUCTS_AND_COLLECTIONS} from '~/queries/shopify/product';
 import type {SanityModule} from '~/types/sanity';
-import {
+import type {
   SanityCollectionPage,
   SanityHomePage,
   SanityPage,
@@ -215,8 +215,14 @@ export const getStorefrontData = async ({
 /**
  * A not found response. Sets the status code.
  */
-export const notFound = (message = 'Not Found'): Response =>
+export const notFound = (message = 'Not Found') =>
   new Response(message, {
     status: 404,
     statusText: 'Not Found',
   });
+
+/**
+ * A bad request response. Sets the status code and response body
+ */
+export const badRequest = <T>(data: T) =>
+  json(data, {status: 400, statusText: 'Bad Request'});
