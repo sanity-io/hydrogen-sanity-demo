@@ -26,11 +26,13 @@ This demo comes with a Sanity client which operates in a very similar way to the
 
 ```tsx
 // <root>/app/routes/($lang).products.$handle.tsx
-import {json, useLoaderData} from '@shopify/remix-oxygen';
+import {useLoaderData} from '@remix-run/react';
+import {json, type LoaderArgs} from '@shopify/remix-oxygen';
+import type {SanityProductPage} from '~/types/sanity';
 
 const QUERY = `*[_type == 'product' && slug.current == $slug]`;
 
-export async function loader({params, context}) {
+export async function loader({params, context}: LoaderArgs) {
   const sanityContent = await context.sanity.client.fetch<SanityProductPage>(
     QUERY,
     {
@@ -53,12 +55,15 @@ You can also use the [`defer` and `Await` utilities](https://remix.run/docs/en/1
 
 ```tsx
 // <root>/app/routes/($lang).products.$handle.tsx
-import {json, useLoaderData} from '@shopify/remix-oxygen';
+import {Suspense} from 'react'
+import {Await, useLoaderData} from '@remix-run/react';
+import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
+import type {SanityProductPage, LessImportant} from '~/types/sanity';
 
 const QUERY = `*[_type == 'product' && slug.current == $slug]`;
 const ANOTHER_QUERY = `*[references($id)]`;
 
-export async function loader({params, context}) {
+export async function loader({params, context}: LoaderArgs) {
   /* Await the important content here */
   const sanityContent = await context.sanity.client.fetch<SanityProductPage>(
     QUERY,
@@ -75,7 +80,7 @@ export async function loader({params, context}) {
     },
   );
 
-  return json({sanityContent});
+  return defer({sanityContent});
 }
 export default function Product() {
   const {sanityContent, moreSanityContent} = useLoaderData<typeof loader>();
