@@ -10,7 +10,7 @@ import {useMemo} from 'react';
 
 import {ChevronDownIcon} from '~/components/icons/ChevronDown';
 import RadioIcon from '~/components/icons/Radio';
-import {SortParam} from '~/routes/($lang)/collections/$handle';
+import {SortParam} from '~/routes/($lang).collections.$handle';
 
 type Props = {
   initialSortOrder: string;

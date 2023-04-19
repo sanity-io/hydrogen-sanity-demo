@@ -16,7 +16,7 @@ import FormFieldText from '~/components/account/FormFieldText';
 import Button from '~/components/elements/Button';
 import {Link} from '~/components/Link';
 
-import {doLogin} from './login';
+import {doLogin} from './($lang).account.login';
 
 const seo: SeoHandleFunction<typeof loader> = () => ({
   title: 'Register',
@@ -192,7 +192,7 @@ export default function Register() {
               <div className="flex justify-between">
                 <p className="text-sm">
                   Already have an account? &nbsp;
-                  <Link className="inline underline" to="/account">
+                  <Link className="inline underline" to="/account/login">
                     Sign in
                   </Link>
                 </p>

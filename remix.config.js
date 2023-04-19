@@ -17,6 +17,7 @@ module.exports = {
   serverPlatform: 'neutral',
   serverMinify: process.env.NODE_ENV === 'production',
   future: {
+    v2_routeConvention: true,
     unstable_tailwind: true,
     unstable_postcss: true,
   },

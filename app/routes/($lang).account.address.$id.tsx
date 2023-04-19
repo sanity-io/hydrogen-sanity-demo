@@ -22,7 +22,7 @@ import FormFieldText from '~/components/account/FormFieldText';
 import Button from '~/components/elements/Button';
 import {assertApiErrors} from '~/lib/utils';
 
-import type {AccountOutletContext} from '../edit';
+import type {AccountOutletContext} from './($lang).account.edit';
 
 interface ActionData {
   formError?: string;
