@@ -2,12 +2,8 @@ import {Money} from '@shopify/hydrogen';
 import clsx from 'clsx';
 
 import {Link} from '~/components/Link';
+import {getProductOptionString, hasMultipleProductOptions} from '~/lib/utils';
 import {ProductWithNodes} from '~/types/shopify';
-
-import {
-  getProductOptionString,
-  hasMultipleProductOptions,
-} from '../../lib/utils';
 
 type Props = {
   storefrontProduct: ProductWithNodes;

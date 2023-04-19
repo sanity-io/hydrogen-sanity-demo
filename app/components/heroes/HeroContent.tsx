@@ -1,12 +1,11 @@
 import {useMemo} from 'react';
 
 import ImageWithProductHotspots from '~/components/media/ImageWithProductHotspots';
+import ProductHero from '~/components/product/ProductHero';
 import type {
   SanityImageWithProductHotspots,
   SanityProductWithVariant,
 } from '~/types/sanity';
-
-import ProductHero from '../product/ProductHero';
 
 type Props = {
   content?: SanityImageWithProductHotspots | SanityProductWithVariant;

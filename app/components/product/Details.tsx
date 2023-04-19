@@ -5,10 +5,9 @@ import type {
 } from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 
+import ProductGallery from '~/components/product/Gallery';
+import ProductWidget from '~/components/product/Widget';
 import type {SanityProductPage} from '~/types/sanity';
-
-import ProductGallery from './Gallery';
-import ProductWidget from './Widget';
 
 type Props = {
   sanityProduct: SanityProductPage;

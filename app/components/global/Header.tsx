@@ -1,10 +1,10 @@
 import {useMatches} from '@remix-run/react';
 import clsx from 'clsx';
 
-import HeaderActions from './HeaderActions';
-import HeaderBackground from './HeaderBackground';
-import MobileNavigation from './MobileNavigation';
-import Navigation from './Navigation';
+import HeaderActions from '~/components/global/HeaderActions';
+import HeaderBackground from '~/components/global/HeaderBackground';
+import MobileNavigation from '~/components/global/MobileNavigation';
+import Navigation from '~/components/global/Navigation';
 
 /**
  * A server component that specifies the content of the header on the website

@@ -1,7 +1,7 @@
 import {Image, Money} from '@shopify/hydrogen';
 import type {Product} from '@shopify/hydrogen/storefront-api-types';
 
-import {Link} from './Link';
+import {Link} from '~/components/Link';
 
 export default function ProductCard({product}: {product: Product}) {
   const {price, compareAtPrice} = product.variants?.nodes[0] || {};

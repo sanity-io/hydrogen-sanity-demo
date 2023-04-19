@@ -1,12 +1,11 @@
 import {useMatches} from '@remix-run/react';
 import clsx from 'clsx';
 
+import SanityFooter from '~/components/global/SanityFooter';
+import LogoIcon from '~/components/icons/Logo';
 import {Link} from '~/components/Link';
+import PortableText from '~/components/portableText/PortableText';
 import type {SanityLink} from '~/types/sanity';
-
-import LogoIcon from '../icons/Logo';
-import PortableText from '../portableText/PortableText';
-import SanityFooter from './SanityFooter';
 
 /**
  * A component that specifies the content of the footer on the website

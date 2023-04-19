@@ -2,13 +2,12 @@ import {useMatches} from '@remix-run/react';
 import type {Product} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 
+import Button from '~/components/elements/Button';
+import Link from '~/components/elements/Link';
+import SanityImage from '~/components/media/SanityImage';
+import ProductHotspot from '~/components/product/Hotspot';
+import ProductTag from '~/components/product/Tag';
 import type {SanityModuleImage} from '~/types/sanity';
-
-import Button from '../elements/Button';
-import Link from '../elements/Link';
-import SanityImage from '../media/SanityImage';
-import ProductHotspot from '../product/Hotspot';
-import ProductTag from '../product/Tag';
 
 type Props = {
   module: SanityModuleImage;

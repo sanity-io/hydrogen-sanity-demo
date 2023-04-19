@@ -2,12 +2,11 @@ import {Dialog, Transition} from '@headlessui/react';
 import clsx from 'clsx';
 import {Fragment, useState} from 'react';
 
+import {CountrySelector} from '~/components/global/CountrySelector';
+import CloseIcon from '~/components/icons/Close';
+import MenuIcon from '~/components/icons/Menu';
 import {Link} from '~/components/Link';
 import type {SanityMenuLink} from '~/types/sanity';
-
-import CloseIcon from '../icons/Close';
-import MenuIcon from '../icons/Menu';
-import {CountrySelector} from './CountrySelector';
 
 type Props = {
   menuLinks: SanityMenuLink[];

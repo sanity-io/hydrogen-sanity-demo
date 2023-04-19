@@ -1,6 +1,6 @@
 import {useLoaderData} from '@remix-run/react';
 import {AnalyticsPageType, type SeoHandleFunction} from '@shopify/hydrogen';
-import {defer, LoaderArgs} from '@shopify/remix-oxygen';
+import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 
 import HomeHero from '~/components/heroes/Home';

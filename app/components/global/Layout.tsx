@@ -1,5 +1,5 @@
-import Footer from './Footer';
-import Header from './Header';
+import Footer from '~/components/global/Footer';
+import Header from '~/components/global/Header';
 
 type LayoutProps = {
   backgroundColor?: string;

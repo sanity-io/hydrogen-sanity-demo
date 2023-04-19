@@ -4,12 +4,11 @@ import clsx from 'clsx';
 import {useState} from 'react';
 import invariant from 'tiny-invariant';
 
+import {ChevronDownIcon} from '~/components/icons/ChevronDown';
+import RadioIcon from '~/components/icons/Radio';
 import {countries} from '~/data/countries';
 import {DEFAULT_LOCALE} from '~/lib/utils';
 import {Locale} from '~/types/shopify';
-
-import {ChevronDownIcon} from '../icons/ChevronDown';
-import RadioIcon from '../icons/Radio';
 
 type Props = {
   align?: 'center' | 'left' | 'right';

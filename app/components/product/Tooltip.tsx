@@ -2,13 +2,12 @@ import {Image, Money, type ShopifyAnalyticsProduct} from '@shopify/hydrogen';
 import type {Image as ImageType} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 
+import Badge from '~/components/elements/Badge';
 import {Link} from '~/components/Link';
 import AddToCartButton from '~/components/product/buttons/AddToCartButton';
 import BuyNowButton from '~/components/product/buttons/BuyNowButton';
 import {getProductOptionString, hasMultipleProductOptions} from '~/lib/utils';
 import type {ProductWithNodes} from '~/types/shopify';
-
-import Badge from '../elements/Badge';
 
 type Props = {
   imageAspectClassName?: string;

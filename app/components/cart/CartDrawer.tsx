@@ -6,8 +6,7 @@ import {Fragment, Suspense, useState} from 'react';
 
 import {CartActions, CartLineItems, CartSummary} from '~/components/cart/Cart';
 import Button from '~/components/elements/Button';
-
-import CloseIcon from '../icons/Close';
+import CloseIcon from '~/components/icons/Close';
 
 /**
  * A Drawer component that opens on user click.

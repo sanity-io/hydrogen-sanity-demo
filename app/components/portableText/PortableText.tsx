@@ -6,19 +6,18 @@ import {PortableTextBlock} from '@sanity/types';
 import clsx from 'clsx';
 import {useMemo} from 'react';
 
+import LinkEmailAnnotation from '~/components/portableText/annotations/LinkEmail';
+import LinkExternalAnnotation from '~/components/portableText/annotations/LinkExternal';
+import LinkInternalAnnotation from '~/components/portableText/annotations/LinkInternal';
+import ProductAnnotation from '~/components/portableText/annotations/Product';
+import AccordionBlock from '~/components/portableText/blocks/Accordion';
+import Block from '~/components/portableText/blocks/Block';
+import CalloutBlock from '~/components/portableText/blocks/Callout';
+import GridBlock from '~/components/portableText/blocks/Grid';
+import ImagesBlock from '~/components/portableText/blocks/Images';
+import InstagramBlock from '~/components/portableText/blocks/Instagram';
+import ProductsBlock from '~/components/portableText/blocks/Products';
 import type {SanityColorTheme} from '~/types/sanity';
-
-import LinkEmailAnnotation from './annotations/LinkEmail';
-import LinkExternalAnnotation from './annotations/LinkExternal';
-import LinkInternalAnnotation from './annotations/LinkInternal';
-import ProductAnnotation from './annotations/Product';
-import AccordionBlock from './blocks/Accordion';
-import Block from './blocks/Block';
-import CalloutBlock from './blocks/Callout';
-import GridBlock from './blocks/Grid';
-import ImagesBlock from './blocks/Images';
-import InstagramBlock from './blocks/Instagram';
-import ProductsBlock from './blocks/Products';
 
 const SHARED_LIST_CLASSES = clsx(
   'first:mt-0 last:mb-0', //

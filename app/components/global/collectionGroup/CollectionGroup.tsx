@@ -1,6 +1,5 @@
+import CollectionGroupDialog from '~/components/global/collectionGroup/CollectionGroupDialog';
 import type {SanityCollectionGroup} from '~/types/sanity';
-
-import CollectionGroupDialog from './CollectionGroupDialog';
 
 type Props = {
   collectionGroup: SanityCollectionGroup;

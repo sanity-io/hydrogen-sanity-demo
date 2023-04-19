@@ -1,9 +1,8 @@
 import clsx from 'clsx';
 import {useEffect, useState} from 'react';
 
+import LogoIcon from '~/components/icons/Logo';
 import {Link} from '~/components/Link';
-
-import LogoIcon from '../icons/Logo';
 
 export default function HeaderBackground() {
   const [scrolledDown, setScrolledDown] = useState(false);

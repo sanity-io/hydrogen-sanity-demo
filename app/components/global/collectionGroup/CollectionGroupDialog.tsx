@@ -2,9 +2,8 @@ import {Dialog, Transition} from '@headlessui/react';
 import clsx from 'clsx';
 import {Fragment, useState} from 'react';
 
+import CollectionGroupContent from '~/components/global/collectionGroup/CollectionGroupContent';
 import type {SanityCollection, SanityCollectionGroup} from '~/types/sanity';
-
-import CollectionGroupContent from './CollectionGroupContent';
 
 export default function CollectionGroupDialog({
   collection,

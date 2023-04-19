@@ -4,9 +4,9 @@ import type {
   MailingAddress,
 } from '@shopify/hydrogen/storefront-api-types';
 
-import Badge from '../elements/Badge';
-import Button from '../elements/Button';
-import {Link} from '../Link';
+import Badge from '~/components/elements/Badge';
+import Button from '~/components/elements/Button';
+import {Link} from '~/components/Link';
 
 export function AccountAddressBook({
   customer,

@@ -3,9 +3,8 @@ import {useMatches} from '@remix-run/react';
 import clsx from 'clsx';
 
 import SanityImage from '~/components/media/SanityImage';
+import PortableText from '~/components/portableText/PortableText';
 import type {SanityModuleGrid} from '~/types/sanity';
-
-import PortableText from '../PortableText';
 
 type Props = {
   value: PortableTextBlock & SanityModuleGrid;
