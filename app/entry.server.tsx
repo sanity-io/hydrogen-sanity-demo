@@ -18,10 +18,16 @@ export default async function handleRequest(
      * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce
      */
     nonce = generateNonce();
+
+    /**
+     * Currently, we're not setting the CSP headers due to lack of support on deferred scripts.
+     * @see https://github.com/remix-run/remix/issues/5156
+     *
     responseHeaders.set(
       'Content-Security-Policy',
-      `script-src 'nonce-${nonce}' 'strict-dynamic'; object-src 'none'; base-uri 'none';`,
+      `script-src 'nonce-${nonce}' 'strict-dynamic' cdn.shopify.com; object-src 'none'; base-uri 'none';`,
     );
+     */
   }
 
   const body = await renderToReadableStream(
