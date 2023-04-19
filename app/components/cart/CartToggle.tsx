@@ -25,7 +25,7 @@ export default function CartToggle({cart, isOpen, openDrawer}: Props) {
               openDrawer();
             }}
           >
-            {data?.totalQuantity}
+            {data?.totalQuantity || 0}
           </CircleOutlineButton>
         )}
       </Await>
