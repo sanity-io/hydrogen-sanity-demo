@@ -1,5 +1,6 @@
 export const CART_QUERY = `#graphql
-  query CartQuery($cartId: ID!) {
+  query CartQuery($cartId: ID!, $country: CountryCode, $language: LanguageCode)
+    @inContext(country: $country, language: $language) {
     cart(id: $cartId) {
       ...CartFragment
     }

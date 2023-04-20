@@ -16,9 +16,10 @@ import invariant from 'tiny-invariant';
 
 import {CartActions, CartLineItems, CartSummary} from '~/components/cart/Cart';
 import SpinnerIcon from '~/components/icons/Spinner';
+import {isLocalPath} from '~/lib/utils';
 import {CartAction, type CartActions as CartActionsType} from '~/types/shopify';
 
-const seo: SeoHandleFunction = ({data}) => ({
+const seo: SeoHandleFunction = () => ({
   title: 'Cart',
   noIndex: true,
 });
@@ -46,7 +47,7 @@ export async function action({request, context}: ActionArgs) {
     ? (formData.get('countryCode') as CartBuyerIdentityInput['countryCode'])
     : null;
 
-  const status = 200;
+  let status = 200;
   let result: {
     cart: CartType;
     errors?: CartUserError[] | UserError[];
@@ -106,7 +107,41 @@ export async function action({request, context}: ActionArgs) {
 
       break;
     }
-    // TODO: handle cart updates, discount code updates and buyeridentity updates
+    case CartAction.UPDATE_BUYER_IDENTITY: {
+      const buyerIdentity = formData.get('buyerIdentity')
+        ? (JSON.parse(
+            String(formData.get('buyerIdentity')),
+          ) as CartBuyerIdentityInput)
+        : ({} as CartBuyerIdentityInput);
+
+      result = cartId
+        ? await cartUpdateBuyerIdentity({
+            cartId,
+            buyerIdentity: {
+              ...buyerIdentity,
+              customerAccessToken: customerAccessToken
+                ? customerAccessToken
+                : null,
+            },
+            storefront,
+          })
+        : await cartCreate({
+            input: {
+              buyerIdentity: {
+                ...buyerIdentity,
+                customerAccessToken: customerAccessToken
+                  ? customerAccessToken
+                  : null,
+              },
+            },
+            storefront,
+          });
+
+      cartId = result.cart.id;
+
+      break;
+    }
+    // TODO: handle discount code updates
     default:
       invariant(false, `${cartAction} cart action is not defined`);
   }
@@ -116,6 +151,12 @@ export async function action({request, context}: ActionArgs) {
    */
   session.set('cartId', cartId);
   headers.set('Set-Cookie', await session.commit());
+
+  const redirectTo = formData.get('redirectTo') ?? null;
+  if (typeof redirectTo === 'string' && isLocalPath(redirectTo)) {
+    status = 303;
+    headers.set('Location', redirectTo);
+  }
 
   const {cart, errors} = result;
   return json(
@@ -286,6 +327,40 @@ export async function cartUpdate({
   return cartLinesUpdate;
 }
 
+/**
+ * Mutation to update a cart buyerIdentity
+ * @param cartId  Cart['id']
+ * @param buyerIdentity CartBuyerIdentityInput
+ * @returns {cart: Cart; errors: UserError[]}
+ * @see API https://shopify.dev/api/storefront/2022-10/mutations/cartBuyerIdentityUpdate
+ * @preserve
+ */
+export async function cartUpdateBuyerIdentity({
+  cartId,
+  buyerIdentity,
+  storefront,
+}: {
+  cartId: string;
+  buyerIdentity: CartBuyerIdentityInput;
+  storefront: AppLoadContext['storefront'];
+}) {
+  const {cartBuyerIdentityUpdate} = await storefront.mutate<{
+    cartBuyerIdentityUpdate: {cart: CartType; errors: UserError[]};
+  }>(UPDATE_CART_BUYER_COUNTRY, {
+    variables: {
+      cartId,
+      buyerIdentity,
+    },
+  });
+
+  invariant(
+    cartBuyerIdentityUpdate,
+    'No data returned from cart buyer identity update mutation',
+  );
+
+  return cartBuyerIdentityUpdate;
+}
+
 /*
   Cart Queries
 */
@@ -305,7 +380,6 @@ const LINES_CART_FRAGMENT = `#graphql
   }
 `;
 
-//! @see: https://shopify.dev/api/storefront/{api_version}/mutations/cartcreate
 const CREATE_CART_MUTATION = `#graphql
   mutation ($input: CartInput!, $country: CountryCode = ZZ, $language: LanguageCode)
   @inContext(country: $country, language: $language) {
@@ -383,4 +457,29 @@ const REMOVE_LINE_ITEMS_MUTATION = `#graphql
       }
     }
   }
+`;
+
+const UPDATE_CART_BUYER_COUNTRY = `#graphql
+ mutation(
+   $cartId: ID!
+   $buyerIdentity: CartBuyerIdentityInput!
+   $country: CountryCode = ZZ
+   $language: LanguageCode
+ ) @inContext(country: $country, language: $language) {
+   cartBuyerIdentityUpdate(cartId: $cartId, buyerIdentity: $buyerIdentity) {
+     cart {
+       id
+       buyerIdentity {
+         email
+         phone
+         countryCode
+       }
+     }
+     errors: userErrors {
+       message
+       field
+       code
+     }
+   }
+ }
 `;
