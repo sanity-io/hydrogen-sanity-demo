@@ -4,7 +4,6 @@ import type {CustomerAccessTokenCreatePayload} from '@shopify/hydrogen/storefron
 import {
   type ActionFunction,
   type AppLoadContext,
-  json,
   type LoaderArgs,
   redirect,
 } from '@shopify/remix-oxygen';
@@ -15,6 +14,7 @@ import FormCardWrapper from '~/components/account/FormCardWrapper';
 import FormFieldText from '~/components/account/FormFieldText';
 import Button from '~/components/elements/Button';
 import {Link} from '~/components/Link';
+import {badRequest} from '~/lib/utils';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: 'Login',
@@ -39,8 +39,6 @@ type ActionData = {
   formError?: string;
 };
 
-const badRequest = (data: ActionData) => json(data, {status: 400});
-
 export const action: ActionFunction = async ({request, context, params}) => {
   const formData = await request.formData();
 
@@ -53,7 +51,7 @@ export const action: ActionFunction = async ({request, context, params}) => {
     typeof email !== 'string' ||
     typeof password !== 'string'
   ) {
-    return badRequest({
+    return badRequest<ActionData>({
       formError: 'Please provide both an email and a password.',
     });
   }

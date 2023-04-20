@@ -13,22 +13,20 @@ import type {
   CustomerDefaultAddressUpdatePayload,
   MailingAddressInput,
 } from '@shopify/hydrogen/storefront-api-types';
-import {type ActionFunction, json, redirect} from '@shopify/remix-oxygen';
+import {type ActionFunction, redirect} from '@shopify/remix-oxygen';
 import invariant from 'tiny-invariant';
 
 import FormFieldCheckbox from '~/components/account/FormFieldCheckbox';
 import FormFieldCountries from '~/components/account/FormFieldCountries';
 import FormFieldText from '~/components/account/FormFieldText';
 import Button from '~/components/elements/Button';
-import {assertApiErrors} from '~/lib/utils';
+import {assertApiErrors, badRequest} from '~/lib/utils';
 
 import type {AccountOutletContext} from './($lang).account.edit';
 
 interface ActionData {
   formError?: string;
 }
-
-const badRequest = (data: ActionData) => json(data, {status: 400});
 
 const seo: SeoHandleFunction = ({params}) => {
   return {
@@ -63,7 +61,7 @@ export const action: ActionFunction = async ({request, context, params}) => {
 
       return redirect(params.lang ? `/${params.lang}/account` : '/account');
     } catch (error: any) {
-      return badRequest({formError: error.message});
+      return badRequest<ActionData>({formError: error.message});
     }
   }
 

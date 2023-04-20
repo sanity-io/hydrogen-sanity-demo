@@ -22,7 +22,7 @@ import invariant from 'tiny-invariant';
 import PortableText from '~/components/portableText/PortableText';
 import ProductDetails from '~/components/product/Details';
 import RelatedProducts from '~/components/product/RelatedProducts';
-import {getStorefrontData, validateLocale} from '~/lib/utils';
+import {getStorefrontData, notFound, validateLocale} from '~/lib/utils';
 import {PRODUCT_PAGE_QUERY} from '~/queries/sanity/product';
 import {
   PRODUCT_QUERY,
@@ -87,7 +87,7 @@ export async function loader({params, context, request}: LoaderArgs) {
   ]);
 
   if (!page || !product?.id) {
-    throw new Response(null, {status: 404});
+    throw notFound();
   }
 
   // Resolve any references to products on the Storefront API

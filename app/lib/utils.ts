@@ -4,15 +4,15 @@ import type {
   Product,
   ProductOption,
 } from '@shopify/hydrogen/storefront-api-types';
-import type {LoaderArgs} from '@shopify/remix-oxygen';
-import {AppLoadContext} from '@shopify/remix-oxygen';
+import type {AppLoadContext} from '@shopify/remix-oxygen';
+import {json, type LoaderArgs} from '@shopify/remix-oxygen';
 import {reduceDeep} from 'deepdash-es/standalone';
 import pluralize from 'pluralize-esm';
 
 import {countries} from '~/data/countries';
 import {PRODUCTS_AND_COLLECTIONS} from '~/queries/shopify/product';
 import type {SanityModule} from '~/types/sanity';
-import {
+import type {
   SanityCollectionPage,
   SanityHomePage,
   SanityPage,
@@ -64,7 +64,7 @@ export function validateLocale({
   ) {
     // If the lang URL param is defined, and it didn't match a valid localization,
     // then the lang param must be invalid, send to the 404 page
-    throw new Response('Not found', {status: 404});
+    throw notFound();
   }
 }
 
@@ -211,3 +211,18 @@ export const getStorefrontData = async ({
     collections,
   };
 };
+
+/**
+ * A not found response. Sets the status code.
+ */
+export const notFound = (message = 'Not Found') =>
+  new Response(message, {
+    status: 404,
+    statusText: 'Not Found',
+  });
+
+/**
+ * A bad request response. Sets the status code and response body
+ */
+export const badRequest = <T>(data: T) =>
+  json(data, {status: 400, statusText: 'Bad Request'});

@@ -1,12 +1,12 @@
 import {useLoaderData} from '@remix-run/react';
 import type {SeoHandleFunction} from '@shopify/hydrogen';
-import {json, type LoaderArgs} from '@shopify/remix-oxygen';
+import {json, type LoaderArgs, redirect} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 import invariant from 'tiny-invariant';
 
 import PageHero from '~/components/heroes/Page';
 import PortableText from '~/components/portableText/PortableText';
-import {getStorefrontData, validateLocale} from '~/lib/utils';
+import {getStorefrontData, notFound, validateLocale} from '~/lib/utils';
 import {PAGE_QUERY} from '~/queries/sanity/page';
 import {SanityPage} from '~/types/sanity';
 
@@ -34,7 +34,7 @@ export async function loader({params, context}: LoaderArgs) {
   const storefrontData = await getStorefrontData({page, context});
 
   if (!page) {
-    throw new Response(null, {status: 404});
+    throw notFound();
   }
 
   return json({page, storefrontData});

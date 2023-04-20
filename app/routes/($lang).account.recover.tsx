@@ -13,6 +13,7 @@ import {useState} from 'react';
 import FormCardWrapper from '~/components/account/FormCardWrapper';
 import FormFieldText from '~/components/account/FormFieldText';
 import Button from '~/components/elements/Button';
+import {badRequest} from '~/lib/utils';
 
 const seo: SeoHandleFunction<typeof loader> = () => ({
   title: 'Recover password',
@@ -37,14 +38,12 @@ type ActionData = {
   resetRequested?: boolean;
 };
 
-const badRequest = (data: ActionData) => json(data, {status: 400});
-
 export const action: ActionFunction = async ({request, context}) => {
   const formData = await request.formData();
   const email = formData.get('email');
 
   if (!email || typeof email !== 'string') {
-    return badRequest({
+    return badRequest<ActionData>({
       formError: 'Please provide an email.',
     });
   }
@@ -58,7 +57,7 @@ export const action: ActionFunction = async ({request, context}) => {
 
     return json({resetRequested: true});
   } catch (error: any) {
-    return badRequest({
+    return badRequest<ActionData>({
       formError: 'Something went wrong. Please try again later.',
     });
   }

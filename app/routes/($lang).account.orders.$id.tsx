@@ -16,7 +16,7 @@ import {ReactNode} from 'react';
 import invariant from 'tiny-invariant';
 
 import {Link} from '~/components/Link';
-import {statusMessage} from '~/lib/utils';
+import {notFound, statusMessage} from '~/lib/utils';
 
 export const seo: SeoHandleFunction = ({data}) => ({
   title: `Order ${data?.order?.name}`,
@@ -54,7 +54,7 @@ export async function loader({request, context, params}: LoaderArgs) {
   const order = data?.node;
 
   if (!order) {
-    throw new Response('Order not found', {status: 404});
+    throw notFound('Order not found');
   }
 
   const lineItems = flattenConnection(order.lineItems!) as Array<OrderLineItem>;

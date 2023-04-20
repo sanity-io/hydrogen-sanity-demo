@@ -8,7 +8,7 @@ import ProductGrid from '~/components/collection/ProductGrid';
 import SortOrder from '~/components/collection/SortOrder';
 import {SORT_OPTIONS} from '~/components/collection/SortOrder';
 import CollectionHero from '~/components/heroes/Collection';
-import {getStorefrontData, validateLocale} from '~/lib/utils';
+import {getStorefrontData, notFound, validateLocale} from '~/lib/utils';
 import {COLLECTION_PAGE_QUERY} from '~/queries/sanity/collection';
 import {COLLECTION_QUERY} from '~/queries/shopify/collection';
 import {SanityCollectionPage} from '~/types/sanity';
@@ -64,7 +64,7 @@ export async function loader({params, context, request}: LoaderArgs) {
 
   // Handle 404s
   if (!page || !collection) {
-    throw new Response(null, {status: 404});
+    throw notFound();
   }
 
   // Resolve any references to products on the Storefront API
