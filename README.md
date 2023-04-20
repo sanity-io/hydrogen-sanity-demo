@@ -2,6 +2,8 @@
 
 This demo is compatible with `@shopify/hydrogen >= 2023.1.0` built on Remix.
 
+> For the legacy Hydrogen v1 template, please refer to the [hydrogen-v1 branch](https://github.com/sanity-io/hydrogen-sanity-demo/tree/hydrogen-v1).
+
 <img src="https://user-images.githubusercontent.com/209129/173065853-77b26be2-dd15-4b4d-8164-850e70247b88.png" width="1000" />
 
 [Demo][hydrogen-sanity-demo] | [Sanity Studio][sanity-shopify-studio] | [Sanity Connect for Shopify][sanity-connect]
