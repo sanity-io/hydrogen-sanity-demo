@@ -24,7 +24,7 @@ This TypeScript demo adopts many of Hydrogen's [framework conventions and third-
 
 # Fetching Sanity data
 
-This demo comes with a Sanity client which operates in a very similar way to the Hydrogen Storefront client. This provides client is available in the Remix context which enables you to fetch content from Sanity in Remix loaders and actions.
+This demo comes preconfigured with a Sanity client that is available in the Remix context, enabling you to fetch content from Sanity in Remix loaders and actions.
 
 ```tsx
 // <root>/app/routes/($lang).products.$handle.tsx
@@ -51,7 +51,7 @@ export default function Product() {
 }
 ```
 
-This uses our official [`@sanity/client`][sanity-js-client] library, so supports all the methods you would expect of the Sanity Client.
+This uses our official [`@sanity/client`][sanity-js-client] library, so it supports all the methods you would expect to interact with Sanity API's
 
 You can also use the [`defer` and `Await` utilities](https://remix.run/docs/en/1.15.0/guides/streaming#using-defer) from Remix to prioritize critical data:
 
@@ -98,6 +98,56 @@ export default function Product() {
       </Suspense>
     </div>
   );
+}
+```
+
+Utilize Sanity's realtime content platform to give editors live-as-you-type previewing of their content. That way they can see, in context, how their changes will appear directly in the storefront.
+
+Learn more about `@sanity/preview-kit` in the [documentation](preview-kit)
+
+```tsx
+// <root>/app/routes/($lang)._index.tsx
+export async function loader({context, params}: LoaderArgs) {
+  // Fetch initial snapshot to render, in preview mode this will include a token in the request
+  const page = await context.sanity.client.fetch<SanityHomePage>(QUERY);
+
+  // ...rest of loader
+
+  return json({
+    page,
+    // ...other loader data
+  });
+}
+
+export default function Index() {
+  const {page} = useLoaderData<typeof loader>();
+  // In preview mode, use preview component
+  const Component = usePreviewComponent<{page: SanityHomePage}>(Route, Preview);
+
+  return <Component page={page} />;
+}
+
+function Route({page}: {page: SanityHomePage}) {
+  return (
+    <>
+      {/* Page hero */}
+      {page?.hero && <HomeHero hero={page.hero as SanityHeroHome} />}
+
+      {page?.modules && (
+        <div className={clsx('mb-32 mt-24 px-4', 'md:px-8')}>
+          <ModuleGrid items={page.modules} />
+        </div>
+      )}
+    </>
+  );
+}
+
+function Preview(props: {page: SanityHomePage}) {
+  const {usePreview} = usePreviewContext()!;
+  // Query, resolving drafts, and listen for new changes
+  const page = usePreview(HOME_PAGE_QUERY, undefined, props.page);
+
+  return <Route page={page} />;
 }
 ```
 
@@ -198,3 +248,4 @@ This repository is published under the [MIT][license] license.
 [sanity-js-client]: https://www.sanity.io/docs/js-client
 [sanity-shopify-studio]: https://github.com/sanity-io/sanity-shopify-studio
 [shopify-analytics]: https://shopify.dev/docs/custom-storefronts/hydrogen/analytics
+[preview-kit]: https://github.com/sanity-io/preview-kit

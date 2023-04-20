@@ -5,6 +5,7 @@ import clsx from 'clsx';
 
 import HomeHero from '~/components/heroes/Home';
 import ModuleGrid from '~/components/modules/ModuleGrid';
+import {usePreviewComponent, usePreviewContext} from '~/lib/preview';
 import {getStorefrontData, validateLocale} from '~/lib/utils';
 import {HOME_PAGE_QUERY} from '~/queries/sanity/home';
 import {SanityHeroHome, SanityHomePage} from '~/types/sanity';
@@ -41,22 +42,29 @@ export async function loader({context, params}: LoaderArgs) {
 
 export default function Index() {
   const {page} = useLoaderData<typeof loader>();
+  const Component = usePreviewComponent<{page: SanityHomePage}>(Route, Preview);
 
+  return <Component page={page} />;
+}
+
+function Route({page}: {page: SanityHomePage}) {
   return (
     <>
       {/* Page hero */}
       {page?.hero && <HomeHero hero={page.hero as SanityHeroHome} />}
 
       {page?.modules && (
-        <div
-          className={clsx(
-            'mb-32 mt-24 px-4', //
-            'md:px-8',
-          )}
-        >
+        <div className={clsx('mb-32 mt-24 px-4', 'md:px-8')}>
           <ModuleGrid items={page.modules} />
         </div>
       )}
     </>
   );
+}
+
+function Preview(props: {page: SanityHomePage}) {
+  const {usePreview} = usePreviewContext()!;
+  const page = usePreview(HOME_PAGE_QUERY, undefined, props.page);
+
+  return <Route page={page} />;
 }

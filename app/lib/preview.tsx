@@ -4,7 +4,14 @@ import {
   type Session,
   type SessionStorage,
 } from '@shopify/remix-oxygen';
-import {createContext, type ReactNode, useContext} from 'react';
+import {
+  createContext,
+  type ReactElement,
+  type ReactNode,
+  useContext,
+  useMemo,
+  ElementType,
+} from 'react';
 
 export class PreviewSession {
   constructor(
@@ -121,3 +128,18 @@ type PreviewProps = {
   fallback?: ReactNode;
   preview?: PreviewData;
 };
+
+/**
+ * Select and memoize which component to render based on preview mode
+ */
+export function usePreviewComponent<T>(
+  component: ElementType<T>,
+  preview: ElementType<T>,
+) {
+  const isPreview = Boolean(usePreviewContext());
+
+  return useMemo(
+    () => (isPreview ? preview : component),
+    [component, isPreview, preview],
+  );
+}
