@@ -24,7 +24,7 @@ This TypeScript demo adopts many of Hydrogen's [framework conventions and third-
 
 # Fetching Sanity data
 
-This demo comes with a Sanity client which operates in a very similar way to the Hydrogen Storefront client. This provides client is available in the Remix context which enables you to fetch content from Sanity in Remix loaders and actions.
+This demo comes preconfigured with a Sanity client that is available in the Remix context, enabling you to fetch content from Sanity in Remix loaders and actions.
 
 ```tsx
 // <root>/app/routes/($lang).products.$handle.tsx
@@ -51,7 +51,7 @@ export default function Product() {
 }
 ```
 
-This uses our official [`@sanity/client`][sanity-js-client] library, so supports all the methods you would expect of the Sanity Client.
+This uses our official [`@sanity/client`][sanity-js-client] library, so it supports all the methods you would expect to interact with Sanity API's
 
 You can also use the [`defer` and `Await` utilities](https://remix.run/docs/en/1.15.0/guides/streaming#using-defer) from Remix to prioritize critical data:
 
