@@ -1,4 +1,4 @@
-import {Form, useActionData} from '@remix-run/react';
+import {Form, useActionData, useNavigation} from '@remix-run/react';
 import type {SeoHandleFunction} from '@shopify/hydrogen';
 import type {CustomerAccessTokenCreatePayload} from '@shopify/hydrogen/storefront-api-types';
 import {
@@ -104,6 +104,7 @@ export default function Login() {
   const [nativePasswordError, setNativePasswordError] = useState<null | string>(
     null,
   );
+  const navigation = useNavigation();
 
   return (
     <div
@@ -175,9 +176,15 @@ export default function Login() {
             <div className="mt-4 space-y-4">
               <Button
                 type="submit"
-                disabled={!!(nativePasswordError || nativeEmailError)}
+                disabled={
+                  !!(
+                    nativePasswordError ||
+                    nativeEmailError ||
+                    navigation.state !== 'idle'
+                  )
+                }
               >
-                Sign in
+                {navigation.state !== 'idle' ? 'Signing in...' : 'Sign In'}
               </Button>
               <div className="flex justify-between">
                 <p className="text-sm">
