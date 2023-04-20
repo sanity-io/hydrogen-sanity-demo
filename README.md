@@ -1,5 +1,7 @@
 # AKVA - An example storefront powered by Sanity + Hydrogen
 
+> This is the legacy Hydrogen v1 template, for the most recent version, please refer to the [main branch](https://github.com/sanity-io/hydrogen-sanity-demo).
+
 This demo is compatible with `@shopify/hydrogen ~= 1.4.1`
 
 <img src="https://user-images.githubusercontent.com/209129/173065853-77b26be2-dd15-4b4d-8164-850e70247b88.png" width="1000" />
