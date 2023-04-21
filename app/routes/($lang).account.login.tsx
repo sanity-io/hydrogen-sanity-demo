@@ -1,4 +1,4 @@
-import {Form, useActionData} from '@remix-run/react';
+import {Form, useActionData, useNavigation} from '@remix-run/react';
 import type {SeoHandleFunction} from '@shopify/hydrogen';
 import type {CustomerAccessTokenCreatePayload} from '@shopify/hydrogen/storefront-api-types';
 import {
@@ -15,6 +15,7 @@ import FormFieldText from '~/components/account/FormFieldText';
 import Button from '~/components/elements/Button';
 import {Link} from '~/components/Link';
 import {badRequest} from '~/lib/utils';
+import {cartUpdateBuyerIdentity} from '~/routes/($lang).cart';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: 'Login',
@@ -62,6 +63,18 @@ export const action: ActionFunction = async ({request, context, params}) => {
     const customerAccessToken = await doLogin(context, {email, password});
     session.set('customerAccessToken', customerAccessToken);
 
+    // Also update the cart if necessary to add the customer token
+    const cartId = session.get('cartId');
+    if (cartId) {
+      await cartUpdateBuyerIdentity({
+        cartId,
+        buyerIdentity: {
+          customerAccessToken,
+        },
+        storefront: context.storefront,
+      });
+    }
+
     return redirect(params.lang ? `/${params.lang}/account` : '/account', {
       headers: {
         'Set-Cookie': await session.commit(),
@@ -91,6 +104,7 @@ export default function Login() {
   const [nativePasswordError, setNativePasswordError] = useState<null | string>(
     null,
   );
+  const navigation = useNavigation();
 
   return (
     <div
@@ -162,9 +176,15 @@ export default function Login() {
             <div className="mt-4 space-y-4">
               <Button
                 type="submit"
-                disabled={!!(nativePasswordError || nativeEmailError)}
+                disabled={
+                  !!(
+                    nativePasswordError ||
+                    nativeEmailError ||
+                    navigation.state !== 'idle'
+                  )
+                }
               >
-                Sign in
+                {navigation.state !== 'idle' ? 'Signing in...' : 'Sign In'}
               </Button>
               <div className="flex justify-between">
                 <p className="text-sm">

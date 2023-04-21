@@ -1,8 +1,8 @@
 import {
   Form,
   useActionData,
+  useNavigation,
   useOutletContext,
-  useTransition,
 } from '@remix-run/react';
 import {type SeoHandleFunction} from '@shopify/hydrogen';
 import type {
@@ -134,7 +134,7 @@ export const action: ActionFunction = async ({request, context, params}) => {
 export default function AccountDetailsEdit() {
   const actionData = useActionData<ActionData>();
   const {customer} = useOutletContext<AccountOutletContext>();
-  const transition = useTransition();
+  const navigation = useNavigation();
 
   return (
     <>
@@ -233,8 +233,8 @@ export default function AccountDetailsEdit() {
             <Button to=".." mode="outline" type="button" preventScrollReset>
               Cancel
             </Button>
-            <Button type="submit" disabled={transition.state !== 'idle'}>
-              {transition.state !== 'idle' ? 'Saving' : 'Save'}
+            <Button type="submit" disabled={navigation.state !== 'idle'}>
+              {navigation.state !== 'idle' ? 'Saving...' : 'Save'}
             </Button>
           </div>
         </div>

@@ -183,7 +183,7 @@ export default function Register() {
               <div className="flex justify-between">
                 <p className="text-sm">
                   Already have an account? &nbsp;
-                  <Link className="inline underline" to="/account">
+                  <Link className="inline underline" to="/account/login">
                     Sign in
                   </Link>
                 </p>

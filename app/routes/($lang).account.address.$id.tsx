@@ -1,9 +1,9 @@
 import {
   Form,
   useActionData,
+  useNavigation,
   useOutletContext,
   useParams,
-  useTransition,
 } from '@remix-run/react';
 import {flattenConnection, type SeoHandleFunction} from '@shopify/hydrogen';
 import type {
@@ -153,7 +153,7 @@ export const action: ActionFunction = async ({request, context, params}) => {
 export default function EditAddress() {
   const {id: addressId} = useParams();
   const actionData = useActionData<ActionData>();
-  const transition = useTransition();
+  const navigation = useNavigation();
   const {customer} = useOutletContext<AccountOutletContext>();
   const addresses = flattenConnection(customer.addresses);
   const defaultAddress = customer.defaultAddress;
@@ -308,8 +308,8 @@ export default function EditAddress() {
           <Button to=".." mode="outline" type="button" preventScrollReset>
             Cancel
           </Button>
-          <Button disabled={transition.state !== 'idle'} type="submit">
-            {transition.state !== 'idle' ? 'Saving...' : 'Save'}
+          <Button disabled={navigation.state !== 'idle'} type="submit">
+            {navigation.state !== 'idle' ? 'Saving...' : 'Save'}
           </Button>
         </div>
       </div>

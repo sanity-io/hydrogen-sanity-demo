@@ -8,7 +8,7 @@ import {ChevronDownIcon} from '~/components/icons/ChevronDown';
 import RadioIcon from '~/components/icons/Radio';
 import {countries} from '~/data/countries';
 import {DEFAULT_LOCALE} from '~/lib/utils';
-import {Locale} from '~/types/shopify';
+import {CartAction, type Locale} from '~/types/shopify';
 
 type Props = {
   align?: 'center' | 'left' | 'right';
@@ -48,12 +48,13 @@ export function CountrySelector({align = 'center'}: Props) {
 
       fetcher.submit(
         {
-          label: newLocale.label,
-          language: newLocale.language,
-          country: newLocale.country,
-          path: countryUrlPath,
+          cartAction: CartAction.UPDATE_BUYER_IDENTITY,
+          buyerIdentity: JSON.stringify({
+            countryCode: newLocale.country,
+          }),
+          redirectTo: countryUrlPath,
         },
-        {method: 'post', action: '/locale?index'},
+        {method: 'post', action: '/cart?index'},
       );
     }
   };
