@@ -6,6 +6,13 @@ import type {Storefront} from '~/types/shopify';
 import type {SanityClient} from '@sanity/client';
 import type {HydrogenSession} from '../server';
 import type {PreviewSession} from '~/lib/preview';
+import type {Cache} from '@shopify/hydrogen';
+
+type useSanityQuery = {
+  query: string;
+  params?: Record<string, unknown>;
+  cache?: Cache;
+};
 
 type Sanity = {
   client: SanityClient;
@@ -15,6 +22,7 @@ type Sanity = {
     token: string;
   };
   previewSession: PreviewSession;
+  fetchWithCache<Any>(options: useSanityQuery): Promise<R>;
 };
 
 declare global {
@@ -47,6 +55,7 @@ declare global {
 declare module '@shopify/remix-oxygen' {
   export interface AppLoadContext {
     session: HydrogenSession;
+    waitUntil: ExecutionContext['waitUntil'];
     storefront: Storefront;
     env: Env;
     sanity: Sanity;

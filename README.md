@@ -26,6 +26,33 @@ This TypeScript demo adopts many of Hydrogen's [framework conventions and third-
 
 This demo comes preconfigured with a Sanity client that is available in the Remix context, enabling you to fetch content from Sanity in Remix loaders and actions.
 
+In addition to this, we've created a `fetchWithCache` utility, which uses [Hydrogen's caching strategies](https://shopify.dev/docs/custom-storefronts/hydrogen/data-fetching/cache#caching-strategies) to reduce the number of calls to Sanity's API.
+
+It's possible to make calls to the Sanity API either with `fetchWithCache`:
+
+```tsx
+import {json, type LoaderArgs} from '@shopify/remix-oxygen';
+import type {SanityProductPage} from '~/types/sanity';
+
+const QUERY = `*[_type == 'product' && slug.current == $slug]`;
+
+export async function loader({params, context}: LoaderArgs) {
+  const cache = context.storefront.CacheLong();
+
+  const sanityContent = await context.sanity.fetchWithCache<SanityProductPage>({
+    query: QUERY,
+    params: {
+      slug: params.handle,
+    },
+    cache,
+  });
+
+  return json({sanityContent});
+}
+```
+
+or directly with the Sanity client:
+
 ```tsx
 // <root>/app/routes/($lang).products.$handle.tsx
 import {useLoaderData} from '@remix-run/react';
@@ -67,20 +94,20 @@ const ANOTHER_QUERY = `*[references($id)]`;
 
 export async function loader({params, context}: LoaderArgs) {
   /* Await the important content here */
-  const sanityContent = await context.sanity.client.fetch<SanityProductPage>(
-    QUERY,
-    {
+  const sanityContent = await context.sanity.fetchWithCache<SanityProductPage>({
+    query: QUERY,
+    params: {
       slug: params.handle,
     },
-  );
+  });
 
   /* This can wait - so don't await it - keep it as a promise */
-  const moreSanityContent = context.sanity.client.fetch<LessImportant>(
-    ANOTHER_QUERY,
-    {
+  const moreSanityContent = context.sanity.fetchWithCache<LessImportant>({
+    query: ANOTHER_QUERY,
+    params: {
       id: sanityContent._id,
     },
-  );
+  });
 
   return defer({sanityContent});
 }

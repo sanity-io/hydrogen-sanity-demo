@@ -1,7 +1,12 @@
 // Virtual entry point for the app
 import * as remixBuild from '@remix-run/dev/server-build';
 import {createClient as createSanityClient} from '@sanity/client';
-import {createStorefrontClient, storefrontRedirect} from '@shopify/hydrogen';
+import {
+  CacheLong,
+  createStorefrontClient,
+  createWithCache_unstable,
+  storefrontRedirect,
+} from '@shopify/hydrogen';
 import {
   AppLoadContext,
   createCookieSessionStorage,
@@ -56,6 +61,12 @@ export default {
       /**
        * Create Sanity provider with API client.
        */
+
+      const withCache = createWithCache_unstable({
+        cache,
+        waitUntil,
+      });
+
       const sanity: AppLoadContext['sanity'] = {
         client: createSanityClient({
           projectId: env.SANITY_PROJECT_ID,
@@ -64,6 +75,12 @@ export default {
           useCdn: process.env.NODE_ENV === 'production',
         }),
         previewSession,
+        fetchWithCache: ({query, params, cache = CacheLong()}) => {
+          // Prefix the cache key and make it unique based on arguments.
+          return withCache(['sanity', query, params], cache, () => {
+            return sanity.client.fetch(query, params);
+          });
+        },
       };
 
       /**
@@ -93,6 +110,10 @@ export default {
           useCdn: false,
           token,
         });
+
+        sanity.fetchWithCache = ({query, params}) => {
+          return sanity.client.fetch(query, params);
+        };
       }
 
       /**
@@ -104,6 +125,7 @@ export default {
         mode: process.env.NODE_ENV,
         getLoadContext: () => ({
           session,
+          waitUntil,
           storefront,
           env,
           sanity,

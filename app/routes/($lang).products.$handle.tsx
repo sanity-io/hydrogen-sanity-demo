@@ -72,9 +72,19 @@ export async function loader({params, context, request}: LoaderArgs) {
     selectedOptions.push({name, value});
   });
 
+  const cache = context.storefront.CacheCustom({
+    mode: 'public',
+    maxAge: 60,
+    staleWhileRevalidate: 60,
+  });
+
   const [page, {product}] = await Promise.all([
-    context.sanity.client.fetch<SanityProductPage>(PRODUCT_PAGE_QUERY, {
-      slug: params.handle,
+    context.sanity.fetchWithCache<SanityProductPage>({
+      query: PRODUCT_PAGE_QUERY,
+      params: {
+        slug: params.handle,
+      },
+      cache,
     }),
     context.storefront.query<{
       product: Product & {selectedVariant?: ProductVariant};

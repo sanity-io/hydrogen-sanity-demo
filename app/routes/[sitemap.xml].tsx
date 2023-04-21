@@ -21,17 +21,6 @@ type SanityPayload = {
   products: SitemapPage[];
 };
 
-// interface ProductEntry {
-//   url: string;
-//   lastMod: string;
-//   changeFreq: string;
-//   image?: {
-//     url: string;
-//     title?: string;
-//     caption?: string;
-//   };
-// }
-
 export async function loader({request, context: {sanity}}: LoaderArgs) {
   const baseUrl = new URL(request.url).origin;
   const data = await sanity.client.fetch<SanityPayload>(QUERY_SANITY, {

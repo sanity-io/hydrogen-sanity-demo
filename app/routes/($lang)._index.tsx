@@ -24,9 +24,16 @@ export const handle = {
 export async function loader({context, params}: LoaderArgs) {
   validateLocale({context, params});
 
-  const page = await context.sanity.client.fetch<SanityHomePage>(
-    HOME_PAGE_QUERY,
-  );
+  const cache = context.storefront.CacheCustom({
+    mode: 'public',
+    maxAge: 60,
+    staleWhileRevalidate: 60,
+  });
+
+  const page = await context.sanity.fetchWithCache<SanityHomePage>({
+    query: HOME_PAGE_QUERY,
+    cache,
+  });
 
   // Resolve any references to products on the Storefront API
   const storefrontData = await getStorefrontData({page, context});

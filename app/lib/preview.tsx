@@ -6,11 +6,11 @@ import {
 } from '@shopify/remix-oxygen';
 import {
   createContext,
+  ElementType,
   type ReactElement,
   type ReactNode,
   useContext,
   useMemo,
-  ElementType,
 } from 'react';
 
 export class PreviewSession {
