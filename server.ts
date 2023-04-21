@@ -55,10 +55,13 @@ export default {
         cache,
         waitUntil,
         // Optionally, pass session and token to enable live-preview
-        preview: {
-          session: previewSession,
-          token: env.SANITY_API_TOKEN,
-        },
+        preview:
+          env.SANITY_PREVIEW_SECRET && env.SANITY_API_TOKEN
+            ? {
+                session: previewSession,
+                token: env.SANITY_API_TOKEN,
+              }
+            : undefined,
         // Pass configuration options for Sanity client
         config: {
           projectId: env.SANITY_PROJECT_ID,

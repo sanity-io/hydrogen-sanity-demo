@@ -38,7 +38,7 @@ export const action: ActionFunction = async ({request, context}) => {
 export const loader: LoaderFunction = async function ({request, context}) {
   const {env, sanity} = context;
   if (!sanity.preview?.session) {
-    throw notFound();
+    return notFound();
   }
 
   const {searchParams} = new URL(request.url);
