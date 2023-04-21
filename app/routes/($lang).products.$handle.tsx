@@ -79,7 +79,7 @@ export async function loader({params, context, request}: LoaderArgs) {
   });
 
   const [page, {product}] = await Promise.all([
-    context.sanity.fetchWithCache<SanityProductPage>({
+    context.sanity.query<SanityProductPage>({
       query: PRODUCT_PAGE_QUERY,
       params: {
         slug: params.handle,

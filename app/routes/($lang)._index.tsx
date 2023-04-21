@@ -30,7 +30,7 @@ export async function loader({context, params}: LoaderArgs) {
     staleWhileRevalidate: 60,
   });
 
-  const page = await context.sanity.fetchWithCache<SanityHomePage>({
+  const page = await context.sanity.query<SanityHomePage>({
     query: HOME_PAGE_QUERY,
     cache,
   });

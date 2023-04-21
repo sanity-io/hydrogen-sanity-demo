@@ -54,7 +54,7 @@ export async function loader({params, context, request}: LoaderArgs) {
   });
 
   const [page, {collection}] = await Promise.all([
-    context.sanity.fetchWithCache<SanityCollectionPage>({
+    context.sanity.query<SanityCollectionPage>({
       query: COLLECTION_PAGE_QUERY,
       params: {
         slug: params.handle,

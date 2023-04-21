@@ -22,7 +22,7 @@ type Sanity = {
     token: string;
   };
   previewSession: PreviewSession;
-  fetchWithCache<Any>(options: useSanityQuery): Promise<R>;
+  query<Any>(options: useSanityQuery): Promise<R>;
 };
 
 declare global {

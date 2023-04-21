@@ -75,7 +75,7 @@ export default {
           useCdn: process.env.NODE_ENV === 'production',
         }),
         previewSession,
-        fetchWithCache: ({query, params, cache = CacheLong()}) => {
+        query: ({query, params, cache = CacheLong()}) => {
           // Prefix the cache key and make it unique based on arguments.
           return withCache(['sanity', query, params], cache, () => {
             return sanity.client.fetch(query, params);
@@ -111,7 +111,7 @@ export default {
           token,
         });
 
-        sanity.fetchWithCache = ({query, params}) => {
+        sanity.query = ({query, params}) => {
           return sanity.client.fetch(query, params);
         };
       }

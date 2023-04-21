@@ -87,7 +87,7 @@ export async function loader({context}: LoaderArgs) {
   const [cartId, shop, layout] = await Promise.all([
     context.session.get('cartId'),
     context.storefront.query<{shop: Shop}>(SHOP_QUERY),
-    context.sanity.fetchWithCache({query: LAYOUT_QUERY, cache}),
+    context.sanity.query({query: LAYOUT_QUERY, cache}),
   ]);
 
   const selectedLocale = context.storefront.i18n as I18nLocale;
