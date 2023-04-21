@@ -32,7 +32,7 @@ It's possible to make calls to the Sanity API either with `query`:
 
 ```tsx
 import {json, type LoaderArgs} from '@shopify/remix-oxygen';
-import type {SanityProductPage} from '~/types/sanity';
+import type {SanityProductPage} from '~/lib/sanity';
 
 const QUERY = `*[_type == 'product' && slug.current == $slug]`;
 
@@ -57,7 +57,7 @@ or directly with the Sanity client:
 // <root>/app/routes/($lang).products.$handle.tsx
 import {useLoaderData} from '@remix-run/react';
 import {json, type LoaderArgs} from '@shopify/remix-oxygen';
-import type {SanityProductPage} from '~/types/sanity';
+import type {SanityProductPage} from '~/lib/sanity';
 
 const QUERY = `*[_type == 'product' && slug.current == $slug]`;
 
@@ -87,7 +87,7 @@ You can also use the [`defer` and `Await` utilities](https://remix.run/docs/en/1
 import {Suspense} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
 import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
-import type {SanityProductPage, LessImportant} from '~/types/sanity';
+import type {SanityProductPage, LessImportant} from '~/lib/sanity';
 
 const QUERY = `*[_type == 'product' && slug.current == $slug]`;
 const ANOTHER_QUERY = `*[references($id)]`;

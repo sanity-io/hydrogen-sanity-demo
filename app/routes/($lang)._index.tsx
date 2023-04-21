@@ -5,10 +5,10 @@ import clsx from 'clsx';
 
 import HomeHero from '~/components/heroes/Home';
 import ModuleGrid from '~/components/modules/ModuleGrid';
-import {usePreviewComponent, usePreviewContext} from '~/lib/preview';
+import {usePreviewComponent, usePreviewContext} from '~/lib/sanity';
+import {SanityHeroHome, SanityHomePage} from '~/lib/sanity';
 import {getStorefrontData, validateLocale} from '~/lib/utils';
 import {HOME_PAGE_QUERY} from '~/queries/sanity/home';
-import {SanityHeroHome, SanityHomePage} from '~/types/sanity';
 
 const seo: SeoHandleFunction = ({data}) => ({
   title: data?.page?.seo?.title || 'Sanity x Hydrogen',

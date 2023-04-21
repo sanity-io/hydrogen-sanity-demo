@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import SanityImage from '~/components/media/SanityImage';
 import PortableText from '~/components/portableText/PortableText';
-import type {SanityModuleGrid} from '~/types/sanity';
+import type {SanityModuleGrid} from '~/lib/sanity';
 
 type Props = {
   value: PortableTextBlock & SanityModuleGrid;

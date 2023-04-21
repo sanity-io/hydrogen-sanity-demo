@@ -5,7 +5,7 @@ import SanityFooter from '~/components/global/SanityFooter';
 import LogoIcon from '~/components/icons/Logo';
 import {Link} from '~/components/Link';
 import PortableText from '~/components/portableText/PortableText';
-import type {SanityLink} from '~/types/sanity';
+import type {SanityLink} from '~/lib/sanity';
 
 /**
  * A component that specifies the content of the footer on the website

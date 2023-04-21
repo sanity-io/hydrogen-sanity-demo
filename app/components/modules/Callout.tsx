@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
 import LinkButton from '~/components/elements/LinkButton';
-import type {SanityColorTheme, SanityModuleCallout} from '~/types/sanity';
+import type {SanityColorTheme, SanityModuleCallout} from '~/lib/sanity';
 
 type Props = {
   colorTheme?: SanityColorTheme;

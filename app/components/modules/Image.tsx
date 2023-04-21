@@ -7,7 +7,7 @@ import Link from '~/components/elements/Link';
 import SanityImage from '~/components/media/SanityImage';
 import ProductHotspot from '~/components/product/Hotspot';
 import ProductTag from '~/components/product/Tag';
-import type {SanityModuleImage} from '~/types/sanity';
+import type {SanityModuleImage} from '~/lib/sanity';
 
 type Props = {
   module: SanityModuleImage;

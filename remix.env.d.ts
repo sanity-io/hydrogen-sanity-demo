@@ -3,27 +3,9 @@
 /// <reference types="@shopify/oxygen-workers-types" />
 
 import type {Storefront} from '~/types/shopify';
-import type {SanityClient} from '@sanity/client';
 import type {HydrogenSession} from '../server';
-import type {PreviewSession} from '~/lib/preview';
+import type {PreviewSession, Sanity} from '~/lib/sanity';
 import type {Cache} from '@shopify/hydrogen';
-
-type useSanityQuery = {
-  query: string;
-  params?: Record<string, unknown>;
-  cache?: Cache;
-};
-
-type Sanity = {
-  client: SanityClient;
-  preview?: {
-    projectId: string;
-    dataset: string;
-    token: string;
-  };
-  previewSession: PreviewSession;
-  query<Any>(options: useSanityQuery): Promise<R>;
-};
 
 declare global {
   /**

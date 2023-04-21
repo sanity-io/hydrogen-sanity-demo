@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 import LinkButton from '~/components/elements/LinkButton';
 import HeroContent from '~/components/heroes/HeroContent';
-import type {SanityHeroHome} from '~/types/sanity';
+import type {SanityHeroHome} from '~/lib/sanity';
 
 type Props = {
   hero: SanityHeroHome;

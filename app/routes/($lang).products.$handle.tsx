@@ -22,13 +22,13 @@ import invariant from 'tiny-invariant';
 import PortableText from '~/components/portableText/PortableText';
 import ProductDetails from '~/components/product/Details';
 import RelatedProducts from '~/components/product/RelatedProducts';
+import {SanityProductPage} from '~/lib/sanity';
 import {getStorefrontData, notFound, validateLocale} from '~/lib/utils';
 import {PRODUCT_PAGE_QUERY} from '~/queries/sanity/product';
 import {
   PRODUCT_QUERY,
   RECOMMENDED_PRODUCTS_QUERY,
 } from '~/queries/shopify/product';
-import {SanityProductPage} from '~/types/sanity';
 
 const seo: SeoHandleFunction = ({data}) => {
   const media = flattenConnection<MediaConnection>(data.product?.media).find(

@@ -6,9 +6,9 @@ import invariant from 'tiny-invariant';
 
 import PageHero from '~/components/heroes/Page';
 import PortableText from '~/components/portableText/PortableText';
+import {SanityPage} from '~/lib/sanity';
 import {getStorefrontData, notFound, validateLocale} from '~/lib/utils';
 import {PAGE_QUERY} from '~/queries/sanity/page';
-import {SanityPage} from '~/types/sanity';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: data?.page?.seo?.title,

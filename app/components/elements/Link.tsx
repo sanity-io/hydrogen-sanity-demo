@@ -1,7 +1,7 @@
 import type {HTMLAttributes} from 'react';
 
 import {Link as HydrogenLink} from '~/components/Link';
-import type {SanityLink} from '~/types/sanity';
+import type {SanityLink} from '~/lib/sanity';
 
 type Props = {
   link: SanityLink;

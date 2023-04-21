@@ -3,7 +3,7 @@ import {Product} from '@shopify/hydrogen/storefront-api-types';
 
 import SanityImage from '~/components/media/SanityImage';
 import ProductHotspot from '~/components/product/Hotspot';
-import type {SanityImageWithProductHotspots} from '~/types/sanity';
+import type {SanityImageWithProductHotspots} from '~/lib/sanity';
 
 type Props = {
   content: SanityImageWithProductHotspots;

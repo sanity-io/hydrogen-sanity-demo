@@ -4,7 +4,7 @@ import CollectionModule from '~/components/modules/Collection';
 import ImageModule from '~/components/modules/Image';
 import InstagramModule from '~/components/modules/Instagram';
 import ProductModule from '~/components/modules/Product';
-import type {SanityColorTheme, SanityModule} from '~/types/sanity';
+import type {SanityColorTheme, SanityModule} from '~/lib/sanity';
 
 type Props = {
   colorTheme?: SanityColorTheme;

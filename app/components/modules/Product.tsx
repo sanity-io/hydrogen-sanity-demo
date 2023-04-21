@@ -3,7 +3,7 @@ import type {Product} from '@shopify/hydrogen/storefront-api-types';
 
 import ProductCard from '~/components/product/Card';
 import ProductPill from '~/components/product/Pill';
-import type {SanityModuleProduct} from '~/types/sanity';
+import type {SanityModuleProduct} from '~/lib/sanity';
 
 type Props = {
   imageAspectClassName?: string;

@@ -13,7 +13,7 @@ import clsx from 'clsx';
 import {forwardRef} from 'react';
 
 import Tooltip from '~/components/elements/Tooltip';
-import {SanityCustomProductOption} from '~/types/sanity';
+import {SanityCustomProductOption} from '~/lib/sanity';
 
 export default function ProductOptions({
   options,

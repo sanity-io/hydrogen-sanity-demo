@@ -2,7 +2,7 @@ import type {PortableTextBlock} from '@portabletext/types';
 import clsx from 'clsx';
 
 import CalloutModule from '~/components/modules/Callout';
-import type {SanityColorTheme, SanityModuleCallout} from '~/types/sanity';
+import type {SanityColorTheme, SanityModuleCallout} from '~/lib/sanity';
 
 type Props = {
   centered?: boolean;

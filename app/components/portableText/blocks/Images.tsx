@@ -2,7 +2,7 @@ import type {PortableTextBlock} from '@portabletext/types';
 import clsx from 'clsx';
 
 import ImageModule from '~/components/modules/Image';
-import type {SanityModuleImages} from '~/types/sanity';
+import type {SanityModuleImages} from '~/lib/sanity';
 
 type Props = {
   centered?: boolean;

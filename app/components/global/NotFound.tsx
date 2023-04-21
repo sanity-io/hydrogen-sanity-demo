@@ -4,7 +4,7 @@ import type {Collection} from '@shopify/hydrogen/storefront-api-types';
 import {Suspense} from 'react';
 
 import ProductPill, {PillSkeleton} from '~/components/product/Pill';
-import type {SanityNotFoundPage} from '~/types/sanity';
+import type {SanityNotFoundPage} from '~/lib/sanity';
 
 /**
  * A component that defines the content to display when a page isn't found (404 error)

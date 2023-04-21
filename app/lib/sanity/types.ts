@@ -1,6 +1,6 @@
 import type {Image, PortableTextBlock} from '@sanity/types';
 
-import {ProductWithNodes} from './shopify';
+import {ProductWithNodes} from '~/types/shopify';
 
 export interface SanityAssetImage extends Image {
   _type: 'image';

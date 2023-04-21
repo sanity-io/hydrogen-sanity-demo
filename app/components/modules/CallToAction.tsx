@@ -8,7 +8,7 @@ import type {
   SanityAssetImage,
   SanityModuleCallToAction,
   SanityProductWithVariant,
-} from '~/types/sanity';
+} from '~/lib/sanity';
 
 type Props = {
   module: SanityModuleCallToAction;

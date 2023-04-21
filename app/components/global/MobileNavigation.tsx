@@ -6,7 +6,7 @@ import {CountrySelector} from '~/components/global/CountrySelector';
 import CloseIcon from '~/components/icons/Close';
 import MenuIcon from '~/components/icons/Menu';
 import {Link} from '~/components/Link';
-import type {SanityMenuLink} from '~/types/sanity';
+import type {SanityMenuLink} from '~/lib/sanity';
 
 type Props = {
   menuLinks: SanityMenuLink[];
