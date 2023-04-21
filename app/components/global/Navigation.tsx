@@ -3,7 +3,7 @@ import {useCallback} from 'react';
 
 import CollectionGroup from '~/components/global/collectionGroup/CollectionGroup';
 import {Link} from '~/components/Link';
-import type {SanityMenuLink} from '~/types/sanity';
+import type {SanityMenuLink} from '~/lib/sanity';
 
 /**
  * A component that defines the navigation for a web storefront

@@ -3,8 +3,8 @@ import {Product, ProductVariant} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 
 import ProductForm from '~/components/product/Form';
+import type {SanityProductPage} from '~/lib/sanity';
 import {hasMultipleProductOptions} from '~/lib/utils';
-import type {SanityProductPage} from '~/types/sanity';
 
 type Props = {
   sanityProduct: SanityProductPage;

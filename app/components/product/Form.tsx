@@ -11,8 +11,8 @@ import invariant from 'tiny-invariant';
 import AddToCartButton from '~/components/product/buttons/AddToCartButton';
 import BuyNowButton from '~/components/product/buttons/BuyNowButton';
 import ProductOptions from '~/components/product/Options';
+import {SanityCustomProductOption} from '~/lib/sanity';
 import {hasMultipleProductOptions} from '~/lib/utils';
-import {SanityCustomProductOption} from '~/types/sanity';
 
 export default function ProductForm({
   product,

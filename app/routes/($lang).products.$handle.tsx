@@ -22,13 +22,13 @@ import invariant from 'tiny-invariant';
 import PortableText from '~/components/portableText/PortableText';
 import ProductDetails from '~/components/product/Details';
 import RelatedProducts from '~/components/product/RelatedProducts';
+import {SanityProductPage} from '~/lib/sanity';
 import {getStorefrontData, notFound, validateLocale} from '~/lib/utils';
 import {PRODUCT_PAGE_QUERY} from '~/queries/sanity/product';
 import {
   PRODUCT_QUERY,
   RECOMMENDED_PRODUCTS_QUERY,
 } from '~/queries/shopify/product';
-import {SanityProductPage} from '~/types/sanity';
 
 const seo: SeoHandleFunction = ({data}) => {
   const media = flattenConnection<MediaConnection>(data.product?.media).find(
@@ -72,9 +72,19 @@ export async function loader({params, context, request}: LoaderArgs) {
     selectedOptions.push({name, value});
   });
 
+  const cache = context.storefront.CacheCustom({
+    mode: 'public',
+    maxAge: 60,
+    staleWhileRevalidate: 60,
+  });
+
   const [page, {product}] = await Promise.all([
-    context.sanity.client.fetch<SanityProductPage>(PRODUCT_PAGE_QUERY, {
-      slug: params.handle,
+    context.sanity.query<SanityProductPage>({
+      query: PRODUCT_PAGE_QUERY,
+      params: {
+        slug: params.handle,
+      },
+      cache,
     }),
     context.storefront.query<{
       product: Product & {selectedVariant?: ProductVariant};

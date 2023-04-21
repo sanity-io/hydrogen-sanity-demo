@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import {Fragment, useState} from 'react';
 
 import CollectionGroupContent from '~/components/global/collectionGroup/CollectionGroupContent';
-import type {SanityCollection, SanityCollectionGroup} from '~/types/sanity';
+import type {SanityCollection, SanityCollectionGroup} from '~/lib/sanity';
 
 export default function CollectionGroupDialog({
   collection,

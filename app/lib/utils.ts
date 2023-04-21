@@ -10,14 +10,14 @@ import {reduceDeep} from 'deepdash-es/standalone';
 import pluralize from 'pluralize-esm';
 
 import {countries} from '~/data/countries';
-import {PRODUCTS_AND_COLLECTIONS} from '~/queries/shopify/product';
-import type {SanityModule} from '~/types/sanity';
+import type {SanityModule} from '~/lib/sanity';
 import type {
   SanityCollectionPage,
   SanityHomePage,
   SanityPage,
   SanityProductPage,
-} from '~/types/sanity';
+} from '~/lib/sanity';
+import {PRODUCTS_AND_COLLECTIONS} from '~/queries/shopify/product';
 import type {I18nLocale} from '~/types/shopify';
 
 export const DEFAULT_LOCALE: I18nLocale = Object.freeze({
@@ -199,7 +199,7 @@ export const getStorefrontData = async ({
   );
 
   const {products, collections}: StorefrontPayload =
-    await context.storefront.query(PRODUCTS_AND_COLLECTIONS, {
+    await context.storefront.query<any>(PRODUCTS_AND_COLLECTIONS, {
       variables: {
         ids: productGids,
         collectionIds: collectionGids,

@@ -7,7 +7,7 @@ import {useInView} from 'react-intersection-observer';
 import CollectionCard from '~/components/collection/Card';
 import CloseIcon from '~/components/icons/Close';
 import ProductPill, {PillSkeleton} from '~/components/product/Pill';
-import type {SanityCollection, SanityCollectionGroup} from '~/types/sanity';
+import type {SanityCollection, SanityCollectionGroup} from '~/lib/sanity';
 
 type Props = {
   collection?: SanityCollection;

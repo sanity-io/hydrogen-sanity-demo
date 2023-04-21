@@ -8,10 +8,10 @@ import ProductGrid from '~/components/collection/ProductGrid';
 import SortOrder from '~/components/collection/SortOrder';
 import {SORT_OPTIONS} from '~/components/collection/SortOrder';
 import CollectionHero from '~/components/heroes/Collection';
+import {SanityCollectionPage} from '~/lib/sanity';
 import {getStorefrontData, notFound, validateLocale} from '~/lib/utils';
 import {COLLECTION_PAGE_QUERY} from '~/queries/sanity/collection';
 import {COLLECTION_QUERY} from '~/queries/shopify/collection';
-import {SanityCollectionPage} from '~/types/sanity';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: data?.page?.seo?.title ?? data?.collection?.title,
@@ -47,9 +47,19 @@ export async function loader({params, context, request}: LoaderArgs) {
 
   invariant(params.handle, 'Missing collection handle');
 
+  const cache = context.storefront.CacheCustom({
+    mode: 'public',
+    maxAge: 60,
+    staleWhileRevalidate: 60,
+  });
+
   const [page, {collection}] = await Promise.all([
-    context.sanity.client.fetch<SanityCollectionPage>(COLLECTION_PAGE_QUERY, {
-      slug: params.handle,
+    context.sanity.query<SanityCollectionPage>({
+      query: COLLECTION_PAGE_QUERY,
+      params: {
+        slug: params.handle,
+      },
+      cache,
     }),
     context.storefront.query<{collection: any}>(COLLECTION_QUERY, {
       variables: {

@@ -5,7 +5,7 @@ import ProductHero from '~/components/product/ProductHero';
 import type {
   SanityImageWithProductHotspots,
   SanityProductWithVariant,
-} from '~/types/sanity';
+} from '~/lib/sanity';
 
 type Props = {
   content?: SanityImageWithProductHotspots | SanityProductWithVariant;

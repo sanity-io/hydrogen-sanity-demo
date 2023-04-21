@@ -6,9 +6,9 @@ import invariant from 'tiny-invariant';
 
 import PageHero from '~/components/heroes/Page';
 import PortableText from '~/components/portableText/PortableText';
+import {SanityPage} from '~/lib/sanity';
 import {getStorefrontData, notFound, validateLocale} from '~/lib/utils';
 import {PAGE_QUERY} from '~/queries/sanity/page';
-import {SanityPage} from '~/types/sanity';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: data?.page?.seo?.title,
@@ -26,8 +26,18 @@ export async function loader({params, context}: LoaderArgs) {
   const {handle} = params;
   invariant(handle, 'Missing page handle');
 
-  const page = await context.sanity.client.fetch<SanityPage>(PAGE_QUERY, {
-    slug: handle,
+  const cache = context.storefront.CacheCustom({
+    mode: 'public',
+    maxAge: 60,
+    staleWhileRevalidate: 60,
+  });
+
+  const page = await context.sanity.query<SanityPage>({
+    query: PAGE_QUERY,
+    params: {
+      slug: handle,
+    },
+    cache,
   });
 
   // Resolve any references to products on the Storefront API

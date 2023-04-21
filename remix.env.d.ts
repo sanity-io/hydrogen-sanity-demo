@@ -3,19 +3,9 @@
 /// <reference types="@shopify/oxygen-workers-types" />
 
 import type {Storefront} from '~/types/shopify';
-import type {SanityClient} from '@sanity/client';
 import type {HydrogenSession} from '../server';
-import type {PreviewSession} from '~/lib/preview';
-
-type Sanity = {
-  client: SanityClient;
-  preview?: {
-    projectId: string;
-    dataset: string;
-    token: string;
-  };
-  previewSession: PreviewSession;
-};
+import type {PreviewSession, Sanity} from '~/lib/sanity';
+import type {Cache} from '@shopify/hydrogen';
 
 declare global {
   /**
@@ -47,6 +37,7 @@ declare global {
 declare module '@shopify/remix-oxygen' {
   export interface AppLoadContext {
     session: HydrogenSession;
+    waitUntil: ExecutionContext['waitUntil'];
     storefront: Storefront;
     env: Env;
     sanity: Sanity;

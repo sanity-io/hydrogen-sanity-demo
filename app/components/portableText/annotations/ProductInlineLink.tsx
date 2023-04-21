@@ -11,7 +11,7 @@ import {Link} from '~/components/Link';
 import {AddToCartLink} from '~/components/product/buttons/AddToCartButton';
 import BuyNowButton from '~/components/product/buttons/BuyNowButton';
 import ProductTooltip from '~/components/product/Tooltip';
-import type {SanityColorTheme} from '~/types/sanity';
+import type {SanityColorTheme} from '~/lib/sanity';
 import type {ProductWithNodes} from '~/types/shopify';
 
 type Props = {

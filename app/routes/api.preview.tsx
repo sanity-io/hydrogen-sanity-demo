@@ -5,13 +5,16 @@ import {
   redirect,
 } from '@shopify/remix-oxygen';
 
+import {notFound} from '~/lib/utils';
+
 const ROOT_PATH = '/' as const;
 
 /**
  * A `POST` request to this route will exit preview mode
  */
 export const action: ActionFunction = async ({request, context}) => {
-  if (request.method !== 'POST') {
+  const {preview} = context.sanity;
+  if (request.method !== 'POST' || !preview?.session) {
     return json({message: 'Method not allowed'}, 405);
   }
 
@@ -21,7 +24,7 @@ export const action: ActionFunction = async ({request, context}) => {
 
   return redirect(slug, {
     headers: {
-      'Set-Cookie': await context.sanity.previewSession.destroy(),
+      'Set-Cookie': await preview.session.destroy(),
     },
   });
 };
@@ -34,6 +37,10 @@ export const action: ActionFunction = async ({request, context}) => {
  */
 export const loader: LoaderFunction = async function ({request, context}) {
   const {env, sanity} = context;
+  if (!sanity.preview?.session) {
+    return notFound();
+  }
+
   const {searchParams} = new URL(request.url);
 
   if (!searchParams.has('secret')) {
@@ -47,12 +54,12 @@ export const loader: LoaderFunction = async function ({request, context}) {
   let slug = searchParams.get('slug') ?? ROOT_PATH;
   slug = slug.startsWith(ROOT_PATH) ? slug : ROOT_PATH;
 
-  sanity.previewSession.set('projectId', env.SANITY_PROJECT_ID);
+  sanity.preview.session.set('projectId', env.SANITY_PROJECT_ID);
 
   return redirect(slug, {
     status: 307,
     headers: {
-      'Set-Cookie': await sanity.previewSession.commit(),
+      'Set-Cookie': await sanity.preview.session.commit(),
     },
   });
 };

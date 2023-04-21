@@ -6,11 +6,10 @@ import {
 } from '@shopify/remix-oxygen';
 import {
   createContext,
-  type ReactElement,
+  ElementType,
   type ReactNode,
   useContext,
   useMemo,
-  ElementType,
 } from 'react';
 
 export class PreviewSession {
@@ -39,17 +38,17 @@ export class PreviewSession {
     return this.session.has(key);
   }
 
-  get(key: string) {
-    return this.session.get(key);
-  }
+  // get(key: string) {
+  //   return this.session.get(key);
+  // }
 
   destroy() {
     return this.sessionStorage.destroySession(this.session);
   }
 
-  unset(key: string) {
-    this.session.unset(key);
-  }
+  // unset(key: string) {
+  //   this.session.unset(key);
+  // }
 
   set(key: string, value: any) {
     this.session.set(key, value);
@@ -71,7 +70,7 @@ export const usePreviewContext = () => useContext(PreviewContext);
 export function Preview(props: PreviewProps) {
   const {children, preview} = props;
 
-  if (!preview) {
+  if (!preview?.token) {
     return <>{children}</>;
   }
 
@@ -109,7 +108,7 @@ type UsePreview = <
   serverSnapshot?: R,
 ) => R;
 
-type PreviewData = {
+export type PreviewData = {
   projectId: string;
   dataset: string;
   token: string;
@@ -123,7 +122,7 @@ type PreviewContext = {
   usePreview: UsePreview;
 };
 
-type PreviewProps = {
+export type PreviewProps = {
   children: ReactNode;
   fallback?: ReactNode;
   preview?: PreviewData;

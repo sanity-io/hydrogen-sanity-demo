@@ -7,7 +7,7 @@ import clsx from 'clsx';
 
 import ProductGallery from '~/components/product/Gallery';
 import ProductWidget from '~/components/product/Widget';
-import type {SanityProductPage} from '~/types/sanity';
+import type {SanityProductPage} from '~/lib/sanity';
 
 type Props = {
   sanityProduct: SanityProductPage;

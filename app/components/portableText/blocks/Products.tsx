@@ -2,7 +2,7 @@ import type {PortableTextBlock} from '@portabletext/types';
 import clsx from 'clsx';
 
 import ProductModule from '~/components/modules/Product';
-import type {SanityModuleProducts} from '~/types/sanity';
+import type {SanityModuleProducts} from '~/lib/sanity';
 
 type Props = {
   value: PortableTextBlock & SanityModuleProducts;

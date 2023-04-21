@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
 import {Link} from '~/components/Link';
-import type {SanityCollection} from '~/types/sanity';
+import type {SanityCollection} from '~/lib/sanity';
 
 type Props = {
   collection: SanityCollection;

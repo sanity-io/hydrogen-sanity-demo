@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 import {defaultButtonStyles} from '~/components/elements/Button';
 import Link from '~/components/elements/Link';
-import type {SanityLink} from '~/types/sanity';
+import type {SanityLink} from '~/lib/sanity';
 
 type Props = {
   backgroundColor?: string;

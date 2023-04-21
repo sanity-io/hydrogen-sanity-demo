@@ -15,7 +15,7 @@ export async function loader({params, context, request}: LoaderArgs) {
   const count = searchParams.get('count');
 
   const {collection}: {collection: CollectionType} =
-    await context.storefront.query(COLLECTION_QUERY, {
+    await context.storefront.query<any>(COLLECTION_QUERY, {
       variables: {
         handle,
         cursor,

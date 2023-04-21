@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import MinusIcon from '~/components/icons/Minus';
 import PlusIcon from '~/components/icons/Plus';
 import PortableText from '~/components/portableText/PortableText';
-import type {SanityModuleAccordion} from '~/types/sanity';
+import type {SanityModuleAccordion} from '~/lib/sanity';
 
 type Props = {
   value: PortableTextBlock & SanityModuleAccordion;

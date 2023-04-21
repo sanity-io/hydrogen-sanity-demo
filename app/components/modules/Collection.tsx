@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 import Button from '~/components/elements/Button';
 import {Link} from '~/components/Link';
-import type {SanityModuleCollection} from '~/types/sanity';
+import type {SanityModuleCollection} from '~/lib/sanity';
 
 type Props = {
   module?: SanityModuleCollection;

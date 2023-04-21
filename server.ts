@@ -1,9 +1,7 @@
 // Virtual entry point for the app
 import * as remixBuild from '@remix-run/dev/server-build';
-import {createClient as createSanityClient} from '@sanity/client';
 import {createStorefrontClient, storefrontRedirect} from '@shopify/hydrogen';
 import {
-  AppLoadContext,
   createCookieSessionStorage,
   createRequestHandler,
   getStorefrontHeaders,
@@ -11,7 +9,7 @@ import {
   type SessionStorage,
 } from '@shopify/remix-oxygen';
 
-import {PreviewSession} from '~/lib/preview';
+import {createSanityClient, PreviewSession} from '~/lib/sanity';
 import {getLocaleFromRequest} from '~/lib/utils';
 
 /**
@@ -53,47 +51,25 @@ export default {
         storefrontHeaders: getStorefrontHeaders(request),
       });
 
-      /**
-       * Create Sanity provider with API client.
-       */
-      const sanity: AppLoadContext['sanity'] = {
-        client: createSanityClient({
+      const sanity = createSanityClient({
+        cache,
+        waitUntil,
+        // Optionally, pass session and token to enable live-preview
+        preview:
+          env.SANITY_PREVIEW_SECRET && env.SANITY_API_TOKEN
+            ? {
+                session: previewSession,
+                token: env.SANITY_API_TOKEN,
+              }
+            : undefined,
+        // Pass configuration options for Sanity client
+        config: {
           projectId: env.SANITY_PROJECT_ID,
           dataset: env.SANITY_DATASET,
           apiVersion: env.SANITY_API_VERSION ?? '2023-03-30',
           useCdn: process.env.NODE_ENV === 'production',
-        }),
-        previewSession,
-      };
-
-      /**
-       * @todo naming
-       * @todo test token?
-       */
-      const isPreview = previewSession.has('projectId');
-      if (isPreview) {
-        /**
-         * Sanity API token to view draft documents
-         */
-        const token = env.SANITY_API_TOKEN;
-
-        if (!token) {
-          throw new Error(
-            'A Sanity API token must be provided in preview mode',
-          );
-        }
-
-        sanity.preview = {
-          projectId: env.SANITY_PROJECT_ID,
-          dataset: env.SANITY_DATASET,
-          token: env.SANITY_API_TOKEN,
-        };
-
-        sanity.client = sanity.client.withConfig({
-          useCdn: false,
-          token,
-        });
-      }
+        },
+      });
 
       /**
        * Create a Remix request handler and pass
@@ -104,6 +80,7 @@ export default {
         mode: process.env.NODE_ENV,
         getLoadContext: () => ({
           session,
+          waitUntil,
           storefront,
           env,
           sanity,

@@ -4,23 +4,30 @@ import imageUrlBuilder from '@sanity/image-url';
 
 const BREAKPOINTS = [640, 768, 1024, 1280, 1536]; // px
 
+// @ts-expect-error
 export const findLastNonNullValue = (items, currentIndex) => {
   const sliced = items.slice(0, currentIndex);
+  // @ts-expect-error
   return sliced.filter((val) => val !== null).pop();
 };
 
+// @ts-expect-error
 const generateSrcSet = (urlBuilder, breakpoints, {quality}) => {
-  return breakpoints
-    .map((width) => {
-      return `${urlBuilder
-        .width(width)
-        .auto('format')
-        .quality(quality)} ${width}w`;
-    })
-    .join(', ');
+  return (
+    breakpoints
+      // @ts-expect-error
+      .map((width) => {
+        return `${urlBuilder
+          .width(width)
+          .auto('format')
+          .quality(quality)} ${width}w`;
+      })
+      .join(', ')
+  );
 };
 
 // Generate srcset sizes based off breakpoints
+// @ts-expect-error
 const generateSizes = (breakpoints, sizes) => {
   if (!sizes) {
     return undefined;
@@ -34,25 +41,29 @@ const generateSizes = (breakpoints, sizes) => {
     return sizes[0];
   }
 
-  return sizes
-    .map((val, i) => {
-      if (i === sizes.length - 1) {
-        return sizes[i];
-      }
+  return (
+    sizes
+      // @ts-expect-error
+      .map((val, i) => {
+        if (i === sizes.length - 1) {
+          return sizes[i];
+        }
 
-      let current = val;
-      if (val === null) {
-        current = findLastNonNullValue(sizes, i);
-      }
+        let current = val;
+        if (val === null) {
+          current = findLastNonNullValue(sizes, i);
+        }
 
-      return `(max-width: ${breakpoints?.[i]}px) ${current}`;
-    })
-    .join(', ');
+        return `(max-width: ${breakpoints?.[i]}px) ${current}`;
+      })
+      .join(', ')
+  );
 };
 
 /**
  * A simple image component that wraps around `@sanity/image-url`
  */
+// @ts-expect-error
 export default function SanityImage(props) {
   const {
     // blurDataURL,
@@ -121,6 +132,7 @@ export default function SanityImage(props) {
   if (options?.blur) {
     urlDefault = urlDefault.blur(options.blur);
   }
+  // @ts-expect-error
   urlDefault = urlDefault.url();
 
   return (
