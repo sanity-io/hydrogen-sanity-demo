@@ -149,9 +149,14 @@ export function ErrorBoundary({error}: {error: Error}) {
   const routeError = useRouteError();
   const isRouteError = isRouteErrorResponse(routeError);
 
-  const {selectedLocale, layout, notFoundCollection} = root.data;
-  const {notFoundPage} = layout;
-  const locale = selectedLocale ?? DEFAULT_LOCALE;
+  const {
+    selectedLocale: locale,
+    layout,
+    notFoundCollection,
+  } = root.data
+    ? root.data
+    : {selectedLocale: DEFAULT_LOCALE, layout: null, notFoundCollection: {}};
+  const {notFoundPage} = layout || {};
 
   let title = 'Error';
   if (isRouteError) {
@@ -168,27 +173,37 @@ export function ErrorBoundary({error}: {error: Error}) {
         <Links />
       </head>
       <body>
-        <Layout
-          key={`${locale.language}-${locale.country}`}
-          backgroundColor={notFoundPage?.colorTheme?.background}
-        >
-          {isRouteError ? (
-            <>
-              {routeError.status === 404 ? (
-                <NotFound
-                  notFoundPage={notFoundPage}
-                  notFoundCollection={notFoundCollection}
-                />
-              ) : (
-                <GenericError
-                  error={{message: `${routeError.status} ${routeError.data}`}}
-                />
-              )}
-            </>
-          ) : (
-            <GenericError error={error instanceof Error ? error : undefined} />
-          )}
-        </Layout>
+        {layout ? (
+          <Layout
+            key={`${locale.language}-${locale.country}`}
+            backgroundColor={notFoundPage?.colorTheme?.background}
+          >
+            {isRouteError ? (
+              <>
+                {routeError.status === 404 ? (
+                  <NotFound
+                    notFoundPage={notFoundPage}
+                    notFoundCollection={notFoundCollection}
+                  />
+                ) : (
+                  <GenericError
+                    error={{message: `${routeError.status} ${routeError.data}`}}
+                  />
+                )}
+              </>
+            ) : (
+              <GenericError
+                error={error instanceof Error ? error : undefined}
+              />
+            )}
+          </Layout>
+        ) : (
+          <GenericError
+            error={{
+              message: 'No layout data available was found from Sanity.',
+            }}
+          />
+        )}
         <Scripts nonce={nonce} />
       </body>
     </html>
