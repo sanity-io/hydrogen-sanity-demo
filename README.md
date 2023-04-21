@@ -26,7 +26,7 @@ This TypeScript demo adopts many of Hydrogen's [framework conventions and third-
 
 This demo comes preconfigured with a Sanity client that is available in the Remix context, enabling you to fetch content from Sanity in Remix loaders and actions.
 
-In addition to this, we've created a `fetchWithCache` utility, which uses [Hydrogen's caching strategies](https://shopify.dev/docs/custom-storefronts/hydrogen/data-fetching/cache#caching-strategies) to reduce the number of calls to Sanity's API.
+In addition to this, we've created a `fetchWithCache` utility, which uses [Hydrogen's caching strategies](https://shopify.dev/docs/custom-storefronts/hydrogen/data-fetching/cache#caching-strategies) to reduce the number of calls to Sanity's API. If no straregy is provided to the `cache` option, then the Hydrogen `CacheLong()` strategy will be used by default.
 
 It's possible to make calls to the Sanity API either with `fetchWithCache`:
 
