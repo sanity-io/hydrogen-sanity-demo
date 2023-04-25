@@ -1,4 +1,5 @@
 import {useMatches} from '@remix-run/react';
+import {extractWithPath} from '@sanity/mutator';
 import type {
   Collection,
   Product,
@@ -6,7 +7,6 @@ import type {
 } from '@shopify/hydrogen/storefront-api-types';
 import type {AppLoadContext} from '@shopify/remix-oxygen';
 import {json, type LoaderArgs} from '@shopify/remix-oxygen';
-import {reduceDeep} from 'deepdash-es/standalone';
 import pluralize from 'pluralize-esm';
 
 import {countries} from '~/data/countries';
@@ -184,19 +184,15 @@ export const getStorefrontData = async ({
   page: SanityHomePage | SanityPage | SanityCollectionPage | SanityProductPage;
   context: AppLoadContext;
 }) => {
-  const [productGids, collectionGids] = reduceDeep(
+  const productGids = extractWithPath(
+    `..[_type == "productWithVariant"].gid`,
     page,
-    (acc, value) => {
-      if (value?._type == 'productWithVariant') {
-        acc[0].push(value.gid);
-      }
-      if (value?._type == 'collection') {
-        acc[1].push(value.gid);
-      }
-      return acc;
-    },
-    [[], []],
-  );
+  ).map(({value}) => value);
+
+  const collectionGids = extractWithPath(
+    `..[_type == "collection"].gid`,
+    page,
+  ).map(({value}) => value);
 
   const {products, collections}: StorefrontPayload =
     await context.storefront.query<any>(PRODUCTS_AND_COLLECTIONS, {
