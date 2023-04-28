@@ -14,7 +14,7 @@ export default function Footer() {
   const [root] = useMatches();
 
   const layout = root.data?.layout;
-  const {footer} = layout;
+  const {footer} = layout || {};
 
   const renderLinks = footer?.links?.map((link: SanityLink) => {
     if (link._type === 'linkExternal') {
