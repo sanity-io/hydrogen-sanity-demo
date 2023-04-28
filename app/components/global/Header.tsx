@@ -13,7 +13,7 @@ export default function Header() {
   const [root] = useMatches();
 
   const layout = root.data?.layout;
-  const {menuLinks} = layout;
+  const {menuLinks} = layout || {};
 
   return (
     <header

@@ -41,7 +41,9 @@ import type {I18nLocale} from '~/types/shopify';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: data?.layout?.seo?.title,
-  titleTemplate: `%s · ${data?.layout?.seo?.title}`,
+  titleTemplate: `%s${
+    data?.layout?.seo?.title ? ` · ${data?.layout?.seo?.title}` : ''
+  }`,
   description: data?.layout?.seo?.description,
 });
 
@@ -110,7 +112,7 @@ export async function loader({context}: LoaderArgs) {
     },
     cart: cartId ? getCart(context, cartId) : undefined,
     layout,
-    notFoundCollection: layout.notFoundPage?.collectionGid
+    notFoundCollection: layout?.notFoundPage?.collectionGid
       ? context.storefront.query<{collection: Collection}>(
           COLLECTION_QUERY_ID,
           {
@@ -189,37 +191,27 @@ export function ErrorBoundary({error}: {error: Error}) {
         <Links />
       </head>
       <body>
-        {layout ? (
-          <Layout
-            key={`${locale.language}-${locale.country}`}
-            backgroundColor={notFoundPage?.colorTheme?.background}
-          >
-            {isRouteError ? (
-              <>
-                {routeError.status === 404 ? (
-                  <NotFound
-                    notFoundPage={notFoundPage}
-                    notFoundCollection={notFoundCollection}
-                  />
-                ) : (
-                  <GenericError
-                    error={{message: `${routeError.status} ${routeError.data}`}}
-                  />
-                )}
-              </>
-            ) : (
-              <GenericError
-                error={error instanceof Error ? error : undefined}
-              />
-            )}
-          </Layout>
-        ) : (
-          <GenericError
-            error={{
-              message: 'No layout data available was found from Sanity.',
-            }}
-          />
-        )}
+        <Layout
+          key={`${locale.language}-${locale.country}`}
+          backgroundColor={notFoundPage?.colorTheme?.background}
+        >
+          {isRouteError ? (
+            <>
+              {routeError.status === 404 ? (
+                <NotFound
+                  notFoundPage={notFoundPage}
+                  notFoundCollection={notFoundCollection}
+                />
+              ) : (
+                <GenericError
+                  error={{message: `${routeError.status} ${routeError.data}`}}
+                />
+              )}
+            </>
+          ) : (
+            <GenericError error={error instanceof Error ? error : undefined} />
+          )}
+        </Layout>
         <Scripts nonce={nonce} />
       </body>
     </html>
