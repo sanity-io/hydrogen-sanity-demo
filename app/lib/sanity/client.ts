@@ -45,9 +45,9 @@ export function createSanityClient(options: CreateSanityClientOptions): Sanity {
     client: createClient(config),
     query: ({query, params, cache = CacheLong()}) => {
       // Prefix the cache key and make it unique based on arguments.
-      // return withCache(['sanity', query, params], cache, () => {
-      return sanity.client.fetch(query, params);
-      // });
+      return withCache(['sanity', query, params], cache, () => {
+        return sanity.client.fetch(query, params);
+      });
     },
   };
 
