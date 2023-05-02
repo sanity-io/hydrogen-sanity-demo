@@ -1,6 +1,6 @@
-import {HTMLAttributes} from 'react';
+import {SVGAttributes} from 'react';
 
-export default function CartIcon(props: HTMLAttributes<SVGElement>) {
+export default function CartIcon(props: SVGAttributes<SVGElement>) {
   return (
     <svg
       width="14"

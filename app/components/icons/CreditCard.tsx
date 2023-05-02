@@ -1,6 +1,6 @@
-import {HTMLAttributes} from 'react';
+import {SVGAttributes} from 'react';
 
-export default function CreditCardIcon(props: HTMLAttributes<SVGElement>) {
+export default function CreditCardIcon(props: SVGAttributes<SVGElement>) {
   return (
     <svg
       width="16"

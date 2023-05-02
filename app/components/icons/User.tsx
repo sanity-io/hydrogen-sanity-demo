@@ -1,6 +1,6 @@
-import {HTMLAttributes} from 'react';
+import {SVGAttributes} from 'react';
 
-export function UserIcon(props: HTMLAttributes<SVGElement>) {
+export function UserIcon(props: SVGAttributes<SVGElement>) {
   return (
     <svg
       width="17"

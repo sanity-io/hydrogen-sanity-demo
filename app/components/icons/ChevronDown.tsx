@@ -1,6 +1,6 @@
-import {HTMLAttributes} from 'react';
+import {SVGAttributes} from 'react';
 
-export function ChevronDownIcon(props: HTMLAttributes<SVGElement>) {
+export function ChevronDownIcon(props: SVGAttributes<SVGElement>) {
   return (
     <svg
       width="12"

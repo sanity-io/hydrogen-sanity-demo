@@ -1,4 +1,8 @@
-import {useFetcher, useMatches} from '@remix-run/react';
+import {
+  type FetcherWithComponents,
+  useFetcher,
+  useMatches,
+} from '@remix-run/react';
 import type {
   Cart,
   CartCost,
@@ -17,6 +21,7 @@ import Button, {defaultButtonStyles} from '~/components/elements/Button';
 import MinusCircleIcon from '~/components/icons/MinusCircle';
 import PlusCircleIcon from '~/components/icons/PlusCircle';
 import RemoveIcon from '~/components/icons/Remove';
+import SpinnerIcon from '~/components/icons/Spinner';
 import {Link} from '~/components/Link';
 import {CartAction} from '~/types/shopify';
 
@@ -47,10 +52,21 @@ function LineItem({lineItem}: {lineItem: CartLine}) {
   const hasDefaultVariantOnly =
     firstVariant.name === 'Title' && firstVariant.value === 'Default Title';
 
+  const updateItem = useFetcher();
+  const deleteItem = useFetcher();
+
+  const updating =
+    updateItem.state === 'submitting' || updateItem.state === 'loading';
+  const deleting =
+    deleteItem.state === 'submitting' || deleteItem.state === 'loading';
+
   return (
     <div
       role="row"
-      className="flex items-center border-b border-lightGray py-3 last:border-b-0"
+      className={clsx(
+        'flex items-center border-b border-lightGray py-3 last:border-b-0',
+        deleting && 'opacity-50',
+      )}
     >
       {/* Image */}
       <div role="cell" className="mr-3 aspect-square w-[66px] flex-shrink-0">
@@ -76,7 +92,6 @@ function LineItem({lineItem}: {lineItem: CartLine}) {
           to={`/products/${merchandise.product.handle}`}
           className="text-sm font-bold hover:underline"
         >
-          {/* <CartLineProductTitle className="text-sm font-bold" /> */}
           {merchandise.product.title}
         </Link>
 
@@ -93,23 +108,31 @@ function LineItem({lineItem}: {lineItem: CartLine}) {
       </div>
 
       {/* Quantity */}
-      <CartItemQuantity line={lineItem} />
+      <CartItemQuantity line={lineItem} fetcher={updateItem} />
 
       {/* Price */}
-      <div className="ml-4 mr-6 min-w-[4rem] text-right text-sm font-bold leading-none">
-        <Money data={lineItem.cost.totalAmount} />
+      <div className="ml-4 mr-6 flex min-w-[4rem] justify-end text-sm font-bold leading-none">
+        {updating ? (
+          <SpinnerIcon width={24} height={24} />
+        ) : (
+          <Money data={lineItem.cost.totalAmount} />
+        )}
       </div>
 
       <div role="cell" className="flex flex-col items-end justify-between">
-        <ItemRemoveButton lineIds={[lineItem.id]} />
+        <ItemRemoveButton lineIds={[lineItem.id]} fetcher={deleteItem} />
       </div>
     </div>
   );
 }
 
-function CartItemQuantity({line}: {line: CartLine}) {
-  const fetcher = useFetcher();
-
+function CartItemQuantity({
+  line,
+  fetcher,
+}: {
+  line: CartLine;
+  fetcher: FetcherWithComponents<any>;
+}) {
   if (!line || typeof line?.quantity === 'undefined') return null;
   const {id: lineId, quantity} = line;
 
@@ -174,9 +197,13 @@ function UpdateCartButton({
   );
 }
 
-function ItemRemoveButton({lineIds}: {lineIds: CartLine['id'][]}) {
-  const fetcher = useFetcher();
-
+function ItemRemoveButton({
+  lineIds,
+  fetcher,
+}: {
+  lineIds: CartLine['id'][];
+  fetcher: FetcherWithComponents<any>;
+}) {
   return (
     <fetcher.Form action="/cart" method="post">
       <input type="hidden" name="cartAction" value="REMOVE_FROM_CART" />

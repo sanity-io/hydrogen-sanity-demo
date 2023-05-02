@@ -1,6 +1,6 @@
-import {HTMLAttributes} from 'react';
+import {SVGAttributes} from 'react';
 
-export function ArrowRightIcon(props: HTMLAttributes<SVGElement>) {
+export function ArrowRightIcon(props: SVGAttributes<SVGElement>) {
   return (
     <svg fill="none" height="24" viewBox="0 0 24 24" width="24" {...props}>
       <path
