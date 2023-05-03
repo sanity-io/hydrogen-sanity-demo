@@ -1,4 +1,9 @@
-export default function SpinnerIcon() {
+import clsx from 'clsx';
+import type {SVGAttributes} from 'react';
+
+export default function SpinnerIcon(props: SVGAttributes<SVGElement>) {
+  const {className, ...rest} = props;
+
   return (
     <svg
       width="54"
@@ -6,7 +11,8 @@ export default function SpinnerIcon() {
       viewBox="0 0 54 54"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="animate-spin"
+      className={clsx('animate-spin', props.className)}
+      {...rest}
     >
       <path
         d="M43.6663 27.0002C43.6663 36.2049 36.2044 43.6668 26.9997 43.6668C17.7949 43.6668 10.333 36.2049 10.333 27.0002C10.333 17.7954 17.7949 10.3335 26.9997 10.3335C36.2044 10.3335 43.6663 17.7954 43.6663 27.0002ZM13.6663 27.0002C13.6663 34.364 19.6359 40.3335 26.9997 40.3335C34.3635 40.3335 40.333 34.364 40.333 27.0002C40.333 19.6364 34.3635 13.6668 26.9997 13.6668C19.6359 13.6668 13.6663 19.6364 13.6663 27.0002Z"

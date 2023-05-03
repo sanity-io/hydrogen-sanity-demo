@@ -3,6 +3,7 @@ import type {CartLineInput} from '@shopify/hydrogen/storefront-api-types';
 import {twMerge} from 'tailwind-merge';
 
 import {defaultButtonStyles} from '~/components/elements/Button';
+import SpinnerIcon from '~/components/icons/Spinner';
 import {CartAction} from '~/types/shopify';
 
 type FormMode = 'default' | 'inline';
@@ -49,8 +50,13 @@ export default function AddToCartButton({
             : buttonClassName
         }
         {...props}
+        disabled={fetcher.state === 'submitting'}
       >
-        {children}
+        {fetcher.state === 'submitting' ? (
+          <SpinnerIcon width={24} height={24} />
+        ) : (
+          children
+        )}
       </button>
     </fetcher.Form>
   );
@@ -62,6 +68,7 @@ export function AddToCartLink({
   analytics,
   mode = 'default',
   buttonClassName,
+  loadingContent,
   ...props
 }: {
   children?: React.ReactNode;
@@ -69,6 +76,7 @@ export function AddToCartLink({
   analytics?: unknown;
   mode?: FormMode;
   buttonClassName?: string;
+  loadingContent?: React.ReactNode;
   [key: string]: any;
 }) {
   const [root] = useMatches();
@@ -96,7 +104,9 @@ export function AddToCartLink({
       onClick={onClick}
       {...props}
     >
-      {children}
+      {fetcher.state === 'submitting' && loadingContent
+        ? loadingContent
+        : children}
     </button>
   );
 }
