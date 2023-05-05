@@ -1,15 +1,15 @@
 import clsx from 'clsx';
 
 import ProductCard from '~/components/product/Card';
-import type {SanityColorTheme} from '~/lib/theme';
+import {useColorTheme} from '~/lib/theme';
 import type {ProductWithNodes} from '~/types/shopify';
 
 type Props = {
-  colorTheme?: SanityColorTheme;
   relatedProducts: ProductWithNodes[];
 };
 
-export default function RelatedProducts({colorTheme, relatedProducts}: Props) {
+export default function RelatedProducts({relatedProducts}: Props) {
+  const colorTheme = useColorTheme();
   const products = relatedProducts && relatedProducts?.slice(0, 4);
 
   return (

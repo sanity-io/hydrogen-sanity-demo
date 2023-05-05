@@ -2,14 +2,15 @@ import clsx from 'clsx';
 
 import LinkButton from '~/components/elements/LinkButton';
 import type {SanityModuleCallout} from '~/lib/sanity';
-import type {SanityColorTheme} from '~/lib/theme';
+import {useColorTheme} from '~/lib/theme';
 
 type Props = {
-  colorTheme?: SanityColorTheme;
   module: SanityModuleCallout;
 };
 
-export default function CalloutModule({colorTheme, module}: Props) {
+export default function CalloutModule({module}: Props) {
+  const colorTheme = useColorTheme();
+
   return (
     <div
       className="mr-auto flex flex-col items-start"

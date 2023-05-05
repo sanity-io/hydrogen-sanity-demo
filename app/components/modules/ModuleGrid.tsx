@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import Module from '~/components/modules/Module';
 import ProductCard from '~/components/product/Card';
 import type {SanityModule} from '~/lib/sanity';
-import type {SanityColorTheme} from '~/lib/theme';
 import type {ProductWithNodes} from '~/types/shopify';
 
 // Sanity modules to render in full width (across all grid columns)
@@ -90,11 +89,10 @@ const PRODUCT_LAYOUT = [
 ] as const;
 
 type Props = {
-  colorTheme?: SanityColorTheme;
   items: (SanityModule | ProductWithNodes)[];
 };
 
-export default function ModuleGrid({colorTheme, items}: Props) {
+export default function ModuleGrid({items}: Props) {
   return (
     <ul className="grid grid-cols-1 gap-x-[7.5vw] gap-y-[7.5vw] md:grid-cols-2">
       {items.map((item, index) => {
@@ -126,7 +124,6 @@ export default function ModuleGrid({colorTheme, items}: Props) {
             >
               <div className={clsx(isProductModule ? productWidth : 'w-full')}>
                 <Module
-                  colorTheme={colorTheme}
                   imageAspectClassName={productImageAspect}
                   module={item}
                 />

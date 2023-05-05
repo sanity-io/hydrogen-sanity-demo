@@ -3,15 +3,13 @@ import clsx from 'clsx';
 
 import CalloutModule from '~/components/modules/Callout';
 import type {SanityModuleCallout} from '~/lib/sanity';
-import type {SanityColorTheme} from '~/lib/theme';
 
 type Props = {
   centered?: boolean;
-  colorTheme?: SanityColorTheme;
   value: PortableTextBlock & SanityModuleCallout;
 };
 
-export default function CalloutBlock({centered, colorTheme, value}: Props) {
+export default function CalloutBlock({centered, value}: Props) {
   return (
     <div
       className={clsx(
@@ -24,7 +22,7 @@ export default function CalloutBlock({centered, colorTheme, value}: Props) {
       )}
     >
       <div className={clsx(centered && 'mx-auto w-full max-w-[1400px]')}>
-        <CalloutModule colorTheme={colorTheme} module={value} />
+        <CalloutModule module={value} />
       </div>
     </div>
   );

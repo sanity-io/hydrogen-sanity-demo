@@ -2,15 +2,16 @@ import clsx from 'clsx';
 
 import HeroContent from '~/components/heroes/HeroContent';
 import type {SanityHeroPage} from '~/lib/sanity';
-import type {SanityColorTheme} from '~/lib/theme';
+import {useColorTheme} from '~/lib/theme';
 
 type Props = {
-  colorTheme?: SanityColorTheme;
   fallbackTitle: string;
   hero?: SanityHeroPage;
 };
 
-export default function PageHero({colorTheme, fallbackTitle, hero}: Props) {
+export default function PageHero({fallbackTitle, hero}: Props) {
+  const colorTheme = useColorTheme();
+
   if (!hero) {
     return (
       <h1
