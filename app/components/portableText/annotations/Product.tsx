@@ -3,7 +3,8 @@ import {useMatches} from '@remix-run/react';
 import type {Product} from '@shopify/hydrogen/storefront-api-types';
 
 import ProductInlineLink from '~/components/portableText/annotations/ProductInlineLink';
-import type {SanityColorTheme, SanityProductWithVariant} from '~/lib/sanity';
+import type {SanityProductWithVariant} from '~/lib/sanity';
+import type {SanityColorTheme} from '~/lib/theme';
 
 type Props = PortableTextMarkComponentProps & {
   colorTheme?: SanityColorTheme;

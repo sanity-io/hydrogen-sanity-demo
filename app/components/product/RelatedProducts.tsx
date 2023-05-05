@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
 import ProductCard from '~/components/product/Card';
-import type {SanityColorTheme} from '~/lib/sanity';
+import type {SanityColorTheme} from '~/lib/theme';
 import type {ProductWithNodes} from '~/types/shopify';
 
 type Props = {

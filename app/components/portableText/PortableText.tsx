@@ -17,7 +17,7 @@ import GridBlock from '~/components/portableText/blocks/Grid';
 import ImagesBlock from '~/components/portableText/blocks/Images';
 import InstagramBlock from '~/components/portableText/blocks/Instagram';
 import ProductsBlock from '~/components/portableText/blocks/Products';
-import type {SanityColorTheme} from '~/lib/sanity';
+import type {SanityColorTheme} from '~/lib/theme';
 
 const SHARED_LIST_CLASSES = clsx(
   'first:mt-0 last:mb-0', //

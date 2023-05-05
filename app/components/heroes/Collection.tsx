@@ -1,7 +1,8 @@
 import clsx from 'clsx';
 
 import HeroContent from '~/components/heroes/HeroContent';
-import type {SanityColorTheme, SanityHeroCollection} from '~/lib/sanity';
+import type {SanityHeroCollection} from '~/lib/sanity';
+import type {SanityColorTheme} from '~/lib/theme';
 
 type Props = {
   colorTheme?: SanityColorTheme;

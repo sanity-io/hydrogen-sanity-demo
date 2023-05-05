@@ -6,7 +6,8 @@ import {useEffect, useState} from 'react';
 import Button from '~/components/elements/Button';
 import SpinnerIcon from '~/components/icons/Spinner';
 import ModuleGrid from '~/components/modules/ModuleGrid';
-import {SanityColorTheme, SanityModule} from '~/lib/sanity';
+import type {SanityModule} from '~/lib/sanity';
+import type {SanityColorTheme} from '~/lib/theme';
 import {combineProductsAndModules} from '~/lib/utils';
 
 export default function ProductGrid({

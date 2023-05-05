@@ -1,6 +1,7 @@
 import type {Image, PortableTextBlock} from '@sanity/types';
 
-import {ProductWithNodes} from '~/types/shopify';
+import type {SanityColorTheme} from '~/lib/theme';
+import type {ProductWithNodes} from '~/types/shopify';
 
 export interface SanityAssetImage extends Image {
   _type: 'image';
@@ -38,11 +39,6 @@ export type SanityCollectionGroup = {
   collectionLinks?: SanityCollection[];
   collectionProducts?: SanityCollection;
   title: string;
-};
-
-export type SanityColorTheme = {
-  background: string;
-  text: string;
 };
 
 export type SanityCustomProductOption =
