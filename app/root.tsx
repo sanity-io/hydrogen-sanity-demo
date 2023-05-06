@@ -29,6 +29,7 @@ import {
 import {GenericError} from '~/components/global/GenericError';
 import {Layout} from '~/components/global/Layout';
 import {NotFound} from '~/components/global/NotFound';
+import {PreviewSpinner} from '~/components/global/PreviewSkeleton';
 import {useAnalytics} from '~/hooks/useAnalytics';
 import {useNonce} from '~/lib/nonce';
 import {isPreviewModeEnabled, Preview, PreviewData} from '~/lib/sanity';
@@ -148,7 +149,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Preview preview={preview}>
+        <Preview preview={preview} fallback={<PreviewSpinner />}>
           <Layout key={`${locale.language}-${locale.country}`}>
             <Outlet />
           </Layout>
