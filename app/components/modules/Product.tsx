@@ -1,3 +1,5 @@
+import type {Product} from '@shopify/hydrogen/storefront-api-types';
+
 import ProductCard from '~/components/product/Card';
 import ProductPill from '~/components/product/Pill';
 import type {SanityModuleProduct} from '~/lib/sanity';
@@ -16,7 +18,7 @@ export default function ProductModule({
 }: Props) {
   const productGid = module?.productWithVariant.gid;
   const productVariantGid = module?.productWithVariant.variantGid;
-  const storefrontProduct = useGid(productGid);
+  const storefrontProduct = useGid<Product>(productGid);
 
   if (!storefrontProduct) {
     return null;

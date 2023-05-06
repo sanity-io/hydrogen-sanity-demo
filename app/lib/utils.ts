@@ -181,7 +181,7 @@ type StorefrontPayload = {
 /**
  * Get data from Shopify for page components
  */
-export async function fetchProductsAndCollections({
+export async function fetchGids({
   page,
   context,
 }: {

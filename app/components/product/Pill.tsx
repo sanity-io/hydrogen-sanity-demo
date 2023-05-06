@@ -1,10 +1,15 @@
 import {Image, Money} from '@shopify/hydrogen';
+import type {ProductVariant} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 
 import Badge from '~/components/elements/Badge';
 import {Skeleton} from '~/components/global/Skeleton';
 import {Link} from '~/components/Link';
-import {getProductOptionString, hasMultipleProductOptions} from '~/lib/utils';
+import {
+  getProductOptionString,
+  hasMultipleProductOptions,
+  useGid,
+} from '~/lib/utils';
 import type {ProductWithNodes} from '~/types/shopify';
 
 /**
@@ -22,10 +27,7 @@ export default function ProductPill({
   storefrontProduct,
   variantGid,
 }: Props) {
-  const firstVariant =
-    storefrontProduct.variants.nodes.find(
-      (variant) => variant.id == variantGid,
-    ) ?? storefrontProduct.variants.nodes[0];
+  const firstVariant = useGid<ProductVariant>(variantGid);
 
   if (firstVariant == null) {
     return null;
