@@ -4,6 +4,7 @@ import {Product} from '@shopify/hydrogen/storefront-api-types';
 import SanityImage from '~/components/media/SanityImage';
 import ProductHotspot from '~/components/product/Hotspot';
 import type {SanityImageWithProductHotspots} from '~/lib/sanity';
+import {useGids} from '~/lib/utils';
 
 type Props = {
   content: SanityImageWithProductHotspots;
@@ -12,15 +13,12 @@ type Props = {
 export default function ImageWithProductHotspots({content}: Props) {
   const [root] = useMatches();
   const {sanityDataset, sanityProjectID} = root.data;
-
-  const storefrontData =
-    useMatches().find((match) => match.data?.storefrontData)?.data
-      ?.storefrontData || {};
+  const gids = useGids();
 
   return (
     <>
-      {content.productHotspots?.map((hotspot, index) => {
-        const storefrontProduct = storefrontData.products.find(
+      {content.productHotspots?.map((hotspot) => {
+        const storefrontProduct = gids.find(
           (product: Product) => product.id === hotspot?.product?.gid,
         );
 

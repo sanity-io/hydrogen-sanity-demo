@@ -24,7 +24,7 @@ import ProductDetails from '~/components/product/Details';
 import RelatedProducts from '~/components/product/RelatedProducts';
 import {SanityProductPage} from '~/lib/sanity';
 import {ColorTheme} from '~/lib/theme';
-import {getStorefrontData, notFound, validateLocale} from '~/lib/utils';
+import {fetchGids, notFound, validateLocale} from '~/lib/utils';
 import {PRODUCT_PAGE_QUERY} from '~/queries/sanity/product';
 import {
   PRODUCT_QUERY,
@@ -102,7 +102,7 @@ export async function loader({params, context, request}: LoaderArgs) {
   }
 
   // Resolve any references to products on the Storefront API
-  const storefrontData = await getStorefrontData({page, context});
+  const gids = await fetchGids({page, context});
 
   // Get recommended products from Shopify
   const recommended = context.storefront.query<{
@@ -128,7 +128,7 @@ export async function loader({params, context, request}: LoaderArgs) {
   return defer({
     page,
     product,
-    storefrontData,
+    gids,
     selectedVariant,
     recommended,
     analytics: {

@@ -8,6 +8,7 @@ import type {
 import type {AppLoadContext} from '@shopify/remix-oxygen';
 import {json, type LoaderArgs} from '@shopify/remix-oxygen';
 import pluralize from 'pluralize-esm';
+import {useMemo} from 'react';
 
 import {countries} from '~/data/countries';
 import type {SanityModule} from '~/lib/sanity';
@@ -19,6 +20,10 @@ import type {
 } from '~/lib/sanity';
 import {PRODUCTS_AND_COLLECTIONS} from '~/queries/shopify/product';
 import type {I18nLocale} from '~/types/shopify';
+
+/** @see https://github.com/sanity-io/sanity/pull/4462 */
+const extract = (...args: Parameters<typeof extractWithPath>) =>
+  extractWithPath(...args).map(({value}) => value);
 
 export const DEFAULT_LOCALE: I18nLocale = Object.freeze({
   ...countries.default,
@@ -177,22 +182,16 @@ type StorefrontPayload = {
   collections: Collection[];
 };
 
-export const getStorefrontData = async ({
+export async function fetchGids({
   page,
   context,
 }: {
   page: SanityHomePage | SanityPage | SanityCollectionPage | SanityProductPage;
   context: AppLoadContext;
-}) => {
-  const productGids = extractWithPath(
-    `..[_type == "productWithVariant"].gid`,
-    page,
-  ).map(({value}) => value);
+}) {
+  const productGids = extract(`..[_type == "productWithVariant"].gid`, page);
 
-  const collectionGids = extractWithPath(
-    `..[_type == "collection"].gid`,
-    page,
-  ).map(({value}) => value);
+  const collectionGids = extract(`..[_type == "collection"].gid`, page);
 
   const {products, collections}: StorefrontPayload =
     await context.storefront.query<any>(PRODUCTS_AND_COLLECTIONS, {
@@ -202,11 +201,48 @@ export const getStorefrontData = async ({
       },
     });
 
-  return {
-    products,
-    collections,
-  };
-};
+  const gids = extract(`..[id?][handle?]`, [...products, ...collections]);
+
+  return gids;
+}
+
+// TODO: better typing
+export function useGid<T = any>(gid?: string | null): T | undefined {
+  const matches = useMatches();
+  return useMemo(() => {
+    if (!gid) {
+      return undefined;
+    }
+    let productOrCollection;
+    for (const match of matches) {
+      if (!match.data?.gids) {
+        continue;
+      }
+
+      productOrCollection = match.data.gids.find((a: any) => a.gid === gid);
+      if (productOrCollection) {
+        break;
+      }
+    }
+
+    return productOrCollection;
+  }, [matches, gid]);
+}
+
+export function useGids() {
+  const matches = useMatches();
+  return useMemo(() => {
+    const gids = [];
+    for (const match of matches) {
+      if (!match.data?.gids) {
+        continue;
+      }
+
+      gids.push(...match.data.gids);
+    }
+    return gids;
+  }, [matches]);
+}
 
 /**
  * A not found response. Sets the status code.
