@@ -209,7 +209,7 @@ export async function fetchGids({
   )[];
 }
 
-// TODO: better typing
+// TODO: better typing?
 export function useGid<
   T extends Product | Collection | ProductVariant | ProductVariant['image'],
 >(gid?: string | null): T | null | undefined {
@@ -225,6 +225,7 @@ export function useGid<
 export function useGids() {
   const matches = useMatches();
 
+  // TODO: this doesnt' seem to actually memoize...
   return useMemo(() => {
     const gids = new Map<
       string,

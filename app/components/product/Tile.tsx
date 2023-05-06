@@ -16,7 +16,12 @@ type Props = {
 };
 
 export default function ProductTile({storefrontProduct, variantGid}: Props) {
-  const firstVariant = useGid<ProductVariant>(variantGid);
+  const firstVariant =
+    useGid<ProductVariant>(variantGid) ??
+    storefrontProduct.variants.nodes.find(
+      (variant) => variant.id == variantGid,
+    ) ??
+    storefrontProduct.variants.nodes[0];
 
   if (!(storefrontProduct && firstVariant)) {
     return null;

@@ -27,7 +27,12 @@ export default function ProductPill({
   storefrontProduct,
   variantGid,
 }: Props) {
-  const firstVariant = useGid<ProductVariant>(variantGid);
+  const firstVariant =
+    useGid<ProductVariant>(variantGid) ??
+    storefrontProduct.variants.nodes.find(
+      (variant) => variant.id == variantGid,
+    ) ??
+    storefrontProduct.variants.nodes[0];
 
   if (firstVariant == null) {
     return null;
