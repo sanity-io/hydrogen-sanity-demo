@@ -41,9 +41,9 @@ export default function ImageModule({module}: Props) {
       {module.variant === 'productHotspots' && (
         <>
           {module.productHotspots?.map((hotspot) => {
-            const storefrontProduct = gids.find(
-              (product: Product) => product.id === hotspot?.product?.gid,
-            );
+            const storefrontProduct = gids.get(
+              hotspot?.product?.gid,
+            ) as Product;
 
             return (
               <ProductHotspot
@@ -61,9 +61,7 @@ export default function ImageModule({module}: Props) {
       {module.variant === 'productTags' && (
         <div className="mt-2 flex flex-wrap gap-x-1 gap-y-2">
           {module.productTags?.map((tag) => {
-            const storefrontProduct = gids.find(
-              (product: Product) => product.id === tag?.gid,
-            );
+            const storefrontProduct = gids.get(tag?.gid) as Product;
 
             return (
               <ProductTag

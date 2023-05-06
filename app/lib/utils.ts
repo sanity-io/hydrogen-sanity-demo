@@ -210,28 +210,41 @@ export async function fetchGids({
 }
 
 // TODO: better typing
-export function useGid<T = any>(gid?: string | null): T | undefined {
+export function useGid<
+  T extends Product | Collection | ProductVariant | ProductVariant['image'],
+>(gid?: string | null): T | null | undefined {
   const gids = useGids();
-  return useMemo(() => {
-    if (!gid) {
-      return undefined;
-    }
 
-    return gids.find((a: any) => a.id === gid);
-  }, [gid, gids]);
+  if (!gid) {
+    return null;
+  }
+
+  return gids.get(gid) as T;
 }
 
 export function useGids() {
   const matches = useMatches();
+
   return useMemo(() => {
-    const gids = [];
+    const gids = new Map<
+      string,
+      Product | Collection | ProductVariant | ProductVariant['image']
+    >();
+
     for (const match of matches) {
-      if (!match.data?.gids) {
+      if (!match.data?.gids?.length) {
         continue;
       }
 
-      gids.push(...match.data.gids);
+      for (const gid of match.data.gids) {
+        if (gids.has(gid.id)) {
+          continue;
+        }
+
+        gids.set(gid.id, gid);
+      }
     }
+
     return gids;
   }, [matches]);
 }
