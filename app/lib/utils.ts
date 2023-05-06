@@ -212,7 +212,8 @@ export function useGid<T = any>(gid?: string | null): T | undefined {
     if (!gid) {
       return undefined;
     }
-    return gids.find((a: any) => a.gid === gid);
+
+    return gids.find((a: any) => a.id === gid);
   }, [gid, gids]);
 }
 
