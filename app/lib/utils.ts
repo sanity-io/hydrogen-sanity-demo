@@ -4,6 +4,7 @@ import type {
   Collection,
   Product,
   ProductOption,
+  ProductVariant,
 } from '@shopify/hydrogen/storefront-api-types';
 import type {AppLoadContext} from '@shopify/remix-oxygen';
 import {json, type LoaderArgs} from '@shopify/remix-oxygen';
@@ -166,23 +167,21 @@ export const hasMultipleProductOptions = (options?: ProductOption[]) => {
 /**
  * Get the product options as a string, e.g. "Color / Size / Title"
  */
-
 export const getProductOptionString = (options?: ProductOption[]) => {
   return options
     ?.map(({name, values}) => pluralize(name, values.length, true))
     .join(' / ');
 };
 
-/**
- * Get data from Shopify for page components
- */
-
 type StorefrontPayload = {
   products: Product[];
   collections: Collection[];
 };
 
-export async function fetchGids({
+/**
+ * Get data from Shopify for page components
+ */
+export async function fetchProductsAndCollections({
   page,
   context,
 }: {
@@ -192,17 +191,22 @@ export async function fetchGids({
   const productGids = extract(`..[_type == "productWithVariant"].gid`, page);
   const collectionGids = extract(`..[_type == "collection"].gid`, page);
 
-  const {products, collections}: StorefrontPayload =
-    await context.storefront.query<any>(PRODUCTS_AND_COLLECTIONS, {
-      variables: {
-        ids: productGids,
-        collectionIds: collectionGids,
+  const {products, collections} =
+    await context.storefront.query<StorefrontPayload>(
+      PRODUCTS_AND_COLLECTIONS,
+      {
+        variables: {
+          ids: productGids,
+          collectionIds: collectionGids,
+        },
       },
-    });
+    );
 
-  const gids = extract(`..[id?][handle?]`, [...products, ...collections]);
-
-  return gids;
+  return extract(`..[id?]`, [...products, ...collections]) as (
+    | Product
+    | Collection
+    | ProductVariant
+  )[];
 }
 
 // TODO: better typing
