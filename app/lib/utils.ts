@@ -190,7 +190,6 @@ export async function fetchGids({
   context: AppLoadContext;
 }) {
   const productGids = extract(`..[_type == "productWithVariant"].gid`, page);
-
   const collectionGids = extract(`..[_type == "collection"].gid`, page);
 
   const {products, collections}: StorefrontPayload =
@@ -208,25 +207,13 @@ export async function fetchGids({
 
 // TODO: better typing
 export function useGid<T = any>(gid?: string | null): T | undefined {
-  const matches = useMatches();
+  const gids = useGids();
   return useMemo(() => {
     if (!gid) {
       return undefined;
     }
-    let productOrCollection;
-    for (const match of matches) {
-      if (!match.data?.gids) {
-        continue;
-      }
-
-      productOrCollection = match.data.gids.find((a: any) => a.gid === gid);
-      if (productOrCollection) {
-        break;
-      }
-    }
-
-    return productOrCollection;
-  }, [matches, gid]);
+    return gids.find((a: any) => a.gid === gid);
+  }, [gid, gids]);
 }
 
 export function useGids() {
