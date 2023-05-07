@@ -1,6 +1,6 @@
 import SpinnerIcon from '../icons/Spinner';
 
-export function PreviewSpinner() {
+export function PreviewLoading() {
   return (
     <div className="max-w-screen flex min-h-screen flex-col items-center">
       <main
