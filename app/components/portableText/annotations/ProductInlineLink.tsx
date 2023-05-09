@@ -12,12 +12,11 @@ import {Link} from '~/components/Link';
 import {AddToCartLink} from '~/components/product/buttons/AddToCartButton';
 import BuyNowButton from '~/components/product/buttons/BuyNowButton';
 import ProductTooltip from '~/components/product/Tooltip';
-import type {SanityColorTheme} from '~/lib/sanity';
+import {useColorTheme} from '~/lib/theme';
 import type {ProductWithNodes} from '~/types/shopify';
 
 type Props = {
   children?: ReactNode;
-  colorTheme?: SanityColorTheme;
   variantGid?: ProductVariant['id'];
   linkAction: 'addToCart' | 'buyNow' | 'link';
   quantity?: number;
@@ -26,7 +25,6 @@ type Props = {
 
 export default function ProductInlineLink({
   children,
-  colorTheme,
   variantGid,
   linkAction,
   quantity = 1,
@@ -34,7 +32,6 @@ export default function ProductInlineLink({
 }: Props) {
   return (
     <ProductInlineLinkContent
-      colorTheme={colorTheme}
       linkAction={linkAction}
       quantity={quantity}
       storefrontProduct={storefrontProduct}
@@ -47,12 +44,12 @@ export default function ProductInlineLink({
 
 function ProductInlineLinkContent({
   children,
-  colorTheme,
   linkAction,
   quantity = 1,
   storefrontProduct,
   variantGid,
 }: Props) {
+  const colorTheme = useColorTheme();
   const {handle, title} = storefrontProduct;
 
   const selectedVariant =

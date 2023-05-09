@@ -23,6 +23,7 @@ import PortableText from '~/components/portableText/PortableText';
 import ProductDetails from '~/components/product/Details';
 import RelatedProducts from '~/components/product/RelatedProducts';
 import {SanityProductPage} from '~/lib/sanity';
+import {ColorTheme} from '~/lib/theme';
 import {getStorefrontData, notFound, validateLocale} from '~/lib/utils';
 import {PRODUCT_PAGE_QUERY} from '~/queries/sanity/product';
 import {
@@ -144,7 +145,7 @@ export default function ProductHandle() {
     useLoaderData();
 
   return (
-    <>
+    <ColorTheme value={page.colorTheme}>
       <div className="relative w-full">
         <ProductDetails
           selectedVariant={selectedVariant}
@@ -167,7 +168,6 @@ export default function ProductHandle() {
                 'max-w-[660px] px-4 pb-24 pt-8', //
                 'md:px-8',
               )}
-              colorTheme={page?.colorTheme}
             />
           )}
         </div>
@@ -181,11 +181,10 @@ export default function ProductHandle() {
           {(products) => (
             <RelatedProducts
               relatedProducts={products.productRecommendations}
-              colorTheme={page?.colorTheme}
             />
           )}
         </Await>
       </Suspense>
-    </>
+    </ColorTheme>
   );
 }

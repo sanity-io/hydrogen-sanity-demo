@@ -4,22 +4,17 @@ import CollectionModule from '~/components/modules/Collection';
 import ImageModule from '~/components/modules/Image';
 import InstagramModule from '~/components/modules/Instagram';
 import ProductModule from '~/components/modules/Product';
-import type {SanityColorTheme, SanityModule} from '~/lib/sanity';
+import type {SanityModule} from '~/lib/sanity';
 
 type Props = {
-  colorTheme?: SanityColorTheme;
   imageAspectClassName?: string;
   module: SanityModule;
 };
 
-export default function Module({
-  colorTheme,
-  imageAspectClassName,
-  module,
-}: Props) {
+export default function Module({imageAspectClassName, module}: Props) {
   switch (module._type) {
     case 'module.callout':
-      return <CalloutModule colorTheme={colorTheme} module={module} />;
+      return <CalloutModule module={module} />;
     case 'module.callToAction':
       return <CallToActionModule module={module} />;
     case 'module.collection':

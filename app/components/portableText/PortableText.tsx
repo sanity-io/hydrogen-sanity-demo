@@ -17,7 +17,6 @@ import GridBlock from '~/components/portableText/blocks/Grid';
 import ImagesBlock from '~/components/portableText/blocks/Images';
 import InstagramBlock from '~/components/portableText/blocks/Instagram';
 import ProductsBlock from '~/components/portableText/blocks/Products';
-import type {SanityColorTheme} from '~/lib/sanity';
 
 const SHARED_LIST_CLASSES = clsx(
   'first:mt-0 last:mb-0', //
@@ -28,15 +27,9 @@ type Props = {
   blocks: PortableTextBlock[];
   className?: string;
   centered?: boolean;
-  colorTheme?: SanityColorTheme;
 };
 
-export default function PortableText({
-  blocks,
-  centered,
-  className,
-  colorTheme,
-}: Props) {
+export default function PortableText({blocks, centered, className}: Props) {
   const components: PortableTextComponents = {
     list: {
       bullet: ({children}) => (
@@ -50,15 +43,13 @@ export default function PortableText({
       annotationLinkExternal: LinkExternalAnnotation,
       annotationLinkInternal: LinkInternalAnnotation,
       annotationLinkEmail: LinkEmailAnnotation,
-      annotationProduct: (props: any) => (
-        <ProductAnnotation colorTheme={colorTheme} {...props} />
-      ),
+      annotationProduct: (props: any) => <ProductAnnotation {...props} />,
     },
     block: Block,
     types: {
       blockAccordion: AccordionBlock,
       blockCallout: (props: any) => (
-        <CalloutBlock centered={centered} colorTheme={colorTheme} {...props} />
+        <CalloutBlock centered={centered} {...props} />
       ),
       blockGrid: GridBlock,
       blockImages: (props: any) => (

@@ -9,6 +9,7 @@ import SortOrder from '~/components/collection/SortOrder';
 import {SORT_OPTIONS} from '~/components/collection/SortOrder';
 import CollectionHero from '~/components/heroes/Collection';
 import {SanityCollectionPage} from '~/lib/sanity';
+import {ColorTheme} from '~/lib/theme';
 import {getStorefrontData, notFound, validateLocale} from '~/lib/utils';
 import {COLLECTION_PAGE_QUERY} from '~/queries/sanity/collection';
 import {COLLECTION_QUERY} from '~/queries/shopify/collection';
@@ -101,13 +102,9 @@ export default function Collection() {
   const products = collection.products.nodes;
 
   return (
-    <>
+    <ColorTheme value={page.colorTheme}>
       {/* Hero */}
-      <CollectionHero
-        colorTheme={page.colorTheme}
-        fallbackTitle={page.title}
-        hero={page.hero}
-      />
+      <CollectionHero fallbackTitle={page.title} hero={page.hero} />
 
       <div
         className={clsx(
@@ -134,14 +131,13 @@ export default function Collection() {
         )}
 
         <ProductGrid
-          colorTheme={page.colorTheme}
           collection={collection}
           modules={page.modules}
           url={`/collections/${collection.handle}`}
           key={`${collection.handle}-${sort}`}
         />
       </div>
-    </>
+    </ColorTheme>
   );
 }
 

@@ -6,17 +6,15 @@ import {useEffect, useState} from 'react';
 import Button from '~/components/elements/Button';
 import SpinnerIcon from '~/components/icons/Spinner';
 import ModuleGrid from '~/components/modules/ModuleGrid';
-import {SanityColorTheme, SanityModule} from '~/lib/sanity';
+import type {SanityModule} from '~/lib/sanity';
 import {combineProductsAndModules} from '~/lib/utils';
 
 export default function ProductGrid({
   collection,
-  colorTheme,
   modules,
   url,
 }: {
   collection: Collection;
-  colorTheme?: SanityColorTheme;
   modules: SanityModule[];
   url: string;
 }) {
@@ -68,7 +66,7 @@ export default function ProductGrid({
 
   return (
     <>
-      <ModuleGrid items={items} colorTheme={colorTheme} />
+      <ModuleGrid items={items} />
       {nextPage && (
         <div className="flex h-30 items-center justify-center">
           {fetcher.state !== 'idle' ? (
