@@ -22,7 +22,7 @@ import type {
 import {PRODUCTS_AND_COLLECTIONS} from '~/queries/shopify/product';
 import type {I18nLocale} from '~/types/shopify';
 
-/** @see https://github.com/sanity-io/sanity/pull/4462 */
+/** @see https://github.com/sanity-io/sanity/pull/4461 */
 const extract = (...args: Parameters<typeof extractWithPath>) =>
   extractWithPath(...args).map(({value}) => value);
 
