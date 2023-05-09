@@ -7,7 +7,7 @@ import HomeHero from '~/components/heroes/Home';
 import ModuleGrid from '~/components/modules/ModuleGrid';
 import {usePreviewComponent, usePreviewContext} from '~/lib/sanity';
 import {SanityHeroHome, SanityHomePage} from '~/lib/sanity';
-import {getStorefrontData, notFound, validateLocale} from '~/lib/utils';
+import {fetchGids, notFound, validateLocale} from '~/lib/utils';
 import {HOME_PAGE_QUERY} from '~/queries/sanity/home';
 
 const seo: SeoHandleFunction = ({data}) => ({
@@ -40,11 +40,11 @@ export async function loader({context, params}: LoaderArgs) {
   }
 
   // Resolve any references to products on the Storefront API
-  const storefrontData = await getStorefrontData({page, context});
+  const gids = await fetchGids({page, context});
 
   return json({
     page,
-    storefrontData,
+    gids,
     analytics: {
       pageType: AnalyticsPageType.home,
     },

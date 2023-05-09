@@ -1,9 +1,9 @@
-import {useMatches} from '@remix-run/react';
 import type {Product} from '@shopify/hydrogen/storefront-api-types';
 
 import ProductCard from '~/components/product/Card';
 import ProductPill from '~/components/product/Pill';
 import type {SanityModuleProduct} from '~/lib/sanity';
+import {useGid} from '~/lib/utils';
 
 type Props = {
   imageAspectClassName?: string;
@@ -16,16 +16,9 @@ export default function ProductModule({
   layout = 'card',
   module,
 }: Props) {
-  const storefrontData =
-    useMatches().find((match) => match.data?.storefrontData)?.data
-      ?.storefrontData || {};
-
   const productGid = module?.productWithVariant.gid;
   const productVariantGid = module?.productWithVariant.variantGid;
-
-  const storefrontProduct = storefrontData.products.find(
-    (product: Product) => product.id === productGid,
-  );
+  const storefrontProduct = useGid<Product>(productGid);
 
   if (!storefrontProduct) {
     return null;

@@ -1,9 +1,9 @@
 import type {PortableTextMarkComponentProps} from '@portabletext/react';
-import {useMatches} from '@remix-run/react';
 import type {Product} from '@shopify/hydrogen/storefront-api-types';
 
 import ProductInlineLink from '~/components/portableText/annotations/ProductInlineLink';
 import type {SanityProductWithVariant} from '~/lib/sanity';
+import {useGid} from '~/lib/utils';
 
 type Props = PortableTextMarkComponentProps & {
   value: PortableTextMarkComponentProps['value'] & {
@@ -16,16 +16,9 @@ type Props = PortableTextMarkComponentProps & {
 const ProductAnnotation = ({children, value}: Props) => {
   const {productWithVariant} = value;
 
-  const storefrontData =
-    useMatches().find((match) => match.data?.storefrontData)?.data
-      ?.storefrontData || {};
-
   const productGid = productWithVariant.gid;
   const productVariantGid = productWithVariant.variantGid;
-
-  const storefrontProduct = storefrontData.products.find(
-    (product: Product) => product.id === productGid,
-  );
+  const storefrontProduct = useGid<Product>(productGid);
 
   if (!storefrontProduct) {
     return <>{children}</>;

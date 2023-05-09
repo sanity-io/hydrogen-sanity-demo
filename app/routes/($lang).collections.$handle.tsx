@@ -10,7 +10,7 @@ import {SORT_OPTIONS} from '~/components/collection/SortOrder';
 import CollectionHero from '~/components/heroes/Collection';
 import {SanityCollectionPage} from '~/lib/sanity';
 import {ColorTheme} from '~/lib/theme';
-import {getStorefrontData, notFound, validateLocale} from '~/lib/utils';
+import {fetchGids, notFound, validateLocale} from '~/lib/utils';
 import {COLLECTION_PAGE_QUERY} from '~/queries/sanity/collection';
 import {COLLECTION_QUERY} from '~/queries/shopify/collection';
 
@@ -79,12 +79,12 @@ export async function loader({params, context, request}: LoaderArgs) {
   }
 
   // Resolve any references to products on the Storefront API
-  const storefrontData = await getStorefrontData({page, context});
+  const gids = await fetchGids({page, context});
 
   return json({
     page,
     collection,
-    storefrontData,
+    gids,
     sortKey,
     analytics: {
       pageType: AnalyticsPageType.collection,

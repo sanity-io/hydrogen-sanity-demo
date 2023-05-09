@@ -8,15 +8,14 @@ import SanityImage from '~/components/media/SanityImage';
 import ProductHotspot from '~/components/product/Hotspot';
 import ProductTag from '~/components/product/Tag';
 import type {SanityModuleImage} from '~/lib/sanity';
+import {useGids} from '~/lib/utils';
 
 type Props = {
   module: SanityModuleImage;
 };
 
 export default function ImageModule({module}: Props) {
-  const storefrontData =
-    useMatches().find((match) => match.data?.storefrontData)?.data
-      ?.storefrontData || {};
+  const gids = useGids();
 
   if (!module.image) {
     return null;
@@ -41,10 +40,10 @@ export default function ImageModule({module}: Props) {
       {/* Product hotspots */}
       {module.variant === 'productHotspots' && (
         <>
-          {module.productHotspots?.map((hotspot, index) => {
-            const storefrontProduct = storefrontData.products.find(
-              (product: Product) => product.id === hotspot?.product?.gid,
-            );
+          {module.productHotspots?.map((hotspot) => {
+            const storefrontProduct = gids.get(
+              hotspot?.product?.gid,
+            ) as Product;
 
             return (
               <ProductHotspot
@@ -61,10 +60,8 @@ export default function ImageModule({module}: Props) {
       {/* Product tags */}
       {module.variant === 'productTags' && (
         <div className="mt-2 flex flex-wrap gap-x-1 gap-y-2">
-          {module.productTags?.map((tag, index) => {
-            const storefrontProduct = storefrontData.products.find(
-              (product: Product) => product.id === tag?.gid,
-            );
+          {module.productTags?.map((tag) => {
+            const storefrontProduct = gids.get(tag?.gid) as Product;
 
             return (
               <ProductTag

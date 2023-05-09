@@ -1,8 +1,13 @@
 import {Money} from '@shopify/hydrogen';
+import type {ProductVariant} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 
 import {Link} from '~/components/Link';
-import {getProductOptionString, hasMultipleProductOptions} from '~/lib/utils';
+import {
+  getProductOptionString,
+  hasMultipleProductOptions,
+  useGid,
+} from '~/lib/utils';
 import {ProductWithNodes} from '~/types/shopify';
 
 type Props = {
@@ -11,14 +16,16 @@ type Props = {
 };
 
 export default function ProductTile({storefrontProduct, variantGid}: Props) {
-  if (!storefrontProduct) {
-    return null;
-  }
-
   const firstVariant =
+    useGid<ProductVariant>(variantGid) ??
     storefrontProduct.variants.nodes.find(
       (variant) => variant.id == variantGid,
-    ) ?? storefrontProduct.variants.nodes[0];
+    ) ??
+    storefrontProduct.variants.nodes[0];
+
+  if (!(storefrontProduct && firstVariant)) {
+    return null;
+  }
 
   const {availableForSale, compareAtPrice, price} = firstVariant;
 

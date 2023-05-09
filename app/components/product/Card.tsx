@@ -1,10 +1,15 @@
 import {Image, Money, type ShopifyAnalyticsProduct} from '@shopify/hydrogen';
+import type {ProductVariant} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 
 import Badge from '~/components/elements/Badge';
 import {Link} from '~/components/Link';
 import AddToCartButton from '~/components/product/buttons/AddToCartButton';
-import {getProductOptionString, hasMultipleProductOptions} from '~/lib/utils';
+import {
+  getProductOptionString,
+  hasMultipleProductOptions,
+  useGid,
+} from '~/lib/utils';
 import type {ProductWithNodes} from '~/types/shopify';
 
 type Props = {
@@ -19,9 +24,11 @@ export default function ProductCard({
   variantGid,
 }: Props) {
   const firstVariant =
+    useGid<ProductVariant>(variantGid) ??
     storefrontProduct.variants.nodes.find(
       (variant) => variant.id == variantGid,
-    ) ?? storefrontProduct.variants.nodes[0];
+    ) ??
+    storefrontProduct.variants.nodes[0];
 
   if (firstVariant == null) {
     return null;

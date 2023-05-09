@@ -1,4 +1,3 @@
-import {useMatches} from '@remix-run/react';
 import {Image} from '@shopify/hydrogen';
 import type {
   Product,
@@ -6,6 +5,7 @@ import type {
 } from '@shopify/hydrogen/storefront-api-types';
 
 import ProductTile from '~/components/product/Tile';
+import {useGid} from '~/lib/utils';
 
 type Props = {
   gid: string;
@@ -13,22 +13,17 @@ type Props = {
 };
 
 export default function ProductHero({gid, variantGid}: Props) {
-  const storefrontData =
-    useMatches().find((match) => match.data?.storefrontData)?.data
-      ?.storefrontData || {};
+  const storefrontProduct = useGid<Product>(gid);
+  const firstVariant =
+    useGid<ProductVariant>(variantGid) ??
+    storefrontProduct?.variants.nodes.find(
+      (variant) => variant.id == variantGid,
+    ) ??
+    storefrontProduct?.variants.nodes[0];
 
-  const storefrontProduct = storefrontData.products.find(
-    (product: Product) => product.id === gid,
-  );
-
-  if (!storefrontProduct) {
+  if (!(storefrontProduct && firstVariant)) {
     return null;
   }
-
-  const firstVariant =
-    storefrontProduct.variants.nodes.find(
-      (variant: ProductVariant) => variant.id == variantGid,
-    ) ?? storefrontProduct.variants.nodes[0];
 
   return (
     <>

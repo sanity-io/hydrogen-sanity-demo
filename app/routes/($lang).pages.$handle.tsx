@@ -8,7 +8,7 @@ import PageHero from '~/components/heroes/Page';
 import PortableText from '~/components/portableText/PortableText';
 import {SanityPage} from '~/lib/sanity';
 import {ColorTheme} from '~/lib/theme';
-import {getStorefrontData, notFound, validateLocale} from '~/lib/utils';
+import {fetchGids, notFound, validateLocale} from '~/lib/utils';
 import {PAGE_QUERY} from '~/queries/sanity/page';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
@@ -41,14 +41,14 @@ export async function loader({params, context}: LoaderArgs) {
     cache,
   });
 
-  // Resolve any references to products on the Storefront API
-  const storefrontData = await getStorefrontData({page, context});
-
   if (!page) {
     throw notFound();
   }
 
-  return json({page, storefrontData});
+  // Resolve any references to products on the Storefront API
+  const gids = await fetchGids({page, context});
+
+  return json({page, gids});
 }
 
 export default function Page() {

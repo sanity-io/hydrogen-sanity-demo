@@ -1,4 +1,3 @@
-import {useMatches} from '@remix-run/react';
 import {Image} from '@shopify/hydrogen';
 import type {Collection} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
@@ -6,6 +5,7 @@ import clsx from 'clsx';
 import Button from '~/components/elements/Button';
 import {Link} from '~/components/Link';
 import type {SanityModuleCollection} from '~/lib/sanity';
+import {useGid} from '~/lib/utils';
 
 type Props = {
   module?: SanityModuleCollection;
@@ -13,16 +13,8 @@ type Props = {
 
 export default function CollectionModule({module}: Props) {
   const collection = module?.collection;
-
-  const storefrontData =
-    useMatches().find((match) => match.data?.storefrontData)?.data
-      ?.storefrontData || {};
-
   const collectionGid = collection?.gid;
-
-  const storefrontCollection = storefrontData.collections.find(
-    (collection: Collection) => collection.id === collectionGid,
-  );
+  const storefrontCollection = useGid<Collection>(collectionGid);
 
   if (!collection || !collection?.slug || !storefrontCollection) {
     return null;
