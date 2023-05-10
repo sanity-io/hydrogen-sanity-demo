@@ -43,11 +43,13 @@ export function createSanityClient(options: CreateSanityClientOptions): Sanity {
 
   const sanity: Sanity = {
     client: createClient(config),
-    query: ({query, params, cache = CacheLong()}) => {
-      // Prefix the cache key and make it unique based on arguments.
-      return withCache(['sanity', query, params], cache, () => {
-        return sanity.client.fetch(query, params);
-      });
+    async query({query, params, cache = CacheLong()}) {
+      // Hash query and make it unique based on parameters
+      const queryHash = await hashQuery(query, params);
+
+      return withCache(queryHash, cache, () =>
+        sanity.client.fetch(query, params),
+      );
     },
   };
 
@@ -81,4 +83,37 @@ export function isPreviewModeEnabled(
 ): preview is {session: PreviewSession} & PreviewData {
   // @ts-expect-error
   return preview?.token != null;
+}
+
+/**
+ * Create an SHA-256 hash as a hex string
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest#converting_a_digest_to_a_hex_string
+ */
+export async function sha256(message: string) {
+  // encode as UTF-8
+  const messageBuffer = await new TextEncoder().encode(message);
+  // hash the message
+  const hashBuffer = await crypto.subtle.digest('SHA-256', messageBuffer);
+  // convert bytes to hex string
+  return Array.from(new Uint8Array(hashBuffer))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
+/**
+ * Hash query and its parameters for use as cache key
+ * NOTE: Oxygen deployment will break if the cache key is long or contains `\n`
+ * @todo performance improvement?
+ */
+function hashQuery(
+  query: useSanityQuery['query'],
+  params: useSanityQuery['params'],
+): Promise<string> {
+  let hash = query;
+
+  if (params != null) {
+    hash += JSON.stringify(params);
+  }
+
+  return sha256(hash);
 }
