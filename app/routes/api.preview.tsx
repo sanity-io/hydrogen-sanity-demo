@@ -5,6 +5,7 @@ import {
   redirect,
 } from '@shopify/remix-oxygen';
 
+import {isLocalPath} from '~/lib/utils';
 import {notFound} from '~/lib/utils';
 
 const ROOT_PATH = '/' as const;
@@ -19,10 +20,10 @@ export const action: ActionFunction = async ({request, context}) => {
   }
 
   const body = await request.formData();
-  let slug = (body.get('slug') as string) ?? ROOT_PATH;
-  slug = slug.startsWith(ROOT_PATH) ? slug : ROOT_PATH;
+  const slug = (body.get('slug') as string) ?? ROOT_PATH;
+  const redirectTo = isLocalPath(request, slug) ? slug : ROOT_PATH;
 
-  return redirect(slug, {
+  return redirect(redirectTo, {
     headers: {
       'Set-Cookie': await preview.session.destroy(),
     },
@@ -36,6 +37,7 @@ export const action: ActionFunction = async ({request, context}) => {
  * A `GET` request to this route will enter preview mode
  */
 export const loader: LoaderFunction = async function ({request, context}) {
+  // const location = useLocation();
   const {env, sanity} = context;
   if (!sanity.preview?.session) {
     return notFound();
@@ -51,12 +53,12 @@ export const loader: LoaderFunction = async function ({request, context}) {
     throw new InvalidSecretError();
   }
 
-  let slug = searchParams.get('slug') ?? ROOT_PATH;
-  slug = slug.startsWith(ROOT_PATH) ? slug : ROOT_PATH;
+  const slug = searchParams.get('slug') ?? ROOT_PATH;
+  const redirectTo = isLocalPath(request, slug) ? slug : ROOT_PATH;
 
   sanity.preview.session.set('projectId', env.SANITY_PROJECT_ID);
 
-  return redirect(slug, {
+  return redirect(redirectTo, {
     status: 307,
     headers: {
       'Set-Cookie': await sanity.preview.session.commit(),

@@ -266,21 +266,15 @@ export const badRequest = <T>(data: T) =>
   json(data, {status: 400, statusText: 'Bad Request'});
 
 /**
- * Validates that a url is local
- * @param url
- * @returns `true` if local `false`if external domain
+ * Validates that a url is local to the current request.
  */
-export function isLocalPath(url: string) {
-  try {
-    // We don't want to redirect cross domain,
-    // doing so could create fishing vulnerability
-    // If `new URL()` succeeds, it's a fully qualified
-    // url which is cross domain. If it fails, it's just
-    // a path, which will be the current domain.
-    new URL(url);
-  } catch (e) {
-    return true;
-  }
+export function isLocalPath(request: Request, url: string) {
+  // Our domain, based on the current request path
+  const currentUrl = new URL(request.url);
 
-  return false;
+  // If url is relative, the 2nd argument will act as the base domain.
+  const urlToCheck = new URL(url, currentUrl.origin);
+
+  // If the origins don't match the slug is not on our domain.
+  return currentUrl.origin === urlToCheck.origin;
 }
