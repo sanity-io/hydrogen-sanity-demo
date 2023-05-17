@@ -1,7 +1,7 @@
 import {useFetcher, useLocation} from '@remix-run/react';
 import clsx from 'clsx';
 
-export default function Preview() {
+export default function PreviewExit() {
   const url = useLocation();
   const fetcher = useFetcher();
 
