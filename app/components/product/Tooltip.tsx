@@ -1,5 +1,4 @@
 import {Image, Money, type ShopifyAnalyticsProduct} from '@shopify/hydrogen';
-import type {Image as ImageType} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 
 import Badge from '~/components/elements/Badge';
@@ -60,14 +59,15 @@ export default function ProductTooltip({
           {selectedVariant.image && (
             <Image
               className="absolute h-full w-full transform bg-cover bg-center object-cover object-center ease-in-out"
-              data={selectedVariant.image as ImageType}
+              data={selectedVariant.image}
+              aspectRatio="1/1"
             />
           )}
           {/* Badges */}
           <div className="absolute left-4 top-4">
             {/* Sale */}
             {selectedVariant?.availableForSale &&
-              selectedVariant?.compareAtPriceV2 && (
+              selectedVariant?.compareAtPrice && (
                 <Badge label="Sale" tone="critical" />
               )}
             {/* Sold out */}

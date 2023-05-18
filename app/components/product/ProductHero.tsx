@@ -31,6 +31,7 @@ export default function ProductHero({gid, variantGid}: Props) {
         <Image
           className="absolute h-full w-full transform bg-cover bg-center object-cover object-center"
           data={firstVariant.image}
+          sizes="100vw"
         />
       )}
 

@@ -113,7 +113,9 @@ export default function ProductGallery({
                 draggable={false}
                 key={med.id}
                 tabIndex={0}
-                mediaOptions={{image: {loaderOptions: {crop: 'center'}}}}
+                mediaOptions={{
+                  image: {crop: 'center', sizes: '100vw', loading: 'eager'},
+                }}
                 {...extraProps}
               />
             );

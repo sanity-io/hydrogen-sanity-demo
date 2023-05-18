@@ -33,9 +33,8 @@ export function OrderCard({order}: Props) {
             className="fadeIn cover w-full"
             data={lineItems[0].variant?.image}
             height={168}
-            loaderOptions={{scale: 2, crop: 'center'}}
+            crop="center"
             width={168}
-            widths={[168]}
           />
         </div>
       )}
