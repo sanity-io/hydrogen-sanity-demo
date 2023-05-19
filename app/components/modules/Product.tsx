@@ -16,8 +16,8 @@ export default function ProductModule({
   layout = 'card',
   module,
 }: Props) {
-  const productGid = module?.productWithVariant.gid;
-  const productVariantGid = module?.productWithVariant.variantGid;
+  const productGid = module?.productWithVariant?.gid;
+  const productVariantGid = module?.productWithVariant?.variantGid;
   const storefrontProduct = useGid<Product>(productGid);
 
   if (!storefrontProduct) {

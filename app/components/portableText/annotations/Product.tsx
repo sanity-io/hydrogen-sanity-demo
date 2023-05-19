@@ -16,11 +16,11 @@ type Props = PortableTextMarkComponentProps & {
 const ProductAnnotation = ({children, value}: Props) => {
   const {productWithVariant} = value;
 
-  const productGid = productWithVariant.gid;
-  const productVariantGid = productWithVariant.variantGid;
+  const productGid = productWithVariant?.gid;
+  const productVariantGid = productWithVariant?.variantGid;
   const storefrontProduct = useGid<Product>(productGid);
 
-  if (!storefrontProduct) {
+  if (!productGid || !storefrontProduct) {
     return <>{children}</>;
   }
 

@@ -12,6 +12,10 @@ type Props = {
 };
 
 export default function ProductTag({storefrontProduct, variantGid}: Props) {
+  if (!storefrontProduct) {
+    return null;
+  }
+
   const {handle, title} = storefrontProduct;
 
   return (

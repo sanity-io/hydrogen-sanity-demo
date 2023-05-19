@@ -10,7 +10,7 @@ type Props = PortableTextMarkComponentProps & {
 
 const LinkExternalAnnotation = ({children, value}: Props) => {
   if (!value?.url) {
-    return null;
+    return <>{children}</>;
   }
 
   return (

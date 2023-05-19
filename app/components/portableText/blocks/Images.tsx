@@ -10,6 +10,10 @@ type Props = {
 };
 
 export default function ImagesBlock({centered, value}: Props) {
+  if (!Array.isArray(value.modules)) {
+    return null;
+  }
+
   const multipleImages = value.modules.length > 1;
   let alignClass;
   switch (value.verticalAlign) {

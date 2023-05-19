@@ -17,6 +17,10 @@ export default function LinkButton({
   link,
   textColor,
 }: Props) {
+  if (!link.title) {
+    return null;
+  }
+
   return (
     <Link
       className={clsx(defaultButtonStyles(), className)}
