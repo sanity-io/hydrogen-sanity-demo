@@ -15,7 +15,8 @@ const ROOT_PATH = '/' as const;
  */
 export const action: ActionFunction = async ({request, context}) => {
   const {preview} = context.sanity;
-  if (request.method !== 'POST' || !preview?.session) {
+
+  if (!(request.method === 'POST' && preview?.session)) {
     return json({message: 'Method not allowed'}, 405);
   }
 
@@ -37,8 +38,8 @@ export const action: ActionFunction = async ({request, context}) => {
  * A `GET` request to this route will enter preview mode
  */
 export const loader: LoaderFunction = async function ({request, context}) {
-  // const location = useLocation();
   const {env, sanity} = context;
+
   if (!sanity.preview?.session) {
     return notFound();
   }

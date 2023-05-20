@@ -1,6 +1,6 @@
 import Footer from '~/components/global/Footer';
 import Header from '~/components/global/Header';
-import PreviewCallout from '~/components/global/PreviewCallout';
+import {PreviewBanner} from '~/components/preview/PreviewBanner';
 import {usePreviewContext} from '~/lib/sanity';
 
 type LayoutProps = {
@@ -13,7 +13,6 @@ export function Layout({backgroundColor, children}: LayoutProps) {
 
   return (
     <>
-      {isPreview && <PreviewCallout />}
       <div className="absolute left-0 top-0">
         <a
           href="#mainContent"
@@ -35,6 +34,8 @@ export function Layout({backgroundColor, children}: LayoutProps) {
       </div>
 
       <Footer />
+
+      {isPreview ? <PreviewBanner /> : <></>}
     </>
   );
 }
