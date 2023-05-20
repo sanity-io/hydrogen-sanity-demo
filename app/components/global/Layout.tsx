@@ -1,5 +1,7 @@
 import Footer from '~/components/global/Footer';
 import Header from '~/components/global/Header';
+import {PreviewBanner} from '~/components/preview/PreviewBanner';
+import {usePreviewContext} from '~/lib/sanity';
 
 type LayoutProps = {
   backgroundColor?: string;
@@ -7,6 +9,8 @@ type LayoutProps = {
 };
 
 export function Layout({backgroundColor, children}: LayoutProps) {
+  const isPreview = Boolean(usePreviewContext());
+
   return (
     <>
       <div className="absolute left-0 top-0">
@@ -30,6 +34,8 @@ export function Layout({backgroundColor, children}: LayoutProps) {
       </div>
 
       <Footer />
+
+      {isPreview ? <PreviewBanner /> : <></>}
     </>
   );
 }

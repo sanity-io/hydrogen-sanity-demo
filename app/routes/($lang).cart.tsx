@@ -153,7 +153,7 @@ export async function action({request, context}: ActionArgs) {
   headers.set('Set-Cookie', await session.commit());
 
   const redirectTo = formData.get('redirectTo') ?? null;
-  if (typeof redirectTo === 'string' && isLocalPath(redirectTo)) {
+  if (typeof redirectTo === 'string' && isLocalPath(request, redirectTo)) {
     status = 303;
     headers.set('Location', redirectTo);
   }
