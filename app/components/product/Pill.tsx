@@ -67,7 +67,8 @@ export default function ProductPill({
                   !availableForSale && 'opacity-50',
                 )}
                 data={image}
-                loaderOptions={{height: 200, crop: 'center'}}
+                crop="center"
+                width="110px"
               />
             )}
 

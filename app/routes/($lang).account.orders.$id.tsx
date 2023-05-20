@@ -149,16 +149,11 @@ export default function OrderRoute() {
                             {lineItem?.variant?.image && (
                               <div className="aspect-square w-20 overflow-hidden rounded-sm">
                                 <Image
-                                  data={{
-                                    url: lineItem.variant.image.src!,
-                                  }}
+                                  data={lineItem.variant.image!}
                                   width={lineItem.variant.image.width!}
                                   height={lineItem.variant.image.height!}
                                   alt={lineItem.variant.image.altText!}
-                                  loaderOptions={{
-                                    scale: 2,
-                                    crop: 'center',
-                                  }}
+                                  crop="center"
                                 />
                               </div>
                             )}
@@ -245,7 +240,7 @@ export default function OrderRoute() {
                       <p>Subtotal</p>
                     </th>
                     <td className="pl-3 pr-4 pt-6 text-right md:pr-3">
-                      <Money data={order.subtotalPriceV2!} />
+                      <Money data={order.subtotalPrice!} />
                     </td>
                   </tr>
                   <tr>
@@ -263,7 +258,7 @@ export default function OrderRoute() {
                       <p>Tax</p>
                     </th>
                     <td className="pl-3 pr-4 pt-4 text-right md:pr-3">
-                      <Money data={order.totalTaxV2!} />
+                      <Money data={order.totalTax!} />
                     </td>
                   </tr>
                   <tr>
@@ -281,7 +276,7 @@ export default function OrderRoute() {
                       <p>Total</p>
                     </th>
                     <td className="pl-3 pr-4 pt-4 text-right font-bold md:pr-3">
-                      <Money data={order.totalPriceV2!} />
+                      <Money data={order.totalPrice!} />
                     </td>
                   </tr>
                 </tfoot>
@@ -371,7 +366,7 @@ const CUSTOMER_ORDER_QUERY = `#graphql
   fragment Image on Image {
     altText
     height
-    src: url(transform: {crop: CENTER, maxHeight: 96, maxWidth: 96, scale: 2})
+    url: url(transform: {crop: CENTER, maxHeight: 96, maxWidth: 96, scale: 2})
     id
     width
   }
@@ -423,13 +418,13 @@ const CUSTOMER_ORDER_QUERY = `#graphql
         orderNumber
         processedAt
         fulfillmentStatus
-        totalTaxV2 {
+        totalTax {
           ...Money
         }
-        totalPriceV2 {
+        totalPrice {
           ...Money
         }
-        subtotalPriceV2 {
+        subtotalPrice {
           ...Money
         }
         shippingAddress {
