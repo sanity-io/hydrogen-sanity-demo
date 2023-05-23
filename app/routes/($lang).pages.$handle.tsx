@@ -6,7 +6,7 @@ import invariant from 'tiny-invariant';
 
 import PageHero from '~/components/heroes/Page';
 import PortableText from '~/components/portableText/PortableText';
-import {SanityPage} from '~/lib/sanity';
+import type {SanityPage} from '~/lib/sanity';
 import {ColorTheme} from '~/lib/theme';
 import {fetchGids, notFound, validateLocale} from '~/lib/utils';
 import {PAGE_QUERY} from '~/queries/sanity/page';

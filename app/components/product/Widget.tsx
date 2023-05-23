@@ -4,7 +4,6 @@ import clsx from 'clsx';
 
 import ProductForm from '~/components/product/Form';
 import type {SanityProductPage} from '~/lib/sanity';
-import {hasMultipleProductOptions} from '~/lib/utils';
 
 type Props = {
   sanityProduct: SanityProductPage;

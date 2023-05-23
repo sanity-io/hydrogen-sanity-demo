@@ -8,7 +8,7 @@ import ProductGrid from '~/components/collection/ProductGrid';
 import SortOrder from '~/components/collection/SortOrder';
 import {SORT_OPTIONS} from '~/components/collection/SortOrder';
 import CollectionHero from '~/components/heroes/Collection';
-import {SanityCollectionPage} from '~/lib/sanity';
+import type {SanityCollectionPage} from '~/lib/sanity';
 import {ColorTheme} from '~/lib/theme';
 import {fetchGids, notFound, validateLocale} from '~/lib/utils';
 import {COLLECTION_PAGE_QUERY} from '~/queries/sanity/collection';

@@ -25,6 +25,7 @@ import {
   type LinksFunction,
   type LoaderArgs,
 } from '@shopify/remix-oxygen';
+import {isPreviewModeEnabled, Preview, type PreviewData} from 'hydrogen-sanity';
 
 import {GenericError} from '~/components/global/GenericError';
 import {Layout} from '~/components/global/Layout';
@@ -32,7 +33,6 @@ import {NotFound} from '~/components/global/NotFound';
 import {PreviewLoading} from '~/components/global/PreviewLoading';
 import {useAnalytics} from '~/hooks/useAnalytics';
 import {useNonce} from '~/lib/nonce';
-import {isPreviewModeEnabled, Preview, PreviewData} from '~/lib/sanity';
 import {DEFAULT_LOCALE} from '~/lib/utils';
 import {LAYOUT_QUERY} from '~/queries/sanity/layout';
 import {CART_QUERY} from '~/queries/shopify/cart';

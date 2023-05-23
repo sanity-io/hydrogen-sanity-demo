@@ -12,10 +12,10 @@ import pluralize from 'pluralize-esm';
 import {useMemo} from 'react';
 
 import {countries} from '~/data/countries';
-import type {SanityModule} from '~/lib/sanity';
 import type {
   SanityCollectionPage,
   SanityHomePage,
+  SanityModule,
   SanityPage,
   SanityProductPage,
 } from '~/lib/sanity';

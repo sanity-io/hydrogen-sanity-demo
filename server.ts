@@ -8,8 +8,8 @@ import {
   type Session,
   type SessionStorage,
 } from '@shopify/remix-oxygen';
+import {createSanityClient, PreviewSession} from 'hydrogen-sanity';
 
-import {createSanityClient, PreviewSession} from '~/lib/sanity';
 import {getLocaleFromRequest} from '~/lib/utils';
 
 /**

@@ -4,7 +4,7 @@
 
 import type {Storefront} from '~/types/shopify';
 import type {HydrogenSession} from '../server';
-import type {PreviewSession, Sanity} from '~/lib/sanity';
+import type {PreviewSession, Sanity} from 'hydrogen-sanity';
 import type {Cache} from '@shopify/hydrogen';
 
 declare global {
