@@ -5,7 +5,7 @@ import {LINKS} from './fragments/links';
 import {PORTABLE_TEXT} from './fragments/portableText/portableText';
 
 export const LAYOUT_QUERY = groq`
-  *[_type == 'settings'][0] {
+  *[_type == 'settings'] | order(_updatedAt desc) [0] {
     seo,
     "menuLinks": menu.links[] {
       ${LINKS}
