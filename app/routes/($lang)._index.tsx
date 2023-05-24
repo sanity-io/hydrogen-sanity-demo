@@ -2,11 +2,11 @@ import {useLoaderData} from '@remix-run/react';
 import {AnalyticsPageType, type SeoHandleFunction} from '@shopify/hydrogen';
 import {json, type LoaderArgs} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
+import {usePreviewComponent, usePreviewContext} from 'hydrogen-sanity';
 
 import HomeHero from '~/components/heroes/Home';
 import ModuleGrid from '~/components/modules/ModuleGrid';
-import {usePreviewComponent, usePreviewContext} from '~/lib/sanity';
-import {SanityHeroHome, SanityHomePage} from '~/lib/sanity';
+import type {SanityHeroHome, SanityHomePage} from '~/lib/sanity';
 import {fetchGids, notFound, validateLocale} from '~/lib/utils';
 import {HOME_PAGE_QUERY} from '~/queries/sanity/home';
 
