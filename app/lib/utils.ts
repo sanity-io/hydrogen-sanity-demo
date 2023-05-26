@@ -1,4 +1,4 @@
-import {useMatches} from '@remix-run/react';
+import {useAsyncValue, useMatches} from '@remix-run/react';
 import {extractWithPath} from '@sanity/mutator';
 import type {
   Collection,
@@ -223,31 +223,29 @@ export function useGid<
 }
 
 export function useGids() {
-  const matches = useMatches();
+  const gids = useAsyncValue();
 
   // TODO: this doesnt' seem to actually memoize...
   return useMemo(() => {
-    const gids = new Map<
+    const byGid = new Map<
       string,
       Product | Collection | ProductVariant | ProductVariant['image']
     >();
 
-    for (const match of matches) {
-      if (!match.data?.gids?.length) {
+    if (!Array.isArray(gids)) {
+      return byGid;
+    }
+
+    for (const gid of gids) {
+      if (byGid.has(gid.id)) {
         continue;
       }
 
-      for (const gid of match.data.gids) {
-        if (gids.has(gid.id)) {
-          continue;
-        }
-
-        gids.set(gid.id, gid);
-      }
+      byGid.set(gid.id, gid);
     }
 
-    return gids;
-  }, [matches]);
+    return byGid;
+  }, [gids]);
 }
 
 /**

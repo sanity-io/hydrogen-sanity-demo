@@ -1,7 +1,8 @@
-import {useLoaderData, useSearchParams} from '@remix-run/react';
+import {Await, useLoaderData, useSearchParams} from '@remix-run/react';
 import {AnalyticsPageType, type SeoHandleFunction} from '@shopify/hydrogen';
-import {json, type LoaderArgs} from '@shopify/remix-oxygen';
+import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
+import {Suspense} from 'react';
 import invariant from 'tiny-invariant';
 
 import ProductGrid from '~/components/collection/ProductGrid';
@@ -79,9 +80,9 @@ export async function loader({params, context, request}: LoaderArgs) {
   }
 
   // Resolve any references to products on the Storefront API
-  const gids = await fetchGids({page, context});
+  const gids = fetchGids({page, context});
 
-  return json({
+  return defer({
     page,
     collection,
     gids,
@@ -95,7 +96,7 @@ export async function loader({params, context, request}: LoaderArgs) {
 }
 
 export default function Collection() {
-  const {collection, page} = useLoaderData();
+  const {collection, page, gids} = useLoaderData<typeof loader>();
   const [params] = useSearchParams();
   const sort = params.get('sort');
 
@@ -103,40 +104,44 @@ export default function Collection() {
 
   return (
     <ColorTheme value={page.colorTheme}>
-      {/* Hero */}
-      <CollectionHero fallbackTitle={page.title} hero={page.hero} />
+      <Suspense>
+        <Await resolve={gids}>
+          {/* Hero */}
+          <CollectionHero fallbackTitle={page.title} hero={page.hero} />
 
-      <div
-        className={clsx(
-          'mb-32 mt-8 px-4', //
-          'md:px-8',
-        )}
-      >
-        {products.length > 0 && (
           <div
             className={clsx(
-              'mb-8 flex justify-start', //
-              'md:justify-end',
+              'mb-32 mt-8 px-4', //
+              'md:px-8',
             )}
           >
-            <SortOrder key={page._id} initialSortOrder={page.sortOrder} />
-          </div>
-        )}
+            {products.length > 0 && (
+              <div
+                className={clsx(
+                  'mb-8 flex justify-start', //
+                  'md:justify-end',
+                )}
+              >
+                <SortOrder key={page._id} initialSortOrder={page.sortOrder} />
+              </div>
+            )}
 
-        {/* No results */}
-        {products.length === 0 && (
-          <div className="mt-16 text-center text-lg text-darkGray">
-            No products.
-          </div>
-        )}
+            {/* No results */}
+            {products.length === 0 && (
+              <div className="mt-16 text-center text-lg text-darkGray">
+                No products.
+              </div>
+            )}
 
-        <ProductGrid
-          collection={collection}
-          modules={page.modules}
-          url={`/collections/${collection.handle}`}
-          key={`${collection.handle}-${sort}`}
-        />
-      </div>
+            <ProductGrid
+              collection={collection}
+              modules={page.modules}
+              url={`/collections/${collection.handle}`}
+              key={`${collection.handle}-${sort}`}
+            />
+          </div>
+        </Await>
+      </Suspense>
     </ColorTheme>
   );
 }

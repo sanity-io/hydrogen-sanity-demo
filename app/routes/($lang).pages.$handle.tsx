@@ -1,7 +1,8 @@
-import {useLoaderData} from '@remix-run/react';
+import {Await, useLoaderData} from '@remix-run/react';
 import type {SeoHandleFunction} from '@shopify/hydrogen';
-import {json, type LoaderArgs} from '@shopify/remix-oxygen';
+import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
+import {Suspense} from 'react';
 import invariant from 'tiny-invariant';
 
 import PageHero from '~/components/heroes/Page';
@@ -46,29 +47,33 @@ export async function loader({params, context}: LoaderArgs) {
   }
 
   // Resolve any references to products on the Storefront API
-  const gids = await fetchGids({page, context});
+  const gids = fetchGids({page, context});
 
-  return json({page, gids});
+  return defer({page, gids});
 }
 
 export default function Page() {
-  const {page} = useLoaderData<typeof loader>();
+  const {page, gids} = useLoaderData<typeof loader>();
 
   return (
     <ColorTheme value={page.colorTheme}>
-      {/* Page hero */}
-      <PageHero fallbackTitle={page.title} hero={page.hero} />
-      {/* Body */}
-      {page.body && (
-        <PortableText
-          blocks={page.body}
-          centered
-          className={clsx(
-            'mx-auto max-w-[660px] px-4 pb-24 pt-8', //
-            'md:px-8',
+      <Suspense>
+        <Await resolve={gids}>
+          {/* Page hero */}
+          <PageHero fallbackTitle={page.title} hero={page.hero} />
+          {/* Body */}
+          {page.body && (
+            <PortableText
+              blocks={page.body}
+              centered
+              className={clsx(
+                'mx-auto max-w-[660px] px-4 pb-24 pt-8', //
+                'md:px-8',
+              )}
+            />
           )}
-        />
-      )}
+        </Await>
+      </Suspense>
     </ColorTheme>
   );
 }

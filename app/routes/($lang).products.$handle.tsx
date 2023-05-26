@@ -102,7 +102,7 @@ export async function loader({params, context, request}: LoaderArgs) {
   }
 
   // Resolve any references to products on the Storefront API
-  const gids = await fetchGids({page, context});
+  const gids = fetchGids({page, context});
 
   // Get recommended products from Shopify
   const recommended = context.storefront.query<{
@@ -141,7 +141,7 @@ export async function loader({params, context, request}: LoaderArgs) {
 }
 
 export default function ProductHandle() {
-  const {page, product, selectedVariant, analytics, recommended} =
+  const {page, product, selectedVariant, analytics, recommended, gids} =
     useLoaderData();
 
   return (
@@ -162,13 +162,17 @@ export default function ProductHandle() {
         >
           {/* Body */}
           {page?.body && (
-            <PortableText
-              blocks={page.body}
-              className={clsx(
-                'max-w-[660px] px-4 pb-24 pt-8', //
-                'md:px-8',
-              )}
-            />
+            <Suspense>
+              <Await resolve={gids}>
+                <PortableText
+                  blocks={page.body}
+                  className={clsx(
+                    'max-w-[660px] px-4 pb-24 pt-8', //
+                    'md:px-8',
+                  )}
+                />
+              </Await>
+            </Suspense>
           )}
         </div>
       </div>
