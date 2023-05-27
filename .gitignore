@@ -31,6 +31,8 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+.yalc
+yalc.lock
 
 # TypeScript cache
 *.tsbuildinfo

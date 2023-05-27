@@ -32,7 +32,7 @@
     "embla-carousel-react": "^7.1.0",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
-    "hydrogen-sanity": "^1.0.1",
+    "hydrogen-sanity": "^1.1.0",
     "isbot": "^3.6.8",
     "lodash.filter": "^4.6.0",
     "pluralize-esm": "^9.0.5",

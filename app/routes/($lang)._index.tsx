@@ -2,11 +2,11 @@ import {useLoaderData} from '@remix-run/react';
 import {AnalyticsPageType, type SeoHandleFunction} from '@shopify/hydrogen';
 import {json, type LoaderArgs} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
-import {usePreviewComponent, usePreviewContext} from 'hydrogen-sanity';
+import {SanityPreview} from 'hydrogen-sanity';
 
 import HomeHero from '~/components/heroes/Home';
 import ModuleGrid from '~/components/modules/ModuleGrid';
-import type {SanityHeroHome, SanityHomePage} from '~/lib/sanity';
+import type {SanityHomePage} from '~/lib/sanity';
 import {fetchGids, notFound, validateLocale} from '~/lib/utils';
 import {HOME_PAGE_QUERY} from '~/queries/sanity/home';
 
@@ -53,29 +53,21 @@ export async function loader({context, params}: LoaderArgs) {
 
 export default function Index() {
   const {page} = useLoaderData<typeof loader>();
-  const Component = usePreviewComponent<{page: SanityHomePage}>(Route, Preview);
 
-  return <Component page={page} />;
-}
-
-function Route({page}: {page: SanityHomePage}) {
   return (
-    <>
-      {/* Page hero */}
-      {page?.hero && <HomeHero hero={page.hero as SanityHeroHome} />}
+    <SanityPreview data={page} query={HOME_PAGE_QUERY}>
+      {(page) => (
+        <>
+          {/* Page hero */}
+          {page?.hero && <HomeHero hero={page.hero} />}
 
-      {page?.modules && (
-        <div className={clsx('mb-32 mt-24 px-4', 'md:px-8')}>
-          <ModuleGrid items={page.modules} />
-        </div>
+          {page?.modules && (
+            <div className={clsx('mb-32 mt-24 px-4', 'md:px-8')}>
+              <ModuleGrid items={page.modules} />
+            </div>
+          )}
+        </>
       )}
-    </>
+    </SanityPreview>
   );
-}
-
-function Preview(props: {page: SanityHomePage}) {
-  const {usePreview} = usePreviewContext()!;
-  const page = usePreview(HOME_PAGE_QUERY, undefined, props.page);
-
-  return <Route page={page} />;
 }
