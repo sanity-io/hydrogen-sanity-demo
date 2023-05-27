@@ -1,4 +1,4 @@
-import {useAsyncValue, useMatches} from '@remix-run/react';
+import {useAsyncValue, useMatches, useRevalidator} from '@remix-run/react';
 import {extractWithPath} from '@sanity/mutator';
 import type {
   Collection,
@@ -8,8 +8,9 @@ import type {
 } from '@shopify/hydrogen/storefront-api-types';
 import type {AppLoadContext} from '@shopify/remix-oxygen';
 import {json, type LoaderArgs} from '@shopify/remix-oxygen';
+import {usePreviewContext} from 'hydrogen-sanity';
 import pluralize from 'pluralize-esm';
-import {useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
 
 import {countries} from '~/data/countries';
 import type {
@@ -212,14 +213,22 @@ export async function fetchGids({
 // TODO: better typing?
 export function useGid<
   T extends Product | Collection | ProductVariant | ProductVariant['image'],
->(gid?: string | null): T | null | undefined {
+>(id?: string | null): T | null | undefined {
   const gids = useGids();
+  const revalidator = useRevalidator();
+  const isPreview = Boolean(usePreviewContext());
+  const gid = gids.get(id as string) as T | null;
 
-  if (!gid) {
-    return null;
-  }
+  // In preview mode, if a product or collection is added
+  // then the loader has to be revalidated to fetch from
+  // the Storefront API
+  useEffect(() => {
+    if (isPreview && revalidator.state === 'idle' && !gid) {
+      revalidator.revalidate();
+    }
+  }, [gid, isPreview, revalidator]);
 
-  return gids.get(gid) as T;
+  return gid;
 }
 
 export function useGids() {
