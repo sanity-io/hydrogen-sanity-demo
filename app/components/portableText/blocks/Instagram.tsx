@@ -8,6 +8,10 @@ type Props = {
 };
 
 export default function InstagramBlock({value}: Props) {
+  if (!value) {
+    return null;
+  }
+
   return (
     <div
       className={clsx(

@@ -13,6 +13,10 @@ export default function InstagramModule({
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
+  if (!module.url) {
+    return null;
+  }
+
   return (
     <div className="mx-auto min-h-full max-w-[400px] overflow-hidden">
       {mounted && <InstagramEmbed url={module.url} />}

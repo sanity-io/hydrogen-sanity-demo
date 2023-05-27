@@ -11,6 +11,9 @@
     @apply text-offBlack;
     @apply text-md;
   }
+  body {
+    @apply bg-white;
+  }
 }
 
 @layer components {

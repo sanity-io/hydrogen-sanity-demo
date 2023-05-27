@@ -9,6 +9,10 @@ type Props = {
 };
 
 export default function ProductsBlock({value}: Props) {
+  if (!Array.isArray(value?.modules)) {
+    return null;
+  }
+
   const multipleProducts = value.modules.length > 1;
 
   return (
