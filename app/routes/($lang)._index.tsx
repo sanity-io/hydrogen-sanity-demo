@@ -1,6 +1,6 @@
-import {useLoaderData} from '@remix-run/react';
+import {Await, useLoaderData} from '@remix-run/react';
 import {AnalyticsPageType, type SeoHandleFunction} from '@shopify/hydrogen';
-import {json, type LoaderArgs} from '@shopify/remix-oxygen';
+import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 import {SanityPreview} from 'hydrogen-sanity';
 
@@ -40,9 +40,9 @@ export async function loader({context, params}: LoaderArgs) {
   }
 
   // Resolve any references to products on the Storefront API
-  const gids = await fetchGids({page, context});
+  const gids = fetchGids({page, context});
 
-  return json({
+  return defer({
     page,
     gids,
     analytics: {
@@ -52,12 +52,12 @@ export async function loader({context, params}: LoaderArgs) {
 }
 
 export default function Index() {
-  const {page} = useLoaderData<typeof loader>();
+  const {page, gids} = useLoaderData<typeof loader>();
 
   return (
     <SanityPreview data={page} query={HOME_PAGE_QUERY}>
       {(page) => (
-        <>
+        <Await resolve={gids}>
           {/* Page hero */}
           {page?.hero && <HomeHero hero={page.hero} />}
 
@@ -66,7 +66,7 @@ export default function Index() {
               <ModuleGrid items={page.modules} />
             </div>
           )}
-        </>
+        </Await>
       )}
     </SanityPreview>
   );
