@@ -3,6 +3,7 @@ import {AnalyticsPageType, type SeoHandleFunction} from '@shopify/hydrogen';
 import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 import {SanityPreview} from 'hydrogen-sanity';
+import {Suspense} from 'react';
 
 import HomeHero from '~/components/heroes/Home';
 import ModuleGrid from '~/components/modules/ModuleGrid';
@@ -57,16 +58,18 @@ export default function Index() {
   return (
     <SanityPreview data={page} query={HOME_PAGE_QUERY}>
       {(page) => (
-        <Await resolve={gids}>
-          {/* Page hero */}
-          {page?.hero && <HomeHero hero={page.hero} />}
+        <Suspense>
+          <Await resolve={gids}>
+            {/* Page hero */}
+            {page?.hero && <HomeHero hero={page.hero} />}
 
-          {page?.modules && (
-            <div className={clsx('mb-32 mt-24 px-4', 'md:px-8')}>
-              <ModuleGrid items={page.modules} />
-            </div>
-          )}
-        </Await>
+            {page?.modules && (
+              <div className={clsx('mb-32 mt-24 px-4', 'md:px-8')}>
+                <ModuleGrid items={page.modules} />
+              </div>
+            )}
+          </Await>
+        </Suspense>
       )}
     </SanityPreview>
   );
