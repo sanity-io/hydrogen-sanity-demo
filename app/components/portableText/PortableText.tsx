@@ -47,16 +47,16 @@ export default function PortableText({blocks, centered, className}: Props) {
     },
     block: Block,
     types: {
-      blockAccordion: AccordionBlock,
-      blockCallout: (props: any) => (
+      'module.accordion': AccordionBlock,
+      'module.callout': (props: any) => (
         <CalloutBlock centered={centered} {...props} />
       ),
-      blockGrid: GridBlock,
-      blockImages: (props: any) => (
+      'module.grid': GridBlock,
+      'module.images': (props: any) => (
         <ImagesBlock centered={centered} {...props} />
       ),
-      blockInstagram: InstagramBlock,
-      blockProducts: ProductsBlock,
+      'module.instagram': InstagramBlock,
+      'module.products': ProductsBlock,
     },
   };
 
