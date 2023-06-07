@@ -1,4 +1,5 @@
 import groq from 'groq';
+import {z} from 'zod';
 
 import {MODULE_ACCORDION} from './modules/accordion';
 import {MODULE_CALLOUT} from './modules/callout';
@@ -33,3 +34,5 @@ export const MODULES = groq`
     ${MODULE_PRODUCT}
   },
 `;
+
+export const modulesSchema = z.object({});

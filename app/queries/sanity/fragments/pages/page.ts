@@ -1,9 +1,10 @@
 import groq from 'groq';
+import {z} from 'zod';
 
-import {COLOR_THEME} from '../colorTheme';
+import {COLOR_THEME, colorThemeSchema} from '../colorTheme';
 import {HERO_PAGE} from '../heroes/page';
 import {PORTABLE_TEXT} from '../portableText/portableText';
-import {SEO} from '../seo';
+import {SEO, seoSchema} from '../seo';
 
 export const PAGE = groq`
   body[]{
@@ -20,3 +21,15 @@ export const PAGE = groq`
   ${SEO},
   title,
 `;
+
+export const pageSchema = z
+  .object({
+    // body:
+    colorTheme: colorThemeSchema,
+    // hero:
+    title: z.string(),
+  })
+  .merge(seoSchema);
+
+type Page = z.infer<typeof pageSchema>;
+export type {Page as SanityPage};

@@ -1,6 +1,7 @@
 import groq from 'groq';
+import {z} from 'zod';
 
-import {COLOR_THEME} from '../colorTheme';
+import {COLOR_THEME, colorThemeSchema} from '../colorTheme';
 
 export const NOT_FOUND_PAGE = groq`
   body,
@@ -10,3 +11,13 @@ export const NOT_FOUND_PAGE = groq`
   },
   title
 `;
+
+export const notFoundPageSchema = z.object({
+  // body:
+  collectionGid: z.string(),
+  colorTheme: colorThemeSchema,
+  title: z.string(),
+});
+
+type NotFoundPage = z.infer<typeof notFoundPageSchema>;
+export type {NotFoundPage as SanityNotFoundPage};

@@ -1,4 +1,5 @@
 import groq from 'groq';
+import {z} from 'zod';
 
 import {MODULE_ACCORDION} from '../modules/accordion';
 import {MODULE_CALLOUT} from '../modules/callout';
@@ -32,3 +33,5 @@ export const PORTABLE_TEXT = groq`
     ${MARK_DEFS}
   }
 `;
+
+export const portableTextSchema = z.object({});

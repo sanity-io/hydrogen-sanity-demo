@@ -1,8 +1,9 @@
 import groq from 'groq';
+import {z} from 'zod';
 
 import {HERO_HOME} from '../heroes/home';
 import {MODULES} from '../modules';
-import {SEO} from '../seo';
+import {SEO, seoSchema} from '../seo';
 
 export const HOME_PAGE = groq`
   hero {
@@ -13,3 +14,13 @@ export const HOME_PAGE = groq`
   },
   ${SEO}
 `;
+
+export const homePageSchema = z
+  .object({
+    // hero:
+    // modules:
+  })
+  .merge(seoSchema);
+
+type HomePage = z.infer<typeof homePageSchema>;
+export type {HomePage as SanityHomePage};

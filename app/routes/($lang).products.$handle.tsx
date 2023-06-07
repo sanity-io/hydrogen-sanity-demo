@@ -25,7 +25,7 @@ import RelatedProducts from '~/components/product/RelatedProducts';
 import type {SanityProductPage} from '~/lib/sanity';
 import {ColorTheme} from '~/lib/theme';
 import {fetchGids, notFound, validateLocale} from '~/lib/utils';
-import {PRODUCT_PAGE_QUERY} from '~/queries/sanity/product';
+import {PRODUCT_PAGE_QUERY, productPageSchema} from '~/queries/sanity/product';
 import {
   PRODUCT_QUERY,
   RECOMMENDED_PRODUCTS_QUERY,
@@ -79,7 +79,7 @@ export async function loader({params, context, request}: LoaderArgs) {
     staleWhileRevalidate: 60,
   });
 
-  const [page, {product}] = await Promise.all([
+  let [page, {product}] = await Promise.all([
     context.sanity.query<SanityProductPage>({
       query: PRODUCT_PAGE_QUERY,
       params: {
@@ -99,6 +99,13 @@ export async function loader({params, context, request}: LoaderArgs) {
 
   if (!page || !product?.id) {
     throw notFound();
+  }
+
+  try {
+    console.log(page);
+    page = await productPageSchema.passthrough().parseAsync(page);
+  } catch (error) {
+    console.error(error);
   }
 
   // Resolve any references to products on the Storefront API

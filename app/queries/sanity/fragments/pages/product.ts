@@ -1,8 +1,13 @@
 import groq from 'groq';
+import {z} from 'zod';
 
-import {COLOR_THEME} from '../colorTheme';
-import {CUSTOM_PRODUCT_OPTIONS} from '../customProductOptions';
+import {COLOR_THEME, colorThemeSchema} from '../colorTheme';
+import {
+  CUSTOM_PRODUCT_OPTIONS,
+  customProductOptionsSchema,
+} from '../customProductOptions';
 import {PORTABLE_TEXT} from '../portableText/portableText';
+import {seoSchema} from '../seo';
 import {SEO_SHOPIFY} from '../seoShopify';
 
 export const PRODUCT_PAGE = groq`
@@ -21,3 +26,18 @@ export const PRODUCT_PAGE = groq`
   ${SEO_SHOPIFY},
   "slug": store.slug.current,
 `;
+
+export const productPageSchema = z
+  .object({
+    _id: z.string(),
+    available: z.boolean(),
+    // body:
+    colorTheme: colorThemeSchema,
+    customProductOptions: customProductOptionsSchema.array(),
+    gid: z.string(),
+    slug: z.string(),
+  })
+  .merge(seoSchema);
+
+type ProductPage = z.infer<typeof productPageSchema>;
+export type {ProductPage as SanityProductPage};

@@ -1,7 +1,8 @@
 import groq from 'groq';
+import {z} from 'zod';
 
-import {IMAGE} from './image';
-import {PRODUCT_HOTSPOT} from './productHotspot';
+import {IMAGE, imageAssetSchema} from './image';
+import {PRODUCT_HOTSPOT, productHotspotSchema} from './productHotspot';
 
 export const IMAGE_WITH_PRODUCT_HOTSPOTS = groq`
   image {
@@ -12,3 +13,11 @@ export const IMAGE_WITH_PRODUCT_HOTSPOTS = groq`
     ${PRODUCT_HOTSPOT}
   }
 `;
+
+export const imageWithProductHotspotsSchema = z.object({
+  image: imageAssetSchema,
+  productHotspots: productHotspotSchema.array(),
+});
+
+type ImageWithProductHotspots = z.infer<typeof imageWithProductHotspotsSchema>;
+export type {ImageWithProductHotspots as SanityImageWithProductHotspots};

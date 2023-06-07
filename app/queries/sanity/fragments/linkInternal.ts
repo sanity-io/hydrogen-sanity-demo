@@ -1,4 +1,5 @@
 import groq from 'groq';
+import {z} from 'zod';
 
 export const LINK_INTERNAL = groq`
   _key,
@@ -20,3 +21,19 @@ export const LINK_INTERNAL = groq`
     },
   }
 `;
+
+export const linkInternalSchema = z.object({
+  _key: z.string(),
+  _type: z.literal('linkInternal'),
+  title: z.string(),
+  documentType: z.union([
+    z.literal('collection'),
+    z.literal('home'),
+    z.literal('page'),
+    z.literal('product'),
+  ]),
+  slug: z.string(),
+});
+
+type LinkInternal = z.infer<typeof linkInternalSchema>;
+export type {LinkInternal as SanityLinkInternal};
