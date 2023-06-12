@@ -223,10 +223,10 @@ export function useGid<
   // then the loader has to be revalidated to fetch from
   // the Storefront API
   useEffect(() => {
-    if (isPreview && revalidator.state === 'idle' && !gid) {
+    if (isPreview && revalidator.state === 'idle' && !gid && id) {
       revalidator.revalidate();
     }
-  }, [gid, isPreview, revalidator]);
+  }, [id, gid, isPreview, revalidator]);
 
   return gid;
 }
