@@ -1,5 +1,4 @@
 import {useMatches} from '@remix-run/react';
-import type {Product} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 
 import Button from '~/components/elements/Button';
@@ -8,15 +7,12 @@ import SanityImage from '~/components/media/SanityImage';
 import ProductHotspot from '~/components/product/Hotspot';
 import ProductTag from '~/components/product/Tag';
 import type {SanityModuleImage} from '~/lib/sanity';
-import {useGids} from '~/lib/utils';
 
 type Props = {
   module: SanityModuleImage;
 };
 
 export default function ImageModule({module}: Props) {
-  const gids = useGids();
-
   if (!module.image) {
     return null;
   }
@@ -41,14 +37,14 @@ export default function ImageModule({module}: Props) {
       {module.variant === 'productHotspots' && (
         <>
           {module.productHotspots?.map((hotspot) => {
-            const storefrontProduct = gids.get(
-              hotspot?.product?.gid,
-            ) as Product;
+            if (!hotspot?.product?.gid) {
+              return null;
+            }
 
             return (
               <ProductHotspot
                 key={hotspot._key}
-                storefrontProduct={storefrontProduct}
+                productGid={hotspot?.product?.gid}
                 variantGid={hotspot?.product?.variantGid}
                 x={hotspot.x}
                 y={hotspot.y}
@@ -61,12 +57,14 @@ export default function ImageModule({module}: Props) {
       {module.variant === 'productTags' && (
         <div className="mt-2 flex flex-wrap gap-x-1 gap-y-2">
           {module.productTags?.map((tag) => {
-            const storefrontProduct = gids.get(tag?.gid) as Product;
+            if (!tag?.gid) {
+              return null;
+            }
 
             return (
               <ProductTag
                 key={tag._key}
-                storefrontProduct={storefrontProduct}
+                productGid={tag?.gid}
                 variantGid={tag?.variantGid}
               />
             );
