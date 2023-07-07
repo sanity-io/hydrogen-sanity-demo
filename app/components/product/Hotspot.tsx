@@ -1,23 +1,21 @@
+import type {Product} from '@shopify/hydrogen/storefront-api-types';
 import Tippy from '@tippyjs/react/headless';
 import clsx from 'clsx';
 
 import {Link} from '~/components/Link';
 import ProductTile from '~/components/product/Tile';
-import {ProductWithNodes} from '~/types/shopify';
+import {useGid} from '~/lib/utils';
 
 type Props = {
-  storefrontProduct: ProductWithNodes;
+  productGid: string;
   variantGid?: string;
   x: number;
   y: number;
 };
 
-export default function ProductHotspot({
-  storefrontProduct,
-  variantGid,
-  x,
-  y,
-}: Props) {
+export default function ProductHotspot({productGid, variantGid, x, y}: Props) {
+  const storefrontProduct = useGid<Product>(productGid);
+
   if (!storefrontProduct) {
     return null;
   }

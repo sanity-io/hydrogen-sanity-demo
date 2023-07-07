@@ -129,13 +129,12 @@ export const PRODUCTS_AND_COLLECTIONS = `#graphql
   ${PRODUCT_FIELDS}
   ${PRODUCT_VARIANT_FIELDS}
 
-  query products(
+  query productsAndCollections(
     $country: CountryCode
     $language: LanguageCode
     $ids: [ID!]!
-    $collectionIds: [ID!]!
   ) @inContext(country: $country, language: $language) {
-    products: nodes(ids: $ids) {
+    productsAndCollections: nodes(ids: $ids) {
       ... on Product {
         ...ProductFields
         variants(first: 250) {
@@ -144,8 +143,6 @@ export const PRODUCTS_AND_COLLECTIONS = `#graphql
           }
         }
       }
-    }
-    collections: nodes(ids: $collectionIds) {
       ... on Collection {
         id
         title

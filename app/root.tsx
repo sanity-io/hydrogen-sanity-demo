@@ -25,7 +25,7 @@ import {
   type LinksFunction,
   type LoaderArgs,
 } from '@shopify/remix-oxygen';
-import {isPreviewModeEnabled, Preview, type PreviewData} from 'hydrogen-sanity';
+import {getPreview, PreviewProvider} from 'hydrogen-sanity';
 
 import {GenericError} from '~/components/global/GenericError';
 import {Layout} from '~/components/global/Layout';
@@ -87,15 +87,7 @@ export async function loader({context}: LoaderArgs) {
     staleWhileRevalidate: 60,
   });
 
-  const preview: PreviewData | undefined = isPreviewModeEnabled(
-    context.sanity.preview,
-  )
-    ? {
-        projectId: context.sanity.preview.projectId,
-        dataset: context.sanity.preview.dataset,
-        token: context.sanity.preview.token,
-      }
-    : undefined;
+  const preview = getPreview(context);
 
   const [cartId, shop, layout] = await Promise.all([
     context.session.get('cartId'),
@@ -149,11 +141,11 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Preview preview={preview} fallback={<PreviewLoading />}>
+        <PreviewProvider previewConfig={preview} fallback={<PreviewLoading />}>
           <Layout key={`${locale.language}-${locale.country}`}>
             <Outlet />
           </Layout>
-        </Preview>
+        </PreviewProvider>
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
       </body>
