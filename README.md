@@ -24,9 +24,9 @@ This TypeScript demo adopts many of Hydrogen's [framework conventions and third-
 
 # Fetching Sanity data
 
-This demo comes preconfigured with a Sanity client that is available in the Remix context, enabling you to fetch content from Sanity in Remix loaders and actions.
+This demo comes preconfigured to use [`hydrogen-sanity`](hydrogen-sanity), which adds a Sanity client to the Remix context. This enables you to fetch content from Sanity in Remix loaders and actions.
 
-In addition to this, we've created a `query` utility, which uses [Hydrogen's caching strategies](https://shopify.dev/docs/custom-storefronts/hydrogen/data-fetching/cache#caching-strategies) to reduce the number of calls to Sanity's API. If no straregy is provided to the `cache` option, then the Hydrogen `CacheLong()` strategy will be used by default.
+In addition to this, we've created a `query` utility, which uses [Hydrogen's caching strategies](https://shopify.dev/docs/custom-storefronts/hydrogen/data-fetching/cache#caching-strategies) to reduce the number of calls to Sanity's API. If no strategy is provided to the `cache` option, then the Hydrogen `CacheLong()` strategy will be used by default.
 
 It's possible to make calls to the Sanity API either with `query`:
 
@@ -128,55 +128,13 @@ export default function Product() {
 }
 ```
 
-Utilize Sanity's realtime content platform to give editors live-as-you-type previewing of their content. That way they can see, in context, how their changes will appear directly in the storefront.
+# Live Preview
 
-Learn more about `@sanity/preview-kit` in the [documentation](preview-kit)
+In addition to providing a Sanity Client, `hydrogen-sanity` can utilize Sanity's realtime content platform to give editors live-as-you-type previewing of their content. That way they can see, in context, how their changes will appear directly in the storefront.
 
-```tsx
-// <root>/app/routes/($lang)._index.tsx
-export async function loader({context, params}: LoaderArgs) {
-  // Fetch initial snapshot to render, in preview mode this will include a token in the request
-  const page = await context.sanity.client.fetch<SanityHomePage>(QUERY);
+You can read more about configuration in the `hydrogen-sanity` [documentation](hydrogen-sanity).
 
-  // ...rest of loader
-
-  return json({
-    page,
-    // ...other loader data
-  });
-}
-
-export default function Index() {
-  const {page} = useLoaderData<typeof loader>();
-  // In preview mode, use preview component
-  const Component = usePreviewComponent<{page: SanityHomePage}>(Route, Preview);
-
-  return <Component page={page} />;
-}
-
-function Route({page}: {page: SanityHomePage}) {
-  return (
-    <>
-      {/* Page hero */}
-      {page?.hero && <HomeHero hero={page.hero as SanityHeroHome} />}
-
-      {page?.modules && (
-        <div className={clsx('mb-32 mt-24 px-4', 'md:px-8')}>
-          <ModuleGrid items={page.modules} />
-        </div>
-      )}
-    </>
-  );
-}
-
-function Preview(props: {page: SanityHomePage}) {
-  const {usePreview} = usePreviewContext()!;
-  // Query, resolving drafts, and listen for new changes
-  const page = usePreview(HOME_PAGE_QUERY, undefined, props.page);
-
-  return <Route page={page} />;
-}
-```
+This demo is set up with an example of live preview on the `($lang)._index.tsx` route.
 
 # Opinions
 
@@ -276,3 +234,4 @@ This repository is published under the [MIT][license] license.
 [sanity-shopify-studio]: https://github.com/sanity-io/sanity-shopify-studio
 [shopify-analytics]: https://shopify.dev/docs/custom-storefronts/hydrogen/analytics
 [preview-kit]: https://github.com/sanity-io/preview-kit
+[hydrogen-sanity]: https://github.com/sanity-io/hydrogen-sanity
