@@ -1,16 +1,19 @@
-import {useAsyncValue, useMatches, useRevalidator} from '@remix-run/react';
-import {extractWithPath} from '@sanity/mutator';
+import {useAsyncValue, useFetcher, useMatches} from '@remix-run/react';
+import {extract} from '@sanity/mutator';
 import type {
   Collection,
   Product,
   ProductOption,
   ProductVariant,
 } from '@shopify/hydrogen/storefront-api-types';
-import type {AppLoadContext} from '@shopify/remix-oxygen';
-import {json, type LoaderArgs} from '@shopify/remix-oxygen';
+import {
+  type AppLoadContext,
+  json,
+  type LoaderArgs,
+} from '@shopify/remix-oxygen';
 import {usePreviewContext} from 'hydrogen-sanity';
 import pluralize from 'pluralize-esm';
-import {useEffect, useMemo} from 'react';
+import {useEffect, useMemo, useRef} from 'react';
 
 import {countries} from '~/data/countries';
 import type {
@@ -22,10 +25,6 @@ import type {
 } from '~/lib/sanity';
 import {PRODUCTS_AND_COLLECTIONS} from '~/queries/shopify/product';
 import type {I18nLocale} from '~/types/shopify';
-
-/** @see https://github.com/sanity-io/sanity/pull/4461 */
-const extract = (...args: Parameters<typeof extractWithPath>) =>
-  extractWithPath(...args).map(({value}) => value);
 
 export const DEFAULT_LOCALE: I18nLocale = Object.freeze({
   ...countries.default,
@@ -175,8 +174,7 @@ export const getProductOptionString = (options?: ProductOption[]) => {
 };
 
 type StorefrontPayload = {
-  products: Product[];
-  collections: Collection[];
+  productsAndCollections: Product[] | Collection[];
 };
 
 /**
@@ -192,18 +190,17 @@ export async function fetchGids({
   const productGids = extract(`..[_type == "productWithVariant"].gid`, page);
   const collectionGids = extract(`..[_type == "collection"].gid`, page);
 
-  const {products, collections} =
+  const {productsAndCollections} =
     await context.storefront.query<StorefrontPayload>(
       PRODUCTS_AND_COLLECTIONS,
       {
         variables: {
-          ids: productGids,
-          collectionIds: collectionGids,
+          ids: [...productGids, ...collectionGids],
         },
       },
     );
 
-  return extract(`..[id?]`, [...products, ...collections]) as (
+  return extract(`..[id?]`, productsAndCollections) as (
     | Product
     | Collection
     | ProductVariant
@@ -214,21 +211,54 @@ export async function fetchGids({
 export function useGid<
   T extends Product | Collection | ProductVariant | ProductVariant['image'],
 >(id?: string | null): T | null | undefined {
-  const gids = useGids();
-  const revalidator = useRevalidator();
+  const gids = useRef(useGids());
+  const fetcher = useFetcher();
   const isPreview = Boolean(usePreviewContext());
-  const gid = gids.get(id as string) as T | null;
+  const [root] = useMatches();
+  const selectedLocale = root.data?.selectedLocale;
+
+  const gid = useRef(gids.current.get(id as string) as T | null);
 
   // In preview mode, if a product or collection is added
-  // then the loader has to be revalidated to fetch from
+  // then the fetcher is used to fetch the new data from
   // the Storefront API
   useEffect(() => {
-    if (isPreview && revalidator.state === 'idle' && !gid) {
-      revalidator.revalidate();
-    }
-  }, [gid, isPreview, revalidator]);
+    if (isPreview && !gid.current && id) {
+      const apiUrl = `${
+        selectedLocale && `${selectedLocale.pathPrefix}`
+      }/api/fetchgids`;
+      if (fetcher.state === 'idle' && fetcher.data == null) {
+        fetcher.submit(
+          {ids: JSON.stringify([id])},
+          {method: 'post', action: apiUrl},
+        );
+      }
 
-  return gid;
+      if (fetcher.data) {
+        const newGids = fetcher.data as (
+          | Product
+          | Collection
+          | ProductVariant
+        )[];
+
+        if (!Array.isArray(newGids)) {
+          return;
+        }
+
+        for (const newGid of newGids) {
+          if (gids.current.has(newGid.id)) {
+            continue;
+          }
+
+          gids.current.set(newGid.id, newGid);
+        }
+
+        gid.current = gids.current.get(id as string) as T | null;
+      }
+    }
+  }, [gids, id, isPreview, fetcher, selectedLocale]);
+
+  return gid.current;
 }
 
 export function useGids() {

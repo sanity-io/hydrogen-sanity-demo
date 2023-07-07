@@ -1,10 +1,8 @@
 import {useMatches} from '@remix-run/react';
-import type {Product} from '@shopify/hydrogen/storefront-api-types';
 
 import SanityImage from '~/components/media/SanityImage';
 import ProductHotspot from '~/components/product/Hotspot';
 import type {SanityImageWithProductHotspots} from '~/lib/sanity';
-import {useGids} from '~/lib/utils';
 
 type Props = {
   content: SanityImageWithProductHotspots;
@@ -13,17 +11,18 @@ type Props = {
 export default function ImageWithProductHotspots({content}: Props) {
   const [root] = useMatches();
   const {sanityDataset, sanityProjectID} = root.data;
-  const gids = useGids();
 
   return (
     <>
       {content.productHotspots?.map((hotspot) => {
-        const storefrontProduct = gids.get(hotspot?.product?.gid) as Product;
+        if (!hotspot?.product?.gid) {
+          return null;
+        }
 
         return (
           <ProductHotspot
             key={hotspot._key}
-            storefrontProduct={storefrontProduct}
+            productGid={hotspot?.product?.gid}
             variantGid={hotspot?.product?.variantGid}
             x={hotspot.x}
             y={hotspot.y}

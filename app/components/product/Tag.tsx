@@ -1,17 +1,22 @@
-import type {ProductVariant} from '@shopify/hydrogen/storefront-api-types';
+import type {
+  Product,
+  ProductVariant,
+} from '@shopify/hydrogen/storefront-api-types';
 import Tippy from '@tippyjs/react/headless';
 import clsx from 'clsx';
 
 import {Link} from '~/components/Link';
 import ProductTooltip from '~/components/product/Tooltip';
-import type {ProductWithNodes} from '~/types/shopify';
+import {useGid} from '~/lib/utils';
 
 type Props = {
-  storefrontProduct: ProductWithNodes;
+  productGid: Product['id'];
   variantGid?: ProductVariant['id'];
 };
 
-export default function ProductTag({storefrontProduct, variantGid}: Props) {
+export default function ProductTag({productGid, variantGid}: Props) {
+  const storefrontProduct = useGid<Product>(productGid);
+
   if (!storefrontProduct) {
     return null;
   }

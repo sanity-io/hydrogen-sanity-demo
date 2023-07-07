@@ -68,6 +68,7 @@ export default {
           dataset: env.SANITY_DATASET,
           apiVersion: env.SANITY_API_VERSION ?? '2023-03-30',
           useCdn: process.env.NODE_ENV === 'production',
+          perspective: 'published',
         },
       });
 
