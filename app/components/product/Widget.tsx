@@ -8,6 +8,7 @@ import type {SanityProductPage} from '~/lib/sanity';
 type Props = {
   sanityProduct: SanityProductPage;
   storefrontProduct: Product;
+  storefrontVariants: ProductVariant[];
   selectedVariant: ProductVariant;
   analytics: ShopifyAnalyticsPayload;
 };
@@ -38,6 +39,7 @@ function ProductPrices({
 export default function ProductWidget({
   sanityProduct,
   storefrontProduct,
+  storefrontVariants,
   selectedVariant,
   analytics,
 }: Props) {
@@ -92,6 +94,7 @@ export default function ProductWidget({
       {/* Product options */}
       <ProductForm
         product={storefrontProduct}
+        variants={storefrontVariants}
         selectedVariant={selectedVariant}
         analytics={analytics}
         customProductOptions={sanityProduct.customProductOptions}

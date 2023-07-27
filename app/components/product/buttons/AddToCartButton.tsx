@@ -47,7 +47,7 @@ export default function AddToCartButton({
                   : buttonClassName
               }
               {...props}
-              disabled={fetcher.state !== 'idle'}
+              disabled={fetcher.state !== 'idle' || props.disabled}
             >
               {fetcher.state !== 'idle' ? (
                 <SpinnerIcon width={24} height={24} />

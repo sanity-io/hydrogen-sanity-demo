@@ -16,11 +16,13 @@ import {hasMultipleProductOptions} from '~/lib/utils';
 
 export default function ProductForm({
   product,
+  variants,
   selectedVariant,
   analytics,
   customProductOptions,
 }: {
   product: Product;
+  variants: ProductVariant[];
   selectedVariant: ProductVariant;
   analytics: ShopifyAnalyticsPayload;
   customProductOptions?: SanityCustomProductOption[];
@@ -44,6 +46,8 @@ export default function ProductForm({
       {multipleProductOptions && (
         <>
           <ProductOptions
+            product={product}
+            variants={variants}
             options={product.options}
             selectedVariant={selectedVariant}
             customProductOptions={customProductOptions}

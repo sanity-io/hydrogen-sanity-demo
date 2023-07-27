@@ -1,4 +1,5 @@
 import type {CartLineInput} from '@shopify/hydrogen/storefront-api-types';
+import clsx from 'clsx';
 import {twMerge} from 'tailwind-merge';
 
 import {defaultButtonStyles} from '~/components/elements/Button';
@@ -31,11 +32,12 @@ export default function BuyNowButton({
   return (
     <Link
       to={`/cart/${to}`}
-      className={
+      className={clsx([
         mode == 'default'
           ? twMerge(defaultButtonStyles(), buttonClassName)
-          : buttonClassName
-      }
+          : buttonClassName,
+        props.disabled ? 'pointer-events-none bg-opacity-100 opacity-20' : '',
+      ])}
       {...props}
     >
       {children}

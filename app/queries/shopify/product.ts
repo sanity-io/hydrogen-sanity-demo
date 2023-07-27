@@ -22,6 +22,15 @@ export const PRODUCT_VARIANT_FIELDS = `
       value
     }
     title
+    sku
+    unitPrice {
+      amount
+      currencyCode
+    }
+    product {
+      title
+      handle
+    }
   }
 `;
 
@@ -148,6 +157,24 @@ export const PRODUCTS_AND_COLLECTIONS = `#graphql
         title
         description
         handle
+      }
+    }
+  }
+`;
+
+export const VARIANTS_QUERY = `#graphql
+  ${PRODUCT_VARIANT_FIELDS}
+
+  query variants(
+    $country: CountryCode
+    $language: LanguageCode
+    $handle: String!
+  ) @inContext(country: $country, language: $language) {
+    product(handle: $handle) {
+      variants(first: 250) {
+        nodes {
+          ...ProductVariantFields
+        }
       }
     }
   }
