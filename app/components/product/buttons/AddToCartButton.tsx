@@ -1,10 +1,10 @@
-import {useFetcher, useMatches} from '@remix-run/react';
+import {type FetcherWithComponents, useFetcher} from '@remix-run/react';
+import {CartForm} from '@shopify/hydrogen';
 import type {CartLineInput} from '@shopify/hydrogen/storefront-api-types';
 import {twMerge} from 'tailwind-merge';
 
 import {defaultButtonStyles} from '~/components/elements/Button';
 import SpinnerIcon from '~/components/icons/Spinner';
-import {CartAction} from '~/types/shopify';
 
 type FormMode = 'default' | 'inline';
 
@@ -23,42 +23,42 @@ export default function AddToCartButton({
   buttonClassName?: string;
   [key: string]: any;
 }) {
-  const [root] = useMatches();
-  const selectedLocale = root?.data?.selectedLocale;
-  const fetcher = useFetcher();
-
   return (
-    <fetcher.Form
-      action={`/cart`}
-      method="post"
-      className={mode == 'inline' ? 'inline' : ''}
-    >
-      <input type="hidden" name="cartAction" value={CartAction.ADD_TO_CART} />
-      {selectedLocale && (
-        <input
-          type="hidden"
-          name="countryCode"
-          value={selectedLocale.country}
-        />
-      )}
-      <input type="hidden" name="lines" value={JSON.stringify(lines)} />
-      <input type="hidden" name="analytics" value={JSON.stringify(analytics)} />
-      <button
-        className={
-          mode == 'default'
-            ? twMerge(defaultButtonStyles(), buttonClassName)
-            : buttonClassName
-        }
-        {...props}
-        disabled={fetcher.state === 'submitting'}
+    // We can't pass a className to CartForm, so we have to wrap it in a div with a className instead
+    <div className={mode == 'inline' ? '[&>*]:inline' : ''}>
+      <CartForm
+        route={`/cart`}
+        inputs={{
+          lines,
+        }}
+        action={CartForm.ACTIONS.LinesAdd}
       >
-        {fetcher.state === 'submitting' ? (
-          <SpinnerIcon width={24} height={24} />
-        ) : (
-          children
+        {(fetcher: FetcherWithComponents<any>) => (
+          <>
+            <input
+              type="hidden"
+              name="analytics"
+              value={JSON.stringify(analytics)}
+            />
+            <button
+              className={
+                mode == 'default'
+                  ? twMerge(defaultButtonStyles(), buttonClassName)
+                  : buttonClassName
+              }
+              {...props}
+              disabled={fetcher.state !== 'idle'}
+            >
+              {fetcher.state !== 'idle' ? (
+                <SpinnerIcon width={24} height={24} />
+              ) : (
+                children
+              )}
+            </button>
+          </>
         )}
-      </button>
-    </fetcher.Form>
+      </CartForm>
+    </div>
   );
 }
 
@@ -79,16 +79,17 @@ export function AddToCartLink({
   loadingContent?: React.ReactNode;
   [key: string]: any;
 }) {
-  const [root] = useMatches();
-  const selectedLocale = root?.data?.selectedLocale;
   const fetcher = useFetcher();
 
   const onClick = () =>
     fetcher.submit(
       {
-        cartAction: CartAction.ADD_TO_CART,
-        countryCode: selectedLocale?.country,
-        lines: JSON.stringify(lines),
+        cartFormInput: JSON.stringify({
+          action: CartForm.ACTIONS.LinesAdd,
+          inputs: {
+            lines,
+          },
+        }),
         analytics: JSON.stringify(analytics),
       },
       {method: 'post', action: '/cart?index'},
