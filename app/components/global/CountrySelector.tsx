@@ -1,5 +1,6 @@
 import {Listbox} from '@headlessui/react';
 import {useFetcher, useLocation, useMatches} from '@remix-run/react';
+import {CartForm} from '@shopify/hydrogen';
 import clsx from 'clsx';
 import {useState} from 'react';
 import invariant from 'tiny-invariant';
@@ -8,7 +9,7 @@ import {ChevronDownIcon} from '~/components/icons/ChevronDown';
 import RadioIcon from '~/components/icons/Radio';
 import {countries} from '~/data/countries';
 import {DEFAULT_LOCALE} from '~/lib/utils';
-import {CartAction, type Locale} from '~/types/shopify';
+import type {Locale} from '~/types/shopify';
 
 type Props = {
   align?: 'center' | 'left' | 'right';
@@ -48,9 +49,13 @@ export function CountrySelector({align = 'center'}: Props) {
 
       fetcher.submit(
         {
-          cartAction: CartAction.UPDATE_BUYER_IDENTITY,
-          buyerIdentity: JSON.stringify({
-            countryCode: newLocale.country,
+          cartFormInput: JSON.stringify({
+            action: CartForm.ACTIONS.BuyerIdentityUpdate,
+            inputs: {
+              buyerIdentity: {
+                countryCode: newLocale.country,
+              },
+            },
           }),
           redirectTo: countryUrlPath,
         },

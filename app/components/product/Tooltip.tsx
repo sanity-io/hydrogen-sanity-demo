@@ -123,6 +123,7 @@ export default function ProductTooltip({
             products: [productAnalytics],
             totalValue: parseFloat(productAnalytics.price),
           }}
+          buttonClassName="p-3"
         />
         <BuyNowButton
           lines={[
@@ -132,6 +133,7 @@ export default function ProductTooltip({
             },
           ]}
           disabled={!selectedVariant.availableForSale}
+          buttonClassName="p-3"
         />
       </div>
     </div>

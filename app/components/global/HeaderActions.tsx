@@ -1,4 +1,5 @@
 import {useMatches} from '@remix-run/react';
+import {CartForm} from '@shopify/hydrogen';
 import clsx from 'clsx';
 import {useEffect} from 'react';
 
@@ -15,7 +16,7 @@ export default function HeaderActions() {
   const cart = root.data?.cart;
 
   // Grab all the fetchers that are adding to cart
-  const addToCartFetchers = useCartFetchers('ADD_TO_CART');
+  const addToCartFetchers = useCartFetchers(CartForm.ACTIONS.LinesAdd);
 
   // When the fetchers array changes, open the drawer if there is an add to cart action
   useEffect(() => {

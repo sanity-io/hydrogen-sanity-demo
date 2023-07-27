@@ -14,13 +14,8 @@ import {
   type SeoHandleFunction,
   ShopifySalesChannel,
 } from '@shopify/hydrogen';
-import type {
-  Cart,
-  Collection,
-  Shop,
-} from '@shopify/hydrogen/storefront-api-types';
+import type {Collection, Shop} from '@shopify/hydrogen/storefront-api-types';
 import {
-  type AppLoadContext,
   defer,
   type LinksFunction,
   type LoaderArgs,
@@ -35,7 +30,6 @@ import {useAnalytics} from '~/hooks/useAnalytics';
 import {useNonce} from '~/lib/nonce';
 import {DEFAULT_LOCALE} from '~/lib/utils';
 import {LAYOUT_QUERY} from '~/queries/sanity/layout';
-import {CART_QUERY} from '~/queries/shopify/cart';
 import {COLLECTION_QUERY_ID} from '~/queries/shopify/collection';
 import stylesheet from '~/styles/tailwind.css';
 import type {I18nLocale} from '~/types/shopify';
@@ -81,6 +75,8 @@ export const links: LinksFunction = () => {
 };
 
 export async function loader({context}: LoaderArgs) {
+  const {cart} = context;
+
   const cache = context.storefront.CacheCustom({
     mode: 'public',
     maxAge: 60,
@@ -89,8 +85,7 @@ export async function loader({context}: LoaderArgs) {
 
   const preview = getPreview(context);
 
-  const [cartId, shop, layout] = await Promise.all([
-    context.session.get('cartId'),
+  const [shop, layout] = await Promise.all([
     context.storefront.query<{shop: Shop}>(SHOP_QUERY),
     context.sanity.query<any>({query: LAYOUT_QUERY, cache}),
   ]);
@@ -103,7 +98,7 @@ export async function loader({context}: LoaderArgs) {
       shopifySalesChannel: ShopifySalesChannel.hydrogen,
       shopId: shop.shop.id,
     },
-    cart: cartId ? getCart(context, cartId) : undefined,
+    cart: cart.get(),
     layout,
     notFoundCollection: layout?.notFoundPage?.collectionGid
       ? context.storefront.query<{collection: Collection}>(
@@ -220,20 +215,3 @@ const SHOP_QUERY = `#graphql
     }
   }
 `;
-
-async function getCart({storefront}: AppLoadContext, cartId: string) {
-  if (!storefront) {
-    throw new Error('missing storefront client in cart query');
-  }
-
-  const {cart} = await storefront.query<{cart?: Cart}>(CART_QUERY, {
-    variables: {
-      cartId,
-      country: storefront.i18n.country,
-      language: storefront.i18n.language,
-    },
-    cache: storefront.CacheNone(),
-  });
-
-  return cart;
-}

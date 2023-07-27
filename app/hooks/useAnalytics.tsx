@@ -1,15 +1,16 @@
 import {useFetchers, useLocation, useMatches} from '@remix-run/react';
 import {
   AnalyticsEventName,
+  CartForm,
   getClientBrowserParameters,
   sendShopifyAnalytics,
-  ShopifyAddToCartPayload,
-  ShopifyPageViewPayload,
+  type ShopifyAddToCartPayload,
+  type ShopifyPageViewPayload,
   useShopifyCookies,
 } from '@shopify/hydrogen';
 import {useEffect} from 'react';
 
-import {CartAction, I18nLocale} from '~/types/shopify';
+import {I18nLocale} from '~/types/shopify';
 
 export function useAnalytics(hasUserConsent: boolean, locale: I18nLocale) {
   useShopifyCookies({hasUserConsent});
@@ -43,10 +44,10 @@ export function useAnalytics(hasUserConsent: boolean, locale: I18nLocale) {
 
   // Add to cart analytics
   const cartData = useDataFromFetchers({
-    formDataKey: 'cartAction',
-    formDataValue: CartAction.ADD_TO_CART,
+    cartAction: CartForm.ACTIONS.LinesAdd,
     dataKey: 'analytics',
   }) as unknown as ShopifyAddToCartPayload;
+
   if (cartData) {
     const addToCartPayload: ShopifyAddToCartPayload = {
       ...getClientBrowserParameters(),
@@ -134,7 +135,7 @@ function useDataFromMatches(dataKey: string): Record<string, unknown> {
  *   ...
  *   return (
  *     <fetcher.Form action="/cart" method="post">
- *       <input type="hidden" name="cartAction" value={CartAction.ADD_TO_CART} />
+ *       <input type="hidden" name="cartAction" value={CartForm.ACTIONS.LinesAdd} />
  *
  * // You can add additional data as hidden form inputs and it will also be collected
  * // As long as it is JSON parse-able.
@@ -146,14 +147,13 @@ function useDataFromMatches(dataKey: string): Record<string, unknown> {
  *
  *   return (
  *     <fetcher.Form action="/cart" method="post">
- *       <input type="hidden" name="cartAction" value={CartAction.ADD_TO_CART} />
+ *       <input type="hidden" name="cartAction" value={CartForm.ACTIONS.LinesAdd} />
  *       <input type="hidden" name="analytics" value={JSON.stringify(analytics)} />
  *
  * // In root.tsx
  * export default function App() {
  *   const cartData = useDataFromFetchers({
- *     formDataKey: 'cartAction',
- *     formDataValue: CartAction.ADD_TO_CART,
+ *     cartAction: CartForm.ACTIONS.LinesAdd,
  *     dataKey: 'analytics',
  *   });
  *
@@ -165,12 +165,10 @@ function useDataFromMatches(dataKey: string): Record<string, unknown> {
  * ```
  **/
 function useDataFromFetchers({
-  formDataKey,
-  formDataValue,
+  cartAction,
   dataKey,
 }: {
-  formDataKey: string;
-  formDataValue: unknown;
+  cartAction: string;
   dataKey: string;
 }): Record<string, unknown> | undefined {
   const fetchers = useFetchers();
@@ -180,9 +178,12 @@ function useDataFromFetchers({
     const formData = fetcher?.formData;
     const fetcherData = fetcher.data;
 
+    const formInputs = formData ? CartForm.getFormInput(formData) : null;
+
     if (
       formData &&
-      formData.get(formDataKey) === formDataValue &&
+      formInputs &&
+      formInputs.action === cartAction &&
       fetcherData &&
       fetcherData[dataKey]
     ) {
