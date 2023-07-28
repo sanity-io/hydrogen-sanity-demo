@@ -12,6 +12,7 @@ import type {SanityProductPage} from '~/lib/sanity';
 type Props = {
   sanityProduct: SanityProductPage;
   storefrontProduct: Product;
+  storefrontVariants: ProductVariant[];
   selectedVariant: ProductVariant;
   analytics: ShopifyAnalyticsPayload;
 };
@@ -19,6 +20,7 @@ type Props = {
 export default function ProductDetails({
   sanityProduct,
   storefrontProduct,
+  storefrontVariants,
   selectedVariant,
   analytics,
 }: Props) {
@@ -35,6 +37,7 @@ export default function ProductDetails({
         <ProductWidget
           sanityProduct={sanityProduct}
           storefrontProduct={storefrontProduct}
+          storefrontVariants={storefrontVariants}
           selectedVariant={selectedVariant}
           analytics={analytics}
         />
@@ -52,6 +55,7 @@ export default function ProductDetails({
             <ProductWidget
               sanityProduct={sanityProduct}
               storefrontProduct={storefrontProduct}
+              storefrontVariants={storefrontVariants}
               selectedVariant={selectedVariant}
               analytics={analytics}
             />

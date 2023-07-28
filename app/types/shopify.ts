@@ -32,15 +32,6 @@ export type I18nLocale = Locale & {
 
 export type Storefront = HydrogenStorefront<I18nLocale>;
 
-export enum CartAction {
-  ADD_TO_CART = 'ADD_TO_CART',
-  REMOVE_FROM_CART = 'REMOVE_FROM_CART',
-  UPDATE_CART = 'UPDATE_CART',
-  UPDATE_DISCOUNT = 'UPDATE_DISCOUNT',
-  UPDATE_BUYER_IDENTITY = 'UPDATE_BUYER_IDENTITY',
-}
-export type CartActions = keyof typeof CartAction;
-
 export type CollectionWithNodes = Partial<Omit<Collection, 'products'>> & {
   products: {
     nodes: ProductWithNodes[];

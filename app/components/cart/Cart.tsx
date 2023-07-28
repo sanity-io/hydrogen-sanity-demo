@@ -1,13 +1,11 @@
-import {
-  type FetcherWithComponents,
-  useFetcher,
-  useMatches,
-} from '@remix-run/react';
+import {useMatches} from '@remix-run/react';
+import {CartForm} from '@shopify/hydrogen';
 import type {
   Cart,
   CartCost,
   CartLine,
   CartLineUpdateInput,
+  ComponentizableCartLine,
 } from '@shopify/hydrogen/storefront-api-types';
 import {
   flattenConnection,
@@ -23,7 +21,7 @@ import PlusCircleIcon from '~/components/icons/PlusCircle';
 import RemoveIcon from '~/components/icons/Remove';
 import SpinnerIcon from '~/components/icons/Spinner';
 import {Link} from '~/components/Link';
-import {CartAction} from '~/types/shopify';
+import {useCartFetchers} from '~/hooks/useCartFetchers';
 
 export function CartLineItems({
   linesObj,
@@ -45,20 +43,47 @@ export function CartLineItems({
   );
 }
 
-function LineItem({lineItem}: {lineItem: CartLine}) {
+function LineItem({lineItem}: {lineItem: CartLine | ComponentizableCartLine}) {
   const {merchandise} = lineItem;
+
+  const updatingItems = useCartFetchers(CartForm.ACTIONS.LinesUpdate);
+  const removingItems = useCartFetchers(CartForm.ACTIONS.LinesRemove);
+
+  // Check if the line item is being updated, as we want to show the new quantity as optimistic UI
+  let updatingQty;
+  const updating =
+    updatingItems?.find((fetcher) => {
+      const formData = fetcher?.formData;
+
+      if (formData) {
+        const formInputs = CartForm.getFormInput(formData);
+        return (
+          Array.isArray(formInputs?.inputs?.lines) &&
+          formInputs?.inputs?.lines?.find((line: CartLineUpdateInput) => {
+            updatingQty = line.quantity;
+            return line.id === lineItem.id;
+          })
+        );
+      }
+    }) && updatingQty;
+
+  // Check if the line item is being removed, as we want to show the line item as being deleted
+  const deleting = removingItems.find((fetcher) => {
+    const formData = fetcher?.formData;
+    if (formData) {
+      const formInputs = CartForm.getFormInput(formData);
+      return (
+        Array.isArray(formInputs?.inputs?.lineIds) &&
+        formInputs?.inputs?.lineIds?.find(
+          (lineId: CartLineUpdateInput['id']) => lineId === lineItem.id,
+        )
+      );
+    }
+  });
 
   const firstVariant = merchandise.selectedOptions[0];
   const hasDefaultVariantOnly =
     firstVariant.name === 'Title' && firstVariant.value === 'Default Title';
-
-  const updateItem = useFetcher();
-  const deleteItem = useFetcher();
-
-  const updating =
-    updateItem.state === 'submitting' || updateItem.state === 'loading';
-  const deleting =
-    deleteItem.state === 'submitting' || deleteItem.state === 'loading';
 
   return (
     <div
@@ -108,7 +133,7 @@ function LineItem({lineItem}: {lineItem: CartLine}) {
       </div>
 
       {/* Quantity */}
-      <CartItemQuantity line={lineItem} fetcher={updateItem} />
+      <CartItemQuantity line={lineItem} submissionQuantity={updating} />
 
       {/* Price */}
       <div className="ml-4 mr-6 flex min-w-[4rem] justify-end text-sm font-bold leading-none">
@@ -120,7 +145,7 @@ function LineItem({lineItem}: {lineItem: CartLine}) {
       </div>
 
       <div role="cell" className="flex flex-col items-end justify-between">
-        <ItemRemoveButton lineIds={[lineItem.id]} fetcher={deleteItem} />
+        <ItemRemoveButton lineIds={[lineItem.id]} />
       </div>
     </div>
   );
@@ -128,55 +153,41 @@ function LineItem({lineItem}: {lineItem: CartLine}) {
 
 function CartItemQuantity({
   line,
-  fetcher,
+  submissionQuantity,
 }: {
-  line: CartLine;
-  fetcher: FetcherWithComponents<any>;
+  line: CartLine | ComponentizableCartLine;
+  submissionQuantity: number | undefined;
 }) {
   if (!line || typeof line?.quantity === 'undefined') return null;
   const {id: lineId, quantity} = line;
 
-  // The below handles optimistic updates for the quantity
-  const submissionQuantity = fetcher?.formData?.get('quantity');
-  const lineQuantity = submissionQuantity
-    ? Number(submissionQuantity)
-    : quantity;
+  // // The below handles optimistic updates for the quantity
+  const lineQuantity = submissionQuantity ? submissionQuantity : quantity;
 
   const prevQuantity = Number(Math.max(0, lineQuantity - 1).toFixed(0));
   const nextQuantity = Number((lineQuantity + 1).toFixed(0));
 
   return (
     <div className="flex items-center gap-2">
-      <fetcher.Form action="/cart" method="post">
-        <UpdateCartButton lines={[{id: lineId, quantity: prevQuantity}]}>
-          <input type="hidden" name="quantity" value={prevQuantity} />
-          <button
-            name="decrease-quantity"
-            aria-label="Decrease quantity"
-            value={prevQuantity}
-            disabled={quantity <= 1}
-          >
-            <MinusCircleIcon />
-          </button>
-        </UpdateCartButton>
-      </fetcher.Form>
+      <UpdateCartButton lines={[{id: lineId, quantity: prevQuantity}]}>
+        <button
+          aria-label="Decrease quantity"
+          value={prevQuantity}
+          disabled={quantity <= 1}
+        >
+          <MinusCircleIcon />
+        </button>
+      </UpdateCartButton>
 
       <div className="min-w-[1rem] text-center text-sm font-bold leading-none text-black">
         {lineQuantity}
       </div>
 
-      <fetcher.Form action="/cart" method="post">
-        <UpdateCartButton lines={[{id: lineId, quantity: nextQuantity}]}>
-          <input type="hidden" name="quantity" value={nextQuantity} />
-          <button
-            name="increase-quantity"
-            aria-label="Increase quantity"
-            value={prevQuantity}
-          >
-            <PlusCircleIcon />
-          </button>
-        </UpdateCartButton>
-      </fetcher.Form>
+      <UpdateCartButton lines={[{id: lineId, quantity: nextQuantity}]}>
+        <button aria-label="Increase quantity" value={prevQuantity}>
+          <PlusCircleIcon />
+        </button>
+      </UpdateCartButton>
     </div>
   );
 }
@@ -189,32 +200,30 @@ function UpdateCartButton({
   lines: CartLineUpdateInput[];
 }) {
   return (
-    <>
-      <input type="hidden" name="cartAction" value={CartAction.UPDATE_CART} />
-      <input type="hidden" name="lines" value={JSON.stringify(lines)} />
+    <CartForm
+      route="/cart"
+      action={CartForm.ACTIONS.LinesUpdate}
+      inputs={{lines}}
+    >
       {children}
-    </>
+    </CartForm>
   );
 }
 
-function ItemRemoveButton({
-  lineIds,
-  fetcher,
-}: {
-  lineIds: CartLine['id'][];
-  fetcher: FetcherWithComponents<any>;
-}) {
+function ItemRemoveButton({lineIds}: {lineIds: CartLine['id'][]}) {
   return (
-    <fetcher.Form action="/cart" method="post">
-      <input type="hidden" name="cartAction" value="REMOVE_FROM_CART" />
-      <input type="hidden" name="linesIds" value={JSON.stringify(lineIds)} />
+    <CartForm
+      route="/cart"
+      action={CartForm.ACTIONS.LinesRemove}
+      inputs={{lineIds}}
+    >
       <button
         className="disabled:pointer-events-all disabled:cursor-wait"
         type="submit"
       >
         <RemoveIcon />
       </button>
-    </fetcher.Form>
+    </CartForm>
   );
 }
 
