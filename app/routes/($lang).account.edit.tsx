@@ -10,7 +10,7 @@ import type {
   CustomerUpdateInput,
   CustomerUpdatePayload,
 } from '@shopify/hydrogen/storefront-api-types';
-import {type ActionFunction, redirect} from '@shopify/remix-oxygen';
+import {redirect, type ActionFunction} from '@shopify/remix-oxygen';
 import invariant from 'tiny-invariant';
 
 import FormFieldText from '~/components/account/FormFieldText';

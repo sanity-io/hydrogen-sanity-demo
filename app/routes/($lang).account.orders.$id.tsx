@@ -10,7 +10,7 @@ import type {
   Order,
   OrderLineItem,
 } from '@shopify/hydrogen/storefront-api-types';
-import {json, type LoaderArgs, redirect} from '@shopify/remix-oxygen';
+import {json, redirect, type LoaderArgs} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 import {ReactNode} from 'react';
 import invariant from 'tiny-invariant';

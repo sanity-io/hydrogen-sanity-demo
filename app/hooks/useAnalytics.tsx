@@ -4,9 +4,9 @@ import {
   CartForm,
   getClientBrowserParameters,
   sendShopifyAnalytics,
+  useShopifyCookies,
   type ShopifyAddToCartPayload,
   type ShopifyPageViewPayload,
-  useShopifyCookies,
 } from '@shopify/hydrogen';
 import {useEffect} from 'react';
 

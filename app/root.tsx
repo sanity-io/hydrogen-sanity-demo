@@ -11,8 +11,8 @@ import {
 } from '@remix-run/react';
 import {
   Seo,
-  type SeoHandleFunction,
   ShopifySalesChannel,
+  type SeoHandleFunction,
 } from '@shopify/hydrogen';
 import type {Collection, Shop} from '@shopify/hydrogen/storefront-api-types';
 import {

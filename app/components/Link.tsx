@@ -1,9 +1,9 @@
 import {
   Link as RemixLink,
-  type LinkProps as RemixLinkProps,
   NavLink as RemixNavLink,
-  type NavLinkProps as RemixNavLinkProps,
   useMatches,
+  type LinkProps as RemixLinkProps,
+  type NavLinkProps as RemixNavLinkProps,
 } from '@remix-run/react';
 import {forwardRef} from 'react';
 

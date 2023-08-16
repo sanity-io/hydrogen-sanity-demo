@@ -1,12 +1,11 @@
 import {
-  type ActionFunction,
   json,
-  type LoaderFunction,
   redirect,
+  type ActionFunction,
+  type LoaderFunction,
 } from '@shopify/remix-oxygen';
 
-import {isLocalPath} from '~/lib/utils';
-import {notFound} from '~/lib/utils';
+import {isLocalPath, notFound} from '~/lib/utils';
 
 const ROOT_PATH = '/' as const;
 

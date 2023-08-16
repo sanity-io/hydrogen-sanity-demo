@@ -7,8 +7,8 @@ import type {
   ProductVariant,
 } from '@shopify/hydrogen/storefront-api-types';
 import {
-  type AppLoadContext,
   json,
+  type AppLoadContext,
   type LoaderArgs,
 } from '@shopify/remix-oxygen';
 import {usePreviewContext} from 'hydrogen-sanity';

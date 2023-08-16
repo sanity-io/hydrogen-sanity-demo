@@ -1,9 +1,3 @@
-import {flattenConnection} from '@shopify/hydrogen';
-import {
-  CollectionConnection,
-  PageConnection,
-  ProductConnection,
-} from '@shopify/hydrogen/storefront-api-types';
 import type {LoaderArgs} from '@shopify/remix-oxygen';
 import groq from 'groq';
 import invariant from 'tiny-invariant';
