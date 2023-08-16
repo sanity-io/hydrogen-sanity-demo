@@ -1,4 +1,4 @@
-import {type FetcherWithComponents, useFetcher} from '@remix-run/react';
+import {useFetcher, type FetcherWithComponents} from '@remix-run/react';
 import {CartForm} from '@shopify/hydrogen';
 import type {CartLineInput} from '@shopify/hydrogen/storefront-api-types';
 import {twMerge} from 'tailwind-merge';

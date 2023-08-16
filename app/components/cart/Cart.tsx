@@ -1,5 +1,11 @@
 import {useMatches} from '@remix-run/react';
 import {CartForm} from '@shopify/hydrogen';
+import {
+  flattenConnection,
+  Image,
+  Money,
+  ShopPayButton,
+} from '@shopify/hydrogen-react';
 import type {
   Cart,
   CartCost,
@@ -7,12 +13,6 @@ import type {
   CartLineUpdateInput,
   ComponentizableCartLine,
 } from '@shopify/hydrogen/storefront-api-types';
-import {
-  flattenConnection,
-  Image,
-  Money,
-  ShopPayButton,
-} from '@shopify/hydrogen-react';
 import clsx from 'clsx';
 
 import Button, {defaultButtonStyles} from '~/components/elements/Button';

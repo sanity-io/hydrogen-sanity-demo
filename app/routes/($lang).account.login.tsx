@@ -2,10 +2,10 @@ import {Form, useActionData, useNavigation} from '@remix-run/react';
 import type {SeoHandleFunction} from '@shopify/hydrogen';
 import type {CustomerAccessTokenCreatePayload} from '@shopify/hydrogen/storefront-api-types';
 import {
+  redirect,
   type ActionFunction,
   type AppLoadContext,
   type LoaderArgs,
-  redirect,
 } from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 import {useState} from 'react';

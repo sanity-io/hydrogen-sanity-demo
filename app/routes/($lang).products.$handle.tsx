@@ -1,19 +1,19 @@
 import {Await, useLoaderData} from '@remix-run/react';
 import {
+  ShopifyAnalyticsProduct,
   flattenConnection,
   getSelectedProductOptions,
   type SeoConfig,
   type SeoHandleFunction,
-  ShopifyAnalyticsProduct,
 } from '@shopify/hydrogen';
+import {AnalyticsPageType} from '@shopify/hydrogen-react';
 import type {
   MediaConnection,
   MediaImage,
   Product,
   ProductVariant,
 } from '@shopify/hydrogen/storefront-api-types';
-import {AnalyticsPageType} from '@shopify/hydrogen-react';
-import {defer, type LoaderArgs, redirect} from '@shopify/remix-oxygen';
+import {defer, redirect, type LoaderArgs} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 import {Suspense} from 'react';
 import invariant from 'tiny-invariant';

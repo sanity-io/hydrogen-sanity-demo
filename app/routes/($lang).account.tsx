@@ -13,11 +13,11 @@ import type {
   Order,
 } from '@shopify/hydrogen/storefront-api-types';
 import {
-  type AppLoadContext,
   defer,
   json,
-  type LoaderArgs,
   redirect,
+  type AppLoadContext,
+  type LoaderArgs,
 } from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 import {ReactNode} from 'react';

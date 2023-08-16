@@ -1,5 +1,5 @@
 import {Shop} from '@shopify/hydrogen/storefront-api-types';
-import {type LoaderArgs, redirect} from '@shopify/remix-oxygen';
+import {redirect, type LoaderArgs} from '@shopify/remix-oxygen';
 import invariant from 'tiny-invariant';
 
 /*

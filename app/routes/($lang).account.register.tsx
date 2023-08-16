@@ -2,9 +2,9 @@ import {Form, useActionData} from '@remix-run/react';
 import type {SeoHandleFunction} from '@shopify/hydrogen';
 import type {CustomerCreatePayload} from '@shopify/hydrogen/storefront-api-types';
 import {
+  redirect,
   type ActionFunction,
   type LoaderArgs,
-  redirect,
 } from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 import {useState} from 'react';
