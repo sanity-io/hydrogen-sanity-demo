@@ -138,6 +138,7 @@ export default function App() {
         <PreviewProvider previewConfig={preview} fallback={<PreviewLoading />}>
           <Layout key={`${locale.language}-${locale.country}`}>
             <Outlet />
+            <div>this is a react test</div>
           </Layout>
         </PreviewProvider>
         <ScrollRestoration nonce={nonce} />
