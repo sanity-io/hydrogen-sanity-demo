@@ -89,7 +89,6 @@ export async function loader({context}: LoaderArgs) {
     context.storefront.query<{shop: Shop}>(SHOP_QUERY),
     context.sanity.query<any>({query: LAYOUT_QUERY, cache}),
   ]);
-
   const selectedLocale = context.storefront.i18n as I18nLocale;
 
   return defer({

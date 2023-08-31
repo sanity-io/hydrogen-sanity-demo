@@ -110,7 +110,7 @@ module.exports = {
         gray: '#E7E7E7',
         lightGray: '#F3F3F3',
         offBlack: '#2B2E2E',
-        peach: '#FFE1D1',
+        peach: '#E5DEF4',
         red: '#EC5039',
         shopPay: '#5A31F4',
       },
