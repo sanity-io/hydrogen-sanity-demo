@@ -24,7 +24,6 @@ export default function Header() {
       )}
       role="banner"
     >
-      <HeaderBackground />
       {menuLinks && <MobileNavigation menuLinks={menuLinks} />}
       {menuLinks && <Navigation menuLinks={menuLinks} />}
       {/* Accounts, country selector + cart toggle */}

@@ -83,7 +83,7 @@ export default function ProductCard({
         </Link>
 
         {/* Quick add to cart */}
-        {firstVariant.availableForSale && (
+        {/* {firstVariant.availableForSale && (
           <div
             className={clsx(
               'absolute bottom-0 right-4 translate-y-full pb-4 duration-200 ease-in-out',
@@ -106,10 +106,10 @@ export default function ProductCard({
               Quick add
             </AddToCartButton>
           </div>
-        )}
+        )} */}
       </div>
 
-      <div className="mt-3 text-md">
+      <div className="mt-2 text-md">
         <div className="space-y-1">
           {/* Title */}
           <Link
@@ -123,18 +123,18 @@ export default function ProductCard({
           </Link>
 
           {/* Vendor */}
-          {storefrontProduct.vendor && (
+          {/* {storefrontProduct.vendor && (
             <div className="text-darkGray">{storefrontProduct.vendor}</div>
-          )}
+          )} */}
 
           {/* Product options */}
-          {multipleProductOptions && (
+          {/* {multipleProductOptions && (
             <div className="text-darkGray">{productOptions}</div>
-          )}
+          )} */}
         </div>
 
         {/* Price / compare at price */}
-        <div className="mt-3 flex font-bold">
+        <div className="mt-2 flex font-bold">
           {firstVariant.compareAtPrice && (
             <span className="text-darkGray">
               <Money

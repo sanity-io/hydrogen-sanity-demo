@@ -12,8 +12,49 @@
     @apply text-md;
   }
   body {
-    @apply bg-white;
+    @apply bg-white font-sans;
   }
+
+  html, body {
+    overscroll-behavior: none;
+  }
+
+  @font-face {
+    font-family: 'EngraversEF';
+    src: url('/fonts/EngraversEF-Roman.woff2') format('woff2'),
+        url('/fonts/EngraversEF-Roman.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Snell';
+    src: url('/fonts/SnellBT-Regular.woff2') format('woff2'),
+        url('/fonts/SnellBT-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'EngraversGothic';
+    src: url('/fonts/EngraversGothicBT-Regular.woff2') format('woff2'),
+        url('/fonts/EngraversGothicBT-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'EurostileMonoEF';
+    src: url('/fonts/EurostileMonoEF-Regular.woff2') format('woff2'),
+        url('/fonts/EurostileMonoEF-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 }
 
 @layer components {

@@ -75,6 +75,7 @@ export const links: LinksFunction = () => {
 };
 
 export async function loader({context}: LoaderArgs) {
+ 
   const {cart} = context;
 
   const cache = context.storefront.CacheCustom({

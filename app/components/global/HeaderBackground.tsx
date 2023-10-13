@@ -19,37 +19,11 @@ export default function HeaderBackground() {
   }, []);
 
   return (
-    <div className="absolute inset-0">
+    <div>
       {/* Background */}
-      <div
-        className={clsx([
-          'absolute inset-0 bg-white bg-opacity-90 backdrop-blur-lg backdrop-filter duration-500',
-          scrolledDown ? 'opacity-100' : 'opacity-0',
-        ])}
-      />
-
       {/* Logo */}
       <Link to="/">
-        <div
-          className={clsx(
-            'absolute bottom-0 left-1/2 top-0 flex w-[50px] -translate-x-1/2 items-center',
-            'lg:w-[65px]',
-          )}
-        >
-          <LogoIcon
-            className="h-auto w-full"
-            classNameMark={clsx([
-              'duration-700',
-              scrolledDown ? 'translate-y-1/4' : 'translate-y-0',
-            ])}
-            classNameType={clsx([
-              'duration-500',
-              scrolledDown
-                ? 'opacity-0 translate-y-1'
-                : 'opacity-100 translate-y-0',
-            ])}
-          />
-        </div>
+       SUPERYAYA
       </Link>
     </div>
   );

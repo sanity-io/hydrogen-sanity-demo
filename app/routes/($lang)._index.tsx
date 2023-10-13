@@ -23,6 +23,7 @@ export const handle = {
 };
 
 export async function loader({context, params}: LoaderArgs) {
+
   validateLocale({context, params});
 
   const cache = context.storefront.CacheCustom({
@@ -35,6 +36,7 @@ export async function loader({context, params}: LoaderArgs) {
     query: HOME_PAGE_QUERY,
     cache,
   });
+  
 
   if (!page) {
     throw notFound();
@@ -61,7 +63,7 @@ export default function Index() {
         <Suspense>
           <Await resolve={gids}>
             {/* Page hero */}
-            {page?.hero && <HomeHero hero={page.hero} />}
+            {/* {page?.hero && <HomeHero hero={page.hero} />} */}
 
             {page?.modules && (
               <div className={clsx('mb-32 mt-24 px-4', 'md:px-8')}>

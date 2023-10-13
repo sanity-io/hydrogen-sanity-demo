@@ -1,9 +1,9 @@
 import clsx from 'clsx';
-import {useCallback} from 'react';
+import { useCallback } from 'react';
 
 import CollectionGroup from '~/components/global/collectionGroup/CollectionGroup';
-import {Link} from '~/components/Link';
-import type {SanityMenuLink} from '~/lib/sanity';
+import { Link } from '~/components/Link';
+import type { SanityMenuLink } from '~/lib/sanity';
 
 /**
  * A component that defines the navigation for a web storefront
@@ -13,7 +13,7 @@ type Props = {
   menuLinks: SanityMenuLink[];
 };
 
-export default function Navigation({menuLinks}: Props) {
+export default function Navigation({ menuLinks }: Props) {
   const renderLinks = useCallback(() => {
     return menuLinks?.map((link) => {
       if (link._type === 'collectionGroup') {
@@ -52,13 +52,12 @@ export default function Navigation({menuLinks}: Props) {
   }, [menuLinks]);
 
   return (
-    <nav
-      className={clsx(
-        'relative hidden items-stretch justify-start gap-6 text-sm font-bold',
-        'lg:flex',
-      )}
-    >
+    <nav className="text-center my-4">
+      <Link className="linkTextNavigation" to="/">SUPERYAYA</Link>
+      <nav>
+        <Link to="/">Galerie</Link>
       {renderLinks()}
+      </nav>
     </nav>
   );
 }

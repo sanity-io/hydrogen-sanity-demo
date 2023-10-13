@@ -77,3 +77,6 @@ yalc.lock
 
 # Mac OS finder cache files
 .DS_Store
+
+# Sanity
+studio/node_modules

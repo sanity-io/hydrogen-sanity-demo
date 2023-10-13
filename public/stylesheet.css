@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'EngraversEF';
+    src: url('EngraversEF-Roman.woff2') format('woff2'),
+        url('EngraversEF-Roman.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Snell';
+    src: url('SnellBT-Regular.woff2') format('woff2'),
+        url('SnellBT-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Engravers\' Gothic';
+    src: url('EngraversGothicBT-Regular.woff2') format('woff2'),
+        url('EngraversGothicBT-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'EurostileMonoEF';
+    src: url('EurostileMonoEF-Regular.woff2') format('woff2'),
+        url('EurostileMonoEF-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+

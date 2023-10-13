@@ -38,16 +38,16 @@ export default function HeaderActions() {
         )}
       >
         {/* Country select */}
-        <div
+        {/* <div
           className={clsx(
             'hidden', //
             'lg:block',
           )}
         >
           <CountrySelector />
-        </div>
+        </div> */}
         {/* Account */}
-        <Link
+        {/* <Link
           className={clsx([
             'hidden h-[2.4rem] items-center rounded-sm bg-darkGray bg-opacity-0 p-2',
             'lg:flex',
@@ -56,7 +56,7 @@ export default function HeaderActions() {
           to="/account"
         >
           <UserIcon />
-        </Link>
+        </Link> */}
         {/* Cart */}
         <div className="ml-2 mr-4 flex h-full items-center justify-center py-4">
           <CartToggle cart={cart} isOpen openDrawer={openDrawer} />

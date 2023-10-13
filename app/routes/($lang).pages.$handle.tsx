@@ -42,17 +42,20 @@ export async function loader({params, context}: LoaderArgs) {
     cache,
   });
 
+  console.log('page', page);
+
   if (!page) {
     throw notFound();
   }
 
   // Resolve any references to products on the Storefront API
   const gids = fetchGids({page, context});
-
+ 
   return defer({page, gids});
 }
 
 export default function Page() {
+
   const {page, gids} = useLoaderData<typeof loader>();
 
   return (
