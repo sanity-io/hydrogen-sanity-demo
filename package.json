@@ -24,7 +24,7 @@
     "@sanity/mutator": "^3.14.1",
     "@sanity/types": "^3.14.1",
     "@shopify/cli": "3.47.5",
-    "@shopify/cli-hydrogen": "^5.1.0",
+    "@shopify/cli-hydrogen": "^6.1.0",
     "@shopify/hydrogen": "^2023.7.0",
     "@shopify/remix-oxygen": "^1.1.1",
     "@tippyjs/react": "^4.2.6",
