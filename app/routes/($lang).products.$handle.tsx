@@ -13,7 +13,7 @@ import type {
   ProductVariant,
 } from '@shopify/hydrogen/storefront-api-types';
 import {AnalyticsPageType} from '@shopify/hydrogen-react';
-import {defer, type LoaderArgs, redirect} from '@shopify/remix-oxygen';
+import {defer, type LoaderFunctionArgs, redirect} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 import {Suspense} from 'react';
 import invariant from 'tiny-invariant';
@@ -59,7 +59,7 @@ export const handle = {
   seo,
 };
 
-export async function loader({params, context, request}: LoaderArgs) {
+export async function loader({params, context, request}: LoaderFunctionArgs) {
   validateLocale({context, params});
 
   const {handle} = params;

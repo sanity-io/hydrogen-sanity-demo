@@ -18,7 +18,7 @@ import type {Collection, Shop} from '@shopify/hydrogen/storefront-api-types';
 import {
   defer,
   type LinksFunction,
-  type LoaderArgs,
+  type LoaderFunctionArgs,
   type MetaFunction,
 } from '@shopify/remix-oxygen';
 import {getPreview, PreviewProvider} from 'hydrogen-sanity';
@@ -82,7 +82,7 @@ export const links: LinksFunction = () => {
   ];
 };
 
-export async function loader({context}: LoaderArgs) {
+export async function loader({context}: LoaderFunctionArgs) {
   const {cart} = context;
 
   const cache = context.storefront.CacheCustom({

@@ -4,7 +4,7 @@ import {
   type CartQueryData,
   type SeoHandleFunction,
 } from '@shopify/hydrogen';
-import {ActionArgs, json} from '@shopify/remix-oxygen';
+import {ActionFunctionArgs, json} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 import {Suspense} from 'react';
 import invariant from 'tiny-invariant';
@@ -22,7 +22,7 @@ export const handle = {
   seo,
 };
 
-export async function action({request, context}: ActionArgs) {
+export async function action({request, context}: ActionFunctionArgs) {
   const {session, cart} = context;
 
   const [formData, customerAccessToken] = await Promise.all([

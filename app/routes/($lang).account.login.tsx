@@ -4,7 +4,7 @@ import type {CustomerAccessTokenCreatePayload} from '@shopify/hydrogen/storefron
 import {
   type ActionFunction,
   type AppLoadContext,
-  type LoaderArgs,
+  type LoaderFunctionArgs,
   redirect,
 } from '@shopify/remix-oxygen';
 import clsx from 'clsx';
@@ -25,7 +25,7 @@ export const handle = {
   isPublic: true,
 };
 
-export async function loader({context, params}: LoaderArgs) {
+export async function loader({context, params}: LoaderFunctionArgs) {
   const customerAccessToken = await context.session.get('customerAccessToken');
 
   if (customerAccessToken) {
