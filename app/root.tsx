@@ -19,6 +19,7 @@ import {
   defer,
   type LinksFunction,
   type LoaderArgs,
+  type MetaFunction,
 } from '@shopify/remix-oxygen';
 import {getPreview, PreviewProvider} from 'hydrogen-sanity';
 
@@ -45,6 +46,13 @@ const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
 export const handle = {
   seo,
 };
+
+export const meta: MetaFunction = () => [
+  {
+    name: 'viewport',
+    content: 'width=device-width,initial-scale=1',
+  },
+];
 
 export const links: LinksFunction = () => {
   return [
@@ -130,7 +138,6 @@ export default function App() {
     <html lang={locale.language}>
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Seo />
         <Meta />
         <Links />
@@ -173,7 +180,6 @@ export function ErrorBoundary({error}: {error: Error}) {
     <html lang={locale.language}>
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>{title}</title>
         <Meta />
         <Links />
