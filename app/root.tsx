@@ -36,6 +36,7 @@ import {LAYOUT_QUERY} from '~/queries/sanity/layout';
 import {COLLECTION_QUERY_ID} from '~/queries/shopify/collection';
 import stylesheet from '~/styles/tailwind.css';
 import type {I18nLocale} from '~/types/shopify';
+import {SanityLayout} from './lib/sanity';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: data?.layout?.seo?.title,
@@ -97,7 +98,7 @@ export async function loader({context}: LoaderFunctionArgs) {
 
   const [shop, layout] = await Promise.all([
     context.storefront.query<{shop: Shop}>(SHOP_QUERY),
-    context.sanity.query<any>({query: LAYOUT_QUERY, cache}),
+    context.sanity.query<SanityLayout>({query: LAYOUT_QUERY, cache}),
   ]);
 
   const selectedLocale = context.storefront.i18n as I18nLocale;
