@@ -14,7 +14,7 @@ import {
   type Session,
   type SessionStorage,
 } from '@shopify/remix-oxygen';
-import {createSanityClient, PreviewSession} from 'hydrogen-sanity';
+import {createSanityClient} from 'hydrogen-sanity';
 
 import {getLocaleFromRequest} from '~/lib/utils';
 
@@ -36,10 +36,27 @@ export default {
       }
 
       const waitUntil = (p: Promise<any>) => executionContext.waitUntil(p);
-      const [cache, session, previewSession] = await Promise.all([
-        caches.open('hydrogen'),
-        HydrogenSession.init(request, [env.SESSION_SECRET]),
-        PreviewSession.init(request, [env.SESSION_SECRET]),
+      const secrets = [env.SESSION_SECRET];
+
+      let [cache, session, previewSession] = await Promise.all([
+        caches?.open('hydrogen'),
+        HydrogenSession.init(request, secrets),
+        (async function createPreviewSession() {
+          const storage = createCookieSessionStorage({
+            cookie: {
+              name: '__preview',
+              httpOnly: true,
+              sameSite: true,
+              secrets,
+            },
+          });
+
+          const session = await storage.getSession(
+            request.headers.get('Cookie'),
+          );
+
+          return new HydrogenSession(storage, session);
+        })(),
       ]);
 
       /**
@@ -52,7 +69,7 @@ export default {
         publicStorefrontToken: env.PUBLIC_STOREFRONT_API_TOKEN,
         privateStorefrontToken: env.PRIVATE_STOREFRONT_API_TOKEN,
         storeDomain: `https://${env.PUBLIC_STORE_DOMAIN}`,
-        storefrontApiVersion: env.PUBLIC_STOREFRONT_API_VERSION || '2023-07',
+        storefrontApiVersion: env.PUBLIC_STOREFRONT_API_VERSION || '2023-10',
         storefrontId: env.PUBLIC_STOREFRONT_ID,
         storefrontHeaders: getStorefrontHeaders(request),
       });
@@ -151,6 +168,10 @@ class HydrogenSession {
 
   get(key: string) {
     return this.session.get(key);
+  }
+
+  has(key: string) {
+    return this.session.has(key);
   }
 
   destroy() {
