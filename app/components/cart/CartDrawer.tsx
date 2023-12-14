@@ -131,7 +131,7 @@ function CartHeader({
 
 function CartFooter({cart}: {cart: Cart}) {
   return (
-    <footer className="sticky bottom-0">
+    <footer className="sticky bottom-0 bg-white">
       <div className="relative flex flex-col">
         <CartSummary cost={cart.cost} />
 

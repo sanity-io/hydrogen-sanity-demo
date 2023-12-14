@@ -1,4 +1,4 @@
-import {useAsyncValue, useFetcher, useMatches} from '@remix-run/react';
+import {useAsyncValue, useFetcher} from '@remix-run/react';
 import {extract} from '@sanity/mutator';
 import type {
   Collection,
@@ -9,7 +9,7 @@ import type {
 import {
   type AppLoadContext,
   json,
-  type LoaderArgs,
+  type LoaderFunctionArgs,
 } from '@shopify/remix-oxygen';
 import {usePreviewContext} from 'hydrogen-sanity';
 import pluralize from 'pluralize-esm';
@@ -25,6 +25,7 @@ import type {
 } from '~/lib/sanity';
 import {PRODUCTS_AND_COLLECTIONS} from '~/queries/shopify/product';
 import type {I18nLocale} from '~/types/shopify';
+import {useRootLoaderData} from '~/root';
 
 export const DEFAULT_LOCALE: I18nLocale = Object.freeze({
   ...countries.default,
@@ -48,8 +49,7 @@ export function getLocaleFromRequest(request: Request): I18nLocale {
 }
 
 export function usePrefixPathWithLocale(path: string) {
-  const [root] = useMatches();
-  const selectedLocale = root.data?.selectedLocale ?? DEFAULT_LOCALE;
+  const selectedLocale = useRootLoaderData()?.selectedLocale ?? DEFAULT_LOCALE;
 
   return `${selectedLocale.pathPrefix}${
     path.startsWith('/') ? path : '/' + path
@@ -60,8 +60,8 @@ export function validateLocale({
   params,
   context,
 }: {
-  context: LoaderArgs['context'];
-  params: LoaderArgs['params'];
+  context: LoaderFunctionArgs['context'];
+  params: LoaderFunctionArgs['params'];
 }) {
   const {language, country} = context.storefront.i18n;
   if (
@@ -214,8 +214,7 @@ export function useGid<
   const gids = useRef(useGids());
   const fetcher = useFetcher();
   const isPreview = Boolean(usePreviewContext());
-  const [root] = useMatches();
-  const selectedLocale = root.data?.selectedLocale;
+  const {selectedLocale} = useRootLoaderData();
 
   const gid = useRef(gids.current.get(id as string) as T | null);
 

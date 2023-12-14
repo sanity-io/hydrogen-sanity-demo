@@ -4,7 +4,7 @@ import type {
   Product,
   ProductVariant,
 } from '@shopify/hydrogen/storefront-api-types';
-import {json, type LoaderArgs} from '@shopify/remix-oxygen';
+import {json, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {isPreviewModeEnabled} from 'hydrogen-sanity';
 
 import {notFound, validateLocale} from '~/lib/utils';
@@ -14,7 +14,7 @@ type StorefrontPayload = {
   productsAndCollections: Product[] | Collection[];
 };
 
-export async function action({params, context, request}: LoaderArgs) {
+export async function action({params, context, request}: LoaderFunctionArgs) {
   const isPreview = isPreviewModeEnabled(context.sanity.preview);
 
   if (!isPreview) {

@@ -1,6 +1,6 @@
 import {Await, useLoaderData, useSearchParams} from '@remix-run/react';
 import {AnalyticsPageType, type SeoHandleFunction} from '@shopify/hydrogen';
-import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
+import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 import {Suspense} from 'react';
 import invariant from 'tiny-invariant';
@@ -36,7 +36,7 @@ export type SortParam =
 
 const PAGINATION_SIZE = 12;
 
-export async function loader({params, context, request}: LoaderArgs) {
+export async function loader({params, context, request}: LoaderFunctionArgs) {
   validateLocale({context, params});
 
   const {handle} = params;

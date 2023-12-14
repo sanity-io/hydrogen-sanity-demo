@@ -1,5 +1,5 @@
 import {Shop} from '@shopify/hydrogen/storefront-api-types';
-import {type LoaderArgs, redirect} from '@shopify/remix-oxygen';
+import {type LoaderFunctionArgs, redirect} from '@shopify/remix-oxygen';
 import invariant from 'tiny-invariant';
 
 /*
@@ -9,7 +9,10 @@ import invariant from 'tiny-invariant';
  that are routing to your Hydrogen storefront. To prevent this, ensure that you redirect
  those requests back to Shopify.
 */
-export async function loader({request, context: {storefront}}: LoaderArgs) {
+export async function loader({
+  request,
+  context: {storefront},
+}: LoaderFunctionArgs) {
   const {origin} = new URL(request.url);
   const {shop} = await storefront.query<{
     shop: Shop;

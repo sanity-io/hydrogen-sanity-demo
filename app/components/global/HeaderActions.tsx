@@ -1,5 +1,6 @@
-import {useMatches} from '@remix-run/react';
+import {Await} from '@remix-run/react';
 import {CartForm} from '@shopify/hydrogen';
+import {Cart} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 import {useEffect} from 'react';
 
@@ -9,11 +10,11 @@ import {CountrySelector} from '~/components/global/CountrySelector';
 import {UserIcon} from '~/components/icons/User';
 import {Link} from '~/components/Link';
 import {useCartFetchers} from '~/hooks/useCartFetchers';
+import {useRootLoaderData} from '~/root';
 
 export default function HeaderActions() {
   const {isOpen, openDrawer, closeDrawer} = useDrawer();
-  const [root] = useMatches();
-  const cart = root.data?.cart;
+  const {cart} = useRootLoaderData();
 
   // Grab all the fetchers that are adding to cart
   const addToCartFetchers = useCartFetchers(CartForm.ACTIONS.LinesAdd);
@@ -59,11 +60,19 @@ export default function HeaderActions() {
         </Link>
         {/* Cart */}
         <div className="ml-2 mr-4 flex h-full items-center justify-center py-4">
-          <CartToggle cart={cart} isOpen openDrawer={openDrawer} />
+          <Await resolve={cart}>
+            {(cart) => (
+              <CartToggle cart={cart as Cart} isOpen openDrawer={openDrawer} />
+            )}
+          </Await>
         </div>
       </div>
 
-      <CartDrawer cart={cart} open={isOpen} onClose={closeDrawer} />
+      <Await resolve={cart}>
+        {(cart) => (
+          <CartDrawer cart={cart as Cart} open={isOpen} onClose={closeDrawer} />
+        )}
+      </Await>
     </>
   );
 }

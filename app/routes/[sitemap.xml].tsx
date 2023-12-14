@@ -4,7 +4,7 @@ import {
   PageConnection,
   ProductConnection,
 } from '@shopify/hydrogen/storefront-api-types';
-import type {LoaderArgs} from '@shopify/remix-oxygen';
+import type {LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import groq from 'groq';
 import invariant from 'tiny-invariant';
 
@@ -21,7 +21,7 @@ type SanityPayload = {
   products: SitemapPage[];
 };
 
-export async function loader({request, context: {sanity}}: LoaderArgs) {
+export async function loader({request, context: {sanity}}: LoaderFunctionArgs) {
   const baseUrl = new URL(request.url).origin;
   const data = await sanity.client.fetch<SanityPayload>(QUERY_SANITY, {
     baseUrl,

@@ -1,6 +1,7 @@
 import {
   isRouteErrorResponse,
   Links,
+  LiveReload,
   Meta,
   Outlet,
   Scripts,
@@ -13,12 +14,15 @@ import {
   Seo,
   type SeoHandleFunction,
   ShopifySalesChannel,
+  useNonce,
 } from '@shopify/hydrogen';
 import type {Collection, Shop} from '@shopify/hydrogen/storefront-api-types';
 import {
   defer,
   type LinksFunction,
-  type LoaderArgs,
+  type LoaderFunctionArgs,
+  type MetaFunction,
+  type SerializeFrom,
 } from '@shopify/remix-oxygen';
 import {getPreview, PreviewProvider} from 'hydrogen-sanity';
 
@@ -27,12 +31,12 @@ import {Layout} from '~/components/global/Layout';
 import {NotFound} from '~/components/global/NotFound';
 import {PreviewLoading} from '~/components/global/PreviewLoading';
 import {useAnalytics} from '~/hooks/useAnalytics';
-import {useNonce} from '~/lib/nonce';
 import {DEFAULT_LOCALE} from '~/lib/utils';
 import {LAYOUT_QUERY} from '~/queries/sanity/layout';
 import {COLLECTION_QUERY_ID} from '~/queries/shopify/collection';
 import stylesheet from '~/styles/tailwind.css';
 import type {I18nLocale} from '~/types/shopify';
+import {SanityLayout} from './lib/sanity';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
   title: data?.layout?.seo?.title,
@@ -45,6 +49,13 @@ const seo: SeoHandleFunction<typeof loader> = ({data}) => ({
 export const handle = {
   seo,
 };
+
+export const meta: MetaFunction = () => [
+  {
+    name: 'viewport',
+    content: 'width=device-width,initial-scale=1',
+  },
+];
 
 export const links: LinksFunction = () => {
   return [
@@ -74,7 +85,7 @@ export const links: LinksFunction = () => {
   ];
 };
 
-export async function loader({context}: LoaderArgs) {
+export async function loader({context}: LoaderFunctionArgs) {
   const {cart} = context;
 
   const cache = context.storefront.CacheCustom({
@@ -87,7 +98,7 @@ export async function loader({context}: LoaderArgs) {
 
   const [shop, layout] = await Promise.all([
     context.storefront.query<{shop: Shop}>(SHOP_QUERY),
-    context.sanity.query<any>({query: LAYOUT_QUERY, cache}),
+    context.sanity.query<SanityLayout>({query: LAYOUT_QUERY, cache}),
   ]);
 
   const selectedLocale = context.storefront.i18n as I18nLocale;
@@ -118,19 +129,23 @@ export async function loader({context}: LoaderArgs) {
   });
 }
 
+export const useRootLoaderData = () => {
+  const [root] = useMatches();
+  return root?.data as SerializeFrom<typeof loader>;
+};
+
 export default function App() {
-  const {preview, ...data} = useLoaderData<typeof loader>();
+  const {preview, ...data} = useLoaderData<SerializeFrom<typeof loader>>();
   const locale = data.selectedLocale ?? DEFAULT_LOCALE;
   const hasUserConsent = true;
   const nonce = useNonce();
 
-  useAnalytics(hasUserConsent, locale);
+  useAnalytics(hasUserConsent);
 
   return (
     <html lang={locale.language}>
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Seo />
         <Meta />
         <Links />
@@ -143,25 +158,31 @@ export default function App() {
         </PreviewProvider>
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
+        <LiveReload nonce={nonce} />
       </body>
     </html>
   );
 }
 
 export function ErrorBoundary({error}: {error: Error}) {
-  const [root] = useMatches();
   const nonce = useNonce();
 
   const routeError = useRouteError();
   const isRouteError = isRouteErrorResponse(routeError);
 
+  const rootData = useRootLoaderData();
+
   const {
     selectedLocale: locale,
     layout,
     notFoundCollection,
-  } = root.data
-    ? root.data
-    : {selectedLocale: DEFAULT_LOCALE, layout: null, notFoundCollection: {}};
+  } = rootData
+    ? rootData
+    : {
+        selectedLocale: DEFAULT_LOCALE,
+        layout: null,
+        notFoundCollection: undefined,
+      };
   const {notFoundPage} = layout || {};
 
   let title = 'Error';
@@ -173,7 +194,6 @@ export function ErrorBoundary({error}: {error: Error}) {
     <html lang={locale.language}>
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>{title}</title>
         <Meta />
         <Links />
@@ -200,7 +220,9 @@ export function ErrorBoundary({error}: {error: Error}) {
             <GenericError error={error instanceof Error ? error : undefined} />
           )}
         </Layout>
+        <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
+        <LiveReload nonce={nonce} />
       </body>
     </html>
   );

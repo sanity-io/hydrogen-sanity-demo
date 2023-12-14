@@ -14,7 +14,7 @@ export function NotFound({
   notFoundPage,
   notFoundCollection,
 }: {
-  notFoundPage: SanityNotFoundPage;
+  notFoundPage?: SanityNotFoundPage;
   notFoundCollection?: Promise<{collection: Collection}>;
 }) {
   return (

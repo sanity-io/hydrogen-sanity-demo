@@ -1,10 +1,18 @@
 import {type FetcherWithComponents, useFetcher} from '@remix-run/react';
-import {CartForm} from '@shopify/hydrogen';
+import {
+  AnalyticsEventName,
+  CartForm,
+  getClientBrowserParameters,
+  sendShopifyAnalytics,
+  type ShopifyAddToCartPayload,
+} from '@shopify/hydrogen';
 import type {CartLineInput} from '@shopify/hydrogen/storefront-api-types';
+import {useEffect} from 'react';
 import {twMerge} from 'tailwind-merge';
 
 import {defaultButtonStyles} from '~/components/elements/Button';
 import SpinnerIcon from '~/components/icons/Spinner';
+import {usePageAnalytics} from '~/hooks/usePageAnalytics';
 
 type FormMode = 'default' | 'inline';
 
@@ -34,7 +42,7 @@ export default function AddToCartButton({
         action={CartForm.ACTIONS.LinesAdd}
       >
         {(fetcher: FetcherWithComponents<any>) => (
-          <>
+          <AddToCartAnalytics fetcher={fetcher}>
             <input
               type="hidden"
               name="analytics"
@@ -55,7 +63,7 @@ export default function AddToCartButton({
                 children
               )}
             </button>
-          </>
+          </AddToCartAnalytics>
         )}
       </CartForm>
     </div>
@@ -96,18 +104,65 @@ export function AddToCartLink({
     );
 
   return (
-    <button
-      className={
-        mode == 'default'
-          ? twMerge(defaultButtonStyles(), buttonClassName)
-          : buttonClassName
-      }
-      onClick={onClick}
-      {...props}
-    >
-      {fetcher.state === 'submitting' && loadingContent
-        ? loadingContent
-        : children}
-    </button>
+    <AddToCartAnalytics fetcher={fetcher}>
+      <button
+        className={
+          mode == 'default'
+            ? twMerge(defaultButtonStyles(), buttonClassName)
+            : buttonClassName
+        }
+        onClick={onClick}
+        {...props}
+      >
+        {fetcher.state === 'submitting' && loadingContent
+          ? loadingContent
+          : children}
+      </button>
+    </AddToCartAnalytics>
   );
+}
+
+function AddToCartAnalytics({
+  fetcher,
+  children,
+}: {
+  fetcher: FetcherWithComponents<any>;
+  children: React.ReactNode;
+}): JSX.Element {
+  const fetcherData = fetcher.data;
+  const formData = fetcher.formData;
+  const pageAnalytics = usePageAnalytics({hasUserConsent: true});
+
+  useEffect(() => {
+    if (formData) {
+      const cartData: Record<string, unknown> = {};
+      const cartInputs = CartForm.getFormInput(formData);
+
+      try {
+        if (cartInputs.inputs.analytics) {
+          const dataInForm: unknown = JSON.parse(
+            String(cartInputs.inputs.analytics),
+          );
+          Object.assign(cartData, dataInForm);
+        }
+      } catch {
+        // do nothing
+      }
+
+      if (Object.keys(cartData).length && fetcherData) {
+        const addToCartPayload: ShopifyAddToCartPayload = {
+          ...getClientBrowserParameters(),
+          ...pageAnalytics,
+          ...cartData,
+          cartId: fetcherData.cart.id,
+        };
+
+        sendShopifyAnalytics({
+          eventName: AnalyticsEventName.ADD_TO_CART,
+          payload: addToCartPayload,
+        });
+      }
+    }
+  }, [fetcherData, formData, pageAnalytics]);
+  return <>{children}</>;
 }
