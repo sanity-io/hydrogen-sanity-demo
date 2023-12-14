@@ -14,6 +14,7 @@ import {
   Seo,
   type SeoHandleFunction,
   ShopifySalesChannel,
+  useNonce,
 } from '@shopify/hydrogen';
 import type {Collection, Shop} from '@shopify/hydrogen/storefront-api-types';
 import {
@@ -30,7 +31,6 @@ import {Layout} from '~/components/global/Layout';
 import {NotFound} from '~/components/global/NotFound';
 import {PreviewLoading} from '~/components/global/PreviewLoading';
 import {useAnalytics} from '~/hooks/useAnalytics';
-import {useNonce} from '~/lib/nonce';
 import {DEFAULT_LOCALE} from '~/lib/utils';
 import {LAYOUT_QUERY} from '~/queries/sanity/layout';
 import {COLLECTION_QUERY_ID} from '~/queries/shopify/collection';
@@ -140,7 +140,7 @@ export default function App() {
   const hasUserConsent = true;
   const nonce = useNonce();
 
-  useAnalytics(hasUserConsent, locale);
+  useAnalytics(hasUserConsent);
 
   return (
     <html lang={locale.language}>
