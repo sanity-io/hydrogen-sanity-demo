@@ -3,9 +3,9 @@ import {
   type LinkProps as RemixLinkProps,
   NavLink as RemixNavLink,
   type NavLinkProps as RemixNavLinkProps,
-  useMatches,
 } from '@remix-run/react';
 import {forwardRef} from 'react';
+import {useRootLoaderData} from '~/root';
 
 type LinkProps = Omit<RemixLinkProps, 'className'> & {
   className?: RemixNavLinkProps['className'] | RemixLinkProps['className'];
@@ -30,8 +30,7 @@ const ABSOLUTE_URL_REGEX = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
  */
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
   const {to, className, ...resOfProps} = props;
-  const [root] = useMatches();
-  const selectedLocale = root.data?.selectedLocale;
+  const {selectedLocale} = useRootLoaderData();
 
   let toWithLocale = to;
 

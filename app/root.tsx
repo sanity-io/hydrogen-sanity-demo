@@ -20,6 +20,7 @@ import {
   type LinksFunction,
   type LoaderFunctionArgs,
   type MetaFunction,
+  type SerializeFrom,
 } from '@shopify/remix-oxygen';
 import {getPreview, PreviewProvider} from 'hydrogen-sanity';
 
@@ -126,8 +127,13 @@ export async function loader({context}: LoaderFunctionArgs) {
   });
 }
 
+export const useRootLoaderData = () => {
+  const [root] = useMatches();
+  return root?.data as SerializeFrom<typeof loader>;
+};
+
 export default function App() {
-  const {preview, ...data} = useLoaderData<typeof loader>();
+  const {preview, ...data} = useLoaderData<SerializeFrom<typeof loader>>();
   const locale = data.selectedLocale ?? DEFAULT_LOCALE;
   const hasUserConsent = true;
   const nonce = useNonce();
@@ -156,19 +162,24 @@ export default function App() {
 }
 
 export function ErrorBoundary({error}: {error: Error}) {
-  const [root] = useMatches();
   const nonce = useNonce();
 
   const routeError = useRouteError();
   const isRouteError = isRouteErrorResponse(routeError);
 
+  const rootData = useRootLoaderData();
+
   const {
     selectedLocale: locale,
     layout,
     notFoundCollection,
-  } = root.data
-    ? root.data
-    : {selectedLocale: DEFAULT_LOCALE, layout: null, notFoundCollection: {}};
+  } = rootData
+    ? rootData
+    : {
+        selectedLocale: DEFAULT_LOCALE,
+        layout: null,
+        notFoundCollection: undefined,
+      };
   const {notFoundPage} = layout || {};
 
   let title = 'Error';

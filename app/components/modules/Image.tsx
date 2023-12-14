@@ -1,4 +1,3 @@
-import {useMatches} from '@remix-run/react';
 import clsx from 'clsx';
 
 import Button from '~/components/elements/Button';
@@ -7,6 +6,7 @@ import SanityImage from '~/components/media/SanityImage';
 import ProductHotspot from '~/components/product/Hotspot';
 import ProductTag from '~/components/product/Tag';
 import type {SanityModuleImage} from '~/lib/sanity';
+import {useRootLoaderData} from '~/root';
 
 type Props = {
   module: SanityModuleImage;
@@ -77,8 +77,7 @@ export default function ImageModule({module}: Props) {
 
 const ImageContent = ({module}: Props) => {
   const image = module.image;
-  const [root] = useMatches();
-  const {sanityDataset, sanityProjectID} = root.data;
+  const {sanityDataset, sanityProjectID} = useRootLoaderData();
 
   return (
     <div

@@ -1,4 +1,4 @@
-import {Await, useMatches} from '@remix-run/react';
+import {Await} from '@remix-run/react';
 import {
   CartForm,
   type CartQueryData,
@@ -12,6 +12,7 @@ import invariant from 'tiny-invariant';
 import {CartActions, CartLineItems, CartSummary} from '~/components/cart/Cart';
 import SpinnerIcon from '~/components/icons/Spinner';
 import {isLocalPath} from '~/lib/utils';
+import {useRootLoaderData} from '~/root';
 
 const seo: SeoHandleFunction = () => ({
   title: 'Cart',
@@ -96,7 +97,7 @@ export async function action({request, context}: ActionFunctionArgs) {
 }
 
 export default function Cart() {
-  const [root] = useMatches();
+  const rootData = useRootLoaderData();
 
   return (
     <section
@@ -112,18 +113,20 @@ export default function Cart() {
           </div>
         }
       >
-        <Await resolve={root.data?.cart}>
+        <Await resolve={rootData?.cart}>
           {(cart) => (
             <>
-              <div className="mx-auto grid w-full max-w-6xl gap-8 pb-12 md:grid-cols-2 md:items-start md:gap-8 lg:gap-12">
-                <div className="flex-grow md:translate-y-4">
-                  <CartLineItems linesObj={cart.lines} />
+              {cart && (
+                <div className="mx-auto grid w-full max-w-6xl gap-8 pb-12 md:grid-cols-2 md:items-start md:gap-8 lg:gap-12">
+                  <div className="flex-grow md:translate-y-4">
+                    <CartLineItems linesObj={cart.lines} />
+                  </div>
+                  <div className="fixed bottom-0 left-0 right-0 grid w-full gap-6 p-4 md:sticky md:top-[65px] md:translate-y-4 md:px-6">
+                    <CartSummary cost={cart.cost} />
+                    <CartActions cart={cart} />
+                  </div>
                 </div>
-                <div className="fixed bottom-0 left-0 right-0 grid w-full gap-6 p-4 md:sticky md:top-[65px] md:translate-y-4 md:px-6">
-                  <CartSummary cost={cart.cost} />
-                  <CartActions cart={cart} />
-                </div>
-              </div>
+              )}
             </>
           )}
         </Await>

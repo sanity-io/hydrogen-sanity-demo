@@ -1,4 +1,3 @@
-import {useMatches} from '@remix-run/react';
 import {CartForm} from '@shopify/hydrogen';
 import type {
   Cart,
@@ -22,6 +21,7 @@ import RemoveIcon from '~/components/icons/Remove';
 import SpinnerIcon from '~/components/icons/Spinner';
 import {Link} from '~/components/Link';
 import {useCartFetchers} from '~/hooks/useCartFetchers';
+import {useRootLoaderData} from '~/root';
 
 export function CartLineItems({
   linesObj,
@@ -264,11 +264,9 @@ export function CartSummary({cost}: {cost: CartCost}) {
 }
 
 export function CartActions({cart}: {cart: Cart}) {
-  const [root] = useMatches();
+  const {storeDomain} = useRootLoaderData();
 
   if (!cart || !cart.checkoutUrl) return null;
-
-  const storeDomain = root?.data?.storeDomain;
 
   const shopPayLineItems = flattenConnection(cart.lines).map((line) => ({
     id: line.merchandise.id,

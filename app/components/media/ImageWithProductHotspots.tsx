@@ -1,16 +1,14 @@
-import {useMatches} from '@remix-run/react';
-
 import SanityImage from '~/components/media/SanityImage';
 import ProductHotspot from '~/components/product/Hotspot';
 import type {SanityImageWithProductHotspots} from '~/lib/sanity';
+import {useRootLoaderData} from '~/root';
 
 type Props = {
   content: SanityImageWithProductHotspots;
 };
 
 export default function ImageWithProductHotspots({content}: Props) {
-  const [root] = useMatches();
-  const {sanityDataset, sanityProjectID} = root.data;
+  const {sanityDataset, sanityProjectID} = useRootLoaderData();
 
   return (
     <>

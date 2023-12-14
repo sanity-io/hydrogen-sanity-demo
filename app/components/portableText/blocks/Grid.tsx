@@ -1,18 +1,17 @@
 import type {PortableTextBlock} from '@portabletext/types';
-import {useMatches} from '@remix-run/react';
 import clsx from 'clsx';
 
 import SanityImage from '~/components/media/SanityImage';
 import PortableText from '~/components/portableText/PortableText';
 import type {SanityModuleGrid} from '~/lib/sanity';
+import {useRootLoaderData} from '~/root';
 
 type Props = {
   value: PortableTextBlock & SanityModuleGrid;
 };
 
 export default function GridBlock({value}: Props) {
-  const [root] = useMatches();
-  const {sanityDataset, sanityProjectID} = root.data;
+  const {sanityDataset, sanityProjectID} = useRootLoaderData();
 
   return (
     <div
