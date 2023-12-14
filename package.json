@@ -26,7 +26,7 @@
     "@shopify/hydrogen": "~2023.10.2",
     "@shopify/remix-oxygen": "^2.0.2",
     "@tippyjs/react": "^4.2.6",
-    "clsx": "^1.2.1",
+    "clsx": "^2.0.0",
     "embla-carousel-react": "^7.1.0",
     "eslist": "^1.0.0-beta.1",
     "graphql": "^16.6.0",
