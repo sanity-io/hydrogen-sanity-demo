@@ -1,6 +1,7 @@
 import {
   isRouteErrorResponse,
   Links,
+  LiveReload,
   Meta,
   Outlet,
   Scripts,
@@ -156,6 +157,7 @@ export default function App() {
         </PreviewProvider>
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
+        <LiveReload nonce={nonce} />
       </body>
     </html>
   );
@@ -217,7 +219,9 @@ export function ErrorBoundary({error}: {error: Error}) {
             <GenericError error={error instanceof Error ? error : undefined} />
           )}
         </Layout>
+        <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
+        <LiveReload nonce={nonce} />
       </body>
     </html>
   );
