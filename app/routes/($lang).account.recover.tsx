@@ -4,7 +4,7 @@ import type {CustomerRecoverPayload} from '@shopify/hydrogen/storefront-api-type
 import {
   type ActionFunction,
   json,
-  type LoaderArgs,
+  type LoaderFunctionArgs,
   redirect,
 } from '@shopify/remix-oxygen';
 import clsx from 'clsx';
@@ -23,7 +23,7 @@ export const handle = {
   seo,
 };
 
-export async function loader({context, params}: LoaderArgs) {
+export async function loader({context, params}: LoaderFunctionArgs) {
   const customerAccessToken = await context.session.get('customerAccessToken');
 
   if (customerAccessToken) {

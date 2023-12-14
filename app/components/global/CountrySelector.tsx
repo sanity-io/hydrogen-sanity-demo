@@ -10,6 +10,7 @@ import RadioIcon from '~/components/icons/Radio';
 import {countries} from '~/data/countries';
 import {DEFAULT_LOCALE} from '~/lib/utils';
 import type {Locale} from '~/types/shopify';
+import {useRootLoaderData} from '~/root';
 
 type Props = {
   align?: 'center' | 'left' | 'right';
@@ -22,8 +23,7 @@ export function CountrySelector({align = 'center'}: Props) {
 
   const fetcherLocaleLabel = fetcher?.formData?.get('label');
 
-  const [root] = useMatches();
-  const selectedLocale = root.data?.selectedLocale ?? DEFAULT_LOCALE;
+  const selectedLocale = useRootLoaderData()?.selectedLocale ?? DEFAULT_LOCALE;
   const selectedLocalePrefix = `${selectedLocale?.language}-${selectedLocale?.country}`;
   const {pathname, search} = useLocation();
   const pathWithoutLocale = `${pathname.replace(

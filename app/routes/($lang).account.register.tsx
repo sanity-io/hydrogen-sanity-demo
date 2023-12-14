@@ -3,7 +3,7 @@ import type {SeoHandleFunction} from '@shopify/hydrogen';
 import type {CustomerCreatePayload} from '@shopify/hydrogen/storefront-api-types';
 import {
   type ActionFunction,
-  type LoaderArgs,
+  type LoaderFunctionArgs,
   redirect,
 } from '@shopify/remix-oxygen';
 import clsx from 'clsx';
@@ -25,7 +25,7 @@ export const handle = {
   seo,
 };
 
-export async function loader({context, params}: LoaderArgs) {
+export async function loader({context, params}: LoaderFunctionArgs) {
   const customerAccessToken = await context.session.get('customerAccessToken');
 
   if (customerAccessToken) {

@@ -1,6 +1,6 @@
 import {Await, useLoaderData} from '@remix-run/react';
 import {AnalyticsPageType, type SeoHandleFunction} from '@shopify/hydrogen';
-import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
+import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 import {SanityPreview} from 'hydrogen-sanity';
 import {Suspense} from 'react';
@@ -22,7 +22,7 @@ export const handle = {
   seo,
 };
 
-export async function loader({context, params}: LoaderArgs) {
+export async function loader({context, params}: LoaderFunctionArgs) {
   validateLocale({context, params});
 
   const cache = context.storefront.CacheCustom({

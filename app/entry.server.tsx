@@ -1,37 +1,53 @@
 import {RemixServer} from '@remix-run/react';
-import type {EntryContext} from '@shopify/remix-oxygen';
+import {createContentSecurityPolicy} from '@shopify/hydrogen';
+import type {AppLoadContext, EntryContext} from '@shopify/remix-oxygen';
 import isbot from 'isbot';
 import {renderToReadableStream} from 'react-dom/server';
-
-import {generateNonce, NonceProvider} from '~/lib/nonce';
 
 export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
   remixContext: EntryContext,
+  loadContext: AppLoadContext,
 ) {
-  let nonce: string | undefined;
-  if (process.env.NODE_ENV === 'production') {
-    /**
-     * Crytographic nonce to strengthen Content Security Policy
-     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce
-     */
-    nonce = generateNonce();
+  const {SANITY_PROJECT_ID: projectId} = loadContext.env;
 
-    /**
-     * Currently, we're not setting the CSP headers due to lack of support on deferred scripts.
-     * @see https://github.com/remix-run/remix/issues/5156
-     *
-    responseHeaders.set(
-      'Content-Security-Policy',
-      `script-src 'nonce-${nonce}' 'strict-dynamic' cdn.shopify.com; object-src 'none'; base-uri 'none';`,
-    );
-     */
+  /**
+   * Apply a content security policy with nonce, and only apply in production
+   * @see https://shopify.dev/docs/api/hydrogen/2023-10/utilities/createcontentsecuritypolicy
+   */
+  const {nonce, header, NonceProvider} = createContentSecurityPolicy({
+    imgSrc: [
+      `'self'`,
+      'https://cdn.shopify.com',
+      'https://cdn.sanity.io',
+      'https://lh3.googleusercontent.com',
+    ],
+    styleSrc: [
+      `'self'`,
+      `'unsafe-inline'`,
+      'https://fonts.googleapis.com',
+      'https://cdn.shopify.com',
+    ],
+    scriptSrc: [`'self'`, 'www.instagram.com', 'https://cdn.shopify.com'],
+    fontSrc: [`'self'`, 'https://fonts.gstatic.com'],
+    frameAncestors: [`'self'`],
+    frameSrc: [`'self'`, 'https://www.instagram.com'],
+    connectSrc: [
+      `'self'`,
+      'https://monorail-edge.shopifysvc.com',
+      `https://${projectId}.api.sanity.io`,
+      `wss://${projectId}.api.sanity.io`,
+    ],
+  });
+
+  if (process.env.NODE_ENV === 'production') {
+    responseHeaders.set('Content-Security-Policy', header);
   }
 
   const body = await renderToReadableStream(
-    <NonceProvider value={nonce}>
+    <NonceProvider>
       <RemixServer context={remixContext} url={request.url} />
     </NonceProvider>,
     {
@@ -50,6 +66,7 @@ export default async function handleRequest(
   }
 
   responseHeaders.set('Content-Type', 'text/html');
+
   return new Response(body, {
     headers: responseHeaders,
     status: responseStatusCode,

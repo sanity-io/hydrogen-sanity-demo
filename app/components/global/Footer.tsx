@@ -1,4 +1,3 @@
-import {useMatches} from '@remix-run/react';
 import clsx from 'clsx';
 
 import SanityFooter from '~/components/global/SanityFooter';
@@ -6,14 +5,13 @@ import LogoIcon from '~/components/icons/Logo';
 import {Link} from '~/components/Link';
 import PortableText from '~/components/portableText/PortableText';
 import type {SanityLink} from '~/lib/sanity';
+import {useRootLoaderData} from '~/root';
 
 /**
  * A component that specifies the content of the footer on the website
  */
 export default function Footer() {
-  const [root] = useMatches();
-
-  const layout = root.data?.layout;
+  const {layout} = useRootLoaderData();
   const {footer} = layout || {};
 
   const renderLinks = footer?.links?.map((link: SanityLink) => {

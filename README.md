@@ -1,7 +1,8 @@
 # AKVA - An example storefront powered by Sanity + Hydrogen
 
-This demo is compatible with `@shopify/hydrogen >= 2023.1.0` built on Remix.
+This demo is compatible with `@shopify/hydrogen >= 2023.10.0` built on Remix.
 
+> For a more complex reference example, please see our [demo-ecommerce repo](https://github.com/sanity-io/demo-ecommerce) which features a monorepo with an embedded Sanity Studio, full live preview, more content models and added internationalisation.
 > For the legacy Hydrogen v1 template, please refer to the [hydrogen-v1 branch](https://github.com/sanity-io/hydrogen-sanity-demo/tree/hydrogen-v1).
 
 <img src="https://user-images.githubusercontent.com/209129/173065853-77b26be2-dd15-4b4d-8164-850e70247b88.png" width="1000" />
@@ -31,12 +32,12 @@ In addition to this, we've created a `query` utility, which uses [Hydrogen's cac
 It's possible to make calls to the Sanity API either with `query`:
 
 ```tsx
-import {json, type LoaderArgs} from '@shopify/remix-oxygen';
+import {json, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import type {SanityProductPage} from '~/lib/sanity';
 
 const QUERY = `*[_type == 'product' && slug.current == $slug]`;
 
-export async function loader({params, context}: LoaderArgs) {
+export async function loader({params, context}: LoaderFunctionArgs) {
   const cache = context.storefront.CacheLong();
 
   const sanityContent = await context.sanity.query<SanityProductPage>({
@@ -56,12 +57,12 @@ or directly with the Sanity client:
 ```tsx
 // <root>/app/routes/($lang).products.$handle.tsx
 import {useLoaderData} from '@remix-run/react';
-import {json, type LoaderArgs} from '@shopify/remix-oxygen';
+import {json, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import type {SanityProductPage} from '~/lib/sanity';
 
 const QUERY = `*[_type == 'product' && slug.current == $slug]`;
 
-export async function loader({params, context}: LoaderArgs) {
+export async function loader({params, context}: LoaderFunctionArgs) {
   const sanityContent = await context.sanity.client.fetch<SanityProductPage>(
     QUERY,
     {
@@ -86,13 +87,13 @@ You can also use the [`defer` and `Await` utilities](https://remix.run/docs/en/1
 // <root>/app/routes/($lang).products.$handle.tsx
 import {Suspense} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
-import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
+import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import type {SanityProductPage, LessImportant} from '~/lib/sanity';
 
 const QUERY = `*[_type == 'product' && slug.current == $slug]`;
 const ANOTHER_QUERY = `*[references($id)]`;
 
-export async function loader({params, context}: LoaderArgs) {
+export async function loader({params, context}: LoaderFunctionArgs) {
   /* Await the important content here */
   const sanityContent = await context.sanity.query<SanityProductPage>({
     query: QUERY,

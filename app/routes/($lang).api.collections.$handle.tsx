@@ -1,12 +1,12 @@
 import type {Collection as CollectionType} from '@shopify/hydrogen/storefront-api-types';
-import {json, type LoaderArgs} from '@shopify/remix-oxygen';
+import {json, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 
 import {validateLocale} from '~/lib/utils';
 import {COLLECTION_QUERY} from '~/queries/shopify/collection';
 
 const PAGINATION_SIZE = 12;
 
-export async function loader({params, context, request}: LoaderArgs) {
+export async function loader({params, context, request}: LoaderFunctionArgs) {
   validateLocale({context, params});
 
   const {handle} = params;
