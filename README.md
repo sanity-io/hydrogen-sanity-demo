@@ -1,3 +1,6 @@
+>[!NOTE]  
+>This repository for a Hydrogen front end is no longer maintained, but the connecting plugin [Sanity Connect for Shopify][sanity-connect] as well as the `shopify` starter template for Sanity Studio are still in active development. See the [Sanity Templates](https://www.sanity.io/templates) page for other ecommerce templates.
+
 # AKVA - An example storefront powered by Sanity + Hydrogen
 
 This demo is compatible with `@shopify/hydrogen >= 2023.10.0` built on Remix.
